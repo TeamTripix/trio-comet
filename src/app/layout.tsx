@@ -54,7 +54,7 @@ export default function RootLayout({
             <EdgeStoreProvider>
               {/* application content */}
               <body className={inter.className}>
-                <Box
+                {/* <Box
                   sx={{
                     display: "flex",
                     justifyContent: "center",
@@ -66,8 +66,8 @@ export default function RootLayout({
                   <Typography sx={{ textAlign: "center" }}>
                     Server Error 500
                   </Typography>
-                </Box>
-                {/* <NextTopLoader
+                </Box> */}
+                <NextTopLoader
                   color={lightColor.theme.primary}
                   initialPosition={0.08}
                   crawlSpeed={200}
@@ -92,7 +92,7 @@ export default function RootLayout({
                   draggable
                   pauseOnHover
                   theme="light"
-                /> */}
+                />
               </body>
             </EdgeStoreProvider>
           </ThemeProvider>
