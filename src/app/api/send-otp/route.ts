@@ -11,7 +11,6 @@ const twilioNumber = process.env.TWILIO_PHONE_NUMBER;
 const client = new Twilio(accountSid, authToken);
 
 const URI: any = process.env.MONGOOSE_URI;
-
 export async function POST(req: Request) {
   const generateRandomNumber = () => {
     let min = 100000;
@@ -22,28 +21,30 @@ export async function POST(req: Request) {
   try {
     await mongoose.connect(URI);
     const parsedData = await req.json();
-
+    
     if (!parsedData.number) {
       return NextResponse.json(
         { message: "please fill all feilds", success: false },
         { status: 400 }
-      );
-    }
-    const otpValue = generateRandomNumber();
-    const findOTPInDB = await otpSchema.find({
-      number: parsedData.number,
-    });
-
-    if (findOTPInDB.length === 1) {
-      const OTPUpdateRes = await otpSchema.updateOne(
-        { number: parsedData.number },
-        { OTP: otpValue }
-      );
-      const sendOTPRes = await client.messages.create({
-        from: twilioNumber,
-        to: `+91${parsedData.number}`,
-        body: `Your RoyalMobisol verification code is: ${otpValue}`,
+        );
+      }
+      const otpValue = generateRandomNumber();
+      const findOTPInDB = await otpSchema.find({
+        number: parsedData.number,
       });
+      
+      if (findOTPInDB.length === 1) {
+        const OTPUpdateRes = await otpSchema.updateOne(
+          { number: parsedData.number },
+          { OTP: otpValue }
+          );
+          const sendOTPRes = await client.messages.create({
+            from: twilioNumber,
+            to: `+91${parsedData.number}`,
+            body: `Your RoyalMobisol verification code is: ${otpValue}`,
+          });
+          
+          console.log("test : ",sendOTPRes)
       if (sendOTPRes.errorMessage === null) {
         return NextResponse.json(
           {

@@ -13,6 +13,7 @@ export const lightColor: any = {
     chevron: "rgba(42, 41, 41, 0.80)",
     white: "#F7F7F7",
   },
+  blackBannerBG:"#eee",
   cardBG: "#FBFBFB",
   navbarBG: "#FBFBFB",
   borderColor: "#EDEDED",

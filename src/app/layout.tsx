@@ -21,6 +21,7 @@ import { useSelector } from "react-redux";
 import ThemeState from "@components/ThemeState";
 import WhatsappIcon from "@components/WhatsappIcon";
 import { Box, Typography } from "@mui/material";
+import BlackBanner from "@components/BlackBanner";
 
 const inter = Inter({ subsets: ["latin"] });
 // export const metadata: Metadata = {
@@ -77,6 +78,7 @@ export default function RootLayout({
                   speed={200}
                   shadow={`0 0 10px ${themeState === "light" ? lightColor.theme.primary : darkColor.theme.primary},0 0 5px ${lightColor.theme.primary}`}
                 />
+                {pathname === "/" ? <BlackBanner /> : ""}
                 <Navbar />
                 {children}
                 <WhatsappIcon/>

@@ -7,7 +7,6 @@ import {
   Tab,
   Tabs,
   Grid,
-  ButtonBase,
   Skeleton,
 } from "@mui/material";
 import Image from "next/image";
@@ -45,25 +44,25 @@ interface TabPanelProps {
   value: number;
 }
 
-function CustomTabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
+// function CustomTabPanel(props: TabPanelProps) {
+//   const { children, value, index, ...other } = props;
 
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box>
-          <Box>{children}</Box>
-        </Box>
-      )}
-    </div>
-  );
-}
+//   return (
+//     <div
+//       role="tabpanel"
+//       hidden={value !== index}
+//       id={`simple-tabpanel-${index}`}
+//       aria-labelledby={`simple-tab-${index}`}
+//       {...other}
+//     >
+//       {value === index && (
+//         <Box>
+//           <Box>{children}</Box>
+//         </Box>
+//       )}
+//     </div>
+//   );
+// }
 
 function a11yProps(index: number) {
   return {
@@ -88,8 +87,6 @@ export default function Home() {
   const [isNewArrivalLoading, setIsNewArrivalLoading] = useState(true);
   const [isCategoryLoading, setIsCategoryLoading] = useState(true);
   const [isBlogLoading, setIsBlogLoading] = useState(true);
-  const [blackBannerApiRes, setBlackBannerApiRes] = useState<any>([]);
-  const [blackBannerApiLoading, setBlackBannerApiLoading] = useState(true);
   const [bannerApiRes, setBannerApiRes] = useState<any>([]);
   const [bannerApiLoading, setBannerApiLoading] = useState(true);
   const [activeItemIndex, setActiveItemIndex] = useState(0);
@@ -113,20 +110,6 @@ export default function Home() {
       .catch((err) => {
         console.log(err);
         setBannerApiLoading(false);
-      });
-
-    // get black banner
-    axios({
-      method: "GET",
-      url: `/api/black-banner`,
-    })
-      .then((res) => {
-        setBlackBannerApiRes(res.data.data);
-        setBlackBannerApiLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setBlackBannerApiLoading(false);
       });
 
     // get sale product api
@@ -276,85 +259,6 @@ export default function Home() {
   return (
     <>
       <Box>
-        {blackBannerApiLoading ? (
-          ""
-        ) : blackBannerApiRes.length === 0 ? (
-          ""
-        ) : (
-          <Box
-            display="inline-flex"
-            height="4.3rem"
-            padding="0.9rem 3.1rem"
-            justifyContent="center"
-            alignItems="center"
-            gap="68.9rem"
-            bgcolor={
-              theme === "light"
-                ? lightColor.text.primary
-                : darkColor.text.primary
-            }
-            width="100%"
-          >
-            <PageSpacing>
-              <Box
-                display="flex"
-                width="100%"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Typography
-                  color={
-                    theme === "dark"
-                      ? lightColor.text.primary
-                      : darkColor.text.primary
-                  }
-                  fontSize={isMobile ? "0.8rem" : "1.6rem"}
-                  fontStyle="normal"
-                  fontWeight={isMobile ? "400" : "700"}
-                  lineHeight="normal"
-                  letterSpacing="0.05rem"
-                >
-                  {blackBannerApiRes[0].bannerText}
-                </Typography>
-                <Link href={blackBannerApiRes[0].bannerURL}>
-                  <ButtonBase
-                    sx={{
-                      display: "flex",
-                      padding: "0.2rem 0.8rem",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      gap: "1rem",
-                      borderRadius: "0.2rem",
-                      bgcolor:
-                        theme === "dark"
-                          ? lightColor.text.primary
-                          : darkColor.text.primary,
-                      width: isMobile ? "5rem" : "7rem",
-                      marginLeft: "0.5rem",
-                    }}
-                  >
-                    <Typography
-                      color={
-                        theme === "light"
-                          ? lightColor.text.primary
-                          : darkColor.text.primary
-                      }
-                      textAlign="center"
-                      fontSize={isMobile ? "0.6rem" : "1.2rem"}
-                      fontStyle="normal"
-                      fontWeight="500"
-                      lineHeight="normal"
-                      letterSpacing="0.05rem"
-                    >
-                      Buy Now
-                    </Typography>
-                  </ButtonBase>
-                </Link>
-              </Box>
-            </PageSpacing>
-          </Box>
-        )}
-
         {bannerApiLoading ? (
           <Skeleton
             variant="rectangular"
@@ -402,7 +306,7 @@ export default function Home() {
 
         <PageSpacing>
           <Box>
-            <Box display="flex" justifyContent="center">
+            {/* <Box display="flex" justifyContent="center">
               <Box
                 sx={{
                   width: "21rem",
@@ -445,9 +349,9 @@ export default function Home() {
                   />
                 </Tabs>
               </Box>
-            </Box>
+            </Box> */}
 
-            <CustomTabPanel value={value} index={0}>
+            {/* <CustomTabPanel value={value} index={0}> */}
               {/* {isMobile ? (
                 ""
               ) : ( */}
@@ -471,7 +375,7 @@ export default function Home() {
                   margin="6rem 0"
                   marginLeft={isMobile || isTablet ? "2rem" : 0}
                 >
-                  On Sale
+                  New Drops
                 </Typography>
                 {/* {isMobile ? (
                     ""
@@ -575,9 +479,9 @@ export default function Home() {
                   )}
                 </Grid>
               )}
-            </CustomTabPanel>
+            {/* </CustomTabPanel> */}
 
-            <CustomTabPanel value={value} index={1}>
+            {/* <CustomTabPanel value={value} index={1}>
               <Box
                 display="flex"
                 justifyContent="space-between"
@@ -700,7 +604,7 @@ export default function Home() {
                   )}
                 </Grid>
               )}
-            </CustomTabPanel>
+            </CustomTabPanel> */}
           </Box>
 
           <Box>
@@ -887,7 +791,7 @@ export default function Home() {
 
           {/* --------------------------------------------- */}
           <div className="App">
-            <Slider  {...settings}>
+            <Slider {...settings}>
               {isCategoryLoading ? (
                 [...Array(11)].map((d, i) => {
                   return (

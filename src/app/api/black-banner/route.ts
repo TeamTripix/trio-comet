@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 const jwt = require("jsonwebtoken");
 
 const URI: any = process.env.MONGOOSE_URI;
+console.log("test :",URI)
 const key = process.env.JWT_KEY;
 
 export async function POST(req: NextRequest) {

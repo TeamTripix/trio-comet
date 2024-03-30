@@ -15,6 +15,7 @@ export const LightTheme = createTheme({
   typography: {
     h1: {},
     htmlFontSize: 10, // Change this to your desired base font size in pixels
+    // fontFamily: ["Montserrat","SF Pro Display", "Roboto"].join(","),
     fontFamily: ["SF Pro Display", "Roboto"].join(","),
   },
   components: {

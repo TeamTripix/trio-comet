@@ -55,48 +55,19 @@ const Index = () => {
           theme === "light" ? lightColor.borderColor : darkColor.borderColor
         }`}
         display="flex"
-        width={isMobile ? "100%" : "30rem"}
+        width={isMobile ? "100%" : "60rem"}
         height="4rem"
         padding="1rem 0rem 1rem 2rem"
         justifyContent="space-between"
-        alignItems="center">
+        alignItems="center"
+      >
         <Box>
-          <input
-            placeholder="Search..."
-            style={{
-              color:
-                theme === "light"
-                  ? lightColor.text.secondary
-                  : darkColor.text.secondary,
-              backgroundColor:
-                theme === "light" ? lightColor.search : darkColor.search,
-              fontSize: "1.4rem",
-              fontStyle: "normal",
-              fontWeight: 400,
-              lineHeight: "2.4rem",
-              letterSpacing: "0.05rem",
-              border: "none",
-              outline: "none",
-              width: isMobile ? "100%" : "15rem",
-              zIndex: "9999",
-            }}
-            onChange={(e: any) => handleInput(e.target.value)}
-          />
-        </Box>
-        <Box width="50%" height="3.9rem" display="flex" alignItems="center">
-          <Box
-            width="0.04rem"
-            height="2.5rem"
-            bgcolor={
-              theme === "light"
-                ? lightColor.text.secondary
-                : darkColor.text.secondary
-            }></Box>
           <FormControl
-            sx={{ margin: "0 1rem" }}
+            sx={{ margin: "0 1rem", width: "20rem" }}
             variant="standard"
             fullWidth
-            size="small">
+            size="small"
+          >
             <Select
               disableUnderline
               value={categorySelector}
@@ -109,7 +80,8 @@ const Index = () => {
                     ? lightColor.text.primary
                     : darkColor.text.primary,
               }}
-              onChange={(e) => handleChangeCategory(e.target.value)}>
+              onChange={(e) => handleChangeCategory(e.target.value)}
+            >
               <MenuItem
                 sx={{
                   color:
@@ -123,7 +95,8 @@ const Index = () => {
                         : darkColor.text.chevron,
                   },
                 }}
-                value={"all"}>
+                value={"all"}
+              >
                 All Category
               </MenuItem>
               {categoryApiRes.map((data: any) => {
@@ -142,15 +115,50 @@ const Index = () => {
                       },
                     }}
                     key={data._id}
-                    value={data._id}>
+                    value={data._id}
+                  >
                     {data.name}
                   </MenuItem>
                 );
               })}
             </Select>
           </FormControl>
+        </Box>
+        <Box
+          width="0.04rem"
+          height="2.5rem"
+          bgcolor={
+            theme === "light"
+              ? lightColor.text.secondary
+              : darkColor.text.secondary
+          }
+          margin="0 2rem"
+        ></Box>
+        <Box width="55%" height="3.9rem" display="flex" alignItems="center">
+          <input
+            placeholder="Search..."
+            style={{
+              color:
+                theme === "light"
+                  ? lightColor.text.secondary
+                  : darkColor.text.secondary,
+              backgroundColor:
+                theme === "light" ? lightColor.search : darkColor.search,
+              fontSize: "1.4rem",
+              fontStyle: "normal",
+              fontWeight: 400,
+              lineHeight: "2.4rem",
+              letterSpacing: "0.05rem",
+              border: "none",
+              outline: "none",
+              width: isMobile ? "100%" : "35rem",
+              zIndex: "9999",
+            }}
+            onChange={(e: any) => handleInput(e.target.value)}
+          />
           <Link
-            href={`/search?category=${categorySelector}&query=${searchInputText}`}>
+            href={`/search?category=${categorySelector}&query=${searchInputText}`}
+          >
             <ButtonBase
               onClick={() =>
                 dispatch({ type: "TOGGLE", payload: { toggle: toggleState } })
@@ -169,7 +177,8 @@ const Index = () => {
                   theme === "light"
                     ? lightColor.text.chevron
                     : darkColor.text.chevron,
-              }}>
+              }}
+            >
               <SearchIcon color="white" height="17" width="16" />
             </ButtonBase>
           </Link>

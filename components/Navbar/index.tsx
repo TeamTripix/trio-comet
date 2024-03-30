@@ -1,5 +1,13 @@
 "use client";
-import { Box, Badge, ButtonBase, MenuItem, Menu, Switch } from "@mui/material";
+import {
+  Box,
+  Badge,
+  ButtonBase,
+  MenuItem,
+  Menu,
+  Switch,
+  Typography,
+} from "@mui/material";
 import React, { useState, useEffect } from "react";
 import Image from "next/legacy/image";
 import styled from "@emotion/styled";
@@ -18,6 +26,7 @@ import { useSession } from "next-auth/react";
 import AdminIcon from "../../icons/adminIcon";
 import SearchIconMobile from "../../icons/SearchIconMobile";
 import ThemeToggleBtn from "@components/ThemeToggleBtn";
+import PageSpacing from "@components/PageSpacing";
 
 interface LIProps {
   highlite?: boolean;
@@ -30,8 +39,8 @@ const LI = styled.div<LIProps>`
         ? lightColor.text.primary
         : darkColor.text.primary
       : props.theme === "light"
-      ? lightColor.text.secondary
-      : darkColor.text.secondary};
+      ? lightColor.text.primary
+      : darkColor.text.primary};
   text-align: center;
   font-size: 1.6rem;
   font-style: normal;
@@ -69,29 +78,29 @@ export default function Index() {
   );
 
   // for capturing scroll on the page
-  useEffect(() => {
-    window.addEventListener("scroll", () => setNavHeight("5rem"));
-    return () => {
-      window.removeEventListener("scroll", () => setNavHeight("5rem"));
-    };
-  });
+  // useEffect(() => {
+  //   window.addEventListener("scroll", () => setNavHeight("5rem"));
+  //   return () => {
+  //     window.removeEventListener("scroll", () => setNavHeight("5rem"));
+  //   };
+  // });
 
   // capturing the top of the page
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollPos = window.scrollY;
-      if (currentScrollPos === 0 && prevScrollPos !== 0) {
-        setNavHeight("8rem");
-      }
-      setPrevScrollPos(currentScrollPos);
-    };
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     const currentScrollPos = window.scrollY;
+  //     if (currentScrollPos === 0 && prevScrollPos !== 0) {
+  //       setNavHeight("8rem");
+  //     }
+  //     setPrevScrollPos(currentScrollPos);
+  //   };
 
-    window.addEventListener("scroll", handleScroll);
+  //   window.addEventListener("scroll", handleScroll);
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [prevScrollPos]);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, [prevScrollPos]);
 
   const favCartData: any = useSelector<any>(
     (state) => state.addToFavCart.favCartData
@@ -138,7 +147,9 @@ export default function Index() {
             <Link href="/">
               <Box width="10rem" sx={{ cursor: "pointer" }}>
                 <Image
-                  src={`/assets/logo/${theme === "light" ? "logo-light.png" : "logo-dark.png"}`}
+                  src={`/assets/logo/${
+                    theme === "light" ? "logo-light.png" : "logo-dark.png"
+                  }`}
                   alt="Logo"
                   width="160"
                   height="50"
@@ -232,7 +243,9 @@ export default function Index() {
               <Link href="/">
                 <Box width="16rem" height="5rem" sx={{ cursor: "pointer" }}>
                   <Image
-                    src={`/assets/logo/${theme === "light" ? "logo-light.png" : "logo-dark.png"}`}
+                    src={`/assets/logo/${
+                      theme === "light" ? "logo-light.png" : "logo-dark.png"
+                    }`}
                     alt="Logo"
                     width="160"
                     height="50"
@@ -317,168 +330,226 @@ export default function Index() {
   return (
     <>
       <Box
-        display="flex"
+        // display="flex"
         width="100vw"
-        height={navHeight}
-        padding="0.8rem 6.4rem"
+        // height="11rem"
+        padding="0.8rem 0rem"
         justifyContent="space-between"
         alignItems="center"
         flexShrink="0"
-        borderBottom={
-          theme === "light" ? lightColor.borderColor : darkColor.borderColor
-        }
-        bgcolor={theme === "light" ? lightColor.navbarBG : darkColor.navbarBG}
+        bgcolor="white"
         position="fixed"
         zIndex="99"
       >
-        <Link href="/">
-          <Box width="16rem" height="5rem" sx={{ cursor: "pointer" }}>
-            <Image
-              src={`/assets/logo/${theme === "light" ? "logo-light.png" : "logo-dark.png"}`}
-              alt="Logo"
-              width="160"
-              height="50"
-              layout="responsive"
-            />
-          </Box>
-        </Link>
-
-        <Box display="flex" alignItems="center" gap="2.4rem">
-          <LI
-            theme={theme}
-            highlite={isCategoryVisible}
-            aria-owns={anchorElHover ? "simple-menu" : undefined}
-            aria-haspopup="true"
-            onMouseEnter={handleClick}
-            onMouseLeave={handleClose}
-          >
-            Category
-            <Menu
-              id="simple-menu"
-              anchorEl={anchorElHover}
-              open={Boolean(anchorElHover)}
-              onClose={handleClose}
-              MenuListProps={{ onMouseLeave: handleClose }}
-            >
-              <Box width={"100vw"}>
-                <CategoryBox />
-              </Box>
-            </Menu>
-          </LI>
-          <Link href="/combos">
-            <LI theme={theme} highlite={pathname === "/combos" ? true : false}>
-              Combos
-            </LI>
-          </Link>
-          <Link href="/bulk-query">
-            <LI
-              theme={theme}
-              highlite={pathname === "/bulk-query" ? true : false}
-            >
-              Bulk Query
-            </LI>
-          </Link>
-          <Link href="/blog-collection">
-            <LI
-              theme={theme}
-              highlite={pathname === "/blog-collection" ? true : false}
-            >
-              Blogs
-            </LI>
-          </Link>
-          <Link href="/about-us">
-            <LI
-              theme={theme}
-              highlite={pathname === "/about-us" ? true : false}
-            >
-              About Us
-            </LI>
-          </Link>
-          {/* <Box onClick={(e) => handleClickMoreMenu(e)}>
-            <LI
-              id="basic-button"
-              aria-controls={open ? "basic-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-            >
-              More
-            </LI>
-          </Box> */}
-          <Menu
-            id="basic-menu"
-            anchorEl={moreAnchorEl}
-            open={open}
-            onClose={() => setMoreAnchorEl(null)}
-          >
-            <MenuItem onClick={() => handleCloseMoreMenu("/about-us")}>
-              <LI theme={theme}>About us</LI>
-            </MenuItem>
-            <MenuItem>
-              <LI theme={theme}>Gallery</LI>
-            </MenuItem>
-          </Menu>
-        </Box>
-        <Box display="flex" alignItems="center" gap="4rem">
-          <Search />
+        <PageSpacing>
           <Box
             display="flex"
+            // width="100vw"
+            height={navHeight}
+            // padding="0.8rem 6.4rem"
+            justifyContent="space-between"
             alignItems="center"
-            justifyContent="center"
-            gap="0.8rem"
+            flexShrink="0"
+            bgcolor="white"
+            // position="fixed"
+            zIndex="99"
           >
-            <Box>
-              <ThemeToggleBtn />
+            <Link href="/">
+              <Box width="16rem" height="5rem" sx={{ cursor: "pointer" }}>
+                <Image
+                  src={`/assets/logo/${
+                    theme === "light" ? "logo-light.png" : "logo-dark.png"
+                  }`}
+                  alt="Logo"
+                  width="160"
+                  height="50"
+                  layout="responsive"
+                />
+              </Box>
+            </Link>
+
+            <Box display="flex" alignItems="center" gap="4rem">
+              <Search />
             </Box>
-            <Box sx={{ borderRadius: "50%", padding: "3px" }}>
-              <Badge invisible={true}>
-                {/* <Profile /> */}
-                <Link
-                  href={
-                    session.status === "authenticated" ? "/profile" : "/login"
-                  }
-                >
-                  <ButtonBase sx={{ borderRadius: "50%" }}>
-                    <AdminIcon
-                      color={
-                        theme === "light"
-                          ? lightColor.text.primary
-                          : darkColor.text.primary
+            <Box display="flex" alignItems="center" gap="4rem">
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                gap="0.8rem"
+              >
+                {/* <Box>
+                  <ThemeToggleBtn />
+                </Box> */}
+                <Box sx={{ borderRadius: "50%", padding: "3px" }}>
+                  <Badge invisible={true}>
+                    {/* <Profile /> */}
+                    <Link
+                      href={
+                        session.status === "authenticated"
+                          ? "/profile"
+                          : "/login"
                       }
-                    />
-                  </ButtonBase>
-                </Link>
-              </Badge>
-            </Box>
+                    >
+                      {/* <Typography>Login</Typography> */}
+                      <ButtonBase sx={{ borderRadius: "50%" }}>
+                        <AdminIcon
+                          color={
+                            theme === "light"
+                              ? lightColor.text.primary
+                              : darkColor.text.primary
+                          }
+                        />
+                      </ButtonBase>
+                    </Link>
+                  </Badge>
+                </Box>
 
-            <Box sx={{ borderRadius: "50%", padding: "3px" }}>
-              <Badge
-                badgeContent={
-                  isClient
-                    ? favCartData.length === 0
-                      ? 0
-                      : favCartData.length
-                    : 0
-                }
-                color="error"
-              >
-                <FavCart />
-              </Badge>
-            </Box>
+                <Box sx={{ borderRadius: "50%", padding: "3px" }}>
+                  <Badge
+                    badgeContent={
+                      isClient
+                        ? favCartData.length === 0
+                          ? 0
+                          : favCartData.length
+                        : 0
+                    }
+                    color="error"
+                  >
+                    <FavCart />
+                  </Badge>
+                </Box>
 
-            <Box sx={{ borderRadius: "50%", padding: "3px" }}>
-              <Badge
-                badgeContent={
-                  isClient ? (cartData.length === 0 ? 0 : cartData.length) : 0
-                }
-                color="error"
-              >
-                <Cart />
-              </Badge>
+                <Box sx={{ borderRadius: "50%", padding: "3px" }}>
+                  <Badge
+                    badgeContent={
+                      isClient
+                        ? cartData.length === 0
+                          ? 0
+                          : cartData.length
+                        : 0
+                    }
+                    color="error"
+                  >
+                    <Cart />
+                  </Badge>
+                </Box>
+              </Box>
             </Box>
           </Box>
+        </PageSpacing>
+        <Box bgcolor={lightColor.navbarBG}>
+          <PageSpacing>
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              gap="5rem"
+              padding="1rem 0"
+            >
+              {/* <LI
+                theme={theme}
+                highlite={isCategoryVisible}
+                aria-owns={anchorElHover ? "simple-menu" : undefined}
+                aria-haspopup="true"
+                onMouseEnter={handleClick}
+                onMouseLeave={handleClose}
+              >
+                Category
+                <Menu
+                  id="simple-menu"
+                  anchorEl={anchorElHover}
+                  open={Boolean(anchorElHover)}
+                  onClose={handleClose}
+                  MenuListProps={{ onMouseLeave: handleClose }}
+                >
+                  <Box width={"100vw"}>
+                    <CategoryBox />
+                  </Box>
+                </Menu>
+              </LI> */}
+
+              <Link href="/new-arrivals">
+                <LI
+                  theme={theme}
+                  highlite={pathname === "/bulk-query" ? true : false}
+                >
+                  New Arrivals
+                </LI>
+              </Link>
+
+              <Link href="/men">
+                <LI
+                  theme={theme}
+                  highlite={pathname === "/men" ? true : false}
+                >
+                  Men
+                </LI>
+              </Link>
+
+              <Link href="/women">
+                <LI
+                  theme={theme}
+                  highlite={pathname === "/women" ? true : false}
+                >
+                  Women
+                </LI>
+              </Link>
+
+              <Link href="/combos">
+                <LI
+                  theme={theme}
+                  highlite={pathname === "/combos" ? true : false}
+                >
+                  Combos
+                </LI>
+              </Link>
+
+              <Link href="/blog-collection">
+                <LI
+                  theme={theme}
+                  highlite={pathname === "/blog-collection" ? true : false}
+                >
+                  Blogs
+                </LI>
+              </Link>
+              <Link href="/about-us">
+                <LI
+                  theme={theme}
+                  highlite={pathname === "/about-us" ? true : false}
+                >
+                  About Us
+                </LI>
+              </Link>
+              {/* <Box onClick={(e) => handleClickMoreMenu(e)}>
+                <LI
+                  id="basic-button"
+                  aria-controls={open ? "basic-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                >
+                  More
+                </LI>
+              </Box> */}
+              <Menu
+                id="basic-menu"
+                anchorEl={moreAnchorEl}
+                open={open}
+                onClose={() => setMoreAnchorEl(null)}
+              >
+                <MenuItem onClick={() => handleCloseMoreMenu("/about-us")}>
+                  <LI theme={theme}>About us</LI>
+                </MenuItem>
+                <MenuItem>
+                  <LI theme={theme}>Gallery</LI>
+                </MenuItem>
+              </Menu>
+            </Box>
+          </PageSpacing>
         </Box>
       </Box>
-      <Box width="100%" height={navHeight}></Box>
+
+      <Box width="100%" height="11rem"></Box>
     </>
   );
 }
