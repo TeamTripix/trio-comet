@@ -17,18 +17,18 @@ const Index = (props: IndexProps) => {
   const { name, _id, image } = props.data;
   const { isHomePage, categoryArrayLength, indexes } = props;
   const theme: any = useSelector<any>((state) => state.themeToggle);
-  const isMobile = useMobile()
+  const isMobile = useMobile();
   return (
     <Box
       height="50rem"
-      marginLeft={isHomePage ? "2rem" : 0}
+      marginLeft={isHomePage ? "1rem" : 0}
       marginRight={
-        isHomePage ? (indexes === categoryArrayLength ? "2rem" : 0) : 0
+        isHomePage ? (indexes === categoryArrayLength ? "1rem" : 0) : 0
       }
     >
       <Link href={`/category/${name}?pid=${_id}`}>
         <Box
-          height="100%"
+          // height="100%"
           display="flex"
           flexDirection="column"
           justifyContent="center"
@@ -37,28 +37,33 @@ const Index = (props: IndexProps) => {
         >
           <Box>
             <Box
-              width={isMobile ? "15rem" : "20rem"}
-              height={isMobile ? "15rem" : "20rem"}
+              width={isMobile ? "15rem" : " 30rem"}
+              height={isMobile ? "15rem" : "35rem"}
               borderRadius="10rem"
             >
-              <Image width={isMobile ? "150" : "200"} height={isMobile ? "150" : "200"} alt="category" src={image} />
+              <Image
+                width={isMobile ? "150" : " 300"}
+                height={isMobile ? "150" : "350"}
+                alt="category"
+                src={image}
+              />
             </Box>
           </Box>
-          {/* <Typography
+          <Typography
             color={
               theme === "light"
                 ? lightColor.text.primary
                 : darkColor.text.primary
             }
             textAlign="center"
-            fontSize="1.4rem"
+            fontSize="2.4rem"
             fontStyle="normal"
-            fontWeight="700"
+            fontWeight="600"
             lineHeight="normal"
             letterSpacing="0.05rem"
           >
             {name}
-          </Typography> */}
+          </Typography>
         </Box>
       </Link>
     </Box>

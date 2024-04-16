@@ -42,7 +42,7 @@ const LI = styled.div<LIProps>`
       ? lightColor.text.primary
       : darkColor.text.primary};
   text-align: center;
-  font-size: 1.6rem;
+  font-size: 2rem;
   font-style: normal;
   font-weight: 500;
   line-height: 2.4rem; /* 150% */
@@ -333,7 +333,7 @@ export default function Index() {
         // display="flex"
         width="100vw"
         // height="11rem"
-        padding="0.8rem 0rem"
+        // padding="0.8rem 0rem"
         justifyContent="space-between"
         alignItems="center"
         flexShrink="0"
@@ -343,9 +343,10 @@ export default function Index() {
       >
         <PageSpacing>
           <Box
+            // bgcolor="pink"
             display="flex"
             // width="100vw"
-            height={navHeight}
+            height="5rem"
             // padding="0.8rem 6.4rem"
             justifyContent="space-between"
             alignItems="center"
@@ -355,14 +356,14 @@ export default function Index() {
             zIndex="99"
           >
             <Link href="/">
-              <Box width="16rem" height="5rem" sx={{ cursor: "pointer" }}>
+              <Box width="16rem" height="7rem" sx={{ cursor: "pointer" }}>
                 <Image
                   src={`/assets/logo/${
                     theme === "light" ? "logo-light.png" : "logo-dark.png"
                   }`}
                   alt="Logo"
                   width="160"
-                  height="50"
+                  height="60"
                   layout="responsive"
                 />
               </Box>
@@ -391,8 +392,8 @@ export default function Index() {
                           : "/login"
                       }
                     >
-                      {/* <Typography>Login</Typography> */}
-                      <ButtonBase sx={{ borderRadius: "50%" }}>
+                      <Typography>Login</Typography>
+                      {/* <ButtonBase sx={{ borderRadius: "50%" }}>
                         <AdminIcon
                           color={
                             theme === "light"
@@ -400,7 +401,7 @@ export default function Index() {
                               : darkColor.text.primary
                           }
                         />
-                      </ButtonBase>
+                      </ButtonBase> */}
                     </Link>
                   </Badge>
                 </Box>
@@ -438,13 +439,15 @@ export default function Index() {
             </Box>
           </Box>
         </PageSpacing>
-        <Box bgcolor={lightColor.navbarBG}>
+        <Box bgcolor={lightColor.text.primary} sx={{opacity:"0.1"}} height="1px"></Box>
+        <Box>
           <PageSpacing>
             <Box
+              height="8rem"
               display="flex"
               alignItems="center"
               justifyContent="center"
-              gap="5rem"
+              gap="12rem"
               padding="1rem 0"
             >
               {/* <LI
@@ -479,10 +482,7 @@ export default function Index() {
               </Link>
 
               <Link href="/men">
-                <LI
-                  theme={theme}
-                  highlite={pathname === "/men" ? true : false}
-                >
+                <LI theme={theme} highlite={pathname === "/men" ? true : false}>
                   Men
                 </LI>
               </Link>

@@ -40,7 +40,7 @@ const Index = () => {
           <Box
             position="fixed"
             display="inline-flex"
-            height="4.3rem"
+            // height="4.3rem"
             padding="0.9rem 30rem"
             justifyContent="center"
             alignItems="center"
@@ -58,7 +58,7 @@ const Index = () => {
               >
                 <Typography
                   color={lightColor.text.primary }
-                  fontSize={isMobile ? "0.8rem" : "1.6rem"}
+                  fontSize={isMobile ? "0.8rem" : "1rem"}
                   fontStyle="normal"
                   fontWeight={isMobile ? "400" : "500"}
                   lineHeight="normal"
@@ -66,7 +66,7 @@ const Index = () => {
                 >
                   {blackBannerApiRes[0].bannerText}
                 </Typography>
-                <Link href={blackBannerApiRes[0].bannerURL}>
+                {/* <Link href={blackBannerApiRes[0].bannerURL}>
                   <ButtonBase
                     sx={{
                       display: "flex",
@@ -99,11 +99,11 @@ const Index = () => {
                       Buy Now
                     </Typography>
                   </ButtonBase>
-                </Link>
+                </Link> */}
               </Box>
             </PageSpacing>
           </Box>
-          <Box width="100%" height="4.3rem"></Box>
+          <Box width="100%" height="3rem"></Box>
         </>
       )}
     </>

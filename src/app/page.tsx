@@ -1,14 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import {
-  Box,
-  Typography,
-  Tab,
-  Tabs,
-  Grid,
-  Skeleton,
-} from "@mui/material";
+import { Box, Typography, Tab, Tabs, Grid, Skeleton } from "@mui/material";
 import Image from "next/image";
 import Card from "@components/Card";
 import ForwardIcon from "../../icons/forwardIcon";
@@ -304,6 +297,87 @@ export default function Home() {
           // <Slider data={bannerApiRes}/>
         )}
 
+        {/* Categories */}
+        <Box
+          display="flex"
+          // paddingTop="8rem"
+          flexDirection="column"
+          alignItems="flex-start"
+          // gap="5.6rem"
+        >
+          <PageSpacing>
+            <Box>
+              <Typography
+                color={
+                  theme === "light"
+                    ? lightColor.text.primary
+                    : darkColor.text.primary
+                }
+                // textAlign="center"
+                fontSize={isMobile ? "2.2rem" : "2.8rem"}
+                fontStyle="normal"
+                fontWeight="700"
+                lineHeight="normal"
+                letterSpacing="0.05rem"
+                // marginLeft="2rem"
+              >
+                Categories
+              </Typography>
+            </Box>
+          </PageSpacing>
+
+          <Box
+            display="flex"
+            width="100%"
+            // justifyContent="space-between"
+            alignItems="flex-start"
+            overflow="scroll"
+            // gap={isMobile ? "2.4rem" : "1rem"}
+          >
+            {isCategoryLoading ? (
+              [...Array(11)].map((d, i) => {
+                return (
+                  <Box key={`categorySkeleton+${i}`}>
+                    <CategorySkeleton />
+                  </Box>
+                );
+              })
+            ) : caregoryApiRes.length === 0 ? (
+              <Box width="100%" textAlign="center">
+                <NoProduct isMobile={isMobile} />
+              </Box>
+            ) : (
+              caregoryApiRes.map((data, index) => {
+                return (
+                  <>
+                    <CategoryCard
+                      key={data._id}
+                      data={data}
+                      isHomePage={true}
+                      indexes={index}
+                      categoryArrayLength={caregoryApiRes.length - 1}
+                    />
+                    <CategoryCard
+                      key={data._id}
+                      data={data}
+                      isHomePage={true}
+                      indexes={index}
+                      categoryArrayLength={caregoryApiRes.length - 1}
+                    />
+                    <CategoryCard
+                      key={data._id}
+                      data={data}
+                      isHomePage={true}
+                      indexes={index}
+                      categoryArrayLength={caregoryApiRes.length - 1}
+                    />
+                  </>
+                );
+              })
+            )}
+          </Box>
+        </Box>
+
         <PageSpacing>
           <Box>
             {/* <Box display="flex" justifyContent="center">
@@ -352,111 +426,75 @@ export default function Home() {
             </Box> */}
 
             {/* <CustomTabPanel value={value} index={0}> */}
-              {/* {isMobile ? (
+            {/* {isMobile ? (
                 ""
               ) : ( */}
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
+            <Box
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Typography
+                color={
+                  theme === "light"
+                    ? lightColor.text.primary
+                    : darkColor.text.primary
+                }
+                textAlign="center"
+                fontSize={isMobile ? "2.2rem" : "2.8rem"}
+                fontStyle="normal"
+                fontWeight="700"
+                lineHeight="normal"
+                letterSpacing="0.05rem"
+                margin="1rem 0"
+                marginLeft={isMobile || isTablet ? "2rem" : 0}
               >
-                <Typography
-                  color={
-                    theme === "light"
-                      ? lightColor.text.primary
-                      : darkColor.text.primary
-                  }
-                  textAlign="center"
-                  fontSize={isMobile ? "2.2rem" : "2.8rem"}
-                  fontStyle="normal"
-                  fontWeight="700"
-                  lineHeight="normal"
-                  letterSpacing="0.05rem"
-                  margin="6rem 0"
-                  marginLeft={isMobile || isTablet ? "2rem" : 0}
-                >
-                  New Drops
-                </Typography>
-                {/* {isMobile ? (
+                New Drops
+              </Typography>
+              {/* {isMobile ? (
                     ""
                   ) : ( */}
-                <Link href="product-collection/sale">
-                  <Box
-                    display="flex"
-                    justifyContent="flex-end"
-                    alignItems="center"
-                    gap="0.4rem"
-                    flexShrink="0"
-                  >
-                    <Typography
-                      color={lightColor.text.link}
-                      textAlign="center"
-                      fontSize={isMobile ? "1.4rem" : "1.8rem"}
-                      fontStyle="normal"
-                      fontWeight="400"
-                      lineHeight="normal"
-                      letterSpacing="0.05rem"
-                      display="flex"
-                      alignItems="center"
-                      marginRight={isMobile ? "2rem" : ""}
-                    >
-                      View more
-                      {!isMobile && <ForwardIcon />}
-                    </Typography>
-                  </Box>
-                </Link>
-                {/* )} */}
-              </Box>
-              {/* )} */}
-              {isTablet ? (
-                // is tablet size is active
+              <Link href="product-collection/sale">
                 <Box
-                  sx={{
-                    overflowY: "hidden",
-                  }}
+                  display="flex"
+                  justifyContent="flex-end"
+                  alignItems="center"
+                  gap="0.4rem"
+                  flexShrink="0"
                 >
-                  <Box display="flex" gap="1rem">
-                    {isOnSaleLoading ? (
-                      [...Array(4)].map((data, index) => {
-                        return (
-                          <Grid
-                            key={`${index}+ProductCardOnSaleSkeletonOnTabView`}
-                            item
-                            xs={3}
-                          >
-                            <ProductCardSkeleton />
-                          </Grid>
-                        );
-                      })
-                    ) : onSaleApiRes.length === 0 ? (
-                      <Box width="100%" textAlign="center">
-                        <NoProduct isMobile={isMobile} />
-                      </Box>
-                    ) : (
-                      onSaleApiRes.slice(0, 4).map((data, index) => {
-                        return (
-                          <>
-                            <Box key={data._id}>
-                              <Card
-                                data={data}
-                                index={index}
-                                isHomePage={true}
-                              />
-                            </Box>
-                          </>
-                        );
-                      })
-                    )}
-                  </Box>
+                  <Typography
+                    color={lightColor.text.link}
+                    textAlign="center"
+                    fontSize={isMobile ? "1.4rem" : "1.8rem"}
+                    fontStyle="normal"
+                    fontWeight="400"
+                    lineHeight="normal"
+                    letterSpacing="0.05rem"
+                    display="flex"
+                    alignItems="center"
+                    marginRight={isMobile ? "2rem" : ""}
+                  >
+                    View more
+                    {!isMobile && <ForwardIcon />}
+                  </Typography>
                 </Box>
-              ) : (
-                // is desktop size is active
-                <Grid container spacing={2} height="52.1rem">
+              </Link>
+              {/* )} */}
+            </Box>
+            {/* )} */}
+            {isTablet ? (
+              // is tablet size is active
+              <Box
+                sx={{
+                  overflowY: "hidden",
+                }}
+              >
+                <Box display="flex" gap="1rem">
                   {isOnSaleLoading ? (
                     [...Array(4)].map((data, index) => {
                       return (
                         <Grid
-                          key={`${index}+ProductCardOnSaleSkeleton`}
+                          key={`${index}+ProductCardOnSaleSkeletonOnTabView`}
                           item
                           xs={3}
                         >
@@ -466,19 +504,53 @@ export default function Home() {
                     })
                   ) : onSaleApiRes.length === 0 ? (
                     <Box width="100%" textAlign="center">
-                      <NoProduct />
+                      <NoProduct isMobile={isMobile} />
                     </Box>
                   ) : (
-                    onSaleApiRes.slice(0, 4).map((data, index) => {
+                    onSaleApiRes.slice(0, 8).map((data, index) => {
                       return (
-                        <Grid key={data._id} item xs={3}>
-                          <Card data={data} isHomePage={true} />
-                        </Grid>
+                        <>
+                          <Box key={data._id}>
+                            <Card data={data} index={index} isHomePage={true} />
+                          </Box>
+                        </>
                       );
                     })
                   )}
-                </Grid>
-              )}
+                </Box>
+              </Box>
+            ) : (
+              // is desktop size is active
+              <Grid container spacing={2}>
+                {isOnSaleLoading ? (
+                  [...Array(4)].map((data, index) => {
+                    return (
+                      <Grid
+                        key={`${index}+ProductCardOnSaleSkeleton`}
+                        item
+                        xs={3}
+                      >
+                        <ProductCardSkeleton />
+                      </Grid>
+                    );
+                  })
+                ) : onSaleApiRes.length === 0 ? (
+                  <Box width="100%" textAlign="center">
+                    <NoProduct />
+                  </Box>
+                ) : (
+                  onSaleApiRes.slice(0, 8).map((data, index) => {
+                    return (
+                      <>
+                        <Grid key={data._id} item xs={3}>
+                          <Card data={data} isHomePage={true} />
+                        </Grid>
+                      </>
+                    );
+                  })
+                )}
+              </Grid>
+            )}
             {/* </CustomTabPanel> */}
 
             {/* <CustomTabPanel value={value} index={1}>
@@ -606,7 +678,19 @@ export default function Home() {
               )}
             </CustomTabPanel> */}
           </Box>
+        </PageSpacing>
 
+        <Box marginTop="4.4rem">
+          <Image
+            src="/assets/label.png"
+            alt="label"
+            layout="responsive"
+            width="1920"
+            height="50"
+          />
+        </Box>
+
+        <PageSpacing>
           <Box>
             <Box
               display="flex"
@@ -625,294 +709,10 @@ export default function Home() {
                 fontWeight="700"
                 lineHeight="normal"
                 letterSpacing="0.05rem"
-                margin="6rem 0"
+                margin="1rem 0"
                 marginLeft={isMobile || isTablet ? "2rem" : 0}
               >
-                Best Seller
-              </Typography>
-              <Link href="product-collection/best_seller">
-                <Box
-                  display="flex"
-                  justifyContent="flex-end"
-                  alignItems="center"
-                  gap="0.4rem"
-                  flexShrink="0"
-                >
-                  <Typography
-                    color={lightColor.text.link}
-                    textAlign="center"
-                    fontSize={isMobile ? "1.4rem" : "1.8rem"}
-                    fontStyle="normal"
-                    fontWeight="400"
-                    lineHeight="normal"
-                    letterSpacing="0.05rem"
-                    display="flex"
-                    alignItems="center"
-                    marginRight={isMobile ? "2rem" : ""}
-                  >
-                    View more
-                    {!isMobile && <ForwardIcon />}
-                  </Typography>
-                </Box>
-              </Link>
-            </Box>
-            {isTablet ? (
-              // is tablet size is active
-              <Box
-                sx={{
-                  overflowY: "hidden",
-                }}
-              >
-                <Box display="flex" gap="1rem">
-                  {isBestSellerLoading ? (
-                    [...Array(4)].map((data, index) => {
-                      return (
-                        <Grid
-                          key={`${index}+ProductCardBestSellerSkeletonOnTabView`}
-                          item
-                          xs={3}
-                        >
-                          <ProductCardSkeleton />
-                        </Grid>
-                      );
-                    })
-                  ) : bestSellerApiRes.length === 0 ? (
-                    <Box width="100%" textAlign="center">
-                      <NoProduct isMobile={isMobile} />
-                    </Box>
-                  ) : (
-                    bestSellerApiRes.slice(0, 4).map((data, index) => {
-                      return (
-                        <>
-                          <Box key={data._id}>
-                            <Card data={data} index={index} isHomePage={true} />
-                          </Box>
-                        </>
-                      );
-                    })
-                  )}
-                </Box>
-              </Box>
-            ) : (
-              // is desktop size is active
-
-              <Grid container spacing={2} height="52.1rem">
-                {isBestSellerLoading ? (
-                  [...Array(4)].map((data, index) => {
-                    return (
-                      <Grid
-                        key={`${index}+ProductCardBestSellerSkeleton`}
-                        item
-                        xs={3}
-                      >
-                        <ProductCardSkeleton />
-                      </Grid>
-                    );
-                  })
-                ) : bestSellerApiRes.length === 0 ? (
-                  <Box width="100%" textAlign="center">
-                    <NoProduct />
-                  </Box>
-                ) : (
-                  bestSellerApiRes.slice(0, 4).map((data, index) => {
-                    return (
-                      <Grid key={data._id} item xs={3}>
-                        <Card data={data} />
-                      </Grid>
-                    );
-                  })
-                )}
-              </Grid>
-            )}
-          </Box>
-
-          <Box
-            display="flex"
-            paddingTop="8rem"
-            flexDirection="column"
-            alignItems="flex-start"
-            gap="5.6rem"
-          >
-            <Box>
-              <Typography
-                color={
-                  theme === "light"
-                    ? lightColor.text.primary
-                    : darkColor.text.primary
-                }
-                textAlign="center"
-                fontSize={isMobile ? "2.2rem" : "2.8rem"}
-                fontStyle="normal"
-                fontWeight="700"
-                lineHeight="normal"
-                letterSpacing="0.05rem"
-                marginLeft="2rem"
-              >
-                Categories
-              </Typography>
-            </Box>
-
-            {/* <Box
-              display="flex"
-              width="100%"
-              justifyContent="space-between"
-              alignItems="flex-start"
-              overflow="scroll"
-              gap={isMobile ? "2.4rem" : "4rem"}>
-              {isCategoryLoading ? (
-                [...Array(11)].map((d, i) => {
-                  return (
-                    <Box key={`categorySkeleton+${i}`}>
-                      <CategorySkeleton />
-                    </Box>
-                  );
-                })
-              ) : caregoryApiRes.length === 0 ? (
-                <Box width="100%" textAlign="center">
-                  <NoProduct isMobile={isMobile} />
-                </Box>
-              ) : (
-                caregoryApiRes.map((data, index) => {
-                  return (
-                    <>
-                      <CategoryCard
-                        key={data._id}
-                        data={data}
-                        isHomePage={true}
-                        indexes={index}
-                        categoryArrayLength={caregoryApiRes.length - 1}
-                      />
-                    </>
-                  );
-                })
-              )}
-            </Box> */}
-          </Box>
-
-          {/* --------------------------------------------- */}
-          <div className="App">
-            <Slider {...settings}>
-              {isCategoryLoading ? (
-                [...Array(11)].map((d, i) => {
-                  return (
-                    <Box key={`categorySkeleton+${i}`}>
-                      <CategorySkeleton />
-                    </Box>
-                  );
-                })
-              ) : caregoryApiRes.length === 0 ? (
-                <Box width="100%" textAlign="center">
-                  <NoProduct isMobile={isMobile} />
-                </Box>
-              ) : (
-                caregoryApiRes.map((data, index) => {
-                  return (
-                    <>
-                      <div
-                        className={
-                          index === imageIndex ? "slide activeSlide" : "slide"
-                        }
-                      >
-                        <CategoryCard
-                          key={data._id}
-                          data={data}
-                          isHomePage={true}
-                          indexes={index}
-                          categoryArrayLength={caregoryApiRes.length - 1}
-                        />
-                      </div>
-                    </>
-                  );
-                })
-              )}
-
-              {/* {images.map((img, idx) => ( */}
-              {/* <div
-
-                >
-                  <img src={img} alt={img} />
-                </div> */}
-              {/* ))} */}
-            </Slider>
-          </div>
-
-          {/* +++++++++++++++++++++++++++++++++++ */}
-
-          {/* <div style={{ padding: `0 ${chevronWidth}px` }}>
-              <ItemsCarousel
-                requestToChangeActive={setActiveItemIndex}
-                activeItemIndex={activeItemIndex}
-                numberOfCards={6}
-                gutter={20}
-                leftChevron={<button>{"<"}</button>}
-                rightChevron={<button>{">"}</button>}
-                outsideChevron
-                chevronWidth={chevronWidth}
-              >
-                {isCategoryLoading ? (
-                  [...Array(11)].map((d, i) => {
-                    return (
-                      <Box key={`categorySkeleton+${i}`}>
-                        <CategorySkeleton />
-                      </Box>
-                    );
-                  })
-                ) : caregoryApiRes.length === 0 ? (
-                  <Box width="100%" textAlign="center">
-                    <NoProduct isMobile={isMobile} />
-                  </Box>
-                ) : (
-                  caregoryApiRes.map((data, index) => {
-                    return (
-                      <>
-                        <CategoryCard
-                          key={data._id}
-                          data={data}
-                          isHomePage={true}
-                          indexes={index}
-                          categoryArrayLength={caregoryApiRes.length - 1}
-                        />
-                      </>
-                    );
-                  })
-                )}
-                {/* <div style={{ height: 200, background: "#EEE" }}>
-                  First card
-                </div>
-                <div style={{ height: 200, background: "#EEE" }}>
-                  Second card
-                </div>
-                <div style={{ height: 200, background: "#EEE" }}>
-                  Third card
-                </div>
-                <div style={{ height: 200, background: "#EEE" }}>
-                  Fourth card
-                </div> */}
-          {/* </ItemsCarousel>
-            </div> */}
-
-          <Box>
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <Typography
-                color={
-                  theme === "light"
-                    ? lightColor.text.primary
-                    : darkColor.text.primary
-                }
-                textAlign="center"
-                fontSize={isMobile ? "2.2rem" : "2.8rem"}
-                fontStyle="normal"
-                fontWeight="700"
-                lineHeight="normal"
-                letterSpacing="0.05rem"
-                margin="6rem 0"
-                marginLeft={isMobile || isTablet ? "2rem" : 0}
-              >
-                New Arrivals
+                Trending
               </Typography>
               <Link href="product-collection/new_arrivals">
                 <Box
@@ -1011,6 +811,220 @@ export default function Home() {
             )}
           </Box>
         </PageSpacing>
+
+        <PageSpacing>
+          <Box marginTop="2.4rem">
+            <Box
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Typography
+                color={
+                  theme === "light"
+                    ? lightColor.text.primary
+                    : darkColor.text.primary
+                }
+                textAlign="center"
+                fontSize={isMobile ? "2.2rem" : "2.8rem"}
+                fontStyle="normal"
+                fontWeight="700"
+                lineHeight="normal"
+                letterSpacing="0.05rem"
+                margin="1rem 0"
+                marginLeft={isMobile || isTablet ? "2rem" : 0}
+              >
+                Best Seller
+              </Typography>
+              <Link href="product-collection/best_seller">
+                <Box
+                  display="flex"
+                  justifyContent="flex-end"
+                  alignItems="center"
+                  gap="0.4rem"
+                  flexShrink="0"
+                >
+                  <Typography
+                    color={lightColor.text.link}
+                    textAlign="center"
+                    fontSize={isMobile ? "1.4rem" : "1.8rem"}
+                    fontStyle="normal"
+                    fontWeight="400"
+                    lineHeight="normal"
+                    letterSpacing="0.05rem"
+                    display="flex"
+                    alignItems="center"
+                    marginRight={isMobile ? "2rem" : ""}
+                  >
+                    View more
+                    {!isMobile && <ForwardIcon />}
+                  </Typography>
+                </Box>
+              </Link>
+            </Box>
+            {isTablet ? (
+              // is tablet size is active
+              <Box
+                sx={{
+                  overflowY: "hidden",
+                }}
+              >
+                <Box display="flex" gap="1rem">
+                  {isBestSellerLoading ? (
+                    [...Array(4)].map((data, index) => {
+                      return (
+                        <Grid
+                          key={`${index}+ProductCardBestSellerSkeletonOnTabView`}
+                          item
+                          xs={3}
+                        >
+                          <ProductCardSkeleton />
+                        </Grid>
+                      );
+                    })
+                  ) : bestSellerApiRes.length === 0 ? (
+                    <Box width="100%" textAlign="center">
+                      <NoProduct isMobile={isMobile} />
+                    </Box>
+                  ) : (
+                    bestSellerApiRes.slice(0, 8).map((data, index) => {
+                      return (
+                        <>
+                          <Box key={data._id}>
+                            <Card data={data} index={index} isHomePage={true} />
+                          </Box>
+                        </>
+                      );
+                    })
+                  )}
+                </Box>
+              </Box>
+            ) : (
+              // is desktop size is active
+
+              <Grid container spacing={2} height="52.1rem">
+                {isBestSellerLoading ? (
+                  [...Array(4)].map((data, index) => {
+                    return (
+                      <Grid
+                        key={`${index}+ProductCardBestSellerSkeleton`}
+                        item
+                        xs={3}
+                      >
+                        <ProductCardSkeleton />
+                      </Grid>
+                    );
+                  })
+                ) : bestSellerApiRes.length === 0 ? (
+                  <Box width="100%" textAlign="center">
+                    <NoProduct />
+                  </Box>
+                ) : (
+                  bestSellerApiRes.slice(0, 8).map((data, index) => {
+                    return (
+                      <Grid key={data._id} item xs={3}>
+                        <Card data={data} />
+                      </Grid>
+                    );
+                  })
+                )}
+              </Grid>
+            )}
+          </Box>
+        </PageSpacing>
+        {/* --------------------------------------------- */}
+        {/* <div className="App">
+            <Slider {...settings}>
+              {isCategoryLoading ? (
+                [...Array(11)].map((d, i) => {
+                  return (
+                    <Box key={`categorySkeleton+${i}`}>
+                      <CategorySkeleton />
+                    </Box>
+                  );
+                })
+              ) : caregoryApiRes.length === 0 ? (
+                <Box width="100%" textAlign="center">
+                  <NoProduct isMobile={isMobile} />
+                </Box>
+              ) : (
+                caregoryApiRes.map((data, index) => {
+                  return (
+                    <>
+                      <div
+                        className={
+                          index === imageIndex ? "slide activeSlide" : "slide"
+                        }
+                      >
+                        <CategoryCard
+                          key={data._id}
+                          data={data}
+                          isHomePage={true}
+                          indexes={index}
+                          categoryArrayLength={caregoryApiRes.length - 1}
+                        />
+                      </div>
+                    </>
+                  );
+                })
+              )}
+            </Slider>
+          </div> */}
+
+        {/* +++++++++++++++++++++++++++++++++++ */}
+
+        {/* <div style={{ padding: `0 ${chevronWidth}px` }}>
+              <ItemsCarousel
+                requestToChangeActive={setActiveItemIndex}
+                activeItemIndex={activeItemIndex}
+                numberOfCards={6}
+                gutter={20}
+                leftChevron={<button>{"<"}</button>}
+                rightChevron={<button>{">"}</button>}
+                outsideChevron
+                chevronWidth={chevronWidth}
+              >
+                {isCategoryLoading ? (
+                  [...Array(11)].map((d, i) => {
+                    return (
+                      <Box key={`categorySkeleton+${i}`}>
+                        <CategorySkeleton />
+                      </Box>
+                    );
+                  })
+                ) : caregoryApiRes.length === 0 ? (
+                  <Box width="100%" textAlign="center">
+                    <NoProduct isMobile={isMobile} />
+                  </Box>
+                ) : (
+                  caregoryApiRes.map((data, index) => {
+                    return (
+                      <>
+                        <CategoryCard
+                          key={data._id}
+                          data={data}
+                          isHomePage={true}
+                          indexes={index}
+                          categoryArrayLength={caregoryApiRes.length - 1}
+                        />
+                      </>
+                    );
+                  })
+                )}
+                {/* <div style={{ height: 200, background: "#EEE" }}>
+                  First card
+                </div>
+                <div style={{ height: 200, background: "#EEE" }}>
+                  Second card
+                </div>
+                <div style={{ height: 200, background: "#EEE" }}>
+                  Third card
+                </div>
+                <div style={{ height: 200, background: "#EEE" }}>
+                  Fourth card
+                </div> */}
+        {/* </ItemsCarousel>
+            </div> */}
 
         {/* <Box width={10} height={"auto"}>
           <YTPlayer videoId="bmD-tZe8HBA" />
