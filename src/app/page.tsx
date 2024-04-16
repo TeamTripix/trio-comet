@@ -357,20 +357,6 @@ export default function Home() {
                       indexes={index}
                       categoryArrayLength={caregoryApiRes.length - 1}
                     />
-                    <CategoryCard
-                      key={data._id}
-                      data={data}
-                      isHomePage={true}
-                      indexes={index}
-                      categoryArrayLength={caregoryApiRes.length - 1}
-                    />
-                    <CategoryCard
-                      key={data._id}
-                      data={data}
-                      isHomePage={true}
-                      indexes={index}
-                      categoryArrayLength={caregoryApiRes.length - 1}
-                    />
                   </>
                 );
               })
