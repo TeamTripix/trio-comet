@@ -13,6 +13,7 @@ const product = new mongoose.Schema({
   productColor: { type: Array, require: true },
   descImage: { type: Object, require: true },
   specificationItems: { type: Object, require: true },
+  SKU: { type: String, require: true },
 });
 
 export const productSchema =

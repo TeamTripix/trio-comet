@@ -320,7 +320,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
   const [pidState, setPidState] = useState(pid);
   const [comboApiRes, setComboApiRes] = useState<any[]>([]);
   const [isComboLoading, setIsComboLoading] = useState(true);
-  const [productAPIRes, setProductAPIRes] = useState<any[]>([]);
+  const [productAPIRes, setProductAPIRes] = useState<any>([]);
   const [couponAPIRes, setCouponAPIRes] = useState<any[]>([]);
   const [isCouponApply, setIsCouponApply] = useState({
     offerValue: 0,
@@ -380,14 +380,29 @@ const Product = ({ params }: { params: { slug: string } }) => {
     }
   }, [reviewImage]);
 
+  // get daily-deals data
+  // useEffect(() => {
+  //   axios({
+  //     method: "GET",
+  //     url: `/api/${
+  //       offerTag === "daily_deals" ? "daily-deals-product" : "product"
+  //     }/?pid=${pidState}`,
+  //   })
+  //     .then((res) => {
+  //       setProductAPIRes(res.data.data);
+  //       setRelatedProductAppear(false);
+  //     })
+  //     .catch(() => {});
+  // }, [params.slug]);
+
+  // get product data
   useEffect(() => {
     axios({
       method: "GET",
-      url: `/api/${
-        offerTag === "daily_deals" ? "daily-deals-product" : "product"
-      }/?pid=${pidState}`,
+      url: `/api/product?slug=${params.slug}`,
     })
       .then((res) => {
+        console.log(res.data.data);
         setProductAPIRes(res.data.data);
         setRelatedProductAppear(false);
       })
@@ -397,7 +412,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
   useEffect(() => {
     axios({
       method: "GET",
-      url: `/api/product/?category=${categoryId}`,
+      url: `/api/product/?category=${productAPIRes.category}`,
     })
       .then((res) => {
         if (res.status === 200) {
@@ -409,30 +424,30 @@ const Product = ({ params }: { params: { slug: string } }) => {
         console.log(err);
         setIsByCategoryProductLoading(false);
       });
-  }, [params.slug]);
+  }, [productAPIRes]);
 
   useEffect(() => {
     axios({
       method: "GET",
-      url: `/api/coupon/?pid=${pidState}`,
+      url: `/api/coupon/?pid=${productAPIRes._id}`,
     })
       .then((res) => {
         setCouponAPIRes(res.data.data);
       })
       .catch(() => {});
-  }, [params.slug]);
+  }, [productAPIRes]);
 
   useEffect(() => {
     // fetching review data
     axios({
       method: "GET",
-      url: `/api/review?id=${pidState}`,
+      url: `/api/review?id=${productAPIRes._id}`,
     })
       .then((res) => {
         setReviewApiRes(res.data.data[0].reviews.reverse());
       })
       .catch(() => {});
-  }, [params.slug, isReviewDialogOpen]);
+  }, [productAPIRes]);
 
   useEffect(() => {
     const ratingArray: any = reviewApiRes.map((data: any) => {
@@ -548,7 +563,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
     const isProductInCart = cartData.filter(
       (cartDataInFilter: any) =>
         cartDataInFilter.product._id ===
-          `coupon${dispatchData._id}colorId${dispatchData.productColor[colorParamID].id}` &&
+          `coupon${dispatchData._id}colorId${dispatchData.productColor[0].id}` &&
         cartDataInFilter.isCouponApply === true
     );
     if (isCouponApply.state) {
@@ -568,9 +583,9 @@ const Product = ({ params }: { params: { slug: string } }) => {
         (isCouponApply.offerValue / 100) * dispatchData.discountPrice,
       name: dispatchData.name,
       productColor: "black",
-      _id: `${dispatchData._id}colorId${dispatchData.productColor[colorParamID].id}`,
-      image: dispatchData.productColor[colorParamID].imageURL[0],
-      colorId: dispatchData.productColor[colorParamID].id,
+      _id: `${dispatchData._id}colorId${dispatchData.productColor[0].id}`,
+      image: dispatchData.productColor[0].imageURL[0],
+      colorId: dispatchData.productColor[0].id,
     };
     if (isCouponApply.state === true) {
       dispatch({
@@ -584,8 +599,8 @@ const Product = ({ params }: { params: { slug: string } }) => {
             name: dispatchData.name,
             productColor: "black",
             _id: "coupon" + dispatchData._id,
-            image: dispatchData.productColor[colorParamID].imageURL[0],
-            colorId: dispatchData.productColor[colorParamID].id,
+            image: dispatchData.productColor[0].imageURL[0],
+            colorId: dispatchData.productColor[0].id,
           },
           quantity: 1,
           isCouponApply: isCouponApply.state,
@@ -636,620 +651,622 @@ const Product = ({ params }: { params: { slug: string } }) => {
   return (
     <>
       <PageSpacing>
-        <Box paddingLeft="2rem" margin="5rem 0">
+        <Box paddingLeft="2rem" margin="1rem 10rem">
           <BreadCrumb />
         </Box>
 
-        <Box
-          display="flex"
-          width="100%"
-          justifyContent="space-between"
-          alignItems="start"
-          height="auto"
-          marginBottom={isMobile ? "0rem" : "5.7rem"}
-          padding="0 2rem"
-          flexDirection={isMobile ? "column" : "row"}
-        >
-          <Box ref={ref} width={isMobile ? "100%" : "50%"}>
-            {productAPIRes.length === 0 ? (
-              <Skeleton
-                variant="rectangular"
-                sx={{
-                  width: "100%",
-                  height: "57rem",
-                  borderRadius: "0.8rem",
-                }}
-              ></Skeleton>
-            ) : (
-              <AwesomeSlider
-                className="slider"
-                bullets={true}
-                style={{
-                  height: productWidth - 100,
-                  width: productWidth,
-                }}
-              >
-                {productAPIRes[0].productColor[colorParamID].imageURL.map(
-                  (data: any, index: number) => {
-                    return (
-                      <Box
-                        ref={ref}
-                        borderRadius="0.8rem"
-                        width="57rem"
-                        height="57rem"
-                        key={`${index}+productImagesSlider`}
-                      >
-                        <FullSizeProductImage image={data} />
-                      </Box>
-                    );
-                  }
-                )}
-              </AwesomeSlider>
-            )}
-
-            <Box
-              display="flex"
-              alignItems="center"
-              gap="1rem"
-              margin="1.2rem 0"
-            >
+        <Box margin="0 10rem">
+          <Box
+            display="flex"
+            width="100%"
+            justifyContent="space-between"
+            alignItems="start"
+            height="auto"
+            marginBottom={isMobile ? "0rem" : "5.7rem"}
+            padding="0 2rem"
+            flexDirection={isMobile ? "column" : "row"}
+          >
+            <Box ref={ref} width={isMobile ? "100%" : "50%"}>
               {productAPIRes.length === 0 ? (
                 <Skeleton
                   variant="rectangular"
                   sx={{
-                    width: "10.1rem",
-                    height: "8.7rem",
+                    width: "100%",
+                    height: "57rem",
                     borderRadius: "0.8rem",
                   }}
                 ></Skeleton>
               ) : (
-                productAPIRes[0].productColor[colorParamID].imageURL.map(
-                  (elem: any, index: number) => {
-                    return (
-                      <Box
-                        width="10.1rem"
-                        height="8.7rem"
-                        borderRadius="0.8rem"
-                        key={`productImage${index}`}
-                      >
-                        <Image
-                          alt="product image"
-                          width="100"
-                          height="90"
-                          src={elem}
-                          style={{ borderRadius: "0.8rem" }}
-                          layout="responsive"
-                        />
-                      </Box>
-                    );
-                  }
-                )
-              )}
-            </Box>
-          </Box>
-          <Box
-            display="flex"
-            flexDirection="column"
-            alignItems="flex-start"
-            gap={isMobile ? "1rem" : "2.4rem"}
-            width={isMobile ? "100%" : "50%"}
-            marginLeft={isMobile ? 0 : "6rem"}
-          >
-            <Box
-              display="flex"
-              flexDirection="column"
-              alignItems="flex-start"
-              gap="0.8rem"
-              width="100%"
-            >
-              {productAPIRes.length === 0 ? (
-                <Skeleton
-                  variant="rectangular"
-                  sx={{
-                    width: "20rem",
-                    height: "3rem",
-                    borderRadius: "0.4rem",
-                  }}
-                ></Skeleton>
-              ) : (
-                <Typography
-                  color={
-                    theme === "light"
-                      ? lightColor.text.primary
-                      : darkColor.text.primary
-                  }
-                  // textAlign="center"
-                  fontSize={isMobile ? "2.2rem" : "2.8rem"}
-                  fontStyle="normal"
-                  fontWeight="700"
-                  lineHeight="normal"
-                  letterSpacing="0.02rem"
-                >
-                  {productAPIRes[0].name}
-                </Typography>
-              )}
-
-              {productAPIRes.length === 0 ? (
-                <Skeleton
-                  variant="rectangular"
-                  sx={{
-                    width: "inherit",
-                    height: "6rem",
-                    borderRadius: "0.4rem",
-                  }}
-                ></Skeleton>
-              ) : (
-                <Typography
-                  color={
-                    theme === "light"
-                      ? lightColor.text.secondary
-                      : darkColor.text.secondary
-                  }
-                  fontSize={isMobile ? "1rem" : "1.6rem"}
-                  fontStyle="normal"
-                  fontWeight="400"
-                  lineHeight="normal"
-                  letterSpacing="0.02rem"
-                >
-                  {productAPIRes[0].description}
-                </Typography>
+                <>
+                  <AwesomeSlider
+                    className="slider"
+                    bullets={true}
+                    style={{
+                      height: productWidth - 100,
+                      width: productWidth,
+                    }}
+                  >
+                    {productAPIRes.productColor[0].imageURL.map(
+                      (data: any, index: number) => {
+                        return (
+                          <Box
+                            ref={ref}
+                            borderRadius="0.8rem"
+                            width="57rem"
+                            height="57rem"
+                            key={`${index}+productImagesSlider`}
+                          >
+                            <FullSizeProductImage image={data} />
+                          </Box>
+                        );
+                      }
+                    )}
+                  </AwesomeSlider>
+                </>
               )}
 
               <Box
                 display="flex"
-                justifyContent="center"
                 alignItems="center"
-                gap="0.4rem"
+                gap="1rem"
+                margin="1.2rem 0"
               >
-                <Typography
-                  color={
-                    theme === "light"
-                      ? lightColor.text.fade
-                      : darkColor.text.fade
-                  }
-                  textAlign="center"
-                  fontSize={isMobile ? "1rem" : "1.5rem"}
-                  fontStyle="normal"
-                  fontWeight="500"
-                  lineHeight="normal"
-                  letterSpacing="0.05rem"
-                >
-                  {"4"}
-                </Typography>
-                <Box width="8rem" display="flex" alignItems="center">
-                  <Rating
-                    name="simple-controlled"
-                    size="small"
-                    readOnly
-                    value={2}
-                    sx={{ fontSize: "1.5rem" }}
-                  />
-                </Box>
+                {productAPIRes.length === 0 ? (
+                  <Skeleton
+                    variant="rectangular"
+                    sx={{
+                      width: "10.1rem",
+                      height: "8.7rem",
+                      borderRadius: "0.8rem",
+                    }}
+                  ></Skeleton>
+                ) : (
+                  productAPIRes.productColor[0].imageURL.map(
+                    (elem: any, index: number) => {
+                      return (
+                        <Box
+                          width="10.1rem"
+                          height="8.7rem"
+                          borderRadius="0.8rem"
+                          key={`productImage${index}`}
+                        >
+                          <Image
+                            alt="product image"
+                            width="100"
+                            height="90"
+                            src={elem}
+                            style={{ borderRadius: "0.8rem" }}
+                            layout="responsive"
+                          />
+                        </Box>
+                      );
+                    }
+                  )
+                )}
               </Box>
             </Box>
-
             <Box
               display="flex"
               flexDirection="column"
               alignItems="flex-start"
-              width="100%"
-            >
-              <Box display="flex">
-                {productAPIRes.length === 0 ? (
-                  <Skeleton
-                    variant="rectangular"
-                    sx={{
-                      marginRight: "2rem",
-                      width: "10rem",
-                      height: "4rem",
-                      borderRadius: "0.8rem",
-                    }}
-                  ></Skeleton>
-                ) : (
-                  <span
-                    style={{
-                      color:
-                        theme === "light"
-                          ? lightColor.text.offer
-                          : darkColor.text.offer,
-                      textAlign: "center",
-                      fontSize: isMobile ? "1rem" : "1.4rem",
-                      fontStyle: "normal",
-                      fontWeight: "700",
-                      lineHeight: "normal",
-                      letterSpacing: "0.02rem",
-                      marginRight: "1rem",
-                    }}
-                  >
-                    {`${Math.round(
-                      ((productAPIRes[0].price -
-                        productAPIRes[0].discountPrice) /
-                        productAPIRes[0].price) *
-                        100
-                    )}% Off`}
-                  </span>
-                )}
-
-                {productAPIRes.length === 0 ? (
-                  <Skeleton
-                    variant="rectangular"
-                    sx={{
-                      width: "10rem",
-                      height: "4rem",
-                      borderRadius: "0.8rem",
-                    }}
-                  ></Skeleton>
-                ) : (
-                  <Typography
-                    variant="body2"
-                    color={
-                      theme === "light"
-                        ? lightColor.text.primary
-                        : darkColor.text.primary
-                    }
-                    textAlign="center"
-                    fontSize={isMobile ? "1.6rem" : "2.8rem"}
-                    fontStyle="normal"
-                    fontWeight="700"
-                    lineHeight="normal"
-                    letterSpacing="0.02rem"
-                  >
-                    ₹
-                    {productAPIRes[0].discountPrice -
-                      (isCouponApply.offerValue / 100) *
-                        productAPIRes[0].discountPrice}
-                  </Typography>
-                )}
-              </Box>
-
-              {productAPIRes.length === 0 ? (
-                <Skeleton
-                  variant="rectangular"
-                  sx={{
-                    width: "5rem",
-                    height: "2rem",
-                    borderRadius: "0.8rem",
-                  }}
-                ></Skeleton>
-              ) : (
-                <Typography
-                  color={
-                    theme === "light"
-                      ? lightColor.text.secondary
-                      : darkColor.text.secondary
-                  }
-                  textAlign="center"
-                  fontSize={isMobile ? "1.4rem" : "1.6rem"}
-                  fontStyle="normal"
-                  fontWeight="400"
-                  lineHeight="normal"
-                  letterSpacing="0.02rem"
-                  sx={{ textDecorationLine: "line-through" }}
-                >
-                  ₹{productAPIRes[0].price}
-                </Typography>
-              )}
-            </Box>
-
-            {/* staring point */}
-            <Box
-              gap="2.4rem"
-              display="flex"
-              flexDirection="column"
-              width={isTablet ? "100%" : "45rem"}
+              gap={isMobile ? "1rem" : "2.4rem"}
+              width={isMobile ? "100%" : "50%"}
+              marginLeft={isMobile ? 0 : "6rem"}
             >
               <Box
                 display="flex"
                 flexDirection="column"
                 alignItems="flex-start"
-                gap="1.6rem"
+                gap="0.8rem"
+                width="100%"
               >
-                <Box display="flex" alignItems="center" gap="0.8rem">
+                {productAPIRes.length === 0 ? (
+                  <Skeleton
+                    variant="rectangular"
+                    sx={{
+                      width: "20rem",
+                      height: "3rem",
+                      borderRadius: "0.4rem",
+                    }}
+                  ></Skeleton>
+                ) : (
                   <Typography
                     color={
                       theme === "light"
                         ? lightColor.text.primary
                         : darkColor.text.primary
                     }
-                    textAlign="center"
-                    fontSize={isMobile ? "1.6rem" : "2rem"}
+                    // textAlign="center"
+                    fontSize={isMobile ? "2.2rem" : "2.8rem"}
                     fontStyle="normal"
                     fontWeight="700"
                     lineHeight="normal"
                     letterSpacing="0.02rem"
                   >
-                    Pick your color
+                    {productAPIRes.name}
                   </Typography>
+                )}
+
+                {productAPIRes.length === 0 ? (
+                  <Skeleton
+                    variant="rectangular"
+                    sx={{
+                      width: "inherit",
+                      height: "6rem",
+                      borderRadius: "0.4rem",
+                    }}
+                  ></Skeleton>
+                ) : (
+                  <Typography
+                    color={
+                      theme === "light"
+                        ? lightColor.text.secondary
+                        : darkColor.text.secondary
+                    }
+                    fontSize={isMobile ? "1rem" : "1.6rem"}
+                    fontStyle="normal"
+                    fontWeight="400"
+                    lineHeight="normal"
+                    letterSpacing="0.02rem"
+                  >
+                    {productAPIRes.description}
+                  </Typography>
+                )}
+
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  gap="0.4rem"
+                >
+                  <Typography
+                    color={
+                      theme === "light"
+                        ? lightColor.text.fade
+                        : darkColor.text.fade
+                    }
+                    textAlign="center"
+                    fontSize={isMobile ? "1rem" : "1.5rem"}
+                    fontStyle="normal"
+                    fontWeight="500"
+                    lineHeight="normal"
+                    letterSpacing="0.05rem"
+                  >
+                    {"4"}
+                  </Typography>
+                  <Box width="8rem" display="flex" alignItems="center">
+                    <Rating
+                      name="simple-controlled"
+                      size="small"
+                      readOnly
+                      value={2}
+                      sx={{ fontSize: "1.5rem" }}
+                    />
+                  </Box>
                 </Box>
-                <Box display="flex" alignItems="flex-start" gap="1rem">
-                  {productAPIRes.length === 0
-                    ? [...Array(4)].map((data, index) => {
-                        return (
-                          <Skeleton
-                            key={`${index}+colorskeleton`}
-                            variant="circular"
-                            sx={{
-                              width: "4rem",
-                              height: "4rem",
-                              borderRadius: "50%",
-                              margin: "0 0.1rem ",
-                            }}
-                          ></Skeleton>
-                        );
-                      })
-                    : productAPIRes[0].productColor.map(
-                        (data: any, index: number) => {
+              </Box>
+
+              <Box
+                display="flex"
+                flexDirection="column"
+                alignItems="flex-start"
+                width="100%"
+              >
+                <Box display="flex">
+                  {productAPIRes.length === 0 ? (
+                    <Skeleton
+                      variant="rectangular"
+                      sx={{
+                        marginRight: "2rem",
+                        width: "10rem",
+                        height: "4rem",
+                        borderRadius: "0.8rem",
+                      }}
+                    ></Skeleton>
+                  ) : (
+                    <span
+                      style={{
+                        color:
+                          theme === "light"
+                            ? lightColor.text.offer
+                            : darkColor.text.offer,
+                        textAlign: "center",
+                        fontSize: isMobile ? "1rem" : "1.4rem",
+                        fontStyle: "normal",
+                        fontWeight: "700",
+                        lineHeight: "normal",
+                        letterSpacing: "0.02rem",
+                        marginRight: "1rem",
+                      }}
+                    >
+                      {`${Math.round(
+                        ((productAPIRes.price - productAPIRes.discountPrice) /
+                          productAPIRes.price) *
+                          100
+                      )}% Off`}
+                    </span>
+                  )}
+
+                  {productAPIRes.length === 0 ? (
+                    <Skeleton
+                      variant="rectangular"
+                      sx={{
+                        width: "10rem",
+                        height: "4rem",
+                        borderRadius: "0.8rem",
+                      }}
+                    ></Skeleton>
+                  ) : (
+                    <Typography
+                      variant="body2"
+                      color={
+                        theme === "light"
+                          ? lightColor.text.primary
+                          : darkColor.text.primary
+                      }
+                      textAlign="center"
+                      fontSize={isMobile ? "1.6rem" : "2.8rem"}
+                      fontStyle="normal"
+                      fontWeight="700"
+                      lineHeight="normal"
+                      letterSpacing="0.02rem"
+                    >
+                      ₹
+                      {productAPIRes.discountPrice -
+                        (isCouponApply.offerValue / 100) *
+                          productAPIRes.discountPrice}
+                    </Typography>
+                  )}
+                </Box>
+
+                {productAPIRes.length === 0 ? (
+                  <Skeleton
+                    variant="rectangular"
+                    sx={{
+                      width: "5rem",
+                      height: "2rem",
+                      borderRadius: "0.8rem",
+                    }}
+                  ></Skeleton>
+                ) : (
+                  <Typography
+                    color={
+                      theme === "light"
+                        ? lightColor.text.secondary
+                        : darkColor.text.secondary
+                    }
+                    textAlign="center"
+                    fontSize={isMobile ? "1.4rem" : "1.6rem"}
+                    fontStyle="normal"
+                    fontWeight="400"
+                    lineHeight="normal"
+                    letterSpacing="0.02rem"
+                    sx={{ textDecorationLine: "line-through" }}
+                  >
+                    ₹{productAPIRes.price}
+                  </Typography>
+                )}
+              </Box>
+
+              <Box
+                gap="2.4rem"
+                display="flex"
+                flexDirection="column"
+                width={isTablet ? "100%" : "45rem"}
+              >
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  alignItems="flex-start"
+                  gap="1.6rem"
+                >
+                  <Box display="flex" alignItems="center" gap="0.8rem">
+                    <Typography
+                      color={
+                        theme === "light"
+                          ? lightColor.text.primary
+                          : darkColor.text.primary
+                      }
+                      textAlign="center"
+                      fontSize={isMobile ? "1.6rem" : "2rem"}
+                      fontStyle="normal"
+                      fontWeight="700"
+                      lineHeight="normal"
+                      letterSpacing="0.02rem"
+                    >
+                      Pick your color
+                    </Typography>
+                  </Box>
+                  <Box display="flex" alignItems="flex-start" gap="1rem">
+                    {productAPIRes.length === 0
+                      ? [...Array(4)].map((data, index) => {
                           return (
-                            <ButtonBase
-                              onClick={() => handleChangeColor(index)}
-                              key={data}
+                            <Skeleton
+                              key={`${index}+colorskeleton`}
+                              variant="circular"
                               sx={{
                                 width: "4rem",
                                 height: "4rem",
                                 borderRadius: "50%",
-                                border:
-                                  parseInt(colorParamID) === index
-                                    ? `3px solid ${lightColor.theme.primary}`
-                                    : `2px solid ${
-                                        theme === "light"
-                                          ? lightColor.text.secondary
-                                          : darkColor.text.secondary
-                                      }`,
-                                bgcolor: data.color,
+                                margin: "0 0.1rem ",
                               }}
-                            ></ButtonBase>
+                            ></Skeleton>
                           );
-                        }
-                      )}
+                        })
+                      : productAPIRes.productColor.map(
+                          (data: any, index: number) => {
+                            return (
+                              <ButtonBase
+                                onClick={() => handleChangeColor(index)}
+                                key={data}
+                                sx={{
+                                  width: "4rem",
+                                  height: "4rem",
+                                  borderRadius: "50%",
+                                  border:
+                                    parseInt(colorParamID) === index
+                                      ? `3px solid ${lightColor.theme.primary}`
+                                      : `2px solid ${
+                                          theme === "light"
+                                            ? lightColor.text.secondary
+                                            : darkColor.text.secondary
+                                        }`,
+                                  bgcolor: data.color,
+                                }}
+                              ></ButtonBase>
+                            );
+                          }
+                        )}
+                  </Box>
                 </Box>
-              </Box>
 
-              <Box>
-                <Box
-                  display="flex"
-                  width="100%"
-                  height="4.5rem"
-                  padding="1.2rem 2rem"
-                  alignItems="center"
-                  gap="1rem"
-                  flexShrink="0"
-                  borderRadius="0.4rem"
-                  border="1px solid var(--light-price-text, #B4B4B9)"
-                  justifyContent="space-between"
-                  paddingRight="0"
-                  borderRight="none"
-                >
-                  <input
-                    onChange={(e) => setCouponInputValue(e.target.value)}
-                    style={{
-                      color:
-                        theme === "light"
-                          ? lightColor.text.primary
-                          : darkColor.text.primary,
-                      fontSize: "1.4rem",
-                      fontStyle: "normal",
-                      fontWeight: 400,
-                      lineHeight: "2.4rem",
-                      letterSpacing: "0.05rem",
-                      border: "none",
-                      backgroundColor: "transparent",
-                      outline: "none",
-                    }}
-                    placeholder="Enter Coupon"
-                  />
-                  <ButtonBase
-                    onClick={handleApplyCoupon}
-                    sx={{
-                      display: "flex",
-                      width: "11.3rem",
-                      height: "4.5rem",
-                      padding: "1.2rem 2rem",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      gap: "1rem",
-                      flexShrink: "0",
-                      borderRadius: "0rem 0.4rem 0.4rem 0rem",
-                      bgcolor:
-                        theme === "light"
-                          ? lightColor.text.chevron
-                          : darkColor.text.chevron,
-                    }}
-                  >
-                    <Typography
-                      color="#fff"
-                      fontSize="1.4rem"
-                      fontStyle="normal"
-                      fontWeight="700"
-                      lineHeight="2.4rem"
-                      letterSpacing="0.05rem"
-                    >
-                      Apply
-                    </Typography>
-                  </ButtonBase>
-                </Box>
-              </Box>
-
-              {couponAPIRes.length !== 0 ? (
-                <>
+                <Box>
                   <Box
                     display="flex"
-                    flexDirection="column"
-                    alignItems="flex-start"
-                    gap="0.8rem"
+                    width="100%"
+                    height="4.5rem"
+                    padding="1.2rem 2rem"
+                    alignItems="center"
+                    gap="1rem"
+                    flexShrink="0"
+                    borderRadius="0.4rem"
+                    border="1px solid var(--light-price-text, #B4B4B9)"
+                    justifyContent="space-between"
+                    paddingRight="0"
+                    borderRight="none"
                   >
-                    <Typography
-                      color={
-                        theme === "light"
-                          ? lightColor.text.primary
-                          : darkColor.text.primary
-                      }
-                      textAlign="center"
-                      fontSize={isMobile ? "1.6rem" : "2rem"}
-                      fontStyle="normal"
-                      fontWeight="500"
-                      lineHeight="normal"
-                      letterSpacing="0.02rem"
+                    <input
+                      onChange={(e) => setCouponInputValue(e.target.value)}
+                      style={{
+                        color:
+                          theme === "light"
+                            ? lightColor.text.primary
+                            : darkColor.text.primary,
+                        fontSize: "1.4rem",
+                        fontStyle: "normal",
+                        fontWeight: 400,
+                        lineHeight: "2.4rem",
+                        letterSpacing: "0.05rem",
+                        border: "none",
+                        backgroundColor: "transparent",
+                        outline: "none",
+                      }}
+                      placeholder="Enter Coupon"
+                    />
+                    <ButtonBase
+                      onClick={handleApplyCoupon}
+                      sx={{
+                        display: "flex",
+                        width: "11.3rem",
+                        height: "4.5rem",
+                        padding: "1.2rem 2rem",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        gap: "1rem",
+                        flexShrink: "0",
+                        borderRadius: "0rem 0.4rem 0.4rem 0rem",
+                        bgcolor:
+                          theme === "light"
+                            ? lightColor.text.chevron
+                            : darkColor.text.chevron,
+                      }}
                     >
-                      Offers
-                    </Typography>
+                      <Typography
+                        color="#fff"
+                        fontSize="1.4rem"
+                        fontStyle="normal"
+                        fontWeight="700"
+                        lineHeight="2.4rem"
+                        letterSpacing="0.05rem"
+                      >
+                        Apply
+                      </Typography>
+                    </ButtonBase>
+                  </Box>
+                </Box>
+
+                {couponAPIRes.length !== 0 ? (
+                  <>
                     <Box
                       display="flex"
-                      gap={isMobile ? "1rem" : "1.7rem"}
-                      width="100%"
+                      flexDirection="column"
+                      alignItems="flex-start"
+                      gap="0.8rem"
                     >
-                      <Box
-                        sx={{
-                          display: "flex",
-                          width: "100%",
-                          height: "4.2rem",
-                          flexDirection: "column",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          gap: "1rem",
-                          bgcolor: "#EFF2F6",
-                          borderRadius: "0.8rem",
-                        }}
-                      >
-                        <Typography
-                          color={
-                            theme === "light"
-                              ? lightColor.text.primary
-                              : darkColor.text.primary
-                          }
-                          textAlign="center"
-                          fontSize={isMobile ? "1.6rem" : "1.8rem"}
-                          fontStyle="normal"
-                          fontWeight="700"
-                          lineHeight="normal"
-                          letterSpacing="0.02rem"
-                        >
-                          {couponAPIRes[0].name}
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </Box>
-                  <Box>
-                    {productAPIRes.length === 0 ? (
-                      <Skeleton
-                        variant="rectangular"
-                        sx={{
-                          width: "inherit",
-                          height: "3rem",
-                          borderRadius: "0.4rem",
-                        }}
-                      ></Skeleton>
-                    ) : (
                       <Typography
                         color={
                           theme === "light"
-                            ? lightColor.text.chevron
-                            : darkColor.text.chevron
+                            ? lightColor.text.primary
+                            : darkColor.text.primary
                         }
-                        fontSize="1.2rem"
+                        textAlign="center"
+                        fontSize={isMobile ? "1.6rem" : "2rem"}
                         fontStyle="normal"
-                        fontWeight="400"
+                        fontWeight="500"
                         lineHeight="normal"
                         letterSpacing="0.02rem"
                       >
-                        {couponAPIRes.length === 0
-                          ? "no offer"
-                          : couponAPIRes[0].desc}
+                        Offers
                       </Typography>
-                    )}
-                  </Box>
-                </>
-              ) : (
-                ""
-              )}
-              <Box
-                display="flex"
-                flexDirection="column"
-                gap={isMobile ? "1rem" : "1.6rem"}
-              >
-                {productAPIRes.length === 0 ? (
-                  <Skeleton
-                    variant="rectangular"
-                    sx={{
-                      width: "100%",
-                      height: "5rem",
-                      borderRadius: "4rem",
-                    }}
-                  ></Skeleton>
+                      <Box
+                        display="flex"
+                        gap={isMobile ? "1rem" : "1.7rem"}
+                        width="100%"
+                      >
+                        <Box
+                          sx={{
+                            display: "flex",
+                            width: "100%",
+                            height: "4.2rem",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            gap: "1rem",
+                            bgcolor: "#EFF2F6",
+                            borderRadius: "0.8rem",
+                          }}
+                        >
+                          <Typography
+                            color={
+                              theme === "light"
+                                ? lightColor.text.primary
+                                : darkColor.text.primary
+                            }
+                            textAlign="center"
+                            fontSize={isMobile ? "1.6rem" : "1.8rem"}
+                            fontStyle="normal"
+                            fontWeight="700"
+                            lineHeight="normal"
+                            letterSpacing="0.02rem"
+                          >
+                            {couponAPIRes[0].name}
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </Box>
+                    <Box>
+                      {productAPIRes.length === 0 ? (
+                        <Skeleton
+                          variant="rectangular"
+                          sx={{
+                            width: "inherit",
+                            height: "3rem",
+                            borderRadius: "0.4rem",
+                          }}
+                        ></Skeleton>
+                      ) : (
+                        <Typography
+                          color={
+                            theme === "light"
+                              ? lightColor.text.chevron
+                              : darkColor.text.chevron
+                          }
+                          fontSize="1.2rem"
+                          fontStyle="normal"
+                          fontWeight="400"
+                          lineHeight="normal"
+                          letterSpacing="0.02rem"
+                        >
+                          {couponAPIRes.length === 0
+                            ? "no offer"
+                            : couponAPIRes[0].desc}
+                        </Typography>
+                      )}
+                    </Box>
+                  </>
                 ) : (
-                  <ButtonBase
-                    onClick={() =>
-                      handleAddToCartBtn(productAPIRes[0], isCouponApply.state)
-                    }
-                    sx={{
-                      display: "flex",
-                      width: "100%",
-                      height: isMobile ? "4.4rem" : "5rem",
-                      padding: "0.2rem 0.8rem",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      gap: "1.6rem",
-                      borderRadius: "4rem",
-                      bgcolor: "var(--orange, #FFA000)",
-                    }}
-                  >
-                    <Typography
-                      color={
-                        theme === "light"
-                          ? lightColor.text.primary
-                          : darkColor.text.primary
-                      }
-                      textAlign="center"
-                      fontSize={isMobile ? "1.6rem" : "2rem"}
-                      fontStyle="normal"
-                      fontWeight="700"
-                      lineHeight="normal"
-                      letterSpacing="0.02rem"
-                    >
-                      Add To Cart
-                    </Typography>
-                  </ButtonBase>
+                  ""
                 )}
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  gap={isMobile ? "1rem" : "1.6rem"}
+                >
+                  {productAPIRes.length === 0 ? (
+                    <Skeleton
+                      variant="rectangular"
+                      sx={{
+                        width: "100%",
+                        height: "5rem",
+                        borderRadius: "4rem",
+                      }}
+                    ></Skeleton>
+                  ) : (
+                    <ButtonBase
+                      onClick={() =>
+                        handleAddToCartBtn(productAPIRes, isCouponApply.state)
+                      }
+                      sx={{
+                        display: "flex",
+                        width: "100%",
+                        height: isMobile ? "4.4rem" : "5rem",
+                        padding: "0.2rem 0.8rem",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        gap: "1.6rem",
+                        borderRadius: "4rem",
+                        bgcolor: "var(--orange, #FFA000)",
+                      }}
+                    >
+                      <Typography
+                        color={
+                          theme === "light"
+                            ? lightColor.text.primary
+                            : darkColor.text.primary
+                        }
+                        textAlign="center"
+                        fontSize={isMobile ? "1.6rem" : "2rem"}
+                        fontStyle="normal"
+                        fontWeight="700"
+                        lineHeight="normal"
+                        letterSpacing="0.02rem"
+                      >
+                        Add To Cart
+                      </Typography>
+                    </ButtonBase>
+                  )}
 
-                {productAPIRes.length === 0 ? (
-                  <Skeleton
-                    variant="rectangular"
-                    sx={{
-                      width: "100%",
-                      height: "5rem",
-                      borderRadius: "4rem",
-                    }}
-                  ></Skeleton>
-                ) : (
-                  <ButtonBase
-                    sx={{
-                      display: "flex",
-                      width: "100%",
-                      height: isMobile ? "4.4rem" : "5rem",
-                      padding: "0.2rem 0.8rem",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      gap: "1.6rem",
-                      borderRadius: "4rem",
-                      bgcolor: lightColor.theme.primary,
-                    }}
-                  >
-                    <Typography
-                      color={
-                        theme === "light"
-                          ? lightColor.text.primary
-                          : darkColor.text.primary
-                      }
-                      textAlign="center"
-                      fontSize={isMobile ? "1.6rem" : "2rem"}
-                      fontStyle="normal"
-                      fontWeight="700"
-                      lineHeight="normal"
-                      letterSpacing="0.02rem"
+                  {productAPIRes.length === 0 ? (
+                    <Skeleton
+                      variant="rectangular"
+                      sx={{
+                        width: "100%",
+                        height: "5rem",
+                        borderRadius: "4rem",
+                      }}
+                    ></Skeleton>
+                  ) : (
+                    <ButtonBase
+                      sx={{
+                        display: "flex",
+                        width: "100%",
+                        height: isMobile ? "4.4rem" : "5rem",
+                        padding: "0.2rem 0.8rem",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        gap: "1.6rem",
+                        borderRadius: "4rem",
+                        bgcolor: lightColor.theme.primary,
+                      }}
                     >
-                      Buy Now
-                    </Typography>
-                  </ButtonBase>
-                )}
+                      <Typography
+                        color={
+                          theme === "light"
+                            ? lightColor.text.primary
+                            : darkColor.text.primary
+                        }
+                        textAlign="center"
+                        fontSize={isMobile ? "1.6rem" : "2rem"}
+                        fontStyle="normal"
+                        fontWeight="700"
+                        lineHeight="normal"
+                        letterSpacing="0.02rem"
+                      >
+                        Buy Now
+                      </Typography>
+                    </ButtonBase>
+                  )}
+                </Box>
               </Box>
             </Box>
           </Box>
@@ -1323,7 +1340,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
       <CustomTabPanel value={parseInt(value)} index={0}>
         {productAPIRes.length === 0
           ? ""
-          : productAPIRes[0].descImage.descItems.map(
+          : productAPIRes.descImage.descItems.map(
               (data: any, index: number) => {
                 return (
                   <Box
@@ -1331,7 +1348,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
                     width="100%"
                     height="auto"
                     display="flex"
-                    bgcolor={productAPIRes[0].descImage.bgcolor}
+                    bgcolor={productAPIRes.descImage.bgcolor}
                     justifyContent="space-between"
                     flexDirection={isTablet ? "column" : "row"}
                   >
@@ -1342,7 +1359,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
                           justifyContent="center"
                           alignItems="center"
                           flexDirection="column"
-                          bgcolor={productAPIRes[0].descImage.bgcolor}
+                          bgcolor={productAPIRes.descImage.bgcolor}
                           width={isTablet ? "100%" : "50%"}
                         >
                           <Box width="70%" margin={"10rem 0"}>
@@ -1411,7 +1428,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
                             justifyContent="center"
                             alignItems="center"
                             flexDirection="column"
-                            bgcolor={productAPIRes[0].descImage.bgcolor}
+                            bgcolor={productAPIRes.descImage.bgcolor}
                             width={isTablet ? "100%" : "50%"}
                           >
                             <Box width="70%" margin={"10rem 0"}>
@@ -1439,7 +1456,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
           bgcolor={
             productAPIRes.length === 0
               ? "#fff"
-              : productAPIRes[0].specificationItems.bgcolor
+              : productAPIRes.specificationItems.bgcolor
           }
           display="flex"
           flexDirection={isTablet ? "column" : "row"}
@@ -1459,15 +1476,13 @@ const Product = ({ params }: { params: { slug: string } }) => {
             >
               {productAPIRes.length === 0
                 ? ""
-                : productAPIRes[0].specificationItems.specItems.map(
+                : productAPIRes.specificationItems.specItems.map(
                     (data: any, index: number) => {
                       return (
                         <>
                           <Grid xs={isMobile ? 6 : 3} item key={`${index}spec`}>
                             <Typography
-                              color={
-                                productAPIRes[0].specificationItems.textColor
-                              }
+                              color={productAPIRes.specificationItems.textColor}
                               fontSize={isMobile ? "1.2rem" : "1.6rem"}
                               fontStyle="normal"
                               fontWeight="700"
@@ -1480,9 +1495,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
 
                           <Grid xs={isMobile ? 6 : 9} item>
                             <Typography
-                              color={
-                                productAPIRes[0].specificationItems.textColor
-                              }
+                              color={productAPIRes.specificationItems.textColor}
                               fontSize={isMobile ? "1.2rem" : "1.6rem"}
                               fontStyle="normal"
                               fontWeight={isMobile ? "500" : "700"}
@@ -1509,7 +1522,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
               src={
                 productAPIRes.length === 0
                   ? ""
-                  : productAPIRes[0].specificationItems.imageURL
+                  : productAPIRes.specificationItems.imageURL
               }
               alt="banner"
               loading="lazy"

@@ -42,9 +42,9 @@ const LI = styled.div<LIProps>`
       ? lightColor.text.primary
       : darkColor.text.primary};
   text-align: center;
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 300;
   line-height: 2.4rem; /* 150% */
   letter-spacing: 0.5px;
   list-style: none;
@@ -439,11 +439,15 @@ export default function Index() {
             </Box>
           </Box>
         </PageSpacing>
-        <Box bgcolor={lightColor.text.primary} sx={{opacity:"0.1"}} height="1px"></Box>
+        <Box
+          bgcolor={lightColor.text.primary}
+          sx={{ opacity: "0.1" }}
+          height="1px"
+        ></Box>
         <Box>
           <PageSpacing>
             <Box
-              height="8rem"
+              height="5rem"
               display="flex"
               alignItems="center"
               justifyContent="center"
@@ -549,7 +553,7 @@ export default function Index() {
         </Box>
       </Box>
 
-      <Box width="100%" height="11rem"></Box>
+      <Box width="100%" height="10rem"></Box>
     </>
   );
 }

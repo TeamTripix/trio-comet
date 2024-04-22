@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { productSchema } from "../../../../models/product";
 import { headers } from "next/headers";
 import { NextRequest } from "next/server";
+import generateSKUNumber from "@/utils/function/generateSKU";
 
 import mongoose from "mongoose";
 let jwt = require("jsonwebtoken");
@@ -10,6 +11,7 @@ const key = process.env.JWT_KEY;
 const URI: any = process.env.MONGOOSE_URI;
 
 export async function POST(req: Request) {
+  const SKU = generateSKUNumber();
   try {
     await mongoose.connect(URI);
     const headersList = headers();
@@ -99,7 +101,8 @@ export async function POST(req: Request) {
               category,
               descImage,
               specificationItems,
-            },
+              SKU,
+            }
             // { expireAfterSeconds: 10 }
           );
           try {
@@ -147,15 +150,16 @@ export async function GET(
   req: NextRequest,
   { params }: { params: { filename: string } }
 ) {
-  const pid = req.nextUrl.searchParams.get("pid");
+  // const pid = req.nextUrl.searchParams.get("pid");
   const tag = req.nextUrl.searchParams.get("tag");
   const category = req.nextUrl.searchParams.get("category");
   const onSale = req.nextUrl.searchParams.get("on-sale");
+  const slug = req.nextUrl.searchParams.get("slug");
   try {
     await mongoose.connect(URI);
     try {
-      if (pid) {
-        const response = await productSchema.find({ _id: pid });
+      if (slug) {
+        const response = await productSchema.findOne({ 'productColor.slug': slug });
         return NextResponse.json(
           {
             message: "product found successfully",
@@ -164,7 +168,8 @@ export async function GET(
           },
           { status: 200 }
         );
-      } else if (onSale) {
+      }
+       else if (onSale) {
         const response = await productSchema.find({
           isSale: true,
         });
@@ -198,11 +203,12 @@ export async function GET(
           },
           { status: 200 }
         );
-      } else {
+      }
+       else {
         const response = await productSchema.find();
         return NextResponse.json(
           {
-            message: "product found successfully",
+            message: "all product found successfully",
             data: response,
             success: true,
           },

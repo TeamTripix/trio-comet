@@ -99,9 +99,9 @@ const Index: React.FC<IndexProps> = ({
     const dispatchData = {
       price: discountPrice,
       name,
-      _id:`${data._id}colorId${data.productColor[0].id}`,
+      _id: `${data._id}colorId${data.productColor[0].id}`,
       image: productColor[0].imageURL[0],
-      colorId:productColor[0].id
+      colorId: productColor[0].id,
     };
     dispatch({
       type: "ADD_TO_CART",
@@ -134,14 +134,15 @@ const Index: React.FC<IndexProps> = ({
         borderRadius={
           isMobile ? (fullDetailCard ? "0.8rem" : "1.6rem") : "1.6rem"
         }
-        border={
-          `1px solid ${theme === "light" ? lightColor.borderColor : darkColor.borderColor}`
-        }
+        border={`1px solid ${
+          theme === "light" ? lightColor.borderColor : darkColor.borderColor
+        }`}
         bgcolor={theme === "light" ? lightColor.cardBG : darkColor.cardBG}
         overflow={"hidden"}
         position="relative"
         marginLeft={isHomePage ? (index === 0 ? "2rem" : 0) : 0}
-        marginRight={isHomePage ? (index === 3 ? "2rem" : 0) : 0}>
+        marginRight={isHomePage ? (index === 3 ? "2rem" : 0) : 0}
+      >
         {offerTag ? (
           <Box
             display="flex"
@@ -158,7 +159,8 @@ const Index: React.FC<IndexProps> = ({
             borderRadius="0rem 0.4rem 0.4rem 0rem"
             bgcolor="#1D1D1F"
             zIndex="1"
-            sx={{ borderTopLeftRadius: "1rem" }}>
+            sx={{ borderTopLeftRadius: "1rem" }}
+          >
             <Typography
               color={
                 theme === "light"
@@ -171,7 +173,8 @@ const Index: React.FC<IndexProps> = ({
               fontStyle="normal"
               fontWeight="700"
               lineHeight="normal"
-              letterSpacing="0.05rem">
+              letterSpacing="0.05rem"
+            >
               {isSale
                 ? `${Math.round(((price - discountPrice) / price) * 100)}% OFF`
                 : offerTag === "daily_deals"
@@ -194,7 +197,8 @@ const Index: React.FC<IndexProps> = ({
           }}
           onClick={() => {
             handleFavProduct();
-          }}>
+          }}
+        >
           <FavourateIcon
             fill={favProduct ? "#FF0000" : ""}
             color={favProduct ? "#FF0000" : "white"}
@@ -202,7 +206,10 @@ const Index: React.FC<IndexProps> = ({
         </ButtonBase>
         <Box width="100%" height="auto">
           <Link
-            href={`/product/${name}?pid=${_id}&sub_page_id=0&color_id=0&category_id=${category}&offerTag=${offerTag}`}>
+            // onClick={() => alert("test")}
+            // href={`/product/${name}?pid=${_id}&sub_page_id=0&color_id=0&category_id=${category}&offerTag=${offerTag}`}
+            href={`/product/${productColor[0].slug}`}
+          >
             <Image
               src={data.productColor[0].imageURL[0]}
               loading="lazy"
@@ -223,19 +230,22 @@ const Index: React.FC<IndexProps> = ({
           flex="1 0 0"
           alignSelf="stretch"
           borderRadius="0rem 0rem 1.6rem 1.6rem"
-          bgcolor={theme === "light" ? lightColor.cardBG : darkColor.cardBG}>
+          bgcolor={theme === "light" ? lightColor.cardBG : darkColor.cardBG}
+        >
           <Box
             display="flex"
             flexDirection="column"
             justifyContent="center"
             alignItems="flex-start"
             gap="0.8rem"
-            width="100%">
+            width="100%"
+          >
             <Box
               display="flex"
               justifyContent="center"
               alignItems="center"
-              gap="0.4rem">
+              gap="0.4rem"
+            >
               <Typography
                 color={
                   theme === "light" ? lightColor.text.fade : darkColor.text.fade
@@ -245,7 +255,8 @@ const Index: React.FC<IndexProps> = ({
                 fontStyle="normal"
                 fontWeight="500"
                 lineHeight="normal"
-                letterSpacing="0.05rem">
+                letterSpacing="0.05rem"
+              >
                 {"4"}
               </Typography>
               <Box display="flex" alignItems="flex-start" gap="0.2rem">
@@ -264,7 +275,8 @@ const Index: React.FC<IndexProps> = ({
               alignItems="center"
               gap="0.8rem"
               justifyContent="space-between"
-              width="100%">
+              width="100%"
+            >
               <Typography
                 color={
                   theme === "light"
@@ -277,7 +289,8 @@ const Index: React.FC<IndexProps> = ({
                 fontStyle="normal"
                 fontWeight="700"
                 lineHeight="normal"
-                letterSpacing="0.05rem">
+                letterSpacing="0.05rem"
+              >
                 {name.length < 17 ? name : `${name.slice(0, 17)}...`}
               </Typography>
               <Box display="flex" alignItems="center" gap="0.6rem">
@@ -287,7 +300,8 @@ const Index: React.FC<IndexProps> = ({
                   alignContent="center"
                   position="relative"
                   width={isMobile ? "1.5rem" : "2rem"}
-                  height={isMobile ? "1.5rem" : "2rem"}>
+                  height={isMobile ? "1.5rem" : "2rem"}
+                >
                   {productColor.slice(0, 3).map((data: any, index: any) => {
                     return (
                       <Box
@@ -310,7 +324,8 @@ const Index: React.FC<IndexProps> = ({
                           theme === "light"
                             ? lightColor.text.secondary
                             : darkColor.text.secondary
-                        }`}></Box>
+                        }`}
+                      ></Box>
                     );
                   })}
                 </Box>
@@ -325,7 +340,8 @@ const Index: React.FC<IndexProps> = ({
                   fontStyle="normal"
                   fontWeight="500"
                   lineHeight="normal"
-                  letterSpacing="0.05rem">
+                  letterSpacing="0.05rem"
+                >
                   {data.productColor.length > 3
                     ? `+${data.productColor.length - 3}`
                     : ""}
@@ -337,7 +353,8 @@ const Index: React.FC<IndexProps> = ({
               display="flex"
               justifyContent="center"
               alignItems="center"
-              gap="0.2rem">
+              gap="0.2rem"
+            >
               <Typography
                 color={
                   theme === "light"
@@ -351,7 +368,8 @@ const Index: React.FC<IndexProps> = ({
                 fontStyle="normal"
                 fontWeight="700"
                 lineHeight="normal"
-                letterSpacing="0.05rem">
+                letterSpacing="0.05rem"
+              >
                 ₹{discountPrice}
               </Typography>
               <Typography
@@ -368,7 +386,8 @@ const Index: React.FC<IndexProps> = ({
                 fontWeight="500"
                 lineHeight="normal"
                 letterSpacing="0.05rem"
-                sx={{ textDecorationLine: "line-through" }}>
+                sx={{ textDecorationLine: "line-through" }}
+              >
                 /₹{price}
               </Typography>
               <Typography
@@ -384,7 +403,8 @@ const Index: React.FC<IndexProps> = ({
                 fontStyle="normal"
                 fontWeight="700"
                 lineHeight="normal"
-                letterSpacing="0.05rem">
+                letterSpacing="0.05rem"
+              >
                 {Math.round(((price - discountPrice) / price) * 100)}% OFF
               </Typography>
               {isSale ? (
@@ -399,7 +419,8 @@ const Index: React.FC<IndexProps> = ({
                     theme === "light"
                       ? lightColor.text.offer
                       : darkColor.text.offer
-                  }>
+                  }
+                >
                   <Typography
                     color={
                       theme === "light" ? lightColor.cardBG : darkColor.cardBG
@@ -411,7 +432,8 @@ const Index: React.FC<IndexProps> = ({
                     fontStyle="normal"
                     fontWeight="700"
                     lineHeight="normal"
-                    letterSpacing="0.05rem">
+                    letterSpacing="0.05rem"
+                  >
                     Sale
                   </Typography>
                 </Box>
@@ -427,7 +449,8 @@ const Index: React.FC<IndexProps> = ({
                 theme === "light"
                   ? lightColor.borderColor
                   : darkColor.borderColor
-              }></Box>
+              }
+            ></Box>
 
             {fullDetailCard ? (
               <Box display="flex" alignItems="center" gap="0.8rem">
@@ -442,7 +465,8 @@ const Index: React.FC<IndexProps> = ({
                       gap="1rem"
                       borderRadius="0.8rem"
                       border="0.1px solid #667085"
-                      bgcolor="rgba(252, 252, 253, 0.80)">
+                      bgcolor="rgba(252, 252, 253, 0.80)"
+                    >
                       <Typography
                         color="#667085"
                         textAlign="center"
@@ -455,7 +479,8 @@ const Index: React.FC<IndexProps> = ({
                           whiteSpace: "nowrap",
                           overflow: "hidden",
                           textOverflow: "clip",
-                        }}>
+                        }}
+                      >
                         {data.label}
                       </Typography>
                     </Box>
@@ -471,7 +496,8 @@ const Index: React.FC<IndexProps> = ({
               justifyContent="space-between"
               alignItems="center"
               alignSelf="stretch"
-              width="100%">
+              width="100%"
+            >
               <ButtonBase
                 onClick={() => handleAddToCartBtn(data)}
                 sx={{
@@ -495,7 +521,8 @@ const Index: React.FC<IndexProps> = ({
                       ? lightColor.theme.primary
                       : darkColor.theme.primary,
                   width: "100%",
-                }}>
+                }}
+              >
                 <Typography
                   color="#1D1D1F"
                   textAlign="center"
@@ -505,7 +532,8 @@ const Index: React.FC<IndexProps> = ({
                   fontStyle="normal"
                   fontWeight="700"
                   lineHeight="normal"
-                  letterSpacing="0.05rem">
+                  letterSpacing="0.05rem"
+                >
                   Add To Cart
                 </Typography>
                 <CartIcon
