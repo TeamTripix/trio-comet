@@ -651,10 +651,6 @@ const Product = ({ params }: { params: { slug: string } }) => {
   return (
     <>
       <PageSpacing>
-        <Box paddingLeft="2rem" margin="1rem 10rem">
-          <BreadCrumb />
-        </Box>
-
         <Box margin="0 10rem">
           <Box
             display="flex"
@@ -666,45 +662,54 @@ const Product = ({ params }: { params: { slug: string } }) => {
             padding="0 2rem"
             flexDirection={isMobile ? "column" : "row"}
           >
-            <Box ref={ref} width={isMobile ? "100%" : "50%"}>
-              {productAPIRes.length === 0 ? (
-                <Skeleton
-                  variant="rectangular"
-                  sx={{
-                    width: "100%",
-                    height: "57rem",
-                    borderRadius: "0.8rem",
-                  }}
-                ></Skeleton>
-              ) : (
-                <>
-                  <AwesomeSlider
-                    className="slider"
-                    bullets={true}
-                    style={{
-                      height: productWidth - 100,
-                      width: productWidth,
+            <Box
+              ref={ref}
+              width={isMobile ? "100%" : "50%"}
+              position="sticky"
+              top="6rem"
+            >
+              <Box paddingLeft="2rem" margin="1rem 10rem">
+                <BreadCrumb />
+              </Box>
+              <Box>
+                {productAPIRes.length === 0 ? (
+                  <Skeleton
+                    variant="rectangular"
+                    sx={{
+                      width: "100%",
+                      height: "57rem",
+                      borderRadius: "0.8rem",
                     }}
-                  >
-                    {productAPIRes.productColor[0].imageURL.map(
-                      (data: any, index: number) => {
-                        return (
-                          <Box
-                            ref={ref}
-                            borderRadius="0.8rem"
-                            width="57rem"
-                            height="57rem"
-                            key={`${index}+productImagesSlider`}
-                          >
-                            <FullSizeProductImage image={data} />
-                          </Box>
-                        );
-                      }
-                    )}
-                  </AwesomeSlider>
-                </>
-              )}
-
+                  ></Skeleton>
+                ) : (
+                  <>
+                    <AwesomeSlider
+                      className="slider"
+                      bullets={true}
+                      style={{
+                        height: productWidth - 100,
+                        width: productWidth,
+                      }}
+                    >
+                      {productAPIRes.productColor[0].imageURL.map(
+                        (data: any, index: number) => {
+                          return (
+                            <Box
+                              ref={ref}
+                              borderRadius="0.8rem"
+                              width="57rem"
+                              height="57rem"
+                              key={`${index}+productImagesSlider`}
+                            >
+                              <FullSizeProductImage image={data} />
+                            </Box>
+                          );
+                        }
+                      )}
+                    </AwesomeSlider>
+                  </>
+                )}
+              </Box>
               <Box
                 display="flex"
                 alignItems="center"
@@ -745,6 +750,8 @@ const Product = ({ params }: { params: { slug: string } }) => {
                 )}
               </Box>
             </Box>
+
+            {/* right content */}
             <Box
               display="flex"
               flexDirection="column"
@@ -776,7 +783,6 @@ const Product = ({ params }: { params: { slug: string } }) => {
                         ? lightColor.text.primary
                         : darkColor.text.primary
                     }
-                    // textAlign="center"
                     fontSize={isMobile ? "2.2rem" : "2.8rem"}
                     fontStyle="normal"
                     fontWeight="700"
@@ -852,100 +858,110 @@ const Product = ({ params }: { params: { slug: string } }) => {
                 alignItems="flex-start"
                 width="100%"
               >
-                <Box display="flex">
-                  {productAPIRes.length === 0 ? (
-                    <Skeleton
-                      variant="rectangular"
-                      sx={{
-                        marginRight: "2rem",
-                        width: "10rem",
-                        height: "4rem",
-                        borderRadius: "0.8rem",
-                      }}
-                    ></Skeleton>
-                  ) : (
-                    <span
-                      style={{
-                        color:
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  gap="0.5rem"
+                >
+                  <Box>
+                    {productAPIRes.length === 0 ? (
+                      <Skeleton
+                        variant="rectangular"
+                        sx={{
+                          width: "10rem",
+                          height: "4rem",
+                          borderRadius: "0.8rem",
+                        }}
+                      ></Skeleton>
+                    ) : (
+                      <Typography
+                        variant="body2"
+                        color={
                           theme === "light"
-                            ? lightColor.text.offer
-                            : darkColor.text.offer,
-                        textAlign: "center",
-                        fontSize: isMobile ? "1rem" : "1.4rem",
-                        fontStyle: "normal",
-                        fontWeight: "700",
-                        lineHeight: "normal",
-                        letterSpacing: "0.02rem",
-                        marginRight: "1rem",
-                      }}
-                    >
-                      {`${Math.round(
-                        ((productAPIRes.price - productAPIRes.discountPrice) /
-                          productAPIRes.price) *
-                          100
-                      )}% Off`}
-                    </span>
-                  )}
+                            ? lightColor.text.primary
+                            : darkColor.text.primary
+                        }
+                        textAlign="center"
+                        fontSize={isMobile ? "1.6rem" : "2.8rem"}
+                        fontStyle="normal"
+                        fontWeight="700"
+                        lineHeight="normal"
+                        letterSpacing="0.02rem"
+                      >
+                        ₹
+                        {productAPIRes.discountPrice -
+                          (isCouponApply.offerValue / 100) *
+                            productAPIRes.discountPrice}
+                      </Typography>
+                    )}
+                  </Box>
 
-                  {productAPIRes.length === 0 ? (
-                    <Skeleton
-                      variant="rectangular"
-                      sx={{
-                        width: "10rem",
-                        height: "4rem",
-                        borderRadius: "0.8rem",
-                      }}
-                    ></Skeleton>
-                  ) : (
-                    <Typography
-                      variant="body2"
-                      color={
-                        theme === "light"
-                          ? lightColor.text.primary
-                          : darkColor.text.primary
-                      }
-                      textAlign="center"
-                      fontSize={isMobile ? "1.6rem" : "2.8rem"}
-                      fontStyle="normal"
-                      fontWeight="700"
-                      lineHeight="normal"
-                      letterSpacing="0.02rem"
-                    >
-                      ₹
-                      {productAPIRes.discountPrice -
-                        (isCouponApply.offerValue / 100) *
-                          productAPIRes.discountPrice}
-                    </Typography>
-                  )}
+                  <Box>
+                    {productAPIRes.length === 0 ? (
+                      <Skeleton
+                        variant="rectangular"
+                        sx={{
+                          width: "5rem",
+                          height: "2rem",
+                          borderRadius: "0.8rem",
+                        }}
+                      ></Skeleton>
+                    ) : (
+                      <Typography
+                        color={
+                          theme === "light"
+                            ? lightColor.text.secondary
+                            : darkColor.text.secondary
+                        }
+                        textAlign="center"
+                        fontSize={isMobile ? "1.4rem" : "1.6rem"}
+                        fontStyle="normal"
+                        fontWeight="400"
+                        lineHeight="normal"
+                        letterSpacing="0.02rem"
+                        sx={{ textDecorationLine: "line-through" }}
+                      >
+                        ₹{productAPIRes.price}
+                      </Typography>
+                    )}
+                  </Box>
+                  <Box>
+                    {productAPIRes.length === 0 ? (
+                      <Skeleton
+                        variant="rectangular"
+                        sx={{
+                          marginRight: "2rem",
+                          width: "10rem",
+                          height: "4rem",
+                          borderRadius: "0.8rem",
+                        }}
+                      ></Skeleton>
+                    ) : (
+                      <span
+                        style={{
+                          color:
+                            theme === "light"
+                              ? lightColor.text.offer
+                              : darkColor.text.offer,
+                          textAlign: "center",
+                          fontSize: isMobile ? "1rem" : "1.4rem",
+                          fontStyle: "normal",
+                          fontWeight: "700",
+                          lineHeight: "normal",
+                          letterSpacing: "0.02rem",
+                          marginRight: "1rem",
+                        }}
+                      >
+                        {`${Math.round(
+                          ((productAPIRes.price - productAPIRes.discountPrice) /
+                            productAPIRes.price) *
+                            100
+                        )}% Off`}
+                      </span>
+                    )}
+                  </Box>
                 </Box>
-
-                {productAPIRes.length === 0 ? (
-                  <Skeleton
-                    variant="rectangular"
-                    sx={{
-                      width: "5rem",
-                      height: "2rem",
-                      borderRadius: "0.8rem",
-                    }}
-                  ></Skeleton>
-                ) : (
-                  <Typography
-                    color={
-                      theme === "light"
-                        ? lightColor.text.secondary
-                        : darkColor.text.secondary
-                    }
-                    textAlign="center"
-                    fontSize={isMobile ? "1.4rem" : "1.6rem"}
-                    fontStyle="normal"
-                    fontWeight="400"
-                    lineHeight="normal"
-                    letterSpacing="0.02rem"
-                    sx={{ textDecorationLine: "line-through" }}
-                  >
-                    ₹{productAPIRes.price}
-                  </Typography>
-                )}
               </Box>
 
               <Box
@@ -1268,11 +1284,31 @@ const Product = ({ params }: { params: { slug: string } }) => {
                   )}
                 </Box>
               </Box>
+
+              {/* description */}
+              <Box>
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  flexDirection="column"
+                  // bgcolor={productAPIRes.descImage.bgcolor}
+                  width={isTablet ? "100%" : "50%"}
+                >
+                  <Box width="70%" margin={"10rem 0"}>
+                    <Box
+                      dangerouslySetInnerHTML={{
+                        __html: productAPIRes?.descImage?.descItems[0]?.desc,
+                      }}
+                    ></Box>
+                  </Box>
+                </Box>
+              </Box>
             </Box>
           </Box>
         </Box>
 
-        <Box
+        {/* <Box
           margin={isMobile ? "2rem 0" : "6.2rem 0"}
           display="flex"
           alignItems="flex-start"
@@ -1335,7 +1371,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
               />
             </Tabs>
           </Box>
-        </Box>
+        </Box> */}
       </PageSpacing>
       <CustomTabPanel value={parseInt(value)} index={0}>
         {productAPIRes.length === 0
@@ -1448,7 +1484,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
             )}
       </CustomTabPanel>
 
-      <CustomTabPanel value={parseInt(value)} index={1}>
+      {/* <CustomTabPanel value={parseInt(value)} index={1}>
         <Box
           width="100%"
           height="auto"
@@ -1532,347 +1568,10 @@ const Product = ({ params }: { params: { slug: string } }) => {
             />
           </Box>
         </Box>
-      </CustomTabPanel>
+      </CustomTabPanel> */}
 
-      <CustomTabPanel value={parseInt(value)} index={2}>
-        <PageSpacing>
-          <Box
-            display="flex"
-            width="100%"
-            flexDirection="column"
-            alignItems="flex-start"
-            gap={isMobile ? "3.2rem" : "5.6rem"}
-            padding="0 2.4rem"
-          >
-            <Grid
-              container
-              flexDirection={isMobile ? "column-reverse" : "row"}
-              spacing={10}
-            >
-              <Grid item xs={isTablet ? (isMobile ? 12 : 6) : 8}>
-                <Box
-                  display="flex"
-                  flexDirection="column"
-                  alignItems="flex-start"
-                  gap={isMobile ? "3.2rem" : "5.6rem"}
-                >
-                  <Typography
-                    color={
-                      theme === "light"
-                        ? lightColor.text.primary
-                        : darkColor.text.primary
-                    }
-                    fontSize="2rem"
-                    fontStyle="normal"
-                    fontWeight="700"
-                    lineHeight="normal"
-                    letterSpacing="0.02rem"
-                  >
-                    Customer reviews
-                  </Typography>
-
-                  {/* <ButtonBase
-                    sx={{
-                      display: "flex",
-                      padding: "0.4rem 0.8rem",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      borderRadius: "0.4rem",
-                      bgcolor: "#ECECED",
-                    }}
-                  >
-                    Top reviews
-                  </ButtonBase> */}
-                  {reviewApiRes.length === 0 ? (
-                    <Box width="100%" textAlign="center">
-                      {" "}
-                      <NoReview isMobile={isMobile} />
-                    </Box>
-                  ) : (
-                    reviewApiRes.map((data, index) => {
-                      return <ReviewCard data={data} key={`${index}card1`} />;
-                    })
-                  )}
-                </Box>
-              </Grid>
-              <Grid item xs={isTablet ? (isMobile ? 12 : 6) : 4}>
-                <Box
-                  display="flex"
-                  flexDirection="column"
-                  alignItems="flex-start"
-                  gap="1.6rem"
-                >
-                  <Box
-                    display="flex"
-                    flexDirection="column"
-                    justifyContent="center"
-                    alignItems="center"
-                    gap="1.6rem"
-                  >
-                    <Box
-                      display="flex"
-                      width="15.2rem"
-                      alignItems="center"
-                      gap="0.2rem"
-                    >
-                      <Rating
-                        name="simple-controlled"
-                        size="small"
-                        readOnly
-                        value={maxRating}
-                        sx={{ fontSize: "1.5rem" }}
-                      />
-
-                      <Typography
-                        color={
-                          theme === "light"
-                            ? lightColor.text.fade
-                            : darkColor.text.fade
-                        }
-                        textAlign="center"
-                        fontSize="1.6rem"
-                        fontStyle="normal"
-                        fontWeight="500"
-                        lineHeight="normal"
-                        letterSpacing="0.05rem"
-                      >
-                        {maxRating} out of 5
-                      </Typography>
-                    </Box>
-
-                    {Object.values(percentRating).map((data: any, i: any) => {
-                      return (
-                        <Box
-                          key={`reviewstarchart${i}`}
-                          display="flex"
-                          width="17.8rem"
-                          justifyContent="space-between"
-                          alignItems="center"
-                        >
-                          <Typography
-                            color={
-                              theme === "light"
-                                ? lightColor.text.fade
-                                : darkColor.text.fade
-                            }
-                            textAlign="center"
-                            fontSize="1.6rem"
-                            fontStyle="normal"
-                            fontWeight="500"
-                            lineHeight="normal"
-                            letterSpacing="0.05rem"
-                          >
-                            {`${isNaN(data) ? 0 : data}%`}
-                          </Typography>
-                          <Box
-                            width="11.6rem"
-                            height="0.6rem"
-                            flexShrink="0"
-                            bgcolor={
-                              theme === "light"
-                                ? lightColor.text.secondary
-                                : darkColor.text.secondary
-                            }
-                          >
-                            <Box
-                              width={`${isNaN(data) ? 0 : data}%`}
-                              height="0.6rem"
-                              flexShrink="0"
-                              bgcolor={lightColor.theme.primary}
-                            ></Box>
-                          </Box>
-                          <Typography
-                            color={
-                              theme === "light"
-                                ? lightColor.text.fade
-                                : darkColor.text.fade
-                            }
-                            textAlign="center"
-                            fontSize="1.6rem"
-                            fontStyle="normal"
-                            fontWeight="500"
-                            lineHeight="normal"
-                            letterSpacing="0.05rem"
-                          >
-                            {i + 1}
-                          </Typography>
-                        </Box>
-                      );
-                    })}
-                    <ButtonBase
-                      onClick={() => setIsReviewDialogOpen(true)}
-                      sx={{
-                        display: "flex",
-                        padding: "0.7rem 1.2rem",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderRadius: "0.8rem",
-                        bgcolor:
-                          theme === "light"
-                            ? lightColor.text.chevron
-                            : darkColor.text.chevron,
-                      }}
-                    >
-                      <Typography
-                        color="white"
-                        textAlign="center"
-                        fontSize="1.6rem"
-                        fontStyle="normal"
-                        fontWeight="500"
-                        lineHeight="normal"
-                        letterSpacing="0.05rem"
-                      >
-                        Write a review
-                      </Typography>
-                    </ButtonBase>
-
-                    <Dialog
-                      onClose={() => setIsReviewDialogOpen(false)}
-                      aria-labelledby="customized-dialog-title"
-                      open={isReviewDialogOpen}
-                    >
-                      <DialogTitle
-                        sx={{ m: 0, p: 2 }}
-                        id="customized-dialog-title"
-                      >
-                        Add Review
-                      </DialogTitle>
-                      <ButtonBase
-                        aria-label="close"
-                        onClick={() => setIsReviewDialogOpen(false)}
-                        sx={{
-                          position: "absolute",
-                          right: 8,
-                          top: 8,
-                        }}
-                      >
-                        <CancelIcon />
-                      </ButtonBase>
-                      <DialogContent>
-                        <Box
-                          width="50rem"
-                          display="flex"
-                          flexDirection="column"
-                          gap={"1.2rem"}
-                        >
-                          <TextField
-                            label="Heading"
-                            size="small"
-                            fullWidth
-                            onChange={(e: any) =>
-                              setReviewHeading(e.target.value)
-                            }
-                          />
-                          <Box>
-                            <Rating
-                              name="simple-controlled"
-                              size="small"
-                              value={ratingStarValue}
-                              onChange={(event, newValue) =>
-                                setRatingStarValue(newValue)
-                              }
-                            />
-                          </Box>
-                          <Box display="flex" gap="2rem">
-                            <TextField
-                              fullWidth
-                              onChange={(e: any) =>
-                                setReviewDesc(e.target.value)
-                              }
-                              id="filled-multiline-flexible"
-                              label="Description"
-                              multiline
-                              maxRows={4}
-                              minRows={4}
-                            />
-                            <Box>
-                              <ImageUploader
-                                buttonText="upload"
-                                helperText="images size 29x29"
-                                width={100}
-                                height={100}
-                                // dimension={{ width: 1500, height: 1500 }}
-                                getResponse={setReviewImage}
-                              />
-                            </Box>
-                          </Box>
-                        </Box>
-                      </DialogContent>
-                      <DialogContent sx={{ justifyContent: "flex-end" }}>
-                        <ButtonBase
-                          onClick={handleSubmitReview}
-                          sx={{
-                            bgcolor:
-                              theme === "light"
-                                ? lightColor.text.chevron
-                                : darkColor.text.chevron,
-                            padding: "1rem 2rem",
-                            borderRadius: "0.8rem",
-                            width: "15rem",
-                            height: "3.5rem",
-                          }}
-                        >
-                          <Typography
-                            color={"#fbfbfb"}
-                            textAlign="center"
-                            fontSize={isMobile ? "2rem" : "1.4rem"}
-                            fontStyle="normal"
-                            fontWeight="500"
-                            lineHeight="normal"
-                            letterSpacing="0.05rem"
-                          >
-                            {sendReviewIsLoading ? (
-                              <CircularProgress
-                                size={15}
-                                sx={{
-                                  color: "white",
-                                }}
-                              />
-                            ) : (
-                              "Save Changes"
-                            )}
-                          </Typography>
-                        </ButtonBase>
-                      </DialogContent>
-                    </Dialog>
-                  </Box>
-                  <Grid container spacing={2}>
-                    {reviewApiRes.length === 0
-                      ? ""
-                      : reviewApiRes.map((data: any) => {
-                          if (data.image === "") {
-                            return "";
-                          } else {
-                            return (
-                              <Grid
-                                key={data.image}
-                                item
-                                width="17.8rem"
-                                height="15.3rem"
-                                borderRadius="0.8rem"
-                                overflow="hidden"
-                              >
-                                <Image
-                                  src={data.image}
-                                  alt="banner"
-                                  loading="lazy"
-                                  width={180}
-                                  height={155}
-                                  layout="responsive"
-                                  style={{ borderRadius: "0.8rem" }}
-                                />
-                              </Grid>
-                            );
-                          }
-                        })}
-                  </Grid>
-                </Box>
-              </Grid>
-            </Grid>
-          </Box>
-        </PageSpacing>
-      </CustomTabPanel>
       <PageSpacing>
+        {/* FAQ section */}
         <Box
           display="flex"
           flexDirection="column"
@@ -1898,6 +1597,340 @@ const Product = ({ params }: { params: { slug: string } }) => {
             Frequently Asked Questions
           </Typography>
           <FAQs pid={pidState} />
+        </Box>
+
+        {/* review section */}
+        <Box
+          display="flex"
+          width="100%"
+          flexDirection="column"
+          alignItems="flex-start"
+          gap={isMobile ? "3.2rem" : "5.6rem"}
+          padding="0 2.4rem"
+        >
+          <Grid
+            container
+            flexDirection={isMobile ? "column-reverse" : "row"}
+            spacing={10}
+          >
+            <Grid item xs={isTablet ? (isMobile ? 12 : 6) : 8}>
+              <Box
+                display="flex"
+                flexDirection="column"
+                alignItems="flex-start"
+                gap={isMobile ? "3.2rem" : "5.6rem"}
+              >
+                <Typography
+                  color={
+                    theme === "light"
+                      ? lightColor.text.primary
+                      : darkColor.text.primary
+                  }
+                  fontSize="2rem"
+                  fontStyle="normal"
+                  fontWeight="700"
+                  lineHeight="normal"
+                  letterSpacing="0.02rem"
+                >
+                  Customer reviews
+                </Typography>
+
+                {/* <ButtonBase
+                    sx={{
+                      display: "flex",
+                      padding: "0.4rem 0.8rem",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRadius: "0.4rem",
+                      bgcolor: "#ECECED",
+                    }}
+                  >
+                    Top reviews
+                  </ButtonBase> */}
+                {reviewApiRes.length === 0 ? (
+                  <Box width="100%" textAlign="center">
+                    {" "}
+                    <NoReview isMobile={isMobile} />
+                  </Box>
+                ) : (
+                  reviewApiRes.map((data, index) => {
+                    return <ReviewCard data={data} key={`${index}card1`} />;
+                  })
+                )}
+              </Box>
+            </Grid>
+            <Grid item xs={isTablet ? (isMobile ? 12 : 6) : 4}>
+              <Box
+                display="flex"
+                flexDirection="column"
+                alignItems="flex-start"
+                gap="1.6rem"
+              >
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  justifyContent="center"
+                  alignItems="center"
+                  gap="1.6rem"
+                >
+                  <Box
+                    display="flex"
+                    width="15.2rem"
+                    alignItems="center"
+                    gap="0.2rem"
+                  >
+                    <Rating
+                      name="simple-controlled"
+                      size="small"
+                      readOnly
+                      value={maxRating}
+                      sx={{ fontSize: "1.5rem" }}
+                    />
+
+                    <Typography
+                      color={
+                        theme === "light"
+                          ? lightColor.text.fade
+                          : darkColor.text.fade
+                      }
+                      textAlign="center"
+                      fontSize="1.6rem"
+                      fontStyle="normal"
+                      fontWeight="500"
+                      lineHeight="normal"
+                      letterSpacing="0.05rem"
+                    >
+                      {maxRating} out of 5
+                    </Typography>
+                  </Box>
+
+                  {Object.values(percentRating).map((data: any, i: any) => {
+                    return (
+                      <Box
+                        key={`reviewstarchart${i}`}
+                        display="flex"
+                        width="17.8rem"
+                        justifyContent="space-between"
+                        alignItems="center"
+                      >
+                        <Typography
+                          color={
+                            theme === "light"
+                              ? lightColor.text.fade
+                              : darkColor.text.fade
+                          }
+                          textAlign="center"
+                          fontSize="1.6rem"
+                          fontStyle="normal"
+                          fontWeight="500"
+                          lineHeight="normal"
+                          letterSpacing="0.05rem"
+                        >
+                          {`${isNaN(data) ? 0 : data}%`}
+                        </Typography>
+                        <Box
+                          width="11.6rem"
+                          height="0.6rem"
+                          flexShrink="0"
+                          bgcolor={
+                            theme === "light"
+                              ? lightColor.text.secondary
+                              : darkColor.text.secondary
+                          }
+                        >
+                          <Box
+                            width={`${isNaN(data) ? 0 : data}%`}
+                            height="0.6rem"
+                            flexShrink="0"
+                            bgcolor={lightColor.theme.primary}
+                          ></Box>
+                        </Box>
+                        <Typography
+                          color={
+                            theme === "light"
+                              ? lightColor.text.fade
+                              : darkColor.text.fade
+                          }
+                          textAlign="center"
+                          fontSize="1.6rem"
+                          fontStyle="normal"
+                          fontWeight="500"
+                          lineHeight="normal"
+                          letterSpacing="0.05rem"
+                        >
+                          {i + 1}
+                        </Typography>
+                      </Box>
+                    );
+                  })}
+                  <ButtonBase
+                    onClick={() => setIsReviewDialogOpen(true)}
+                    sx={{
+                      display: "flex",
+                      padding: "0.7rem 1.2rem",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRadius: "0.8rem",
+                      bgcolor:
+                        theme === "light"
+                          ? lightColor.text.chevron
+                          : darkColor.text.chevron,
+                    }}
+                  >
+                    <Typography
+                      color="white"
+                      textAlign="center"
+                      fontSize="1.6rem"
+                      fontStyle="normal"
+                      fontWeight="500"
+                      lineHeight="normal"
+                      letterSpacing="0.05rem"
+                    >
+                      Write a review
+                    </Typography>
+                  </ButtonBase>
+
+                  <Dialog
+                    onClose={() => setIsReviewDialogOpen(false)}
+                    aria-labelledby="customized-dialog-title"
+                    open={isReviewDialogOpen}
+                  >
+                    <DialogTitle
+                      sx={{ m: 0, p: 2 }}
+                      id="customized-dialog-title"
+                    >
+                      Add Review
+                    </DialogTitle>
+                    <ButtonBase
+                      aria-label="close"
+                      onClick={() => setIsReviewDialogOpen(false)}
+                      sx={{
+                        position: "absolute",
+                        right: 8,
+                        top: 8,
+                      }}
+                    >
+                      <CancelIcon />
+                    </ButtonBase>
+                    <DialogContent>
+                      <Box
+                        width="50rem"
+                        display="flex"
+                        flexDirection="column"
+                        gap={"1.2rem"}
+                      >
+                        <TextField
+                          label="Heading"
+                          size="small"
+                          fullWidth
+                          onChange={(e: any) =>
+                            setReviewHeading(e.target.value)
+                          }
+                        />
+                        <Box>
+                          <Rating
+                            name="simple-controlled"
+                            size="small"
+                            value={ratingStarValue}
+                            onChange={(event, newValue) =>
+                              setRatingStarValue(newValue)
+                            }
+                          />
+                        </Box>
+                        <Box display="flex" gap="2rem">
+                          <TextField
+                            fullWidth
+                            onChange={(e: any) => setReviewDesc(e.target.value)}
+                            id="filled-multiline-flexible"
+                            label="Description"
+                            multiline
+                            maxRows={4}
+                            minRows={4}
+                          />
+                          <Box>
+                            <ImageUploader
+                              buttonText="upload"
+                              helperText="images size 29x29"
+                              width={100}
+                              height={100}
+                              // dimension={{ width: 1500, height: 1500 }}
+                              getResponse={setReviewImage}
+                            />
+                          </Box>
+                        </Box>
+                      </Box>
+                    </DialogContent>
+                    <DialogContent sx={{ justifyContent: "flex-end" }}>
+                      <ButtonBase
+                        onClick={handleSubmitReview}
+                        sx={{
+                          bgcolor:
+                            theme === "light"
+                              ? lightColor.text.chevron
+                              : darkColor.text.chevron,
+                          padding: "1rem 2rem",
+                          borderRadius: "0.8rem",
+                          width: "15rem",
+                          height: "3.5rem",
+                        }}
+                      >
+                        <Typography
+                          color={"#fbfbfb"}
+                          textAlign="center"
+                          fontSize={isMobile ? "2rem" : "1.4rem"}
+                          fontStyle="normal"
+                          fontWeight="500"
+                          lineHeight="normal"
+                          letterSpacing="0.05rem"
+                        >
+                          {sendReviewIsLoading ? (
+                            <CircularProgress
+                              size={15}
+                              sx={{
+                                color: "white",
+                              }}
+                            />
+                          ) : (
+                            "Save Changes"
+                          )}
+                        </Typography>
+                      </ButtonBase>
+                    </DialogContent>
+                  </Dialog>
+                </Box>
+                <Grid container spacing={2}>
+                  {reviewApiRes.length === 0
+                    ? ""
+                    : reviewApiRes.map((data: any) => {
+                        if (data.image === "") {
+                          return "";
+                        } else {
+                          return (
+                            <Grid
+                              key={data.image}
+                              item
+                              width="17.8rem"
+                              height="15.3rem"
+                              borderRadius="0.8rem"
+                              overflow="hidden"
+                            >
+                              <Image
+                                src={data.image}
+                                alt="banner"
+                                loading="lazy"
+                                width={180}
+                                height={155}
+                                layout="responsive"
+                                style={{ borderRadius: "0.8rem" }}
+                              />
+                            </Grid>
+                          );
+                        }
+                      })}
+                </Grid>
+              </Box>
+            </Grid>
+          </Grid>
         </Box>
 
         <Box>
