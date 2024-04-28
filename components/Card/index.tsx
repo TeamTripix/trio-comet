@@ -123,9 +123,9 @@ const Index: React.FC<IndexProps> = ({
               : "35rem"
             : fullDetailCard
             ? "35rem"
-            : "100%"
+            : "90%"
         }
-        height="auto"
+        height="55rem"
         paddingBottom="0px"
         flexDirection="column"
         alignItems="flex-start"
@@ -224,7 +224,7 @@ const Index: React.FC<IndexProps> = ({
           display="flex"
           padding={isMobile ? "0.9rem" : "0.9rem 1.6rem"}
           flexDirection="column"
-          justifyContent="center"
+          justifyContent="end"
           alignItems="flex-start"
           gap="0.8rem"
           flex="1 0 0"
@@ -294,7 +294,7 @@ const Index: React.FC<IndexProps> = ({
                 {name.length < 17 ? name : `${name.slice(0, 17)}...`}
               </Typography>
               <Box display="flex" alignItems="center" gap="0.6rem">
-                <Box
+                {/* <Box
                   display="flex"
                   justifyContent="center"
                   alignContent="center"
@@ -328,7 +328,7 @@ const Index: React.FC<IndexProps> = ({
                       ></Box>
                     );
                   })}
-                </Box>
+                </Box> */}
                 <Typography
                   color={
                     theme === "light"

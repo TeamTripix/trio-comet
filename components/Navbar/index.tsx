@@ -42,9 +42,9 @@ const LI = styled.div<LIProps>`
       ? lightColor.text.primary
       : darkColor.text.primary};
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 2.2rem;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 2.4rem; /* 150% */
   letter-spacing: 0.5px;
   list-style: none;
@@ -343,27 +343,22 @@ export default function Index() {
       >
         <PageSpacing>
           <Box
-            // bgcolor="pink"
+            margin="0 12rem"
             display="flex"
-            // width="100vw"
             height="5rem"
-            // padding="0.8rem 6.4rem"
-            justifyContent="space-between"
+            justifyContent="space-around"
             alignItems="center"
             flexShrink="0"
             bgcolor="white"
-            // position="fixed"
             zIndex="99"
           >
             <Link href="/">
-              <Box width="16rem" height="7rem" sx={{ cursor: "pointer" }}>
+              <Box width="15rem" height="8rem" sx={{ cursor: "pointer" }}>
                 <Image
-                  src={`/assets/logo/${
-                    theme === "light" ? "logo-light.png" : "logo-dark.png"
-                  }`}
+                  src={`/assets/logo/logo-light.png`}
                   alt="Logo"
-                  width="160"
-                  height="60"
+                  width="1500"
+                  height="800"
                   layout="responsive"
                 />
               </Box>
@@ -452,7 +447,7 @@ export default function Index() {
               alignItems="center"
               justifyContent="center"
               gap="12rem"
-              padding="1rem 0"
+              padding="3rem 0"
             >
               {/* <LI
                 theme={theme}
@@ -491,14 +486,14 @@ export default function Index() {
                 </LI>
               </Link>
 
-              <Link href="/women">
+              {/* <Link href="/women">
                 <LI
                   theme={theme}
                   highlite={pathname === "/women" ? true : false}
                 >
                   Women
                 </LI>
-              </Link>
+              </Link> */}
 
               <Link href="/combos">
                 <LI
@@ -553,7 +548,7 @@ export default function Index() {
         </Box>
       </Box>
 
-      <Box width="100%" height="10rem"></Box>
+      <Box width="100%" height="11rem"></Box>
     </>
   );
 }

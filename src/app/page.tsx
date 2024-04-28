@@ -269,7 +269,7 @@ export default function Home() {
             play={true}
             cancelOnInteraction={false}
             interval={6000}
-            style={{ height: bannerHeight - 10, marginBottom: "4rem" }}
+            style={{ height: bannerHeight - 10 }}
           >
             {bannerApiRes.map((data: any) => {
               return (
@@ -298,41 +298,29 @@ export default function Home() {
         )}
 
         {/* Categories */}
-        <Box
-          display="flex"
-          // paddingTop="8rem"
-          flexDirection="column"
-          alignItems="flex-start"
-          // gap="5.6rem"
-        >
-          <PageSpacing>
-            <Box>
-              <Typography
-                color={
-                  theme === "light"
-                    ? lightColor.text.primary
-                    : darkColor.text.primary
-                }
-                // textAlign="center"
-                fontSize={isMobile ? "2.2rem" : "2.8rem"}
-                fontStyle="normal"
-                fontWeight="700"
-                lineHeight="normal"
-                letterSpacing="0.05rem"
-                // marginLeft="2rem"
-              >
-                Categories
-              </Typography>
-            </Box>
-          </PageSpacing>
-
+        <PageSpacing>
+          <Box display="flex" justifyContent="center" margin="1rem">
+            <Typography
+              color={
+                theme === "light"
+                  ? lightColor.text.primary
+                  : darkColor.text.primary
+              }
+              // textAlign="center"
+              fontSize={isMobile ? "2.2rem" : "2.8rem"}
+              fontStyle="normal"
+              fontWeight="700"
+              lineHeight="normal"
+              letterSpacing="0.05rem"
+            >
+              TRENDING CATEGORIES
+            </Typography>
+          </Box>
           <Box
             display="flex"
             width="100%"
-            // justifyContent="space-between"
             alignItems="flex-start"
             overflow="scroll"
-            // gap={isMobile ? "2.4rem" : "1rem"}
           >
             {isCategoryLoading ? (
               [...Array(11)].map((d, i) => {
@@ -347,25 +335,26 @@ export default function Home() {
                 <NoProduct isMobile={isMobile} />
               </Box>
             ) : (
-              caregoryApiRes.map((data, index) => {
-                return (
-                  <>
-                    <CategoryCard
-                      key={data._id}
-                      data={data}
-                      isHomePage={true}
-                      indexes={index}
-                      categoryArrayLength={caregoryApiRes.length - 1}
-                    />
-                  </>
-                );
-              })
+              <Grid container sx={{ width: "100vw" }} spacing={10}>
+                {caregoryApiRes.slice(0, 5).map((data, index) => {
+                  return (
+                    <Grid key={data._id} item xs={2.3}>
+                      <CategoryCard
+                        data={data}
+                        isHomePage={true}
+                        indexes={index}
+                        categoryArrayLength={caregoryApiRes.length - 1}
+                      />
+                    </Grid>
+                  );
+                })}
+              </Grid>
             )}
           </Box>
-        </Box>
+        </PageSpacing>
 
         <PageSpacing>
-          <Box>
+          <Box sx={{ margin: "5rem 0", marginTop: "3rem" }}>
             {/* <Box display="flex" justifyContent="center">
               <Box
                 sx={{
@@ -415,11 +404,7 @@ export default function Home() {
             {/* {isMobile ? (
                 ""
               ) : ( */}
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-            >
+            <Box display="flex" justifyContent="center" alignItems="center">
               <Typography
                 color={
                   theme === "light"
@@ -435,12 +420,12 @@ export default function Home() {
                 margin="1rem 0"
                 marginLeft={isMobile || isTablet ? "2rem" : 0}
               >
-                New Drops
+                NEW DROPS
               </Typography>
               {/* {isMobile ? (
                     ""
                   ) : ( */}
-              <Link href="product-collection/sale">
+              {/* <Link href="product-collection/sale">
                 <Box
                   display="flex"
                   justifyContent="flex-end"
@@ -464,7 +449,7 @@ export default function Home() {
                     {!isMobile && <ForwardIcon />}
                   </Typography>
                 </Box>
-              </Link>
+              </Link> */}
               {/* )} */}
             </Box>
             {/* )} */}
@@ -477,7 +462,7 @@ export default function Home() {
               >
                 <Box display="flex" gap="1rem">
                   {isOnSaleLoading ? (
-                    [...Array(4)].map((data, index) => {
+                    [...Array(8)].map((data, index) => {
                       return (
                         <Grid
                           key={`${index}+ProductCardOnSaleSkeletonOnTabView`}
@@ -493,15 +478,26 @@ export default function Home() {
                       <NoProduct isMobile={isMobile} />
                     </Box>
                   ) : (
-                    onSaleApiRes.slice(0, 8).map((data, index) => {
-                      return (
-                        <>
-                          <Box key={data._id}>
-                            <Card data={data} index={index} isHomePage={true} />
-                          </Box>
-                        </>
-                      );
-                    })
+                    <Box
+                      display="flex"
+                      justifyContent="center"
+                      alignItems="center"
+                      bgcolor="pink"
+                    >
+                      {onSaleApiRes.slice(0, 8).map((data, index) => {
+                        return (
+                          <>
+                            <Box key={data._id}>
+                              <Card
+                                data={data}
+                                index={index}
+                                isHomePage={true}
+                              />
+                            </Box>
+                          </>
+                        );
+                      })}
+                    </Box>
                   )}
                 </Box>
               </Box>
@@ -509,12 +505,17 @@ export default function Home() {
               // is desktop size is active
               <Grid container spacing={2}>
                 {isOnSaleLoading ? (
-                  [...Array(4)].map((data, index) => {
+                  [...Array(8)].map((data, index) => {
                     return (
                       <Grid
                         key={`${index}+ProductCardOnSaleSkeleton`}
                         item
                         xs={3}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
                       >
                         <ProductCardSkeleton />
                       </Grid>
@@ -528,7 +529,16 @@ export default function Home() {
                   onSaleApiRes.slice(0, 8).map((data, index) => {
                     return (
                       <>
-                        <Grid key={data._id} item xs={3}>
+                        <Grid
+                          key={data._id}
+                          item
+                          xs={3}
+                          sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
                           <Card data={data} isHomePage={true} />
                         </Grid>
                       </>
@@ -666,7 +676,7 @@ export default function Home() {
           </Box>
         </PageSpacing>
 
-        <Box marginTop="4.4rem">
+        <Box>
           <Image
             src="/assets/label.png"
             alt="label"
@@ -677,12 +687,8 @@ export default function Home() {
         </Box>
 
         <PageSpacing>
-          <Box>
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-            >
+          <Box sx={{ margin: "5rem 0" }}>
+            <Box display="flex" justifyContent="center" alignItems="center">
               <Typography
                 color={
                   theme === "light"
@@ -698,9 +704,9 @@ export default function Home() {
                 margin="1rem 0"
                 marginLeft={isMobile || isTablet ? "2rem" : 0}
               >
-                Trending
+                TRENDING
               </Typography>
-              <Link href="product-collection/new_arrivals">
+              {/* <Link href="product-collection/new_arrivals">
                 <Box
                   display="flex"
                   justifyContent="flex-end"
@@ -724,7 +730,7 @@ export default function Home() {
                     {!isMobile && <ForwardIcon />}
                   </Typography>
                 </Box>
-              </Link>
+              </Link> */}
               {/*  )} */}
             </Box>
             {isTablet ? (
@@ -787,7 +793,16 @@ export default function Home() {
                 ) : (
                   newArraivalApiRes.slice(0, 4).map((data, index) => {
                     return (
-                      <Grid key={data._id} item xs={3}>
+                      <Grid
+                        key={data._id}
+                        item
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                        xs={3}
+                      >
                         <Card data={data} />
                       </Grid>
                     );
@@ -799,12 +814,8 @@ export default function Home() {
         </PageSpacing>
 
         <PageSpacing>
-          <Box marginTop="2.4rem">
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-            >
+          <Box sx={{ margin: "5rem 0" }}>
+            <Box display="flex" justifyContent="center" alignItems="center">
               <Typography
                 color={
                   theme === "light"
@@ -820,9 +831,9 @@ export default function Home() {
                 margin="1rem 0"
                 marginLeft={isMobile || isTablet ? "2rem" : 0}
               >
-                Best Seller
+                BEST SELLER
               </Typography>
-              <Link href="product-collection/best_seller">
+              {/* <Link href="product-collection/best_seller">
                 <Box
                   display="flex"
                   justifyContent="flex-end"
@@ -846,7 +857,7 @@ export default function Home() {
                     {!isMobile && <ForwardIcon />}
                   </Typography>
                 </Box>
-              </Link>
+              </Link> */}
             </Box>
             {isTablet ? (
               // is tablet size is active
@@ -896,6 +907,11 @@ export default function Home() {
                         key={`${index}+ProductCardBestSellerSkeleton`}
                         item
                         xs={3}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
                       >
                         <ProductCardSkeleton />
                       </Grid>
@@ -906,9 +922,18 @@ export default function Home() {
                     <NoProduct />
                   </Box>
                 ) : (
-                  bestSellerApiRes.slice(0, 8).map((data, index) => {
+                  bestSellerApiRes.slice(0, 4).map((data, index) => {
                     return (
-                      <Grid key={data._id} item xs={3}>
+                      <Grid
+                        key={data._id}
+                        item
+                        xs={3}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
                         <Card data={data} />
                       </Grid>
                     );
@@ -1019,17 +1044,11 @@ export default function Home() {
         <PageSpacing>
           <Box
             display="flex"
-            padding="8rem 0"
             flexDirection="column"
             justifyContent="center"
-            // bgcolor="#FFF"
+            sx={{ margin: "5rem 0" }}
           >
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-              margin="6rem 0"
-            >
+            <Box display="flex" justifyContent="center" alignItems="center">
               <Typography
                 color={
                   theme === "light"
@@ -1042,11 +1061,12 @@ export default function Home() {
                 fontWeight="700"
                 lineHeight="normal"
                 letterSpacing="0.05rem"
+                margin="1rem 0"
                 marginLeft={isMobile || isTablet ? "2rem" : 0}
               >
-                Blogs
+                OUR BLOGS
               </Typography>
-              <Link href={"blog-collection"}>
+              {/* <Link href={"blog-collection"}>
                 <Box
                   display="flex"
                   justifyContent="flex-end"
@@ -1070,7 +1090,7 @@ export default function Home() {
                     {!isMobile && <ForwardIcon />}
                   </Typography>
                 </Box>
-              </Link>
+              </Link> */}
             </Box>
 
             {isTablet ? (

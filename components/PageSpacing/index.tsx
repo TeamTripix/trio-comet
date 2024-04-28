@@ -11,7 +11,7 @@ const Index: React.FC<PageSpaceProps> = ({ children }) => {
   if (isTablet || isMobile) {
     return <Box>{children}</Box>;
   }
-  return <Container maxWidth="xl">{children}</Container>;
+  return <Box sx={{margin:"0 2.4rem"}}>{children}</Box>;
 };
 
 export default Index;

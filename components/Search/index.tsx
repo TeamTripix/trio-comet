@@ -136,7 +136,7 @@ const Index = () => {
         ></Box>
         <Box width="55%" height="3.9rem" display="flex" alignItems="center">
           <input
-            placeholder="Search..."
+            placeholder="search by product, category or collection"
             style={{
               color:
                 theme === "light"
@@ -144,7 +144,7 @@ const Index = () => {
                   : darkColor.text.secondary,
               backgroundColor:
                 theme === "light" ? lightColor.search : darkColor.search,
-              fontSize: "1.4rem",
+              fontSize: "1.1rem",
               fontStyle: "normal",
               fontWeight: 400,
               lineHeight: "2.4rem",

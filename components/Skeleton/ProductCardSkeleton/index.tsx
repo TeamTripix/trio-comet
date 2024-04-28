@@ -10,7 +10,7 @@ function SkeletonChildrenDemo() {
       <Skeleton
         sx={{
           width: isTablet ? "35rem" : "100%",
-          height: "29rem",
+          height: "55rem",
           borderTopLeftRadius: "1.6rem",
           borderTopRightRadius: "1.6rem",
         }}
@@ -34,7 +34,7 @@ function SkeletonChildrenDemo() {
           justifyContent="center"
           alignItems="flex-start"
           gap="0.8rem"
-          width="100%"
+          width="90%"
         >
           <Skeleton
             sx={{ width: "5rem", height: "1rem" }}

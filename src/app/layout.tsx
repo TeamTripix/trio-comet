@@ -4,7 +4,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Navbar from "@components/Navbar";
-import { LightTheme, DarkTheme } from "@/utils/CustomTheme";
+import { LightTheme } from "@/utils/CustomTheme";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Footer from "@components/Footer";
@@ -47,9 +47,7 @@ export default function RootLayout({
       <SessionProvider>
         <Provider store={store}>
           <ThemeState themeValue={themeValue} />
-          <ThemeProvider
-            theme={themeState === "light" ? LightTheme : DarkTheme}
-          >
+          <ThemeProvider theme={LightTheme}>
             {/* // theme={LightTheme}> */}
             <CssBaseline />
             <EdgeStoreProvider>
@@ -76,12 +74,16 @@ export default function RootLayout({
                   crawl={true}
                   easing="ease"
                   speed={200}
-                  shadow={`0 0 10px ${themeState === "light" ? lightColor.theme.primary : darkColor.theme.primary},0 0 5px ${lightColor.theme.primary}`}
+                  shadow={`0 0 10px ${
+                    themeState === "light"
+                      ? lightColor.theme.primary
+                      : darkColor.theme.primary
+                  },0 0 5px ${lightColor.theme.primary}`}
                 />
                 {pathname === "/" ? <BlackBanner /> : ""}
                 <Navbar />
                 {children}
-                <WhatsappIcon/>
+                <WhatsappIcon />
                 {pathname === "/bulk-query" ? "" : <Footer />}
                 <ToastContainer
                   position="bottom-left"

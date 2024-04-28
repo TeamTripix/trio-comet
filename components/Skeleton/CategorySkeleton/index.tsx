@@ -4,12 +4,12 @@ const Index = () => {
   return (
     <Box gap="2.4rem">
       <Skeleton
-        variant="circular"
-        sx={{ width: "7rem", height: "7rem", marginBottom: "2.4rem" }}
+        variant="rectangular"
+        sx={{ width: "35rem", height: "40rem", marginBottom: "2.4rem" }}
       />
       <Skeleton
         variant="rectangular"
-        sx={{ width: "8rem", height: "1.7rem" }}
+        sx={{ width: "10rem", height: "1.7rem" }}
       />
     </Box>
   );

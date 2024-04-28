@@ -20,32 +20,33 @@ const Index = (props: IndexProps) => {
   const isMobile = useMobile();
   return (
     <Box
-      height="50rem"
       marginLeft={isHomePage ? "1rem" : 0}
       marginRight={
         isHomePage ? (indexes === categoryArrayLength ? "1rem" : 0) : 0
       }
     >
       <Link href={`/category/${name}?pid=${_id}`}>
-        <Box
+        {/* <Box
           // height="100%"
           display="flex"
           flexDirection="column"
           justifyContent="center"
           alignItems="center"
           gap="2.4rem"
-        >
+        > */}
           <Box>
             <Box
-              width={isMobile ? "15rem" : " 30rem"}
-              height={isMobile ? "15rem" : "35rem"}
+              width={isMobile ? "15rem" : " 30vw"}
+              height={isMobile ? "15rem" : "35vh"}
               borderRadius="10rem"
             >
-              <Image
-                width={isMobile ? "150" : " 300"}
-                height={isMobile ? "150" : "350"}
+              <img
+                // width={isMobile ? "150" : " 250"}
+                // height={isMobile ? "150" : "300"}
                 alt="category"
                 src={image}
+                style={{maxHeight:"100%", maxWidth:"100%"}}
+                // layout="responsive"
               />
             </Box>
           </Box>
@@ -64,7 +65,7 @@ const Index = (props: IndexProps) => {
           >
             {name}
           </Typography>
-        </Box>
+        {/* </Box> */}
       </Link>
     </Box>
   );

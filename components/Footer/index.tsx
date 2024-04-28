@@ -621,8 +621,8 @@ const Index = () => {
                 letterSpacing="0.05rem">
                 Contact us
               </Typography>
-              <LI theme={theme}>+918076939952</LI>
-              <Link target="_blank" href={"mailto:royalmobisolonline@gmail.com"}>
+              <LI theme={theme}>+919650001541</LI>
+              <Link target="_blank" href={"mailto:info@triocomet.com"}>
               <LI theme={theme}>Email</LI>
               </Link>
             </Grid>

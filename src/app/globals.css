@@ -186,3 +186,8 @@ a {
 
   /* margin: 50rem; */
 }
+.awssld__timer {
+  display: hidden;
+  opacity: 0;
+  pointer-events: none; /* prevent events (mouse clicking etc.) */
+}
