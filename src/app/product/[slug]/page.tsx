@@ -1308,20 +1308,11 @@ const Product = ({ params }: { params: { slug: string } }) => {
                     </AccordionSummary>
                     <AccordionDetails>
                       {/* Description content */}
-                      <Typography
-                        color={
-                          theme === "light"
-                            ? lightColor.text.secondary
-                            : darkColor.text.secondary
-                        }
-                        fontSize={isMobile ? "1rem" : "1.6rem"}
-                        fontStyle="normal"
-                        fontWeight="400"
-                        lineHeight="normal"
-                        letterSpacing="0.02rem"
-                      >
-                        {productAPIRes.description}
-                      </Typography>
+                        <Box
+                      dangerouslySetInnerHTML={{
+                        __html: productAPIRes?.descImage?.descItems[0]?.desc,
+                      }}
+                    ></Box>
                     </AccordionDetails>
                   </Accordion>
                 )}
