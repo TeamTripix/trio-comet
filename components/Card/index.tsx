@@ -125,7 +125,7 @@ const Index: React.FC<IndexProps> = ({
             ? "35rem"
             : "90%"
         }
-        height="55rem"
+        height="auto"
         paddingBottom="0px"
         flexDirection="column"
         alignItems="flex-start"
@@ -186,28 +186,8 @@ const Index: React.FC<IndexProps> = ({
           ""
         )}
 
-        <ButtonBase
-          sx={{
-            borderRadius: "50%",
-            padding: "5px",
-            position: "absolute",
-            right: "0.5rem",
-            top: "0.5rem",
-            zIndex: "1",
-          }}
-          onClick={() => {
-            handleFavProduct();
-          }}
-        >
-          <FavourateIcon
-            fill={favProduct ? "#FF0000" : ""}
-            color={favProduct ? "#FF0000" : "white"}
-          />
-        </ButtonBase>
         <Box width="100%" height="auto">
           <Link
-            // onClick={() => alert("test")}
-            // href={`/product/${name}?pid=${_id}&sub_page_id=0&color_id=0&category_id=${category}&offerTag=${offerTag}`}
             href={`/product/${productColor[0].slug}`}
           >
             <Image
@@ -215,7 +195,7 @@ const Index: React.FC<IndexProps> = ({
               loading="lazy"
               alt="card thumbnail"
               width={"350"}
-              height={"290"}
+              height={"390"}
               layout="responsive"
             />
           </Link>
@@ -223,10 +203,10 @@ const Index: React.FC<IndexProps> = ({
         <Box
           display="flex"
           padding={isMobile ? "0.9rem" : "0.9rem 1.6rem"}
+          // paddingTop="0"
           flexDirection="column"
           justifyContent="end"
           alignItems="flex-start"
-          gap="0.8rem"
           flex="1 0 0"
           alignSelf="stretch"
           borderRadius="0rem 0rem 1.6rem 1.6rem"
@@ -239,19 +219,36 @@ const Index: React.FC<IndexProps> = ({
             alignItems="flex-start"
             gap="0.8rem"
             width="100%"
+            // bgcolor="pink"
           >
             <Box
               display="flex"
               justifyContent="center"
               alignItems="center"
               gap="0.4rem"
+              position="absolute"
+              bottom="18rem"
+              zIndex="99"
+              padding="0.1rem 0.5rem"
+              bgcolor="white"
+              left="0px"
             >
+              <Box display="flex" alignItems="flex-start" gap="0.2rem" paddingLeft="0.5rem">
+                {/* <Rating
+                  name="simple-controlled"
+                  size="small"
+                  readOnly
+                  value={2}
+                  sx={{ fontSize: "1.1rem" }}
+                /> */}
+                <StarIcon state={true}/>
+              </Box>
               <Typography
                 color={
                   theme === "light" ? lightColor.text.fade : darkColor.text.fade
                 }
                 textAlign="center"
-                fontSize="1rem"
+                fontSize="1.1rem"
                 fontStyle="normal"
                 fontWeight="500"
                 lineHeight="normal"
@@ -259,15 +256,6 @@ const Index: React.FC<IndexProps> = ({
               >
                 {"4"}
               </Typography>
-              <Box display="flex" alignItems="flex-start" gap="0.2rem">
-                <Rating
-                  name="simple-controlled"
-                  size="small"
-                  readOnly
-                  value={2}
-                  sx={{ fontSize: "1rem" }}
-                />
-              </Box>
             </Box>
 
             <Box
@@ -284,16 +272,17 @@ const Index: React.FC<IndexProps> = ({
                     : darkColor.text.primary
                 }
                 fontSize={
-                  isMobile ? (fullDetailCard ? "1.2rem" : "1.6rem") : "2rem"
+                  isMobile ? (fullDetailCard ? "1.2rem" : "1.4rem") : "1.4rem"
                 }
                 fontStyle="normal"
                 fontWeight="700"
                 lineHeight="normal"
                 letterSpacing="0.05rem"
               >
-                {name.length < 17 ? name : `${name.slice(0, 17)}...`}
+                {name.length < 35 ? name : `${name.slice(0, 35)}...`}
               </Typography>
               <Box display="flex" alignItems="center" gap="0.6rem">
+                {/* product color */}
                 {/* <Box
                   display="flex"
                   justifyContent="center"
@@ -329,7 +318,24 @@ const Index: React.FC<IndexProps> = ({
                     );
                   })}
                 </Box> */}
-                <Typography
+
+                <ButtonBase
+                  sx={{
+                    borderRadius: "50%",
+                    // padding: "5px",
+                    zIndex: "1",
+                  }}
+                  onClick={() => {
+                    handleFavProduct();
+                  }}
+                >
+                  <FavourateIcon
+                    fill={favProduct ? "#FF0000" : "#000"}
+                    color={favProduct ? "#FF0000" : "#000"}
+                  />
+                </ButtonBase>
+
+                {/* <Typography
                   color={
                     theme === "light"
                       ? lightColor.text.fade
@@ -345,7 +351,7 @@ const Index: React.FC<IndexProps> = ({
                   {data.productColor.length > 3
                     ? `+${data.productColor.length - 3}`
                     : ""}
-                </Typography>
+                </Typography> */}
               </Box>
             </Box>
 
@@ -353,7 +359,7 @@ const Index: React.FC<IndexProps> = ({
               display="flex"
               justifyContent="center"
               alignItems="center"
-              gap="0.2rem"
+              gap="0.4rem"
             >
               <Typography
                 color={
@@ -363,10 +369,10 @@ const Index: React.FC<IndexProps> = ({
                 }
                 textAlign="center"
                 fontSize={
-                  isMobile ? (fullDetailCard ? "1.2rem" : "1.4rem") : "2rem"
+                  isMobile ? (fullDetailCard ? "1.2rem" : "1.4rem") : "1.6rem"
                 }
                 fontStyle="normal"
-                fontWeight="700"
+                fontWeight="600"
                 lineHeight="normal"
                 letterSpacing="0.05rem"
               >
@@ -380,7 +386,7 @@ const Index: React.FC<IndexProps> = ({
                 }
                 textAlign="center"
                 fontSize={
-                  isMobile ? (fullDetailCard ? "0.6rem" : "1.2rem") : "1.2rem"
+                  isMobile ? (fullDetailCard ? "0.6rem" : "1rem") : "1.1rem"
                 }
                 fontStyle="normal"
                 fontWeight="500"
@@ -398,7 +404,7 @@ const Index: React.FC<IndexProps> = ({
                 }
                 textAlign="center"
                 fontSize={
-                  isMobile ? (fullDetailCard ? "0.8rem" : "1.2rem") : "1.2rem"
+                  isMobile ? (fullDetailCard ? "0.8rem" : "1rem") : "1rem"
                 }
                 fontStyle="normal"
                 fontWeight="700"
@@ -442,6 +448,44 @@ const Index: React.FC<IndexProps> = ({
               )}
             </Box>
 
+            {/* {fullDetailCard ? ( */}
+            <Box display="flex" alignItems="center" gap="0.8rem">
+              {specification.slice(0, 3).map((data: any, index: any) => {
+                return (
+                  <Box
+                    key={data.key}
+                    display="flex"
+                    padding="0.4rem 0.8rem"
+                    justifyContent="center"
+                    alignItems="center"
+                    gap="1rem"
+                    // borderRadius="0.8rem"
+                    border="0.1px solid #667085"
+                    bgcolor="rgba(252, 252, 253, 0.80)"
+                  >
+                    <Typography
+                      color="#667085"
+                      textAlign="center"
+                      fontSize={isMobile ? "0.6rem" : "1rem"}
+                      fontStyle="normal"
+                      fontWeight="400"
+                      lineHeight="normal"
+                      letterSpacing="0.05rem"
+                      sx={{
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "clip",
+                      }}
+                    >
+                      {data.label}
+                    </Typography>
+                  </Box>
+                );
+              })}
+            </Box>
+            {/* ) : (
+              ""
+            )} */}
             <Box
               width="100%"
               height="0.1rem"
@@ -451,45 +495,6 @@ const Index: React.FC<IndexProps> = ({
                   : darkColor.borderColor
               }
             ></Box>
-
-            {fullDetailCard ? (
-              <Box display="flex" alignItems="center" gap="0.8rem">
-                {specification.slice(0, 3).map((data: any, index: any) => {
-                  return (
-                    <Box
-                      key={data.key}
-                      display="flex"
-                      padding="0.2rem 0.8rem"
-                      justifyContent="center"
-                      alignItems="center"
-                      gap="1rem"
-                      borderRadius="0.8rem"
-                      border="0.1px solid #667085"
-                      bgcolor="rgba(252, 252, 253, 0.80)"
-                    >
-                      <Typography
-                        color="#667085"
-                        textAlign="center"
-                        fontSize={isMobile ? "0.6rem" : "0.8rem"}
-                        fontStyle="normal"
-                        fontWeight="400"
-                        lineHeight="normal"
-                        letterSpacing="0.05rem"
-                        sx={{
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "clip",
-                        }}
-                      >
-                        {data.label}
-                      </Typography>
-                    </Box>
-                  );
-                })}
-              </Box>
-            ) : (
-              ""
-            )}
 
             <Box
               display="flex"

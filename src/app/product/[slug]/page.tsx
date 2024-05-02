@@ -759,6 +759,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
               gap={isMobile ? "1rem" : "2.4rem"}
               width={isMobile ? "100%" : "50%"}
               marginLeft={isMobile ? 0 : "6rem"}
+              marginTop={isMobile ? 0 : "5rem"}
             >
               <Box
                 display="flex"

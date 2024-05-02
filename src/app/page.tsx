@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect, useRef } from "react";
 import { Box, Typography, Tab, Tabs, Grid, Skeleton } from "@mui/material";
 import Image from "next/image";
@@ -10,6 +9,7 @@ import { lightColor, darkColor } from "@/utils/CustomTheme/color";
 import YTPlayer from "@components/YTPlayer";
 import BlogCard from "@components/BlogCard";
 import TestimonialCard from "@components/TestimonialCard";
+import HomePageSpacing from "@components/HomePageSpacing";
 import PageSpacing from "@components/PageSpacing";
 import Link from "next/link";
 import axios from "axios";
@@ -298,7 +298,7 @@ export default function Home() {
         )}
 
         {/* Categories */}
-        <PageSpacing>
+        <HomePageSpacing>
           <Box display="flex" justifyContent="center" margin="1rem">
             <Typography
               color={
@@ -351,9 +351,9 @@ export default function Home() {
               </Grid>
             )}
           </Box>
-        </PageSpacing>
+        </HomePageSpacing>
 
-        <PageSpacing>
+        <>
           <Box sx={{ margin: "5rem 0", marginTop: "3rem" }}>
             {/* <Box display="flex" justifyContent="center">
               <Box
@@ -482,7 +482,6 @@ export default function Home() {
                       display="flex"
                       justifyContent="center"
                       alignItems="center"
-                      bgcolor="pink"
                     >
                       {onSaleApiRes.slice(0, 8).map((data, index) => {
                         return (
@@ -674,7 +673,7 @@ export default function Home() {
               )}
             </CustomTabPanel> */}
           </Box>
-        </PageSpacing>
+        </>
 
         <Box>
           <Image
@@ -686,7 +685,7 @@ export default function Home() {
           />
         </Box>
 
-        <PageSpacing>
+        <HomePageSpacing>
           <Box sx={{ margin: "5rem 0" }}>
             <Box display="flex" justifyContent="center" alignItems="center">
               <Typography
@@ -773,7 +772,7 @@ export default function Home() {
             ) : (
               // is desktop size is active
 
-              <Grid container spacing={2} height="52.1rem">
+              <Grid container spacing={2}>
                 {isNewArrivalLoading ? (
                   [...Array(4)].map((data, index: number) => {
                     return (
@@ -811,9 +810,9 @@ export default function Home() {
               </Grid>
             )}
           </Box>
-        </PageSpacing>
+        </HomePageSpacing>
 
-        <PageSpacing>
+        <HomePageSpacing>
           <Box sx={{ margin: "5rem 0" }}>
             <Box display="flex" justifyContent="center" alignItems="center">
               <Typography
@@ -899,7 +898,7 @@ export default function Home() {
             ) : (
               // is desktop size is active
 
-              <Grid container spacing={2} height="52.1rem">
+              <Grid container spacing={2}>
                 {isBestSellerLoading ? (
                   [...Array(4)].map((data, index) => {
                     return (
@@ -942,7 +941,7 @@ export default function Home() {
               </Grid>
             )}
           </Box>
-        </PageSpacing>
+        </HomePageSpacing>
         {/* --------------------------------------------- */}
         {/* <div className="App">
             <Slider {...settings}>
@@ -1041,7 +1040,7 @@ export default function Home() {
           <YTPlayer videoId="bmD-tZe8HBA" />
         </Box> */}
 
-        <PageSpacing>
+        <HomePageSpacing>
           <Box
             display="flex"
             flexDirection="column"
@@ -1130,7 +1129,7 @@ export default function Home() {
               </Box>
             ) : (
               // is desktop size is active
-              <Grid container spacing={2} height="52.1rem">
+              <Grid container spacing={2}>
                 {isBlogLoading ? (
                   [...Array(3)].map((data, index) => {
                     return (
@@ -1198,7 +1197,7 @@ export default function Home() {
             ) : (
               // is desktop size is active
 
-              <Grid height="52.1rem" container spacing={4}>
+              <Grid container spacing={4}>
                 <Grid item xs={4}>
                   <TestimonialCard />
                 </Grid>
@@ -1213,7 +1212,7 @@ export default function Home() {
               </Grid>
             )}
           </Box>
-        </PageSpacing>
+        </HomePageSpacing>
       </Box>
     </>
   );
