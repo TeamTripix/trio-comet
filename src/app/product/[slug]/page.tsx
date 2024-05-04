@@ -359,6 +359,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
   const isTablet = useTablet();
   const isMobile = useMobile();
   const theme: any = useSelector<any>((state) => state.themeToggle);
+  const [expanded, setExpanded] = useState('');
 
   useEffect(() => {
     axios({
@@ -627,6 +628,10 @@ const Product = ({ params }: { params: { slug: string } }) => {
       state: false,
     });
     toast.success("Your product added to cart");
+  };
+
+  const handleAccordionChange = (panel: string) => (_event: React.SyntheticEvent, isExpanded : boolean) => {
+    setExpanded(isExpanded ? panel : '');
   };
 
   const ref = useRef<HTMLImageElement>(null);
@@ -1286,8 +1291,86 @@ const Product = ({ params }: { params: { slug: string } }) => {
                 </Box>
               </Box>
 
-              {/* description */}
               <Box>
+                {/* Description */}
+                {productAPIRes.length === 0 ? (
+                  <Skeleton
+                    variant="rectangular"
+                    sx={{
+                      width: "70%",
+                      height: "6rem",
+                      borderRadius: "0.4rem",
+                    }}
+                  ></Skeleton>
+                ) : (
+                  <Accordion expanded={expanded === 'description'} onChange={handleAccordionChange('description')}>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                      <Typography>Description</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      {/* Description content */}
+                        <Box
+                      dangerouslySetInnerHTML={{
+                        __html: productAPIRes?.descImage?.descItems[0]?.desc,
+                      }}
+                    ></Box>
+                    </AccordionDetails>
+                  </Accordion>
+                )}
+
+                {/* Rating */}
+                {productAPIRes.length === 0 ? (
+                  <Skeleton
+                    variant="rectangular"
+                    sx={{
+                      width: "10rem",
+                      height: "2rem",
+                      borderRadius: "0.8rem",
+                    }}
+                  ></Skeleton>
+                ) : (
+                  <Accordion expanded={expanded === 'rating'} onChange={handleAccordionChange('rating')}>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                      <Typography>Rating</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      {/* Rating content */}
+                      <Typography>
+                        <Box display="flex" alignItems="center" gap="0.4rem">
+                          <Typography
+                            color={
+                              theme === "light"
+                                ? lightColor.text.fade
+                                : darkColor.text.fade
+                            }
+                            textAlign="center"
+                            fontSize={isMobile ? "1rem" : "1.5rem"}
+                            fontStyle="normal"
+                            fontWeight="500"
+                            lineHeight="normal"
+                            letterSpacing="0.05rem"
+                          >
+                            {"4"}
+                          </Typography>
+                          <Box width="8rem" display="flex" alignItems="center">
+                            <Rating
+                              name="simple-controlled"
+                              size="small"
+                              readOnly
+                              value={2}
+                              sx={{ fontSize: "1.5rem" }}
+                            />
+                          </Box>
+                        </Box>
+                      </Typography>
+                    </AccordionDetails>
+                  </Accordion>
+                )}
+              </Box>
+
+
+              {/* description */}
+              {/* <Box>
                 <Box
                   display="flex"
                   justifyContent="center"
@@ -1304,7 +1387,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
                     ></Box>
                   </Box>
                 </Box>
-              </Box>
+              </Box> */}
             </Box>
           </Box>
         </Box>
