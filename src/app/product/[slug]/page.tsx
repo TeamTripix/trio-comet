@@ -361,6 +361,10 @@ const Product = ({ params }: { params: { slug: string } }) => {
   const theme: any = useSelector<any>((state) => state.themeToggle);
   const [expanded, setExpanded] = useState('');
 
+  const handleAccordionChange = (panel: string) => (_event: React.SyntheticEvent, isExpanded : boolean) => {
+    setExpanded(isExpanded ? panel : '');
+  };
+
   useEffect(() => {
     axios({
       method: "GET",
@@ -628,10 +632,6 @@ const Product = ({ params }: { params: { slug: string } }) => {
       state: false,
     });
     toast.success("Your product added to cart");
-  };
-
-  const handleAccordionChange = (panel: string) => (_event: React.SyntheticEvent, isExpanded : boolean) => {
-    setExpanded(isExpanded ? panel : '');
   };
 
   const ref = useRef<HTMLImageElement>(null);
@@ -1303,7 +1303,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
                     }}
                   ></Skeleton>
                 ) : (
-                  <Accordion expanded={expanded === 'description'} onChange={handleAccordionChange('description')}>
+                  <Accordion expanded={expanded === 'description'} onChange={handleAccordionChange('description')} sx={{ boxShadow: 'none'  }}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                       <Typography>Description</Typography>
                     </AccordionSummary>
@@ -1329,45 +1329,348 @@ const Product = ({ params }: { params: { slug: string } }) => {
                     }}
                   ></Skeleton>
                 ) : (
-                  <Accordion expanded={expanded === 'rating'} onChange={handleAccordionChange('rating')}>
+                  <Accordion expanded={expanded === 'rating'} onChange={handleAccordionChange('rating')} sx={{ boxShadow: 'none'  }}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                       <Typography>Rating</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                       {/* Rating content */}
-                      <Typography>
-                        <Box display="flex" alignItems="center" gap="0.4rem">
-                          <Typography
-                            color={
-                              theme === "light"
-                                ? lightColor.text.fade
-                                : darkColor.text.fade
-                            }
-                            textAlign="center"
-                            fontSize={isMobile ? "1rem" : "1.5rem"}
-                            fontStyle="normal"
-                            fontWeight="500"
-                            lineHeight="normal"
-                            letterSpacing="0.05rem"
-                          >
-                            {"4"}
-                          </Typography>
-                          <Box width="8rem" display="flex" alignItems="center">
-                            <Rating
-                              name="simple-controlled"
-                              size="small"
-                              readOnly
-                              value={2}
-                              sx={{ fontSize: "1.5rem" }}
-                            />
-                          </Box>
-                        </Box>
-                      </Typography>
+                           <Box
+                              display="flex"
+                              width="90%"
+                              flexDirection="column"
+                              alignItems="flex-start"
+                              gap={isMobile ? "3.2rem" : "5.6rem"}
+                              padding="0 2.4rem"
+                            >
+                              <Grid
+                                container
+                                flexDirection={isMobile ? "column-reverse" : "row"}
+                                spacing={10}
+                              >
+                                <Grid item xs={isTablet ? (isMobile ? 12 : 6) : 8}>
+                                  <Box
+                                    display="flex"
+                                    flexDirection="column"
+                                    alignItems="flex-start"
+                                    gap={isMobile ? "3.2rem" : "5.6rem"}
+                                  >
+                                    <Typography
+                                      color={
+                                        theme === "light"
+                                          ? lightColor.text.primary
+                                          : darkColor.text.primary
+                                      }
+                                      fontSize="2rem"
+                                      fontStyle="normal"
+                                      fontWeight="700"
+                                      lineHeight="normal"
+                                      letterSpacing="0.02rem"
+                                    >
+                                      Customer reviews
+                                    </Typography>
+
+                                    {/* <ButtonBase
+                                        sx={{
+                                          display: "flex",
+                                          padding: "0.4rem 0.8rem",
+                                          justifyContent: "center",
+                                          alignItems: "center",
+                                          borderRadius: "0.4rem",
+                                          bgcolor: "#ECECED",
+                                        }}
+                                      >
+                                        Top reviews
+                                      </ButtonBase> */}
+                                    {reviewApiRes.length === 0 ? (
+                                      <Box width="100%" textAlign="center">
+                                        {" "}
+                                        <NoReview isMobile={isMobile} />
+                                      </Box>
+                                    ) : (
+                                      reviewApiRes.map((data, index) => {
+                                        return <ReviewCard data={data} key={`${index}card1`} />;
+                                      })
+                                    )}
+                                  </Box>
+                                </Grid>
+                                <Grid item xs={isTablet ? (isMobile ? 12 : 6) : 4}>
+                                  <Box
+                                    display="flex"
+                                    flexDirection="column"
+                                    alignItems="flex-start"
+                                    gap="1.6rem"
+                                  >
+                                    <Box
+                                      display="flex"
+                                      flexDirection="column"
+                                      justifyContent="center"
+                                      alignItems="center"
+                                      gap="1.6rem"
+                                    >
+                                      <Box
+                                        display="flex"
+                                        width="15.2rem"
+                                        alignItems="center"
+                                        gap="0.2rem"
+                                      >
+                                        <Rating
+                                          name="simple-controlled"
+                                          size="small"
+                                          readOnly
+                                          value={maxRating}
+                                          sx={{ fontSize: "1.5rem" }}
+                                        />
+
+                                        <Typography
+                                          color={
+                                            theme === "light"
+                                              ? lightColor.text.fade
+                                              : darkColor.text.fade
+                                          }
+                                          textAlign="center"
+                                          fontSize="1.6rem"
+                                          fontStyle="normal"
+                                          fontWeight="500"
+                                          lineHeight="normal"
+                                          letterSpacing="0.05rem"
+                                        >
+                                          {maxRating} out of 5
+                                        </Typography>
+                                      </Box>
+
+                                      {Object.values(percentRating).map((data: any, i: any) => {
+                                        return (
+                                          <Box
+                                            key={`reviewstarchart${i}`}
+                                            display="flex"
+                                            width="17.8rem"
+                                            justifyContent="space-between"
+                                            alignItems="center"
+                                          >
+                                            <Typography
+                                              color={
+                                                theme === "light"
+                                                  ? lightColor.text.fade
+                                                  : darkColor.text.fade
+                                              }
+                                              textAlign="center"
+                                              fontSize="1.6rem"
+                                              fontStyle="normal"
+                                              fontWeight="500"
+                                              lineHeight="normal"
+                                              letterSpacing="0.05rem"
+                                            >
+                                              {`${isNaN(data) ? 0 : data}%`}
+                                            </Typography>
+                                            <Box
+                                              width="11.6rem"
+                                              height="0.6rem"
+                                              flexShrink="0"
+                                              bgcolor={
+                                                theme === "light"
+                                                  ? lightColor.text.secondary
+                                                  : darkColor.text.secondary
+                                              }
+                                            >
+                                              <Box
+                                                width={`${isNaN(data) ? 0 : data}%`}
+                                                height="0.6rem"
+                                                flexShrink="0"
+                                                bgcolor={lightColor.theme.primary}
+                                              ></Box>
+                                            </Box>
+                                            <Typography
+                                              color={
+                                                theme === "light"
+                                                  ? lightColor.text.fade
+                                                  : darkColor.text.fade
+                                              }
+                                              textAlign="center"
+                                              fontSize="1.6rem"
+                                              fontStyle="normal"
+                                              fontWeight="500"
+                                              lineHeight="normal"
+                                              letterSpacing="0.05rem"
+                                            >
+                                              {i + 1}
+                                            </Typography>
+                                          </Box>
+                                        );
+                                      })}
+                                      <ButtonBase
+                                        onClick={() => setIsReviewDialogOpen(true)}
+                                        sx={{
+                                          display: "flex",
+                                          padding: "0.7rem 1.2rem",
+                                          justifyContent: "center",
+                                          alignItems: "center",
+                                          borderRadius: "0.8rem",
+                                          bgcolor:
+                                            theme === "light"
+                                              ? lightColor.text.chevron
+                                              : darkColor.text.chevron,
+                                        }}
+                                      >
+                                        <Typography
+                                          color="white"
+                                          textAlign="center"
+                                          fontSize="1.6rem"
+                                          fontStyle="normal"
+                                          fontWeight="500"
+                                          lineHeight="normal"
+                                          letterSpacing="0.05rem"
+                                        >
+                                          Write a review
+                                        </Typography>
+                                      </ButtonBase>
+
+                                      <Dialog
+                                        onClose={() => setIsReviewDialogOpen(false)}
+                                        aria-labelledby="customized-dialog-title"
+                                        open={isReviewDialogOpen}
+                                      >
+                                        <DialogTitle
+                                          sx={{ m: 0, p: 2 }}
+                                          id="customized-dialog-title"
+                                        >
+                                          Add Review
+                                        </DialogTitle>
+                                        <ButtonBase
+                                          aria-label="close"
+                                          onClick={() => setIsReviewDialogOpen(false)}
+                                          sx={{
+                                            position: "absolute",
+                                            right: 8,
+                                            top: 8,
+                                          }}
+                                        >
+                                          <CancelIcon />
+                                        </ButtonBase>
+                                        <DialogContent>
+                                          <Box
+                                            width="50rem"
+                                            display="flex"
+                                            flexDirection="column"
+                                            gap={"1.2rem"}
+                                          >
+                                            <TextField
+                                              label="Heading"
+                                              size="small"
+                                              fullWidth
+                                              onChange={(e: any) =>
+                                                setReviewHeading(e.target.value)
+                                              }
+                                            />
+                                            <Box>
+                                              <Rating
+                                                name="simple-controlled"
+                                                size="small"
+                                                value={ratingStarValue}
+                                                onChange={(event, newValue) =>
+                                                  setRatingStarValue(newValue)
+                                                }
+                                              />
+                                            </Box>
+                                            <Box display="flex" gap="2rem">
+                                              <TextField
+                                                fullWidth
+                                                onChange={(e: any) => setReviewDesc(e.target.value)}
+                                                id="filled-multiline-flexible"
+                                                label="Description"
+                                                multiline
+                                                maxRows={4}
+                                                minRows={4}
+                                              />
+                                              <Box>
+                                                <ImageUploader
+                                                  buttonText="upload"
+                                                  helperText="images size 29x29"
+                                                  width={100}
+                                                  height={100}
+                                                  // dimension={{ width: 1500, height: 1500 }}
+                                                  getResponse={setReviewImage}
+                                                />
+                                              </Box>
+                                            </Box>
+                                          </Box>
+                                        </DialogContent>
+                                        <DialogContent sx={{ justifyContent: "flex-end" }}>
+                                          <ButtonBase
+                                            onClick={handleSubmitReview}
+                                            sx={{
+                                              bgcolor:
+                                                theme === "light"
+                                                  ? lightColor.text.chevron
+                                                  : darkColor.text.chevron,
+                                              padding: "1rem 2rem",
+                                              borderRadius: "0.8rem",
+                                              width: "15rem",
+                                              height: "3.5rem",
+                                            }}
+                                          >
+                                            <Typography
+                                              color={"#fbfbfb"}
+                                              textAlign="center"
+                                              fontSize={isMobile ? "2rem" : "1.4rem"}
+                                              fontStyle="normal"
+                                              fontWeight="500"
+                                              lineHeight="normal"
+                                              letterSpacing="0.05rem"
+                                            >
+                                              {sendReviewIsLoading ? (
+                                                <CircularProgress
+                                                  size={15}
+                                                  sx={{
+                                                    color: "white",
+                                                  }}
+                                                />
+                                              ) : (
+                                                "Save Changes"
+                                              )}
+                                            </Typography>
+                                          </ButtonBase>
+                                        </DialogContent>
+                                      </Dialog>
+                                    </Box>
+                                    <Grid container spacing={2}>
+                                      {reviewApiRes.length === 0
+                                        ? ""
+                                        : reviewApiRes.map((data: any) => {
+                                            if (data.image === "") {
+                                              return "";
+                                            } else {
+                                              return (
+                                                <Grid
+                                                  key={data.image}
+                                                  item
+                                                  width="17.8rem"
+                                                  height="15.3rem"
+                                                  borderRadius="0.8rem"
+                                                  overflow="hidden"
+                                                >
+                                                  <Image
+                                                    src={data.image}
+                                                    alt="banner"
+                                                    loading="lazy"
+                                                    width={180}
+                                                    height={155}
+                                                    layout="responsive"
+                                                    style={{ borderRadius: "0.8rem" }}
+                                                  />
+                                                </Grid>
+                                              );
+                                            }
+                                          })}
+                                    </Grid>
+                                  </Box>
+                                </Grid>
+                              </Grid>
+                            </Box>
                     </AccordionDetails>
                   </Accordion>
                 )}
               </Box>
-
 
               {/* description */}
               {/* <Box>
