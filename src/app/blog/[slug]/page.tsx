@@ -17,6 +17,8 @@ const Blog = ({ params }: { params: { slug: string } }) => {
   const pid = queryParams.get("pid");
   const [blogApiRes, setBlogApiRes] = useState<any>([]);
   const theme: any = useSelector<any>((state) => state.themeToggle);
+  const [otherBlogsData, setOtherBlogsData] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     axios({
       method: "GET",
@@ -27,6 +29,18 @@ const Blog = ({ params }: { params: { slug: string } }) => {
       })
       .catch((err) => {
         console.log(err);
+      });
+    axios({
+      method: "GET",
+      url: "/api/blog",
+    })
+      .then((res) => {
+        setIsLoading(false);
+        setOtherBlogsData(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsLoading(false);
       });
   }, []);
 
@@ -41,118 +55,144 @@ const Blog = ({ params }: { params: { slug: string } }) => {
               <BreadCrumb />
             </Box>
           </PageSpacing>
-          <Box
-            display="flex"
-            flexDirection="column"
-            justifyContent="center"
-            alignItems="center"
-            gap="5.6rem"
-            alignSelf="stretch">
-            <Box>
+          <Box display="flex">
+            {/* Left side space */}
+            <Box
+              width="15%"
+              padding="0px 0px"
+              display="flex"
+              flexDirection="column"
+            >
               <Typography
                 color={
                   theme === "light"
-                    ? lightColor.text.primary
-                    : darkColor.text.primary
+                    ? lightColor.text.fade
+                    : darkColor.text.secondary
                 }
                 textAlign="center"
-                fontSize="4rem"
+                fontSize="1.4rem"
                 fontStyle="normal"
-                fontWeight="700"
+                fontWeight="500"
                 lineHeight="normal"
-                letterSpacing="0.05rem">
-                {blogApiRes[0].heading}
+                letterSpacing="0.02rem">
+                Links
               </Typography>
             </Box>
-            <Box width="100%" height="auto">
-              <Image
-                width={"1536"}
-                height={"500"}
-                src={blogApiRes[0].banner}
-                alt="blogThumbnail"
-                layout="responsive"
-              />
-            </Box>
-            <PageSpacing>
-              <Box
-                display="flex"
-                flexDirection="column"
-                justifyContent="center"
-                alignItems="flex-start"
-                gap="3.2rem">
+            {/* middle space */}
+            <Box
+              display="flex"
+              flexDirection="column"
+              justifyContent="center"
+              alignItems="center"
+              gap="3.6rem"
+              alignSelf="stretch"
+              width="50%"
+            >
+              <Box>
                 <Typography
                   color={
                     theme === "light"
-                      ? lightColor.text.fade
-                      : darkColor.text.secondary
+                      ? lightColor.text.primary
+                      : darkColor.text.primary
                   }
                   textAlign="center"
-                  fontSize="1.4rem"
+                  fontSize="4rem"
                   fontStyle="normal"
-                  fontWeight="500"
+                  fontWeight="700"
                   lineHeight="normal"
-                  letterSpacing="0.02rem">
-                  15/01/2024
+                  letterSpacing="0.05rem">
+                  {blogApiRes[0].heading}
                 </Typography>
-                <Typography
-                color={theme === "light"
-                ? lightColor.text.primary
-                : darkColor.text.primary}
-                  dangerouslySetInnerHTML={{
-                    __html: blogApiRes[0].desc,
-                  }}></Typography>
               </Box>
-              <Box
-                display="flex"
-                padding="8rem 0"
-                flexDirection="column"
-                justifyContent="center"
-                // bgcolor="#FFF"
-                >
+              <Box width="100%" height="auto">
+                <Image
+                  width={"1536"}
+                  height={"500"}
+                  src={blogApiRes[0].banner}
+                  alt="blogThumbnail"
+                  layout="responsive"
+                />
+              </Box>
+              <PageSpacing>
                 <Box
                   display="flex"
-                  justifyContent="space-between"
-                  alignItems="center"
-                  margin="6rem 0">
+                  flexDirection="column"
+                  justifyContent="center"
+                  alignItems="flex-start"
+                  gap="2.2rem">
                   <Typography
                     color={
                       theme === "light"
-                        ? lightColor.text.primary
-                        : darkColor.text.primary
+                        ? lightColor.text.fade
+                        : darkColor.text.secondary
                     }
                     textAlign="center"
-                    fontSize="2.8rem"
+                    fontSize="1.4rem"
                     fontStyle="normal"
-                    fontWeight="700"
+                    fontWeight="500"
                     lineHeight="normal"
-                    letterSpacing="0.05rem">
-                    Blogs
+                    letterSpacing="0.02rem">
+                    15/01/2024
                   </Typography>
-                  <Link href={"blog-collection"}>
-                    <Box
-                      display="flex"
-                      // width="67.3rem"
-                      justifyContent="flex-end"
-                      alignItems="center"
-                      gap="0.4rem"
-                      flexShrink="0">
-                      <Typography
-                        color={lightColor.text.link}
-                        textAlign="center"
-                        fontSize="1.8rem"
-                        fontStyle="normal"
-                        fontWeight="400"
-                        lineHeight="normal"
-                        letterSpacing="0.05rem"
-                        display="flex"
-                        alignItems="center">
-                        View more
-                        <ForwardIcon />
-                      </Typography>
-                    </Box>
-                  </Link>
+                  <Typography
+                    color={theme === "light"
+                      ? lightColor.text.primary
+                      : darkColor.text.primary}
+                    dangerouslySetInnerHTML={{
+                      __html: blogApiRes[0].desc,
+                    }}></Typography>
                 </Box>
-                {/* <Grid height="52.1rem" container spacing={4}>
+                <Box
+                  display="flex"
+                  padding="1rem 0"
+                  flexDirection="column"
+                  justifyContent="center"
+                // bgcolor="#FFF"
+                >
+                  <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    margin="1rem 0">
+                    <Typography
+                      color={
+                        theme === "light"
+                          ? lightColor.text.primary
+                          : darkColor.text.primary
+                      }
+                      textAlign="center"
+                      fontSize="2.8rem"
+                      fontStyle="normal"
+                      fontWeight="700"
+                      lineHeight="normal"
+                      letterSpacing="0.05rem">
+                      Blogs
+                    </Typography>
+                    <Link href={"blog-collection"}>
+                      <Box
+                        display="flex"
+                        // width="67.3rem"
+                        justifyContent="flex-end"
+                        alignItems="center"
+                        gap="0.4rem"
+                        flexShrink="0">
+                        <Typography
+                          color={lightColor.text.link}
+                          textAlign="center"
+                          fontSize="1.8rem"
+                          fontStyle="normal"
+                          fontWeight="400"
+                          lineHeight="normal"
+                          letterSpacing="0.05rem"
+                          display="flex"
+                          alignItems="center">
+                          View more
+                          <ForwardIcon />
+                        </Typography>
+                      </Box>
+                    </Link>
+                  </Box>
+                  {/* <Grid height="52.1rem" container spacing={4}>
               <Grid item xs={4}>
                 <BlogCard />
               </Grid>
@@ -163,8 +203,54 @@ const Blog = ({ params }: { params: { slug: string } }) => {
                 <BlogCard />
               </Grid>
             </Grid> */}
-              </Box>
-            </PageSpacing>
+                </Box>
+              </PageSpacing>
+            </Box>
+
+            {/* Line */}
+            <Box
+              height="100%"
+              width="1px"
+              bgcolor={darkColor.text.secondary
+              }
+            />
+
+            {/* Right side space */}
+            <Box
+              width="35%"
+              padding="0 0 0 50px"
+              display="flex"
+              flexDirection="column"
+            >
+              <Typography
+                color={
+                  theme === "light"
+                    ? lightColor.text.fade
+                    : darkColor.text.secondary
+                }
+                textAlign="center"
+                fontSize="1.4rem"
+                fontStyle="normal"
+                fontWeight="500"
+                lineHeight="normal"
+                letterSpacing="0.02rem"
+              >
+                {isLoading ? (
+                  "loading..."
+                ) : (
+                  <Grid container spacing={4}>
+                    {otherBlogsData.length === 0
+                      ? "No other blogs found."
+                      : otherBlogsData.map((blog, index) => (
+                        <Grid key={`blog-${index}`} item xs={7}>
+                          {/* Render your BlogCard component here */}
+                          <BlogCard data={blog} />
+                        </Grid>
+                      ))}
+                  </Grid>
+                )}
+              </Typography>
+            </Box>
           </Box>
         </>
       )}
