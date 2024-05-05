@@ -475,14 +475,15 @@ export default function Index() {
                 <LI
                   theme={theme}
                   highlite={pathname === "/bulk-query" ? true : false}
+                  style={{ fontSize: 20 }}
                 >
-                  New Arrivals
+                  NEW ARRIVALS
                 </LI>
               </Link>
 
               <Link href="/men">
-                <LI theme={theme} highlite={pathname === "/men" ? true : false}>
-                  Men
+                <LI theme={theme} highlite={pathname === "/men" ? true : false} style={{ fontSize: 20 }}>
+                  MEN
                 </LI>
               </Link>
 
@@ -499,8 +500,9 @@ export default function Index() {
                 <LI
                   theme={theme}
                   highlite={pathname === "/combos" ? true : false}
+                  style={{ fontSize: 20 }}
                 >
-                  Combos
+                  COMBOS
                 </LI>
               </Link>
 
@@ -508,16 +510,18 @@ export default function Index() {
                 <LI
                   theme={theme}
                   highlite={pathname === "/blog-collection" ? true : false}
+                  style={{ fontSize: 20 }}
                 >
-                  Blogs
+                  BLOGS
                 </LI>
               </Link>
               <Link href="/about-us">
                 <LI
                   theme={theme}
                   highlite={pathname === "/about-us" ? true : false}
+                  style={{ fontSize: 20 }}
                 >
-                  About Us
+                  ABOUT US
                 </LI>
               </Link>
               {/* <Box onClick={(e) => handleClickMoreMenu(e)}>

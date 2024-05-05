@@ -532,7 +532,7 @@ const Index: React.FC<IndexProps> = ({
                   color="#1D1D1F"
                   textAlign="center"
                   fontSize={
-                    isMobile ? (fullDetailCard ? "1.2rem" : "1.6rem") : "2rem"
+                    isMobile ? (fullDetailCard ? "1.2rem" : "1.6rem") : "1.7rem"
                   }
                   fontStyle="normal"
                   fontWeight="700"

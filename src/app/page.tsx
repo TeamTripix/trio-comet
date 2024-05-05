@@ -1129,7 +1129,7 @@ export default function Home() {
               </Box>
             ) : (
               // is desktop size is active
-              <Grid container spacing={2}>
+              <Grid container spacing={0}>
                 {isBlogLoading ? (
                   [...Array(3)].map((data, index) => {
                     return (
