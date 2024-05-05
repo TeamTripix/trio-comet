@@ -1294,14 +1294,52 @@ const Product = ({ params }: { params: { slug: string } }) => {
               </Box>
 
               <Box>
+                {/* Offers */}
+                {productAPIRes.length === 0 ? (
+                  <Skeleton
+                    variant="rectangular"
+                    sx={{
+                      width: "50rem",
+                      height: "5rem",
+                      borderRadius: "0.4rem",
+                      marginBottom: "0.5rem"
+                    }}
+                  ></Skeleton>
+                ) : (
+                  <Accordion
+                    expanded={expanded === "offers"}
+                    onChange={handleAccordionChange("offers")}
+                    sx={{ boxShadow: "none" }}
+                  >
+                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                      <Typography>Offers</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      {/* Offers content */}
+                      <Box
+                        display="flex"
+                        flexDirection="column"
+                        alignItems="flex-start"
+                        gap={isMobile ? "1.6rem" : "3.2rem"}
+                        width="100%"
+                      >
+                        <Typography variant="body1">Buy 1 Get 1 Free</Typography>
+                        <Typography variant="body1">Flat 20% Off</Typography>
+                        <Typography variant="body1">Limited Time Offer</Typography>
+                      </Box>
+                    </AccordionDetails>
+                  </Accordion>
+                )}
+
                 {/* Description */}
                 {productAPIRes.length === 0 ? (
                   <Skeleton
                     variant="rectangular"
                     sx={{
-                      width: "70%",
-                      height: "6rem",
+                      width: "50rem",
+                      height: "5rem",
                       borderRadius: "0.4rem",
+                      marginBottom: "0.5rem"
                     }}
                   ></Skeleton>
                 ) : (
@@ -1329,9 +1367,10 @@ const Product = ({ params }: { params: { slug: string } }) => {
                   <Skeleton
                     variant="rectangular"
                     sx={{
-                      width: "10rem",
-                      height: "2rem",
-                      borderRadius: "0.8rem",
+                      width: "50rem",
+                      height: "5rem",
+                      borderRadius: "0.4rem",
+                      marginBottom: "0.5rem"
                     }}
                   ></Skeleton>
                 ) : (
