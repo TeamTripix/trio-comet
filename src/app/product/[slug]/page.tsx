@@ -44,6 +44,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Carousel } from "react-responsive-carousel";
 import FullSizeProductImage from "@components/FullSizeProductImage";
 import "../../bulletStyle.module.css";
+import StarIcon from '@mui/icons-material/Star';
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -360,6 +361,11 @@ const Product = ({ params }: { params: { slug: string } }) => {
   const isMobile = useMobile();
   const theme: any = useSelector<any>((state) => state.themeToggle);
   const [expanded, setExpanded] = useState("");
+  const [selectedSize, setSelectedSize] = useState(null);
+
+  const handleSizeSelection = (size) => {
+    setSelectedSize(size);
+  };
 
   const handleAccordionChange =
     (panel: string) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -408,7 +414,6 @@ const Product = ({ params }: { params: { slug: string } }) => {
       url: `/api/product?slug=${params.slug}`,
     })
       .then((res) => {
-        console.log(res.data.data);
         setProductAPIRes(res.data.data);
         setRelatedProductAppear(false);
       })
@@ -438,6 +443,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
       url: `/api/coupon/?pid=${productAPIRes._id}`,
     })
       .then((res) => {
+        console.log("coupons--",res.data);
         setCouponAPIRes(res.data.data);
       })
       .catch(() => {});
@@ -675,27 +681,71 @@ const Product = ({ params }: { params: { slug: string } }) => {
               position="sticky"
               top="6rem"
             >
-              <Box paddingLeft="2rem" margin="1rem 10rem">
+              <Box paddingLeft="0rem" margin="1rem 0rem 0rem 0rem">
                 <BreadCrumb />
               </Box>
-              <Box>
+              <Box
+                display="flex"
+                flexDirection={{ xs: 'column', md: 'row' }}
+                alignItems="center"
+                gap="1rem"
+                margin="1.2rem 0"
+              >
+                {/* side images */}
                 {productAPIRes.length === 0 ? (
                   <Skeleton
                     variant="rectangular"
                     sx={{
-                      width: "100%",
-                      height: "57rem",
+                      width: "10.1rem",
+                      height: "8.7rem",
                       borderRadius: "0.8rem",
                     }}
                   ></Skeleton>
                 ) : (
-                  <>
+                  productAPIRes.productColor[0].imageURL.map(
+                    (elem: any, index: number) => {
+                      return (
+                        <Box
+                          width="10.1rem"
+                          height="8.7rem"
+                          borderRadius="0.8rem"
+                          key={`productImageLeft${index}`}
+                        >
+                          <Image
+                            alt="product image"
+                            width="100"
+                            height="90"
+                            src={elem}
+                            style={{ borderRadius: "0.8rem" }}
+                            layout="responsive"
+                          />
+                        </Box>
+                      );
+                    }
+                  )
+                )}
+
+                {/* main image */}
+                <Box
+                  marginLeft={{ xs: '0', md: '1rem' }}
+                  marginTop={{ xs: '1rem', md: '0' }}
+                >
+                  {productAPIRes.length === 0 ? (
+                    <Skeleton
+                      variant="rectangular"
+                      sx={{
+                        width: "100%",
+                        height: "57rem",
+                        borderRadius: "0.8rem",
+                      }}
+                    ></Skeleton>
+                  ) : (
                     <AwesomeSlider
                       className="slider"
                       bullets={true}
                       style={{
-                        height: productWidth - 100,
-                        width: productWidth,
+                        height: productWidth - 50,
+                        width: productWidth - 130,
                       }}
                     >
                       {productAPIRes.productColor[0].imageURL.map(
@@ -714,47 +764,8 @@ const Product = ({ params }: { params: { slug: string } }) => {
                         }
                       )}
                     </AwesomeSlider>
-                  </>
-                )}
-              </Box>
-              <Box
-                display="flex"
-                alignItems="center"
-                gap="1rem"
-                margin="1.2rem 0"
-              >
-                {productAPIRes.length === 0 ? (
-                  <Skeleton
-                    variant="rectangular"
-                    sx={{
-                      width: "10.1rem",
-                      height: "8.7rem",
-                      borderRadius: "0.8rem",
-                    }}
-                  ></Skeleton>
-                ) : (
-                  productAPIRes.productColor[0].imageURL.map(
-                    (elem: any, index: number) => {
-                      return (
-                        <Box
-                          width="10.1rem"
-                          height="8.7rem"
-                          borderRadius="0.8rem"
-                          key={`productImage${index}`}
-                        >
-                          <Image
-                            alt="product image"
-                            width="100"
-                            height="90"
-                            src={elem}
-                            style={{ borderRadius: "0.8rem" }}
-                            layout="responsive"
-                          />
-                        </Box>
-                      );
-                    }
-                  )
-                )}
+                  )}
+                </Box>
               </Box>
             </Box>
 
@@ -829,33 +840,31 @@ const Product = ({ params }: { params: { slug: string } }) => {
 
                 <Box
                   display="flex"
-                  justifyContent="center"
                   alignItems="center"
-                  gap="0.4rem"
+                  justifyContent="center"
+                  width="5rem"
+                  height="2.5rem"
+                  border="0.3px solid #949494"
+                  padding="1rem 2.7rem"
+                  bgcolor="#f7f7f7"
                 >
-                  <Typography
-                    color={
-                      theme === "light"
-                        ? lightColor.text.fade
-                        : darkColor.text.fade
-                    }
-                    textAlign="center"
-                    fontSize={isMobile ? "1rem" : "1.5rem"}
-                    fontStyle="normal"
-                    fontWeight="500"
-                    lineHeight="normal"
-                    letterSpacing="0.05rem"
-                  >
-                    {"4"}
-                  </Typography>
-                  <Box width="8rem" display="flex" alignItems="center">
-                    <Rating
-                      name="simple-controlled"
-                      size="small"
-                      readOnly
-                      value={2}
-                      sx={{ fontSize: "1.5rem" }}
-                    />
+                  <Box display="flex" alignItems="center">
+                    <StarIcon sx={{ fontSize: '1.7rem', marginRight: '0.3rem', color:'#ffc700' }} />
+                    <Typography 
+                      color={
+                        theme === "light"
+                          ? lightColor.text.fade
+                          : darkColor.text.fade
+                      }
+                      textAlign="center"
+                      fontSize={isMobile ? "1rem" : "1.5rem"}
+                      fontStyle="normal"
+                      fontWeight="500"
+                      lineHeight="normal"
+                      letterSpacing="0.05rem"
+                    >
+                      4.5
+                    </Typography>
                   </Box>
                 </Box>
               </Box>
@@ -1041,6 +1050,77 @@ const Product = ({ params }: { params: { slug: string } }) => {
                             );
                           }
                         )}
+                  </Box>
+                </Box>
+
+                {/* size options */}
+                <Box>
+                  {/* Heading */}
+                  <Typography
+                    color={
+                      theme === "light"
+                        ? lightColor.text.primary
+                        : darkColor.text.primary
+                    }
+                    fontSize={isMobile ? "1.6rem" : "2rem"}
+                    fontStyle="normal"
+                    fontWeight="700"
+                    lineHeight="normal"
+                    letterSpacing="0.02rem"
+                  >
+                    Select Sizes
+                  </Typography>
+                  {/* Size options */}
+                  <Box
+                    display="flex"
+                    flexDirection="row"
+                    flexWrap="wrap"
+                    gap={isMobile ? '1rem' : '1.7rem'}
+                    width="100%"
+                    marginTop="1rem"
+                  >
+                    {productAPIRes.length === 0  ? (
+                      <>
+                        <Skeleton variant="rectangular" width="4.2rem" height="4.2rem" />
+                        <Skeleton variant="rectangular" width="4.2rem" height="4.2rem" />
+                        <Skeleton variant="rectangular" width="4.2rem" height="4.2rem" />
+                        <Skeleton variant="rectangular" width="4.2rem" height="4.2rem" />
+                        <Skeleton variant="rectangular" width="4.2rem" height="4.2rem" />
+                      </>
+                    ) : (
+                      ["S", "M", "L", "XL", "2XL"].map((size) => (
+                        <Box
+                          key={size}
+                          onClick={() => handleSizeSelection(size)}
+                          sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            width: '4.2rem',
+                            height: '4.2rem',
+                            bgcolor: selectedSize === size ? '#C4C4C4' : '#EFF2F6',
+                            borderRadius: '0.8rem',
+                            cursor: 'pointer',
+                          }}
+                        >
+                          <Typography
+                            color={
+                              theme === 'light'
+                                ? lightColor.text.primary
+                                : darkColor.text.primary
+                            }
+                            textAlign="center"
+                            fontSize={isMobile ? '1.6rem' : '1.8rem'}
+                            fontStyle="normal"
+                            fontWeight={selectedSize === size ? 700 : 400}
+                            lineHeight="normal"
+                            letterSpacing="0.02rem"
+                          >
+                            {size}
+                          </Typography>
+                        </Box>
+                      ))
+                    )}
                   </Box>
                 </Box>
 
@@ -1324,8 +1404,6 @@ const Product = ({ params }: { params: { slug: string } }) => {
                         width="100%"
                       >
                         <Typography variant="body1">Buy 1 Get 1 Free</Typography>
-                        <Typography variant="body1">Flat 20% Off</Typography>
-                        <Typography variant="body1">Limited Time Offer</Typography>
                       </Box>
                     </AccordionDetails>
                   </Accordion>

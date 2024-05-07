@@ -132,7 +132,7 @@ const Index: React.FC<IndexProps> = ({
         gap="0.1rem"
         flexShrink="0"
         borderRadius={
-          isMobile ? (fullDetailCard ? "0.8rem" : "1.6rem") : "1.6rem"
+          isMobile ? (fullDetailCard ? "0.8rem" : "1.6rem") : "0.5rem"
         }
         border={`1px solid ${
           theme === "light" ? lightColor.borderColor : darkColor.borderColor
