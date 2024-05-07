@@ -363,7 +363,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
   const [expanded, setExpanded] = useState("");
   const [selectedSize, setSelectedSize] = useState(null);
 
-  const handleSizeSelection = (size) => {
+  const handleSizeSelection = (size : any) => {
     setSelectedSize(size);
   };
 
