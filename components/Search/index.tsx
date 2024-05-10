@@ -10,13 +10,20 @@ import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
+interface ProductColor {
+  color: string;
+  id: number;
+  imageURL: string[];
+  slug: string;
+}
+
 interface Product {
   id: number;
   name: string;
   image: string;
   discountPrice: number;
   price: number;
-  productColor: Array;
+  productColor: ProductColor[];
 }
 
 function debounce(func: Function, delay: number) {
@@ -84,6 +91,7 @@ const Index = () => {
   }, [searchInputText, categorySelector]);
 
   const handleSuggestionClick = (item: any) => {
+    {console.log("item", item)}
     setSearchInputText(item.name);
     router.push(`?category=${categorySelector}&query=${item.name}`);
     setSuggestions([]);
@@ -112,7 +120,7 @@ const Index = () => {
   const fetchSuggestions = async (query: string) => {
     try {
       const response = await axios.get(`/api/search/?category=${categorySelector}&query=${query}`);
-      console.log("response", response.data.data);
+      // console.log("response", response.data.data);
       const products: Product[] = response.data.data.map((product: any) => ({
         id: product._id,
         name: product.name,
@@ -121,7 +129,7 @@ const Index = () => {
         price: product.price,
         productColor: product.productColor,
       }));
-      console.log('products-----', products);
+      // console.log('products-----', products);
       setSuggestions(products);
     } catch (error) {
       console.error("Error fetching suggestions:", error);
@@ -284,8 +292,8 @@ const Index = () => {
           zIndex={1000}
         >
           {suggestions.slice(0, 5).map((item) => (
-            <Link href={`/product/${item.productColor[0].slug}`}>
-              <MenuItem key={item.id} onClick={() => handleSuggestionClick(item)}>
+            <Link key={item.id} href={`/product/${item.productColor[0].slug}`}>
+              <MenuItem onClick={() => handleSuggestionClick(item)}>
                 <Box display="flex" alignItems="center">
                   <img src={item.image} alt={item.name} style={{ width: "75px", height: "75px", margin: "10px" }} />
                   <div>
