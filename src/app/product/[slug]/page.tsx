@@ -17,6 +17,7 @@ import {
   DialogContent,
   TextField,
   CircularProgress,
+  IconButton,
 } from "@mui/material";
 import PageSpacing from "@components/PageSpacing";
 import { lightColor, darkColor } from "@/utils/CustomTheme/color";
@@ -45,6 +46,8 @@ import { Carousel } from "react-responsive-carousel";
 import FullSizeProductImage from "@components/FullSizeProductImage";
 import "../../bulletStyle.module.css";
 import StarIcon from '@mui/icons-material/Star';
+import CopyToClipboard from 'react-copy-to-clipboard';
+
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -362,6 +365,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
   const theme: any = useSelector<any>((state) => state.themeToggle);
   const [expanded, setExpanded] = useState("");
   const [selectedSize, setSelectedSize] = useState(null);
+  const [copied, setCopied] = useState(false);
 
   const handleSizeSelection = (size : any) => {
     setSelectedSize(size);
@@ -372,6 +376,10 @@ const Product = ({ params }: { params: { slug: string } }) => {
       setExpanded(isExpanded ? panel : "");
     };
 
+  const handleCopy = () => {
+    toast.success("Copied Succesfully")
+  };
+  
   useEffect(() => {
     axios({
       method: "GET",
@@ -1395,17 +1403,23 @@ const Product = ({ params }: { params: { slug: string } }) => {
                       <Typography>Offers</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                      {/* Offers content */}
-                      <Box
-                        display="flex"
-                        flexDirection="column"
-                        alignItems="flex-start"
-                        gap={isMobile ? "1.6rem" : "3.2rem"}
-                        width="100%"
+                    {/* Offers content */}
+                    <Typography variant="body1">Buy 1 Get 1 Free</Typography>
+                    {/* Tap to copy */}
+                    <CopyToClipboard text="Text to be copied" onCopy={handleCopy}>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          textDecoration: 'none',
+                          cursor: 'pointer',
+                          marginLeft: '1rem',
+                          color: '#42A2A2',
+                        }}
                       >
-                        <Typography variant="body1">Buy 1 Get 1 Free</Typography>
-                      </Box>
-                    </AccordionDetails>
+                        Tap to copy
+                      </Typography>
+                    </CopyToClipboard>
+                  </AccordionDetails>
                   </Accordion>
                 )}
 

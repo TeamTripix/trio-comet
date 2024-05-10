@@ -9,6 +9,28 @@ import axios from "axios";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+
+interface Product {
+  id: number;
+  name: string;
+  image: string;
+  discountPrice: number;
+  price: number;
+  productColor: Array;
+}
+
+function debounce(func: Function, delay: number) {
+  let timeoutId: NodeJS.Timeout;
+  return function (this: any, ...args: any[]) {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    timeoutId = setTimeout(() => {
+      func.apply(this, args);
+    }, delay);
+  };
+}
+
 const Index = () => {
   const [categorySelector, setCategorySelector] = useState("all");
   const [seachApiRes, setSeachApiRes] = useState([]);
@@ -20,6 +42,7 @@ const Index = () => {
   const dispatch = useDispatch();
   const toggleState = useSelector((state: any) => state.searchToggle);
   const theme: any = useSelector<any>((state) => state.themeToggle);
+  const [suggestions, setSuggestions] = useState<Product[]>([]);
 
   useEffect(() => {
     axios({
@@ -27,6 +50,7 @@ const Index = () => {
       url: "/api/category",
     })
       .then((res) => {
+        // console.log('category response', res.data.data);
         setCategoryApiRes(res.data.data);
       })
       .catch((err) => {
@@ -34,9 +58,9 @@ const Index = () => {
       });
   }, []);
 
-  useEffect(() => {}, [setSearchResult, searchInputText, setSeachApiRes]);
+  useEffect(() => { }, [setSearchResult, searchInputText, setSeachApiRes]);
 
-  const handleInput = (data: any) => {
+  const handleInput = (data: string) => {
     setSearchInputText(data);
     router.push(`?category=${categorySelector}&query=${data}`);
   };
@@ -46,9 +70,74 @@ const Index = () => {
     router.push(`?category=${data}&query=${searchInputText}`);
   };
 
+  useEffect(() => {
+    const delay = 300;
+    const timerId = setTimeout(() => {
+      if (searchInputText.trim() !== "") {
+        fetchSuggestions(searchInputText);
+      } else {
+        setSuggestions([]);
+      }
+    }, delay);
+
+    return () => clearTimeout(timerId);
+  }, [searchInputText, categorySelector]);
+
+  const handleSuggestionClick = (item: any) => {
+    setSearchInputText(item.name);
+    router.push(`?category=${categorySelector}&query=${item.name}`);
+    setSuggestions([]);
+    setSearchInputText("");
+  };
+
+  const debouncedSearch = debounce((query: string) => {
+    axios({
+      method: "GET",
+      url: `/api/search/?category=${categorySelector}&query=${query}`,
+    })
+      .then((res) => {
+        const products: Product[] = res.data.data.map((product: any) => ({
+          id: product.id,
+          name: product.name,
+          image: product.image,
+          price: product.price,
+        }));
+        setSuggestions(products);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, 300);
+
+  const fetchSuggestions = async (query: string) => {
+    try {
+      const response = await axios.get(`/api/search/?category=${categorySelector}&query=${query}`);
+      console.log("response", response.data.data);
+      const products: Product[] = response.data.data.map((product: any) => ({
+        id: product._id,
+        name: product.name,
+        image: product.descImage.descItems[0].imageURL,
+        discountPrice: product.discountPrice,
+        price: product.price,
+        productColor: product.productColor,
+      }));
+      console.log('products-----', products);
+      setSuggestions(products);
+    } catch (error) {
+      console.error("Error fetching suggestions:", error);
+    }
+  };
+
+  const handleSeeAllSuggestionsClick = () => {
+    dispatch({ type: "TOGGLE", payload: { toggle: toggleState } })
+    setSearchInputText("");
+    setSuggestions([]);
+  };
+
   return (
     <>
       <Box
+        position="relative"
         bgcolor={theme === "light" ? lightColor.search : darkColor.search}
         borderRadius="1.2rem"
         border={`0.5px solid ${
@@ -182,6 +271,41 @@ const Index = () => {
               <SearchIcon color="white" height="17" width="16" />
             </ButtonBase>
           </Link>
+
+        </Box>
+        <Box
+          width="100%"
+          position="absolute"
+          top="calc(100% + 0.5rem)"
+          right="0rem"
+          bgcolor={theme === "light" ? lightColor.search : darkColor.search}
+          borderRadius="1rem"
+          boxShadow="0px 4px 10px rgba(0, 0, 0, 0.1)"
+          zIndex={1000}
+        >
+          {suggestions.slice(0, 5).map((item) => (
+            <Link href={`/product/${item.productColor[0].slug}`}>
+              <MenuItem key={item.id} onClick={() => handleSuggestionClick(item)}>
+                <Box display="flex" alignItems="center">
+                  <img src={item.image} alt={item.name} style={{ width: "75px", height: "75px", margin: "10px" }} />
+                  <div>
+                    <div>{item.name}</div>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <div style={{ textDecoration: "line-through", marginRight: "5px" }}>₹{item.price}</div>
+                      <div style={{}}> ₹{item.discountPrice}</div>
+                    </div>
+                  </div>
+                </Box>
+              </MenuItem>
+            </Link>
+          ))}
+          {suggestions.length > 5 && (
+            <Link href={`/search?category=${categorySelector}&query=${searchInputText}`}>
+              <MenuItem style={{ display: "flex", justifyContent: "center", cursor: "pointer" }} onClick={handleSeeAllSuggestionsClick}>
+                See all suggestions
+              </MenuItem>
+            </Link>
+          )}
         </Box>
       </Box>
     </>
