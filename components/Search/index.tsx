@@ -284,8 +284,8 @@ const Index = () => {
           {suggestions.slice(0, 5).map((item) =>{
             console.log(item)
             return(
-              <Link href={`/product/${item.productColor[0].slug}`}>
-                <MenuItem key={item.id} onClick={() => handleSuggestionClick(item)}>
+              <Link key={item.id} href={`/product/${item.productColor[0].slug}`}>
+                <MenuItem  onClick={() => handleSuggestionClick(item)}>
                   <Box display="flex" alignItems="center">
                     <Image src={item.productColor[0].imageURL[0]} alt={item.name} width="75" height="75" style={{margin:'1rem'}} />
                     <div>
