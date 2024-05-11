@@ -9,14 +9,14 @@ import axios from "axios";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-
+import Image from "next/image";
 interface Product {
   id: number;
   name: string;
   image: string;
   discountPrice: number;
   price: number;
-  productColor: Array;
+  productColor: Array<any>;
 }
 
 function debounce(func: Function, delay: number) {
@@ -112,7 +112,6 @@ const Index = () => {
   const fetchSuggestions = async (query: string) => {
     try {
       const response = await axios.get(`/api/search/?category=${categorySelector}&query=${query}`);
-      console.log("response", response.data.data);
       const products: Product[] = response.data.data.map((product: any) => ({
         id: product._id,
         name: product.name,
@@ -121,7 +120,6 @@ const Index = () => {
         price: product.price,
         productColor: product.productColor,
       }));
-      console.log('products-----', products);
       setSuggestions(products);
     } catch (error) {
       console.error("Error fetching suggestions:", error);
@@ -283,22 +281,25 @@ const Index = () => {
           boxShadow="0px 4px 10px rgba(0, 0, 0, 0.1)"
           zIndex={1000}
         >
-          {suggestions.slice(0, 5).map((item) => (
-            <Link href={`/product/${item.productColor[0].slug}`}>
-              <MenuItem key={item.id} onClick={() => handleSuggestionClick(item)}>
-                <Box display="flex" alignItems="center">
-                  <img src={item.image} alt={item.name} style={{ width: "75px", height: "75px", margin: "10px" }} />
-                  <div>
-                    <div>{item.name}</div>
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      <div style={{ textDecoration: "line-through", marginRight: "5px" }}>₹{item.price}</div>
-                      <div style={{}}> ₹{item.discountPrice}</div>
+          {suggestions.slice(0, 5).map((item) =>{
+            console.log(item)
+            return(
+              <Link href={`/product/${item.productColor[0].slug}`}>
+                <MenuItem key={item.id} onClick={() => handleSuggestionClick(item)}>
+                  <Box display="flex" alignItems="center">
+                    <Image src={item.productColor[0].imageURL[0]} alt={item.name} width="75" height="75" style={{margin:'1rem'}} />
+                    <div>
+                      <div>{item.name}</div>
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <div style={{ textDecoration: "line-through", marginRight: "5px" }}>₹{item.price}</div>
+                        <div style={{}}> ₹{item.discountPrice}</div>
+                      </div>
                     </div>
-                  </div>
-                </Box>
-              </MenuItem>
-            </Link>
-          ))}
+                  </Box>
+                </MenuItem>
+              </Link>
+            )
+          })}
           {suggestions.length > 5 && (
             <Link href={`/search?category=${categorySelector}&query=${searchInputText}`}>
               <MenuItem style={{ display: "flex", justifyContent: "center", cursor: "pointer" }} onClick={handleSeeAllSuggestionsClick}>
