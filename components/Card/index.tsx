@@ -119,7 +119,7 @@ const Index: React.FC<IndexProps> = ({
             ? isMobile
               ? fullDetailCard
                 ? "17rem"
-                : "29.5rem"
+                : "15rem"
               : "35rem"
             : fullDetailCard
             ? "35rem"
@@ -132,7 +132,7 @@ const Index: React.FC<IndexProps> = ({
         gap="0.1rem"
         flexShrink="0"
         borderRadius={
-          isMobile ? (fullDetailCard ? "0.8rem" : "1.6rem") : "0.5rem"
+          isMobile ? (fullDetailCard ? "0.8rem" : "0.6rem") : "0.5rem"
         }
         border={`1px solid ${
           theme === "light" ? lightColor.borderColor : darkColor.borderColor
@@ -150,7 +150,7 @@ const Index: React.FC<IndexProps> = ({
               isMobile
                 ? fullDetailCard
                   ? "0.4rem 0.6rem"
-                  : "0.6rem 1rem"
+                  : "0.2rem 0.6rem"
                 : "0.6rem 1rem"
             }
             alignItems="center"
@@ -168,7 +168,7 @@ const Index: React.FC<IndexProps> = ({
                   : darkColor.text.tagOffer
               }
               fontSize={
-                isMobile ? (fullDetailCard ? "0.8rem" : "1.2rem") : "1.2rem"
+                isMobile ? (fullDetailCard ? "0.8rem" : "1.0rem") : "1.2rem"
               }
               fontStyle="normal"
               fontWeight="700"
@@ -272,7 +272,7 @@ const Index: React.FC<IndexProps> = ({
                     : darkColor.text.primary
                 }
                 fontSize={
-                  isMobile ? (fullDetailCard ? "1.2rem" : "1.4rem") : "1.4rem"
+                  isMobile ? (fullDetailCard ? "1.2rem" : "1.0rem") : "1.4rem"
                 }
                 fontStyle="normal"
                 fontWeight="700"
@@ -369,7 +369,7 @@ const Index: React.FC<IndexProps> = ({
                 }
                 textAlign="center"
                 fontSize={
-                  isMobile ? (fullDetailCard ? "1.2rem" : "1.4rem") : "1.6rem"
+                  isMobile ? (fullDetailCard ? "1.2rem" : "1.2rem") : "1.6rem"
                 }
                 fontStyle="normal"
                 fontWeight="600"
@@ -386,7 +386,7 @@ const Index: React.FC<IndexProps> = ({
                 }
                 textAlign="center"
                 fontSize={
-                  isMobile ? (fullDetailCard ? "0.6rem" : "1rem") : "1.1rem"
+                  isMobile ? (fullDetailCard ? "0.6rem" : "0.9rem") : "1.1rem"
                 }
                 fontStyle="normal"
                 fontWeight="500"
@@ -404,7 +404,7 @@ const Index: React.FC<IndexProps> = ({
                 }
                 textAlign="center"
                 fontSize={
-                  isMobile ? (fullDetailCard ? "0.8rem" : "1rem") : "1rem"
+                  isMobile ? (fullDetailCard ? "0.8rem" : "0.8rem") : "1rem"
                 }
                 fontStyle="normal"
                 fontWeight="700"
@@ -416,7 +416,7 @@ const Index: React.FC<IndexProps> = ({
               {isSale ? (
                 <Box
                   display="flex"
-                  padding="0.1rem 0.8rem"
+                  padding={isMobile ? (fullDetailCard ? "0.1rem 0.8rem" : "0.1rem 0.5rem") : "0.1rem 0.8rem"}
                   justifyContent="center"
                   alignItems="center"
                   gap="1rem"
@@ -433,7 +433,7 @@ const Index: React.FC<IndexProps> = ({
                     }
                     textAlign="center"
                     fontSize={
-                      isMobile ? (fullDetailCard ? "0.6rem" : "1rem") : "1rem"
+                      isMobile ? (fullDetailCard ? "0.6rem" : "0.9rem") : "1rem"
                     }
                     fontStyle="normal"
                     fontWeight="700"
@@ -510,7 +510,7 @@ const Index: React.FC<IndexProps> = ({
                   height: isMobile
                     ? fullDetailCard
                       ? "2.4rem"
-                      : "4rem"
+                      : "3.6rem"
                     : "4.2rem",
 
                   alignItems: "center",
@@ -532,7 +532,7 @@ const Index: React.FC<IndexProps> = ({
                   color="#1D1D1F"
                   textAlign="center"
                   fontSize={
-                    isMobile ? (fullDetailCard ? "1.2rem" : "1.6rem") : "1.7rem"
+                    isMobile ? (fullDetailCard ? "1.2rem" : "1.3rem") : "1.7rem"
                   }
                   fontStyle="normal"
                   fontWeight="700"

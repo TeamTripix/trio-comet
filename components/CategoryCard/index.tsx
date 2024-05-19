@@ -57,7 +57,7 @@ const Index = (props: IndexProps) => {
                 : darkColor.text.primary
             }
             textAlign="center"
-            fontSize="2.4rem"
+            fontSize={isMobile ? "1.4rem" :"2.4rem"}
             fontStyle="normal"
             fontWeight="600"
             lineHeight="normal"
