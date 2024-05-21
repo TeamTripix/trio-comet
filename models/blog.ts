@@ -6,6 +6,7 @@ const blog = new mongoose.Schema(
     banner: { type: String, required: true },
     desc: { type: String, required: true },
     addUserBy: { type: String, required: true },
+    slug: {type:String, required:true},
     isAdmin: { type: String },
   },
   { timestamps: true }

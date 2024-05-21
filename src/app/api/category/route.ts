@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
           tokenValue.data.role === "co-admin"
         ) {
           const parsedData = await req.json();
-          const { id, name, image } = parsedData;
+          const { id, name, image,slug } = parsedData;
 
           // check all feilds in requested data
           if (!name && !categorySchema && !image) {
@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
 
           const updateCategory = await categorySchema.findOneAndUpdate(
             { id: id },
-            { name: name, image: image }
+            { name: name, image: image,slug }
           );
           if (updateCategory !== null) {
             return NextResponse.json(
@@ -47,6 +47,7 @@ export async function POST(req: NextRequest) {
             id,
             name,
             image,
+            slug,
             addUserBy: tokenValue.data._id,
             isAdmin: tokenValue.data.isAdmin,
           });

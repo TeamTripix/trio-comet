@@ -21,10 +21,10 @@ export async function POST(req: NextRequest) {
           tokenValue.data.role === "co-admin"
           ) {
             const parsedData = await req.json();
-          const { heading, desc, banner, id } = parsedData;
-
+          const { heading, desc, banner, id ,slug} = parsedData;
+            
           // check all feilds in requested data
-          if (!heading && !desc && !banner) {
+          if (!heading && !desc && !banner && !slug) {
             return NextResponse.json(
               { message: "please fill all feilds", success: false },
               { status: 400 }
@@ -46,6 +46,7 @@ export async function POST(req: NextRequest) {
             heading,
             desc,
             banner,
+            slug,
             addUserBy: tokenValue.data._id,
             isAdmin: tokenValue.data.role,
           });
