@@ -436,6 +436,7 @@ const Index = () => {
                 <ButtonBase
                   sx={{
                     display: "flex",
+                    height: "4.5rem",
                     width: "30%",
                     padding: "1.2rem 2rem",
                     justifyContent: "center",
@@ -452,6 +453,7 @@ const Index = () => {
                   <Typography
                     color="var(--text-color-wire, #F7F7F7)"
                     fontSize="1.2rem"
+                    fontStyle="normal"
                     fontWeight="700"
                     lineHeight="2.4rem"
                     letterSpacing="0.05rem"

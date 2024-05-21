@@ -1213,7 +1213,7 @@ export default function Home() {
                   </Box>
                 ) : (
                   blogApiRes.slice(0, 3).map((data, index) => (
-                    <Box key={data._id} sx={{ padding: "0 1rem" }}>
+                    <Box key={data._id}>
                       <BlogCard data={data}  index={index} isHomePage={true} />
                     </Box>
                   ))
@@ -1300,8 +1300,21 @@ export default function Home() {
                 What our customer says
               </Typography>
             </Box>
-
-            {isTablet ? (
+              
+            {isMobile ? (
+              // Mobile view with carousel
+              <Slider {...settings}>
+                 <Box padding="1rem" display="flex" justifyContent="center">
+                  <TestimonialCard />
+                </Box>
+                <Box padding="1rem">
+                  <TestimonialCard />
+                </Box>
+                <Box padding="1rem">
+                  <TestimonialCard />
+                </Box>
+              </Slider>
+            ) : isTablet ? (
               // is tablet size is active
               <Box
                 height="35rem"

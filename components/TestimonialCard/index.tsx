@@ -3,18 +3,21 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import { lightColor, darkColor } from "../../src/utils/CustomTheme/color";
 import Image from "next/legacy/image";
-import { useTablet } from "../../src/utils/responsive";
+import { useMobile, useTablet } from "../../src/utils/responsive";
 import { useSelector } from "react-redux";
 const Index = () => {
   const isTablet = useTablet();
+  const isMobile = useMobile();
   const theme: any = useSelector<any>((state) => state.themeToggle);
   return (
     <Box
-      width={isTablet ? "33rem" : "100%"}
+      width={isMobile ? "70vw" :isTablet ? "33rem" : "100%"}
       padding="1rem"
-      height="20rem"
+      height={isMobile ? "auto" : "20rem"}
       sx={{
         filter: "drop-shadow(0px 6px 15px rgba(0, 0, 0, 0.05))",
+        marginLeft: isMobile ? "auto" : 0,
+        marginRight: isMobile ? "auto" : 0,
       }}>
       <Box
         width="100%"

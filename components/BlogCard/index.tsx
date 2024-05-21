@@ -19,7 +19,7 @@ const Index = (props: any) => {
     <Link href={`/blog/${heading}?pid=${_id}`}>
       <Box
         display="flex"
-        width={isTablet ? (isMobile ? "26rem" : "43.7rem") : "70%"}
+        width={isMobile ? "70vw" : isTablet ? "43.7rem" : "70%"}
         height={"auto"}
         flexDirection="column"
         justifyContent="center"
@@ -30,8 +30,10 @@ const Index = (props: any) => {
         }
         bgcolor={theme === "light" ? lightColor.cardBG : darkColor.cardBG}
         overflow="hidden"
-        marginLeft={isHomePage ? (index === 0 ? "2rem" : 0) : "7rem"}
-        marginRight={isHomePage ? (index === 2 ? "2rem" : 0) : "7rem"}>
+        marginLeft={isHomePage ? (isMobile ? "auto" : index === 0 ? "2rem" : 0) : "7rem"}
+        marginRight={isHomePage ? (isMobile ? "auto" : index === 2 ? "2rem" : 0) : "7rem"}
+        marginTop={isMobile ? "1rem" : 0}
+        marginBottom={isMobile ? "1rem" : 0}>
         <Box width="100%" height="auto">
           <Image
             src={banner}

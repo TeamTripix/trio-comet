@@ -672,7 +672,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
   return (
     <>
       <PageSpacing>
-        <Box margin="0 10rem">
+        <Box margin={isMobile ? "0" : "0 10rem"}>
           <Box
             display="flex"
             width="100%"
@@ -686,12 +686,14 @@ const Product = ({ params }: { params: { slug: string } }) => {
             <Box
               ref={ref}
               width={isMobile ? "100%" : "50%"}
-              position="sticky"
-              top="6rem"
+              position={isMobile ? "relative" : "sticky"}
+              top={isMobile ? 0 : "6rem"}
             >
-              <Box paddingLeft="0rem" margin="1rem 0rem 0rem 0rem">
-                <BreadCrumb />
-              </Box>
+              {!isMobile &&
+                <Box paddingLeft="0rem" margin="1rem 0rem 0rem 0rem">
+                  <BreadCrumb />
+                </Box>
+              }
               <Box
                 display="flex"
                 flexDirection={{ xs: 'column', md: 'row' }}
@@ -700,36 +702,38 @@ const Product = ({ params }: { params: { slug: string } }) => {
                 margin="1.2rem 0"
               >
                 {/* side images */}
-                {productAPIRes.length === 0 ? (
-                  <Skeleton
-                    variant="rectangular"
-                    sx={{
-                      width: "10.1rem",
-                      height: "8.7rem",
-                      borderRadius: "0.8rem",
-                    }}
-                  ></Skeleton>
-                ) : (
-                  productAPIRes.productColor[0].imageURL.map(
-                    (elem: any, index: number) => {
-                      return (
-                        <Box
-                          width="10.1rem"
-                          height="8.7rem"
-                          borderRadius="0.8rem"
-                          key={`productImageLeft${index}`}
-                        >
-                          <Image
-                            alt="product image"
-                            width="100"
-                            height="90"
-                            src={elem}
-                            style={{ borderRadius: "0.8rem" }}
-                            layout="responsive"
-                          />
-                        </Box>
-                      );
-                    }
+                {!isMobile && (
+                  productAPIRes.length === 0 ? (
+                    <Skeleton
+                      variant="rectangular"
+                      sx={{
+                        width: "10.1rem",
+                        height: "8.7rem",
+                        borderRadius: "0.8rem",
+                      }}
+                    ></Skeleton>
+                  ) : (
+                    productAPIRes.productColor[0].imageURL.map(
+                      (elem: any, index: number) => {
+                        return (
+                          <Box
+                            width="10.1rem"
+                            height="8.7rem"
+                            borderRadius="0.8rem"
+                            key={`productImageLeft${index}`}
+                          >
+                            <Image
+                              alt="product image"
+                              width="100"
+                              height="90"
+                              src={elem}
+                              style={{ borderRadius: "0.8rem" }}
+                              layout="responsive"
+                            />
+                          </Box>
+                        );
+                      }
+                    )
                   )
                 )}
 
