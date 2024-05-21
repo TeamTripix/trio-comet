@@ -45,8 +45,9 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Carousel } from "react-responsive-carousel";
 import FullSizeProductImage from "@components/FullSizeProductImage";
 import "../../bulletStyle.module.css";
-import StarIcon from '@mui/icons-material/Star';
-import CopyToClipboard from 'react-copy-to-clipboard';
+import StarIcon from "@mui/icons-material/Star";
+import CopyToClipboard from "react-copy-to-clipboard";
+import { NextSeo } from "next-seo";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -367,7 +368,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
   const [selectedSize, setSelectedSize] = useState(null);
   const [copied, setCopied] = useState(false);
 
-  const handleSizeSelection = (size : any) => {
+  const handleSizeSelection = (size: any) => {
     setSelectedSize(size);
   };
 
@@ -377,9 +378,9 @@ const Product = ({ params }: { params: { slug: string } }) => {
     };
 
   const handleCopy = () => {
-    toast.success("Copied Succesfully")
+    toast.success("Copied Succesfully");
   };
-  
+
   useEffect(() => {
     axios({
       method: "GET",
@@ -451,11 +452,12 @@ const Product = ({ params }: { params: { slug: string } }) => {
       url: `/api/coupon/?pid=${productAPIRes._id}`,
     })
       .then((res) => {
-        console.log("coupons--",res.data);
+        console.log("coupons--", res.data);
         setCouponAPIRes(res.data.data);
       })
       .catch(() => {});
   }, [productAPIRes]);
+
   useEffect(() => {
     // fetching review data
     axios({
@@ -667,10 +669,45 @@ const Product = ({ params }: { params: { slug: string } }) => {
     };
   }, []);
 
-  console.log("reviewApiRes : ", reviewApiRes);
+  console.log(productAPIRes)
 
   return (
     <>
+      <NextSeo
+        title={productAPIRes?.specificationItems?.pageTitle}
+        description="This example uses more of the available config options."
+        canonical="https://www.triocomet.com"
+        openGraph={{
+          url: "https://www.url.ie/a",
+          title: "Open Graph Title",
+          description: "Open Graph Description",
+          images: [
+            {
+              url: "https://www.example.ie/og-image-01.jpg",
+              width: 800,
+              height: 600,
+              alt: "Og Image Alt",
+              type: "image/jpeg",
+            },
+            {
+              url: "https://www.example.ie/og-image-02.jpg",
+              width: 900,
+              height: 800,
+              alt: "Og Image Alt Second",
+              type: "image/jpeg",
+            },
+            { url: "https://www.example.ie/og-image-03.jpg" },
+            { url: "https://www.example.ie/og-image-04.jpg" },
+          ],
+          siteName: "SiteName",
+        }}
+        twitter={{
+          handle: "@handle",
+          site: "@site",
+          cardType: "summary_large_image",
+        }}
+      />
+
       <PageSpacing>
         <Box margin={isMobile ? "0" : "0 10rem"}>
           <Box
@@ -696,7 +733,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
               }
               <Box
                 display="flex"
-                flexDirection={{ xs: 'column', md: 'row' }}
+                flexDirection={{ xs: "column", md: "row" }}
                 alignItems="center"
                 gap="1rem"
                 margin="1.2rem 0"
@@ -739,8 +776,8 @@ const Product = ({ params }: { params: { slug: string } }) => {
 
                 {/* main image */}
                 <Box
-                  marginLeft={{ xs: '0', md: '1rem' }}
-                  marginTop={{ xs: '1rem', md: '0' }}
+                  marginLeft={{ xs: "0", md: "1rem" }}
+                  marginTop={{ xs: "1rem", md: "0" }}
                 >
                   {productAPIRes.length === 0 ? (
                     <Skeleton
@@ -861,8 +898,14 @@ const Product = ({ params }: { params: { slug: string } }) => {
                   bgcolor="#f7f7f7"
                 >
                   <Box display="flex" alignItems="center">
-                    <StarIcon sx={{ fontSize: '1.7rem', marginRight: '0.3rem', color:'#ffc700' }} />
-                    <Typography 
+                    <StarIcon
+                      sx={{
+                        fontSize: "1.7rem",
+                        marginRight: "0.3rem",
+                        color: "#ffc700",
+                      }}
+                    />
+                    <Typography
                       color={
                         theme === "light"
                           ? lightColor.text.fade
@@ -1087,17 +1130,37 @@ const Product = ({ params }: { params: { slug: string } }) => {
                     display="flex"
                     flexDirection="row"
                     flexWrap="wrap"
-                    gap={isMobile ? '1rem' : '1.7rem'}
+                    gap={isMobile ? "1rem" : "1.7rem"}
                     width="100%"
                     marginTop="1rem"
                   >
-                    {productAPIRes.length === 0  ? (
+                    {productAPIRes.length === 0 ? (
                       <>
-                        <Skeleton variant="rectangular" width="4.2rem" height="4.2rem" />
-                        <Skeleton variant="rectangular" width="4.2rem" height="4.2rem" />
-                        <Skeleton variant="rectangular" width="4.2rem" height="4.2rem" />
-                        <Skeleton variant="rectangular" width="4.2rem" height="4.2rem" />
-                        <Skeleton variant="rectangular" width="4.2rem" height="4.2rem" />
+                        <Skeleton
+                          variant="rectangular"
+                          width="4.2rem"
+                          height="4.2rem"
+                        />
+                        <Skeleton
+                          variant="rectangular"
+                          width="4.2rem"
+                          height="4.2rem"
+                        />
+                        <Skeleton
+                          variant="rectangular"
+                          width="4.2rem"
+                          height="4.2rem"
+                        />
+                        <Skeleton
+                          variant="rectangular"
+                          width="4.2rem"
+                          height="4.2rem"
+                        />
+                        <Skeleton
+                          variant="rectangular"
+                          width="4.2rem"
+                          height="4.2rem"
+                        />
                       </>
                     ) : (
                       ["S", "M", "L", "XL", "2XL"].map((size) => (
@@ -1105,24 +1168,25 @@ const Product = ({ params }: { params: { slug: string } }) => {
                           key={size}
                           onClick={() => handleSizeSelection(size)}
                           sx={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            width: '4.2rem',
-                            height: '4.2rem',
-                            bgcolor: selectedSize === size ? '#C4C4C4' : '#EFF2F6',
-                            borderRadius: '0.8rem',
-                            cursor: 'pointer',
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            width: "4.2rem",
+                            height: "4.2rem",
+                            bgcolor:
+                              selectedSize === size ? "#C4C4C4" : "#EFF2F6",
+                            borderRadius: "0.8rem",
+                            cursor: "pointer",
                           }}
                         >
                           <Typography
                             color={
-                              theme === 'light'
+                              theme === "light"
                                 ? lightColor.text.primary
                                 : darkColor.text.primary
                             }
                             textAlign="center"
-                            fontSize={isMobile ? '1.6rem' : '1.8rem'}
+                            fontSize={isMobile ? "1.6rem" : "1.8rem"}
                             fontStyle="normal"
                             fontWeight={selectedSize === size ? 700 : 400}
                             lineHeight="normal"
@@ -1394,7 +1458,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
                       width: "50rem",
                       height: "5rem",
                       borderRadius: "0.4rem",
-                      marginBottom: "0.5rem"
+                      marginBottom: "0.5rem",
                     }}
                   ></Skeleton>
                 ) : (
@@ -1407,23 +1471,26 @@ const Product = ({ params }: { params: { slug: string } }) => {
                       <Typography>Offers</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                    {/* Offers content */}
-                    <Typography variant="body1">Buy 1 Get 1 Free</Typography>
-                    {/* Tap to copy */}
-                    <CopyToClipboard text="Text to be copied" onCopy={handleCopy}>
-                      <Typography
-                        variant="body1"
-                        sx={{
-                          textDecoration: 'none',
-                          cursor: 'pointer',
-                          marginLeft: '1rem',
-                          color: '#42A2A2',
-                        }}
+                      {/* Offers content */}
+                      <Typography variant="body1">Buy 1 Get 1 Free</Typography>
+                      {/* Tap to copy */}
+                      <CopyToClipboard
+                        text="Text to be copied"
+                        onCopy={handleCopy}
                       >
-                        Tap to copy
-                      </Typography>
-                    </CopyToClipboard>
-                  </AccordionDetails>
+                        <Typography
+                          variant="body1"
+                          sx={{
+                            textDecoration: "none",
+                            cursor: "pointer",
+                            marginLeft: "1rem",
+                            color: "#42A2A2",
+                          }}
+                        >
+                          Tap to copy
+                        </Typography>
+                      </CopyToClipboard>
+                    </AccordionDetails>
                   </Accordion>
                 )}
 
@@ -1435,7 +1502,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
                       width: "50rem",
                       height: "5rem",
                       borderRadius: "0.4rem",
-                      marginBottom: "0.5rem"
+                      marginBottom: "0.5rem",
                     }}
                   ></Skeleton>
                 ) : (
@@ -1466,7 +1533,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
                       width: "50rem",
                       height: "5rem",
                       borderRadius: "0.4rem",
-                      marginBottom: "0.5rem"
+                      marginBottom: "0.5rem",
                     }}
                   ></Skeleton>
                 ) : (
