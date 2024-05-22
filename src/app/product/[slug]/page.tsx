@@ -791,10 +791,10 @@ const Product = ({ params }: { params: { slug: string } }) => {
                   ) : (
                     <AwesomeSlider
                       className="slider"
-                      bullets={true}
+                      bullets={isMobile ? false : true}
                       style={{
-                        height: productWidth - 50,
-                        width: productWidth - 130,
+                        height: isMobile ? "50vh" : productWidth - 50,
+                        width: isMobile ? "100vw" : productWidth - 130,
                       }}
                     >
                       {productAPIRes.productColor[0].imageURL.map(
@@ -1455,7 +1455,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
                   <Skeleton
                     variant="rectangular"
                     sx={{
-                      width: "50rem",
+                      width: isMobile ? "35rem" : "50rem",
                       height: "5rem",
                       borderRadius: "0.4rem",
                       marginBottom: "0.5rem",
@@ -1465,7 +1465,10 @@ const Product = ({ params }: { params: { slug: string } }) => {
                   <Accordion
                     expanded={expanded === "offers"}
                     onChange={handleAccordionChange("offers")}
-                    sx={{ boxShadow: "none" }}
+                    sx={{
+                      boxShadow: "none",
+                      width: isMobile ? "90%" : "auto",
+                    }}
                   >
                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                       <Typography>Offers</Typography>
@@ -1499,7 +1502,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
                   <Skeleton
                     variant="rectangular"
                     sx={{
-                      width: "50rem",
+                      width: isMobile ? "35rem" : "50rem",
                       height: "5rem",
                       borderRadius: "0.4rem",
                       marginBottom: "0.5rem",
@@ -1509,7 +1512,10 @@ const Product = ({ params }: { params: { slug: string } }) => {
                   <Accordion
                     expanded={expanded === "description"}
                     onChange={handleAccordionChange("description")}
-                    sx={{ boxShadow: "none" }}
+                    sx={{
+                      boxShadow: "none",
+                      width: isMobile ? "90%" : "auto",
+                    }}
                   >
                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                       <Typography>Description</Typography>
@@ -1530,7 +1536,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
                   <Skeleton
                     variant="rectangular"
                     sx={{
-                      width: "50rem",
+                      width: isMobile ? "35rem" : "50rem",
                       height: "5rem",
                       borderRadius: "0.4rem",
                       marginBottom: "0.5rem",
@@ -1540,7 +1546,10 @@ const Product = ({ params }: { params: { slug: string } }) => {
                   <Accordion
                     expanded={expanded === "rating"}
                     onChange={handleAccordionChange("rating")}
-                    sx={{ boxShadow: "none" }}
+                    sx={{
+                      boxShadow: "none",
+                      width: isMobile ? "90%" : "auto",
+                    }}
                   >
                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                       <Typography>Rating</Typography>
@@ -2554,7 +2563,64 @@ const Product = ({ params }: { params: { slug: string } }) => {
               Products related to this item
             </Typography>
           </Box>
-          {isTablet ? (
+
+          {isMobile ? (
+            <Grid container spacing={2}>
+              {relatedProductAppear ? (
+                [...Array(4)].map((_, index) => (
+                  <Grid 
+                    key={`${index}+ProductCardOnSaleSkeleton`} 
+                    item 
+                    xs={6}
+                    sm={4}
+                    sx={{
+                      display: "flex",
+                      // justifyContent: "center",
+                      // alignItems: "center",
+                    }}
+                  >
+                    <ProductCardSkeleton />
+                  </Grid>
+                ))
+              ) : isByCategoryProductLoading ? (
+                [...Array(4)].map((_, index) => (
+                  <Grid 
+                    key={`${index}+ProductCardOnSaleSkeleton`} 
+                    item 
+                    xs={6}
+                    sm={4}
+                    sx={{
+                      display: "flex",
+                      // justifyContent: "center",
+                      // alignItems: "center",
+                    }}
+                  >
+                    <ProductCardSkeleton />
+                  </Grid>
+                ))
+              ) : byCategoryProductApiRes.length === 0 ? (
+                <Box width="100%" textAlign="center">
+                  <NoProduct isMobile={isMobile} />
+                </Box>
+              ) : (
+                byCategoryProductApiRes.slice(0, 4).map((data, index) => (
+                  <Grid 
+                    key={data._id}
+                    item
+                    xs={6}
+                    sm={4}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Card data={data} index={index} isHomePage={true} />
+                  </Grid>
+                ))
+              )}
+            </Grid>
+          ) : isTablet ? (
             // is tablet size is active
             <Box
               sx={{

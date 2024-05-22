@@ -9,11 +9,13 @@ import BreadCrumb from "@components/BreadCrumb";
 import axios from "axios";
 import ProductCardSkeleton from "@components/Skeleton/ProductCardSkeleton";
 import { useSelector } from "react-redux";
+import { useMobile } from "@/utils/responsive";
 
 const BlogCollection = ({ params }: { params: { slug: string } }) => {
   const [blogApiRes, setBlogApiRes] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const theme: any = useSelector<any>((state) => state.themeToggle);
+  const isMobile = useMobile();
 
   useEffect(() => {
     axios({
@@ -53,20 +55,29 @@ const BlogCollection = ({ params }: { params: { slug: string } }) => {
           </Typography>
         </Box>
 
-        <Grid container spacing={4}>
+        <Grid container spacing={isMobile ? 2 : 4}>
           {isLoading === true
             ? [...Array(3)].map((data, index) => {
-                return (
-                  <Grid key={`${index}+BlogCardSkeleton`} item xs={4}>
-                    <ProductCardSkeleton />
-                  </Grid>
-                );
-              })
+              return (
+                <Grid
+                  key={`${index}+BlogCardSkeleton`}
+                  item
+                  xs={isMobile ? 6 : 4}
+                >
+                  <ProductCardSkeleton />
+                </Grid>
+              );
+            })
             : blogApiRes.length === 0
-            ? "no blog found"
-            : blogApiRes.map((data, index) => {
+              ? "no blog found"
+              : blogApiRes.map((data, index) => {
                 return (
-                  <Grid key={`${index}blog`} margin="5rem 0" item xs={4}>
+                  <Grid
+                    key={`${index}blog`}
+                    item
+                    xs={isMobile ? 6 : 4}
+                    margin={isMobile ? "1rem 0" : "5rem 0"}
+                  >
                     <BlogCard data={data} />
                   </Grid>
                 );

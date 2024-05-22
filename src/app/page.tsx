@@ -1238,7 +1238,7 @@ export default function Home() {
               <Slider {...settings}>
                 {isBlogLoading ? (
                   [...Array(3)].map((_, index) => (
-                    <Box key={`${index}+BlogCardSkeleton`} sx={{ padding: "0 1rem" }}>
+                    <Box key={`${index}+BlogCardSkeleton`}>
                       <ProductCardSkeleton />
                     </Box>
                   ))
