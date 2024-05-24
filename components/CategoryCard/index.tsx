@@ -14,7 +14,7 @@ interface IndexProps {
 }
 
 const Index = (props: IndexProps) => {
-  const { name, _id, image } = props.data;
+  const { name, _id, image,slug } = props.data;
   const { isHomePage, categoryArrayLength, indexes } = props;
   const theme: any = useSelector<any>((state) => state.themeToggle);
   const isMobile = useMobile();
@@ -25,7 +25,7 @@ const Index = (props: IndexProps) => {
         isHomePage ? (indexes === categoryArrayLength ? "1rem" : 0) : 0
       }
     >
-      <Link href={`/category/${name}?pid=${_id}`}>
+      <Link href={`/category/${slug}`}>
         {/* <Box
           // height="100%"
           display="flex"

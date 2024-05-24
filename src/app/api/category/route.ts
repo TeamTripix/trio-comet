@@ -93,12 +93,12 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
-  const categoryId = req.nextUrl.searchParams.get("cid");
+  const slug = req.nextUrl.searchParams.get("cid");
   try {
     await mongoose.connect(URI);
     try {
-      if (categoryId) {
-        const response = await categorySchema.find({ _id: categoryId });
+      if (slug) {
+        const response = await categorySchema.find({ slug: slug });
         return NextResponse.json(
           {
             message: "category found successfully",

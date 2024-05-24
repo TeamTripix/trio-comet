@@ -12,6 +12,7 @@ import ProductCardSkeleton from "@components/Skeleton/ProductCardSkeleton";
 import { useSearchParams } from "next/navigation";
 import { useSelector } from "react-redux";
 
+
 const ProductCollection = ({ params }: { params: { slug: string } }) => {
   const queryParams = useSearchParams();
   const pid = queryParams.get("pid");
@@ -20,32 +21,36 @@ const ProductCollection = ({ params }: { params: { slug: string } }) => {
   const [categoryNameApiRes, setCategoryNameApiRes] = useState("");
   const theme: any = useSelector<any>((state) => state.themeToggle);
   const isMobile = useMobile();
+  
+  
 
   useEffect(() => {
     axios({
       method: "GET",
-      url: `/api/product/?category=${pid}`,
+      url: `/api/product/?category=${categoryNameApiRes}`,
     })
       .then((res) => {
         if (res.status === 200) {
           setIsLoading(false);
           setProductApiRes(res.data.data);
+          console.log('res.data',res.data)
         }
       })
       .catch((err) => {
         console.log(err);
         setIsLoading(false);
       });
-  }, [params.slug]);
+  }, [categoryNameApiRes]);
 
   useEffect(() => {
     axios({
       method: "GET",
-      url: `/api/category/?cid=${pid}`,
+      url: `/api/category/?cid=${params.slug}`,
     })
       .then((res) => {
         if (res.status === 200) {
-          setCategoryNameApiRes(res.data.data[0].name);
+          setCategoryNameApiRes(res.data.data[0]._id);
+          
         }
       })
       .catch((err) => {
