@@ -56,8 +56,7 @@ const BlogCollection = ({ params }: { params: { slug: string } }) => {
           </Typography>
         </Box>
 
-        <Grid container spacing={isMobile ? 2 : 4} justifyContent="center"
-          alignItems="center">
+        <Grid container spacing={isMobile ? 2 : 4}>
           {isLoading === true
             ? [...Array(3)].map((data, index) => {
               return (
@@ -76,6 +75,7 @@ const BlogCollection = ({ params }: { params: { slug: string } }) => {
               ? "no blog found"
               : blogApiRes.map((data, index) => {
                 return (
+                  isMobile ? 
                   <Grid
                     key={`${index}blog`}
                     item
@@ -83,6 +83,15 @@ const BlogCollection = ({ params }: { params: { slug: string } }) => {
                     margin={isMobile ? "0" : "5rem 0"}
                     display="flex"
                     justifyContent="center"
+                  >
+                    <BlogCard data={data} />
+                  </Grid>
+                  :
+                  <Grid
+                    key={`${index}blog`}
+                    item
+                    xs={isTablet ? 6 : 4}
+                    margin={"5rem 0"}
                   >
                     <BlogCard data={data} />
                   </Grid>
