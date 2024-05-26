@@ -22,7 +22,7 @@ const Blog = ({ params }: { params: { slug: string } }) => {
   useEffect(() => {
     axios({
       method: "GET",
-      url: `/api/blog?bid=${pid}`,
+      url: `/api/blog?slug=${params.slug}`,
     })
       .then((res) => {
         setBlogApiRes(res.data.data);
@@ -42,7 +42,7 @@ const Blog = ({ params }: { params: { slug: string } }) => {
         console.log(err);
         setIsLoading(false);
       });
-  }, []);
+  }, [params.slug]);
 
   return (
     <>

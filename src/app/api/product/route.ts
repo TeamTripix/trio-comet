@@ -150,7 +150,8 @@ export async function GET(
   req: NextRequest,
   { params }: { params: { filename: string } }
 ) {
-  // const pid = req.nextUrl.searchParams.get("pid");
+  const pid = req.nextUrl.searchParams.get("pid");
+  console.log("pid : ",pid )
   const tag = req.nextUrl.searchParams.get("tag");
   const category = req.nextUrl.searchParams.get("category");
   const onSale = req.nextUrl.searchParams.get("on-sale");
@@ -159,7 +160,9 @@ export async function GET(
     await mongoose.connect(URI);
     try {
       if (slug) {
-        const response = await productSchema.findOne({ 'productColor.slug': slug });
+        const response = await productSchema.findOne({
+          "productColor.slug": slug,
+        });
         return NextResponse.json(
           {
             message: "product found successfully",
@@ -168,8 +171,17 @@ export async function GET(
           },
           { status: 200 }
         );
-      }
-       else if (onSale) {
+      } else if (pid) {
+        const response = await productSchema.findOne({ _id: pid });
+        return NextResponse.json(
+          {
+            message: "product found successfully",
+            data: response,
+            success: true,
+          },
+          { status: 200 }
+        );
+      } else if (onSale) {
         const response = await productSchema.find({
           isSale: true,
         });
@@ -203,8 +215,7 @@ export async function GET(
           },
           { status: 200 }
         );
-      }
-       else {
+      } else {
         const response = await productSchema.find();
         return NextResponse.json(
           {

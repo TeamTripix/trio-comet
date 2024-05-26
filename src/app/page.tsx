@@ -1276,6 +1276,7 @@ export default function Home() {
                     </Box>
                   ) : (
                     blogApiRes.slice(0, 3).map((data, index) => {
+                      console.log('dataa')
                       return (
                         <Box key={data._id}>
                           <BlogCard
