@@ -669,7 +669,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
     };
   }, []);
 
-  console.log(productAPIRes)
+  console.log(productAPIRes);
 
   return (
     <>
@@ -726,94 +726,96 @@ const Product = ({ params }: { params: { slug: string } }) => {
               position={isMobile ? "relative" : "sticky"}
               top={isMobile ? 0 : "6rem"}
             >
-              {!isMobile &&
+              {!isMobile && (
                 <Box paddingLeft="0rem" margin="1rem 0rem 0rem 0rem">
                   <BreadCrumb />
                 </Box>
-              }
+              )}
               <Box
                 display="flex"
-                flexDirection={{ xs: "column", md: "row" }}
+                flexDirection={{ xs: "row", md: "row" }}
                 alignItems="center"
                 gap="1rem"
                 margin="1.2rem 0"
               >
-                {/* side images */}
-                {!isMobile && (
-                  productAPIRes.length === 0 ? (
-                    <Skeleton
-                      variant="rectangular"
-                      sx={{
-                        width: "10.1rem",
-                        height: "8.7rem",
-                        borderRadius: "0.8rem",
-                      }}
-                    ></Skeleton>
-                  ) : (
-                    productAPIRes.productColor[0].imageURL.map(
-                      (elem: any, index: number) => {
-                        return (
-                          <Box
-                            width="10.1rem"
-                            height="8.7rem"
-                            borderRadius="0.8rem"
-                            key={`productImageLeft${index}`}
-                          >
-                            <Image
-                              alt="product image"
-                              width="100"
-                              height="90"
-                              src={elem}
-                              style={{ borderRadius: "0.8rem" }}
-                              layout="responsive"
-                            />
-                          </Box>
-                        );
-                      }
-                    )
-                  )
-                )}
-
-                {/* main image */}
-                <Box
-                  marginLeft={{ xs: "0", md: "1rem" }}
-                  marginTop={{ xs: "1rem", md: "0" }}
-                >
-                  {productAPIRes.length === 0 ? (
-                    <Skeleton
-                      variant="rectangular"
-                      sx={{
-                        width: "100%",
-                        height: "57rem",
-                        borderRadius: "0.8rem",
-                      }}
-                    ></Skeleton>
-                  ) : (
-                    <AwesomeSlider
-                      className="slider"
-                      bullets={isMobile ? false : true}
-                      style={{
-                        height: isMobile ? "50vh" : productWidth - 50,
-                        width: isMobile ? "100vw" : productWidth - 130,
-                      }}
-                    >
-                      {productAPIRes.productColor[0].imageURL.map(
-                        (data: any, index: number) => {
-                          return (
-                            <Box
-                              ref={ref}
-                              borderRadius="0.8rem"
-                              width="57rem"
-                              height="57rem"
-                              key={`${index}+productImagesSlider`}
-                            >
-                              <FullSizeProductImage image={data} />
-                            </Box>
-                          );
-                        }
-                      )}
-                    </AwesomeSlider>
-                  )}
+                <Box display="flex">
+                  {/* side images */}
+                  <Box display="flex" flexDirection="column" height="100">
+                    {!isMobile &&
+                      (productAPIRes.length === 0 ? (
+                        <Skeleton
+                          variant="rectangular"
+                          sx={{
+                            width: "10.1rem",
+                            height: "8.7rem",
+                            borderRadius: "0.8rem",
+                          }}
+                        ></Skeleton>
+                      ) : (
+                        productAPIRes.productColor[0].imageURL.map(
+                          (elem: any, index: number) => {
+                            return (
+                              <Box
+                                width="6rem"
+                                height="9rem"
+                                borderRadius="0.8rem"
+                                key={`productImageLeft${index}`}
+                              >
+                                <Image
+                                  alt="product image"
+                                  width="90"
+                                  height="100"
+                                  src={elem}
+                                  style={{ borderRadius: "0.8rem" }}
+                                  layout="responsive"
+                                />
+                              </Box>
+                            );
+                          }
+                        )
+                      ))}
+                  </Box>
+                  {/* main image */}
+                  <Box
+                    marginLeft={{ xs: "0", md: "1rem" }}
+                    marginTop={{ xs: "1rem", md: "0" }}
+                  >
+                    {productAPIRes.length === 0 ? (
+                      <Skeleton
+                        variant="rectangular"
+                        sx={{
+                          width: "100%",
+                          height: "57rem",
+                          borderRadius: "0.8rem",
+                        }}
+                      ></Skeleton>
+                    ) : (
+                      <AwesomeSlider
+                        className="slider"
+                        bullets={isMobile ? false : true}
+                        style={{
+                          height: isMobile ? "50vh" : productWidth - 50,
+                          width: isMobile ? "100vw" : productWidth - 130,
+                        }}
+                      >
+                        {productAPIRes.productColor[0].imageURL.map(
+                          (data: any, index: number) => {
+                            return (
+                              <Box
+                                ref={ref}
+                                borderRadius="0.8rem"
+                                width="57rem"
+                                height="57rem"
+                                key={`${index}+productImagesSlider`}
+                              >
+                                <FullSizeProductImage image={data} />
+                              </Box>
+                            );
+                          }
+                        )}
+                      </AwesomeSlider>
+                    )}
+                  </Box>
                 </Box>
               </Box>
             </Box>
@@ -2568,9 +2570,9 @@ const Product = ({ params }: { params: { slug: string } }) => {
             <Grid container spacing={2}>
               {relatedProductAppear ? (
                 [...Array(4)].map((_, index) => (
-                  <Grid 
-                    key={`${index}+ProductCardOnSaleSkeleton`} 
-                    item 
+                  <Grid
+                    key={`${index}+ProductCardOnSaleSkeleton`}
+                    item
                     xs={6}
                     sm={4}
                     sx={{
@@ -2584,9 +2586,9 @@ const Product = ({ params }: { params: { slug: string } }) => {
                 ))
               ) : isByCategoryProductLoading ? (
                 [...Array(4)].map((_, index) => (
-                  <Grid 
-                    key={`${index}+ProductCardOnSaleSkeleton`} 
-                    item 
+                  <Grid
+                    key={`${index}+ProductCardOnSaleSkeleton`}
+                    item
                     xs={6}
                     sm={4}
                     sx={{
@@ -2604,7 +2606,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
                 </Box>
               ) : (
                 byCategoryProductApiRes.slice(0, 4).map((data, index) => (
-                  <Grid 
+                  <Grid
                     key={data._id}
                     item
                     xs={6}

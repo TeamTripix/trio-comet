@@ -10,13 +10,13 @@ const Index = (props: any) => {
   const isTablet = useTablet();
   const isMobile = useMobile();
   const { isHomePage, index } = props;
-  const { heading, _id, desc, createdAt, banner } = props.data;
+  const { heading, _id, desc, createdAt, banner,slug } = props.data;
   const splitDate = createdAt.slice(0, 10).split("-");
   const date = splitDate.reverse();
   const theme: any = useSelector<any>((state) => state.themeToggle);
 
   return (
-    <Link href={`/blog/${heading}?pid=${_id}`}>
+    <Link href={`/blog/${slug}`}>
       <Box
         display="flex"
         width={isMobile ? "62vw" : isTablet ? "43.7rem" : "70%"}

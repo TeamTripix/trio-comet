@@ -93,12 +93,12 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
-  const blogId = req.nextUrl.searchParams.get("bid");
+  const slug = req.nextUrl.searchParams.get("slug");
   try {
     await mongoose.connect(URI);
     try {
-      if (blogId) {
-        const response = await blogSchema.find({ _id: blogId });
+      if (slug) {
+        const response = await blogSchema.find({ slug: slug });
         return NextResponse.json(
           {
             message: "blog found successfully",

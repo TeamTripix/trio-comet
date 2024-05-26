@@ -21,10 +21,12 @@ export async function POST(req: NextRequest) {
           tokenValue.data.role === "co-admin"
         ) {
           const parsedData = await req.json();
-          const { id, name, image,slug } = parsedData;
+          const { id, name, image, slug } = parsedData;
+
+          console.log(parsedData)
 
           // check all feilds in requested data
-          if (!name && !categorySchema && !image) {
+          if (!name && !categorySchema && !image && !slug) {
             return NextResponse.json(
               { message: "please fill all feilds", success: false },
               { status: 400 }
@@ -33,7 +35,7 @@ export async function POST(req: NextRequest) {
 
           const updateCategory = await categorySchema.findOneAndUpdate(
             { id: id },
-            { name: name, image: image,slug }
+            { name: name, image: image, slug: slug }
           );
           if (updateCategory !== null) {
             return NextResponse.json(

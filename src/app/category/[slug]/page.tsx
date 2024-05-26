@@ -12,7 +12,6 @@ import ProductCardSkeleton from "@components/Skeleton/ProductCardSkeleton";
 import { useSearchParams } from "next/navigation";
 import { useSelector } from "react-redux";
 
-
 const ProductCollection = ({ params }: { params: { slug: string } }) => {
   const queryParams = useSearchParams();
   const pid = queryParams.get("pid");
@@ -21,26 +20,6 @@ const ProductCollection = ({ params }: { params: { slug: string } }) => {
   const [categoryNameApiRes, setCategoryNameApiRes] = useState("");
   const theme: any = useSelector<any>((state) => state.themeToggle);
   const isMobile = useMobile();
-  
-  
-
-  useEffect(() => {
-    axios({
-      method: "GET",
-      url: `/api/product/?category=${categoryNameApiRes}`,
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          setIsLoading(false);
-          setProductApiRes(res.data.data);
-          console.log('res.data',res.data)
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsLoading(false);
-      });
-  }, [categoryNameApiRes]);
 
   useEffect(() => {
     axios({
@@ -49,14 +28,34 @@ const ProductCollection = ({ params }: { params: { slug: string } }) => {
     })
       .then((res) => {
         if (res.status === 200) {
-          setCategoryNameApiRes(res.data.data[0]._id);
-          
+          if (!res.data.data[0]._id) {
+            return;
+          }
+          axios({
+            method: "GET",
+            url: `/api/product/?category=${res.data.data[0]._id}`,
+          })
+            .then((res) => {
+              if (res.status === 200) {
+                setIsLoading(false);
+                setProductApiRes(res.data.data);
+                console.log("res.data", res.data);
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+              setIsLoading(false);
+            });
         }
       })
       .catch((err) => {
         console.log(err);
       });
   }, [params.slug]);
+
+  // useEffect(() => {
+
+  // }, [categoryNameApiRes]);
 
   return (
     <>
@@ -76,7 +75,8 @@ const ProductCollection = ({ params }: { params: { slug: string } }) => {
             fontStyle="normal"
             fontWeight="700"
             lineHeight="normal"
-            letterSpacing="0.02rem">
+            letterSpacing="0.02rem"
+          >
             {categoryNameApiRes}
           </Typography>
         </Box>
@@ -102,7 +102,8 @@ const ProductCollection = ({ params }: { params: { slug: string } }) => {
                 <Grid
                   key={`${index}+ProductCardNewArrivalsSkeleton`}
                   item
-                  xs={3}>
+                  xs={3}
+                >
                   <ProductCardSkeleton />
                 </Grid>
               );
@@ -119,7 +120,8 @@ const ProductCollection = ({ params }: { params: { slug: string } }) => {
                   item
                   margin="5rem 0rem"
                   xs={3}
-                  justifyItems="center">
+                  justifyItems="center"
+                >
                   <Card fullDetailCard={true} data={data} />
                 </Grid>
               );
