@@ -1,18 +1,20 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
-import { useTablet } from "../../../src/utils/responsive";
+import { useMobile, useTablet } from "../../../src/utils/responsive";
 
 function SkeletonChildrenDemo() {
   const isTablet = useTablet();
+  const isMobile = useMobile();
   return (
     <>
       <Skeleton
         sx={{
-          width: isTablet ? "35rem" : "100%",
-          height: "55rem",
+          width: isTablet ? "35rem" : isMobile ? "80%" : "100%",
+          height: isMobile ? "25rem" : "55rem",
           borderTopLeftRadius: "1.6rem",
           borderTopRightRadius: "1.6rem",
+          margin: isMobile ? "0 auto" : "0",
         }}
         variant="rectangular"
       ></Skeleton>
@@ -35,6 +37,7 @@ function SkeletonChildrenDemo() {
           alignItems="flex-start"
           gap="0.8rem"
           width="90%"
+          margin={isMobile ? "0 auto" : "0"}
         >
           <Skeleton
             sx={{ width: "5rem", height: "1rem" }}

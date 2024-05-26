@@ -34,7 +34,7 @@ export default function MaxWidthDialog(props: any) {
           onClick={handleClickOpen}
         />
       )}
-
+{/* 
       <Dialog fullWidth={true} maxWidth="md" open={open} onClose={handleClose}>
         <Box height="100rem">
           <Box
@@ -52,7 +52,7 @@ export default function MaxWidthDialog(props: any) {
           </Box>
           <Image src={props.image} alt="product image" fill />
         </Box>
-      </Dialog>
+      </Dialog> */}
     </React.Fragment>
   );
 }

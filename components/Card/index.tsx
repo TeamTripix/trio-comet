@@ -119,7 +119,7 @@ const Index: React.FC<IndexProps> = ({
             ? isMobile
               ? fullDetailCard
                 ? "17rem"
-                : "15rem"
+                : "16rem"
               : "35rem"
             : fullDetailCard
             ? "35rem"
@@ -132,9 +132,9 @@ const Index: React.FC<IndexProps> = ({
         gap="0.1rem"
         flexShrink="0"
         borderRadius={
-          isMobile ? (fullDetailCard ? "0.8rem" : "0.6rem") : "0.5rem"
+          isMobile ? (fullDetailCard ? "0.8rem" : "0") : "0.5rem"
         }
-        border={`1px solid ${
+        border={isMobile ? '0px' : `1px solid ${
           theme === "light" ? lightColor.borderColor : darkColor.borderColor
         }`}
         bgcolor={theme === "light" ? lightColor.cardBG : darkColor.cardBG}
@@ -498,7 +498,7 @@ const Index: React.FC<IndexProps> = ({
 
             <Box
               display="flex"
-              justifyContent="space-between"
+              justifyContent={isMobile ? "center" : "space-between"}
               alignItems="center"
               alignSelf="stretch"
               width="100%"
@@ -510,7 +510,7 @@ const Index: React.FC<IndexProps> = ({
                   height: isMobile
                     ? fullDetailCard
                       ? "2.4rem"
-                      : "3.6rem"
+                      : "3.0rem"
                     : "4.2rem",
 
                   alignItems: "center",
@@ -525,14 +525,14 @@ const Index: React.FC<IndexProps> = ({
                     theme === "light"
                       ? lightColor.theme.primary
                       : darkColor.theme.primary,
-                  width: "100%",
+                  width:isMobile ? (fullDetailCard ? "70%" : "80%") : "100%",
                 }}
               >
                 <Typography
                   color="#1D1D1F"
                   textAlign="center"
                   fontSize={
-                    isMobile ? (fullDetailCard ? "1.2rem" : "1.3rem") : "1.7rem"
+                    isMobile ? (fullDetailCard ? "1.2rem" : "1.2rem") : "1.7rem"
                   }
                   fontStyle="normal"
                   fontWeight="700"

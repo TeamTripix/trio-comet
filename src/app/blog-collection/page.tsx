@@ -9,11 +9,14 @@ import BreadCrumb from "@components/BreadCrumb";
 import axios from "axios";
 import ProductCardSkeleton from "@components/Skeleton/ProductCardSkeleton";
 import { useSelector } from "react-redux";
+import { useMobile, useTablet } from "@/utils/responsive";
 
 const BlogCollection = ({ params }: { params: { slug: string } }) => {
   const [blogApiRes, setBlogApiRes] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const theme: any = useSelector<any>((state) => state.themeToggle);
+  const isMobile = useMobile();
+  const isTablet = useTablet();
 
   useEffect(() => {
     axios({
@@ -33,11 +36,11 @@ const BlogCollection = ({ params }: { params: { slug: string } }) => {
   return (
     <>
       <PageSpacing>
-        <Box paddingLeft="2rem" marginTop="2rem">
+        <Box paddingLeft={isMobile || isTablet ? "1rem" : "2rem"} marginTop="2rem">
           <BreadCrumb />
         </Box>
 
-        <Box paddingLeft="2rem" margin="10rem 0">
+        <Box paddingLeft={isMobile || isTablet ? "1rem" : "2rem"} margin="4rem 0">
           <Typography
             color={
               theme === "light"
@@ -53,20 +56,34 @@ const BlogCollection = ({ params }: { params: { slug: string } }) => {
           </Typography>
         </Box>
 
-        <Grid container spacing={4}>
+        <Grid container spacing={isMobile ? 2 : 4} justifyContent="center"
+          alignItems="center">
           {isLoading === true
             ? [...Array(3)].map((data, index) => {
-                return (
-                  <Grid key={`${index}+BlogCardSkeleton`} item xs={4}>
-                    <ProductCardSkeleton />
-                  </Grid>
-                );
-              })
+              return (
+                <Grid
+                  key={`${index}+BlogCardSkeleton`}
+                  item
+                  xs={isMobile ? 12 : isTablet ? 6 : 4}
+                  display="flex"
+                  justifyContent="center"
+                >
+                  <ProductCardSkeleton />
+                </Grid>
+              );
+            })
             : blogApiRes.length === 0
-            ? "no blog found"
-            : blogApiRes.map((data, index) => {
+              ? "no blog found"
+              : blogApiRes.map((data, index) => {
                 return (
-                  <Grid key={`${index}blog`} margin="5rem 0" item xs={4}>
+                  <Grid
+                    key={`${index}blog`}
+                    item
+                    xs={isMobile ? 12 : isTablet ? 6 : 4}
+                    margin={isMobile ? "0" : "5rem 0"}
+                    display="flex"
+                    justifyContent="center"
+                  >
                     <BlogCard data={data} />
                   </Grid>
                 );
