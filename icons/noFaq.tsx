@@ -4,8 +4,8 @@ const NoFaq = (props: any) => {
   const { isMobile, isTablet } = props;
   return (
     <svg
-      width={isMobile ? "344" : isTablet ? "544" : "944"}
-      height={isMobile ? "344" : isTablet ? "329" : "629"}
+      width={isMobile ? "300" : isTablet ? "544" : "944"}
+      height={isMobile ? "300" : isTablet ? "329" : "629"}
       viewBox="0 0 944 629"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

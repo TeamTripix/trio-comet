@@ -245,6 +245,7 @@ export default function Home() {
     slidesToShow: isMobile ? 1 : 5,
     centerMode: true,
     centerPadding: 0,
+    arrows: !isMobile, 
     // nextArrow: <NextArrow />,
     // prevArrow: <PrevArrow />,
     beforeChange: (current: any, next: any) => setImageIndex(next),
@@ -287,50 +288,89 @@ export default function Home() {
         }}
       />
       <Box>
-        {bannerApiLoading ? (
-          <Skeleton
-            variant="rectangular"
-            sx={{
-              width: "100%",
-              height: "76rem",
-              borderRadius: "0.8rem",
-            }}
-          ></Skeleton>
-        ) : bannerApiRes.length === 0 ? (
-          ""
-        ) : (
-          <AutoplaySlider
-            bullets={false}
-            play={true}
-            cancelOnInteraction={false}
-            interval={6000}
-            style={{ height: bannerHeight - 10 }}
-          >
-            {bannerApiRes.map((data: any) => {
-              return (
-                // <Box key={data.id} width="100%" height={bannerHeight}>
-                <Box key={data.id}>
-                  <Link href={data.link}>
-                    <Image
-                      ref={ref}
-                      src={data.imageURL}
-                      alt="banner"
-                      loading="lazy"
-                      width={1920}
-                      height={bannerHeight}
-                      onLoadingComplete={(img) => {
-                        setBannerHeight(img.naturalHeight);
-                        setBannerWidth(img.naturalWidth);
-                      }}
-                      layout="responsive"
-                    />
-                  </Link>
+      {isMobile ? (
+          bannerApiLoading ? (
+            <Skeleton
+              variant="rectangular"
+              sx={{
+                width: '100%',
+                height: "15rem",
+                borderRadius: '0.8rem',
+              }}
+            ></Skeleton>
+          ) : bannerApiRes.length === 0 ? (
+            ""
+          ) : (
+            <AutoplaySlider
+              bullets={false}
+              play={true}
+              cancelOnInteraction={false}
+              interval={6000}
+              style={{ height: bannerHeight - 10 }}
+            >
+              {Array(5).fill(value).map((_, index) => (
+                <Box key={index}>
+                  <Image
+                    src="/assets/mobileLabel.webp"
+                    alt="mobile banner"
+                    width={1920}
+                    height={bannerHeight}
+                    onLoadingComplete={(img) => {
+                      setBannerHeight(img.naturalHeight);
+                      setBannerWidth(img.naturalWidth);
+                    }}
+                    layout="responsive"
+                    objectFit="cover" 
+                  />
                 </Box>
-              );
-            })}
-          </AutoplaySlider>
-          // <Slider data={bannerApiRes}/>
-        )}
+              ))}
+            </AutoplaySlider>
+          )
+        ) : (
+          bannerApiLoading ? (
+            <Skeleton
+              variant="rectangular"
+              sx={{
+                width: "100%",
+                height: "76rem",
+                borderRadius: "0.8rem",
+              }}
+            ></Skeleton>
+          ) : bannerApiRes.length === 0 ? (
+            ""
+          ) : (
+            <AutoplaySlider
+              bullets={false}
+              play={true}
+              cancelOnInteraction={false}
+              interval={6000}
+              style={{ height: bannerHeight - 10 }}
+            >
+              {bannerApiRes.map((data: any) => {
+                return (
+                  // <Box key={data.id} width="100%" height={bannerHeight}>
+                  <Box key={data.id}>
+                    <Link href={data.link}>
+                      <Image
+                        ref={ref}
+                        src={data.imageURL}
+                        alt="banner"
+                        loading="lazy"
+                        width={320}
+                        height={bannerHeight}
+                        onLoadingComplete={(img) => {
+                          setBannerHeight(img.naturalHeight);
+                          setBannerWidth(img.naturalWidth);
+                        }}
+                        layout="responsive"
+                      />
+                    </Link>
+                  </Box>
+                );
+              })}
+            </AutoplaySlider>
+            // <Slider data={bannerApiRes}/>
+        ))}
 
         {/* Categories */}
         <HomePageSpacing>
@@ -352,7 +392,7 @@ export default function Home() {
             </Typography>
           </Box>
           {isMobile ?
-            (<Grid container spacing={2}>
+            (<Grid container justifyContent="center" padding="0 0.5rem" spacing={0.5}>
               {isCategoryLoading ? (
                 [...Array(4)].map((data, index) => {
                   return (
@@ -381,17 +421,12 @@ export default function Home() {
                     <Grid
                       key={data._id}
                       item
-                      xs={6}
-                      sm={4}
-                      sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
+                      margin="1rem 0"
+                      justifyItems="center"
                     >
                       <CategoryCard
                         data={data}
-                        isHomePage={true}
+                        // isHomePage={true}
                         indexes={index}
                         categoryArrayLength={caregoryApiRes.length - 1}
                       />
@@ -583,7 +618,7 @@ export default function Home() {
 
             {isMobile ? (
               // is mobile size is active
-              <Grid container spacing={2}>
+              <Grid container justifyContent="center" padding="0 0.5rem" spacing={0.5}>
                 {isOnSaleLoading ? (
                   [...Array(4)].map((data, index) => {
                     return (
@@ -612,15 +647,10 @@ export default function Home() {
                       <Grid
                         key={data._id}
                         item
-                        xs={6}
-                        sm={4}
-                        sx={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
+                        margin="1rem 0"
+                        justifyItems="center"
                       >
-                        <Card data={data} isHomePage={true} />
+                        <Card data={data}  />
                       </Grid>
                     );
                   })
@@ -795,7 +825,7 @@ export default function Home() {
 
             {isMobile ? (
               // Mobile view
-              <Grid container spacing={2}>
+              <Grid container justifyContent="center" padding="0 0.5rem" spacing={0.5}>
                 {isNewArrivalLoading ? (
                   [...Array(4)].map((data, index) => (
                     <Grid
@@ -818,12 +848,8 @@ export default function Home() {
                   </Box>
                 ) : (
                   newArraivalApiRes.slice(0, 4).map((data, index) => (
-                    <Grid item xs={6} sm={4} key={data._id} sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}>
-                      <Card data={data} index={index} isHomePage={true} />
+                    <Grid item key={data._id} margin="1rem 0" justifyItems="center">
+                      <Card data={data} index={index} />
                     </Grid>
                   ))
                 )}
@@ -956,7 +982,7 @@ export default function Home() {
             </Box>
             {isMobile ? (
               // is mobile size is active
-              <Grid container spacing={2}>
+              <Grid container justifyContent="center" padding="0 0.5rem" spacing={0.5}>
                 {isBestSellerLoading ? (
                   [...Array(4)].map((data, index) => {
                     return (
@@ -985,15 +1011,10 @@ export default function Home() {
                       <Grid
                         key={data._id}
                         item
-                        xs={6}
-                        sm={4}
-                        sx={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
+                        margin="1rem 0"
+                        justifyItems="center"
                       >
-                        <Card data={data} index={index} isHomePage={true} />
+                        <Card data={data} index={index}/>
                       </Grid>
                     );
                   })
@@ -1235,7 +1256,7 @@ export default function Home() {
 
             {isMobile ? (
               // Mobile view with carousel
-              <Slider {...settings}>
+              <Slider {...settings} arrows={false}>
                 {isBlogLoading ? (
                   [...Array(3)].map((_, index) => (
                     <Box key={`${index}+BlogCardSkeleton`}>

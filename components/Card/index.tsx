@@ -156,10 +156,10 @@ const Index: React.FC<IndexProps> = ({
             alignItems="center"
             position="absolute"
             top="0.4rem"
-            borderRadius="0rem 0.4rem 0.4rem 0rem"
+            borderRadius={isMobile ? "0.4rem 0.4rem 0.4rem 0.4rem": "0rem 0.4rem 0.4rem 0rem"}
             bgcolor="#1D1D1F"
             zIndex="1"
-            sx={{ borderTopLeftRadius: "1rem" }}
+            sx={isMobile ? { borderTopLeftRadius: "0.4rem" } : { borderTopLeftRadius: "1rem" }}
           >
             <Typography
               color={
@@ -227,7 +227,7 @@ const Index: React.FC<IndexProps> = ({
               alignItems="center"
               gap="0.4rem"
               position="absolute"
-              bottom="18rem"
+              bottom={isMobile ? "14rem" : "18rem"}
               zIndex="1"
               padding="0.1rem 0.5rem"
               bgcolor="white"
@@ -332,6 +332,8 @@ const Index: React.FC<IndexProps> = ({
                   <FavourateIcon
                     fill={favProduct ? "#FF0000" : "#000"}
                     color={favProduct ? "#FF0000" : "#000"}
+                    width={"18"}
+                    height={"15"}
                   />
                 </ButtonBase>
 

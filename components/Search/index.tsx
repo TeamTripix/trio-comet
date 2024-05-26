@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Box, FormControl, Select, MenuItem, ButtonBase } from "@mui/material";
+import { Box, FormControl, Select, MenuItem, ButtonBase, Typography } from "@mui/material";
 import { darkColor, lightColor } from "@/utils/CustomTheme/color";
 import SearchIcon from "../../icons/searchIcon";
 import { useRouter } from "next/navigation";
@@ -144,13 +144,13 @@ const Index = () => {
         display="flex"
         width={isMobile ? "100%" : "60rem"}
         height="4rem"
-        padding="1rem 0rem 1rem 2rem"
+        padding={isMobile ? "1rem 0rem 1rem 0rem" : "1rem 0rem 1rem 2rem"}
         justifyContent="space-between"
         alignItems="center"
       >
         <Box>
           <FormControl
-            sx={{ margin: "0 1rem", width: "20rem" }}
+            sx={{ margin: "0 1rem", width: isMobile ? "10rem" : "20rem" }}
             variant="standard"
             fullWidth
             size="small"
@@ -219,7 +219,7 @@ const Index = () => {
               ? lightColor.text.secondary
               : darkColor.text.secondary
           }
-          margin="0 2rem"
+          margin={isMobile ? "0 0rem" : "0 2rem"}
         ></Box>
         <Box width="55%" height="3.9rem" display="flex" alignItems="center">
           <input
@@ -239,7 +239,7 @@ const Index = () => {
               border: "none",
               outline: "none",
               width: isMobile ? "100%" : "35rem",
-              zIndex: "9999",
+              zIndex: "999",
             }}
             onChange={(e: any) => handleInput(e.target.value)}
           />
@@ -253,7 +253,7 @@ const Index = () => {
               sx={{
                 right: "-1px",
                 display: "flex",
-                width: "5.4rem",
+                width: isMobile ? "4rem" : "5.4rem",
                 height: "4rem",
                 padding: "1.1875rem 0rem 1.1125rem 0rem",
                 justifyContent: "center",
@@ -288,13 +288,31 @@ const Index = () => {
                 <MenuItem  onClick={() => handleSuggestionClick(item)}>
                   <Box display="flex" alignItems="center">
                     <Image src={item.productColor[0].imageURL[0]} alt={item.name} width="75" height="75" style={{margin:'1rem'}} />
-                    <div>
-                      <div>{item.name}</div>
-                      <div style={{ display: "flex", alignItems: "center" }}>
-                        <div style={{ textDecoration: "line-through", marginRight: "5px" }}>₹{item.price}</div>
-                        <div style={{}}> ₹{item.discountPrice}</div>
-                      </div>
-                    </div>
+                    <Box>
+                      <Typography
+                        variant="body1"
+                        display="flex"
+                        style={{
+                          maxWidth: isMobile ? 'calc(100% - 10px)' : 'none',
+                          overflow: 'hidden',
+                          whiteSpace: 'normal',
+                          textOverflow: 'ellipsis',
+                        }}
+                      >
+                        {item.name}
+                      </Typography>
+                      <Box display="flex" alignItems="center">
+                        <Typography
+                          variant="body2"
+                          style={{ textDecoration: 'line-through', marginRight: '5px' }}
+                        >
+                          ₹{item.price}
+                        </Typography>
+                        <Typography variant="body2">
+                          ₹{item.discountPrice}
+                        </Typography>
+                      </Box>
+                    </Box>
                   </Box>
                 </MenuItem>
               </Link>

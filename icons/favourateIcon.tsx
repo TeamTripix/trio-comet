@@ -3,15 +3,17 @@ import React from "react";
 interface FavourateIconProps {
   color?: string;
   fill?: string;
+  width?: string;
+  height?: string;
 }
 
-const FavourateIcon: React.FC<FavourateIconProps> = ({ color, fill }) => {
+const FavourateIcon: React.FC<FavourateIconProps> = ({ color, fill, width, height }) => {
   return (
     <>
       <svg
-        width="21"
+        width={width ?? "21"}
         // style={{ boxShadow: "2px 2px 4px #000000" }}
-        height="18"
+        height={height ?? "18"}
         viewBox="0 0 21 18"
         fill={fill ? fill : "none"}
         // fill="none"

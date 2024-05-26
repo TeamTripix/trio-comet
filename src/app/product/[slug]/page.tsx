@@ -1469,7 +1469,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
                     onChange={handleAccordionChange("offers")}
                     sx={{
                       boxShadow: "none",
-                      width: isMobile ? "90%" : "auto",
+                      width: isMobile ? "100%" : "auto",
                     }}
                   >
                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -1516,7 +1516,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
                     onChange={handleAccordionChange("description")}
                     sx={{
                       boxShadow: "none",
-                      width: isMobile ? "90%" : "auto",
+                      width: isMobile ? "100%" : "auto",
                     }}
                   >
                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -1550,7 +1550,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
                     onChange={handleAccordionChange("rating")}
                     sx={{
                       boxShadow: "none",
-                      width: isMobile ? "90%" : "auto",
+                      width: isMobile ? "100%" : "auto",
                     }}
                   >
                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -1560,7 +1560,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
                       {/* Rating content */}
                       <Box
                         display="flex"
-                        width="90%"
+                        width="100%"
                         flexDirection="column"
                         alignItems="flex-start"
                         gap={isMobile ? "3.2rem" : "5.6rem"}
@@ -2713,7 +2713,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
           )}
         </Box>
 
-        <Box>
+        {/* <Box>
           <Box
             display="flex"
             justifyContent="space-between"
@@ -2802,7 +2802,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
               )}
             </Grid>
           )}
-        </Box>
+        </Box> */}
       </PageSpacing>
     </>
   );

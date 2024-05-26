@@ -155,9 +155,11 @@ const Index = () => {
             alignItems="flex-start"
             gap="2.4rem"
             flex="1 0 0">
-            <Box>
-              <ThemeToggleBtn />
-            </Box>
+            {!isMobile &&
+              <Box>
+                <ThemeToggleBtn />
+              </Box>
+            }
             <Box
               onClick={toggleCategory}
               display="flex"

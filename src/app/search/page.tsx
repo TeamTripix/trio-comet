@@ -107,7 +107,9 @@ const Search = (props: any) => {
                 <Grid
                   key={`${index}+ProductCardNewArrivalsSkeleton`}
                   item
-                  xs={3}>
+                  // xs={3}
+                  margin={isMobile ? "1rem 0" : "5rem 0rem"}
+                  justifyItems="center">
                   <ProductCardSkeleton />
                 </Grid>
               );
