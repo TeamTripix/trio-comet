@@ -7,7 +7,7 @@ import Card from "@components/Card";
 import axios from "axios";
 import BreadCrumb from "@components/BreadCrumb";
 import NoProduct from "../../../../icons/noProduct";
-import { useMobile } from "@/utils/responsive";
+import { useMobile, useTablet } from "@/utils/responsive";
 import ProductCardSkeleton from "@components/Skeleton/ProductCardSkeleton";
 import { useSearchParams } from "next/navigation";
 import { useSelector } from "react-redux";
@@ -20,6 +20,7 @@ const ProductCollection = ({ params }: { params: { slug: string } }) => {
   const [categoryNameApiRes, setCategoryNameApiRes] = useState("");
   const theme: any = useSelector<any>((state) => state.themeToggle);
   const isMobile = useMobile();
+  const isTablet = useTablet();
 
   useEffect(() => {
     axios({
@@ -64,7 +65,7 @@ const ProductCollection = ({ params }: { params: { slug: string } }) => {
           <BreadCrumb />
         </Box>
 
-        <Box paddingLeft="2rem" margin="10rem 0">
+        <Box paddingLeft="2rem" margin={isMobile ? "5rem 0" : "10rem 0"}>
           <Typography
             color={
               theme === "light"
@@ -94,7 +95,96 @@ const ProductCollection = ({ params }: { params: { slug: string } }) => {
             Filter
           </Typography>
         </Box> */}
-
+      {isMobile ? (
+        // is mobile size is active
+        <Grid container justifyContent="center" padding="0 0.5rem" spacing={0.5}>
+          {isLoading ? (
+            [...Array(4)].map((data, index) => {
+              return (
+                <Grid
+                 key={`${index}+ProductCardNewArrivalsSkeleton`}
+                  item
+                  xs={6}
+                  sm={4}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <ProductCardSkeleton />
+                </Grid>
+              );
+            })
+          ) : productApiRes.length === 0 ? (
+            <Box width="100%" textAlign="center">
+              <NoProduct isMobile={isMobile} />
+            </Box>
+          ) : (
+            productApiRes.map((data) => {
+              return (
+                <Grid
+                  key={data._id}
+                  item
+                  margin="1rem 0"
+                  justifyItems="center"
+                >
+                  <Card fullDetailCard={true} data={data}  />
+                </Grid>
+              );
+            })
+          )}
+        </Grid>
+      ) : (
+        isTablet ? (
+          // is tablet size is active
+          <Box
+            sx={{
+              overflowY: "hidden",
+            }}
+          >
+            <Box display="flex" gap="1rem">
+              {isLoading ? (
+                [...Array(4)].map((data, index: number) => {
+                  return (
+                    <Grid
+                      key={`${index}+ProductCardNewArrivalsSkeleton`}
+                      item
+                      xs={3}
+                    >
+                      <ProductCardSkeleton />
+                    </Grid>
+                  );
+                })
+              ) : productApiRes.length === 0 ? (
+                <Box width="100%" textAlign="center">
+                  <NoProduct isMobile={isMobile} />
+                </Box>
+              ) : (
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  {productApiRes.map((data, index) => {
+                    return (
+                      <>
+                        <Box key={data._id}>
+                          <Card
+                            data={data}
+                            fullDetailCard={true}
+                            index={index}
+                            isHomePage={true}
+                          />
+                        </Box>
+                      </>
+                    );
+                  })}
+                </Box>
+              )}
+            </Box>
+          </Box>
+        ) : (
         <Grid container>
           {isLoading ? (
             [...Array(4)].map((data, index: number) => {
@@ -128,6 +218,7 @@ const ProductCollection = ({ params }: { params: { slug: string } }) => {
             })
           )}
         </Grid>
+      ))}
       </PageSpacing>
     </>
   );

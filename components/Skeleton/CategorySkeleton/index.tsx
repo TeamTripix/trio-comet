@@ -9,7 +9,7 @@ const Index = () => {
       <Skeleton
         variant="rectangular"
         sx={{
-          width: isMobile ? "1rem" : "35rem",
+          width: isMobile ? "15rem" : "35rem",
           height: isMobile ? "25rem" : "40rem",
           borderTopLeftRadius: "1.6rem",
           borderTopRightRadius: "1.6rem",

@@ -11,6 +11,7 @@ import BlogCard from "@components/BlogCard";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import { useSelector } from "react-redux";
+import { useMobile, useTablet } from "@/utils/responsive";
 
 const Blog = ({ params }: { params: { slug: string } }) => {
   const queryParams = useSearchParams();
@@ -19,6 +20,9 @@ const Blog = ({ params }: { params: { slug: string } }) => {
   const theme: any = useSelector<any>((state) => state.themeToggle);
   const [otherBlogsData, setOtherBlogsData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const isTablet = useTablet();
+  const isMobile = useMobile();
+
   useEffect(() => {
     axios({
       method: "GET",
@@ -55,11 +59,12 @@ const Blog = ({ params }: { params: { slug: string } }) => {
               <BreadCrumb />
             </Box>
           </PageSpacing>
-          <Box display="flex">
+          <Box display="flex" flexDirection={isMobile ? "column" : "row"}>
             {/* Left side space */}
             <Box
               width="15%"
               padding="0px 0px"
+              margin="0 2.7rem"
               display="flex"
               flexDirection="column"
             >
@@ -87,6 +92,7 @@ const Blog = ({ params }: { params: { slug: string } }) => {
               gap="3.6rem"
               alignSelf="stretch"
               width="50%"
+              margin="0 2.7rem"
             >
               <Box>
                 <Typography
