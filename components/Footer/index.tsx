@@ -172,7 +172,15 @@ const Index = () => {
                   letterSpacing="0.05rem">
                   About us
                 </Typography>
-                <LI theme={theme}>Brand story</LI>
+                <Link href={"/about-us"}>
+                  <LI theme={theme}>Brand story</LI>
+                </Link>
+                <Link href={"/terms-condition"}>
+                  <LI theme={theme}>Terms & Conditions</LI>
+                </Link>
+                <Link href={"/return-exchange"}>
+                  <LI theme={theme}>Return & Exchange Policy</LI>
+                </Link>
               </Grid>
 
               <Grid item xs={3}>
@@ -481,7 +489,15 @@ const Index = () => {
                   letterSpacing="0.05rem">
                   About us
                 </Typography>
-                <LI theme={theme}>Brand story</LI>
+                <Link href={"/about-us"}>
+                  <LI theme={theme}>Brand story</LI>
+                </Link>
+                <Link href={"/terms-condition"}>
+                  <LI theme={theme}>Terms & Conditions</LI>
+                </Link>
+                <Link href={"/return-exchange"}>
+                  <LI theme={theme}>Return & Exchange Policy</LI>
+                </Link>
               </Grid>
 
               <Grid item xs={3}>
