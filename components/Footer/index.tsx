@@ -175,11 +175,17 @@ const Index = () => {
                 <Link href={"/about-us"}>
                   <LI theme={theme}>Brand story</LI>
                 </Link>
+                <Link href={"/privacy-policy"}>
+                  <LI theme={theme}>Privacy Policy</LI>
+                </Link>
                 <Link href={"/terms-condition"}>
                   <LI theme={theme}>Terms & Conditions</LI>
                 </Link>
                 <Link href={"/return-exchange"}>
                   <LI theme={theme}>Return & Exchange Policy</LI>
+                </Link>
+                <Link href={"/shipping-policy"}>
+                  <LI theme={theme}>Shipping Policy</LI>
                 </Link>
               </Grid>
 
@@ -492,11 +498,17 @@ const Index = () => {
                 <Link href={"/about-us"}>
                   <LI theme={theme}>Brand story</LI>
                 </Link>
+                <Link href={"/privacy-policy"}>
+                  <LI theme={theme}>Privacy Policy</LI>
+                </Link>
                 <Link href={"/terms-condition"}>
                   <LI theme={theme}>Terms & Conditions</LI>
                 </Link>
                 <Link href={"/return-exchange"}>
                   <LI theme={theme}>Return & Exchange Policy</LI>
+                </Link>
+                <Link href={"/shipping-policy"}>
+                  <LI theme={theme}>Shipping Policy</LI>
                 </Link>
               </Grid>
 
@@ -709,11 +721,17 @@ const Index = () => {
               <Link href={"/about-us"}>
                 <LI theme={theme}>Brand story</LI>
               </Link>
+              <Link href={"/privacy-policy"}>
+                <LI theme={theme}>Privacy Policy</LI>
+              </Link>
               <Link href={"/terms-condition"}>
                 <LI theme={theme}>Terms & Conditions</LI>
               </Link>
               <Link href={"/return-exchange"}>
                 <LI theme={theme}>Return & Exchange Policy</LI>
+              </Link>
+              <Link href={"/shipping-policy"}>
+                <LI theme={theme}>Shipping Policy</LI>
               </Link>
             </Grid>
 
