@@ -94,14 +94,14 @@ export default function TemporaryDrawer() {
         gap="4rem"
         flexShrink="0"
       >
-        <Box borderRadius="1.6rem" width="40%" height="15.2rem">
+        <Box borderRadius="0.8rem" width="25%" height="15.2rem">
           <Image
             src={image}
             loading="lazy"
             alt="cart thumbnail"
-            width="150"
-            height="150"
-            style={{ borderRadius: "1.6rem" }}
+            width="108"
+            height="135"
+            style={{ borderRadius: "0.8rem" }}
           />
         </Box>
         <Box

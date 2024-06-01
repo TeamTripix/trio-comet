@@ -452,7 +452,6 @@ const Product = ({ params }: { params: { slug: string } }) => {
       url: `/api/coupon/?pid=${productAPIRes._id}`,
     })
       .then((res) => {
-        console.log("coupons--", res.data);
         setCouponAPIRes(res.data.data);
       })
       .catch(() => {});
@@ -1165,10 +1164,10 @@ const Product = ({ params }: { params: { slug: string } }) => {
                         />
                       </>
                     ) : (
-                      ["S", "M", "L", "XL", "2XL"].map((size) => (
+                      productAPIRes.productColor[0].size.map((data:any) => (
                         <Box
-                          key={size}
-                          onClick={() => handleSizeSelection(size)}
+                          key={data.size}
+                          onClick={() => handleSizeSelection(data.size)}
                           sx={{
                             display: "flex",
                             justifyContent: "center",
@@ -1176,7 +1175,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
                             width: "4.2rem",
                             height: "4.2rem",
                             bgcolor:
-                              selectedSize === size ? "#C4C4C4" : "#EFF2F6",
+                              selectedSize === data.size ? "#C4C4C4" : "#EFF2F6",
                             borderRadius: "0.8rem",
                             cursor: "pointer",
                           }}
@@ -1190,11 +1189,11 @@ const Product = ({ params }: { params: { slug: string } }) => {
                             textAlign="center"
                             fontSize={isMobile ? "1.6rem" : "1.8rem"}
                             fontStyle="normal"
-                            fontWeight={selectedSize === size ? 700 : 400}
+                            fontWeight={selectedSize === data.size ? 700 : 400}
                             lineHeight="normal"
                             letterSpacing="0.02rem"
                           >
-                            {size}
+                            {data.size}
                           </Typography>
                         </Box>
                       ))

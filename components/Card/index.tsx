@@ -194,8 +194,8 @@ const Index: React.FC<IndexProps> = ({
               src={data.productColor[0].imageURL[0]}
               loading="lazy"
               alt="card thumbnail"
-              width={"350"}
-              height={"390"}
+              width={"1080"}
+              height={"1350"}
               layout="responsive"
             />
           </Link>
