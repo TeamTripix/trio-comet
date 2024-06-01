@@ -294,7 +294,7 @@ export default function Home() {
               variant="rectangular"
               sx={{
                 width: '100%',
-                height: "15rem",
+                height: "60vh",
                 borderRadius: '0.8rem',
               }}
             ></Skeleton>
@@ -306,20 +306,20 @@ export default function Home() {
               play={true}
               cancelOnInteraction={false}
               interval={6000}
-              style={{ height: bannerHeight - 10 }}
+              style={{ height: '60vh' }}
             >
               {Array(5).fill(value).map((_, index) => (
-                <Box key={index}>
+                <Box key={index} sx={{ width: '100%', height: '100%' }}>
                   <Image
-                    src="/assets/mobileLabel.webp"
+                    src="/assets/RS_Banner_MOB.webp"
                     alt="mobile banner"
-                    width={1920}
-                    height={bannerHeight}
-                    onLoadingComplete={(img) => {
-                      setBannerHeight(img.naturalHeight);
-                      setBannerWidth(img.naturalWidth);
-                    }}
-                    layout="responsive"
+                    // width={100}
+                    // height={20}
+                      // onLoadingComplete={(img) => {
+                      //   setBannerHeight(img.naturalHeight);
+                      //   setBannerWidth(img.naturalWidth);
+                      // }}
+                    layout="fill"
                     objectFit="cover" 
                   />
                 </Box>

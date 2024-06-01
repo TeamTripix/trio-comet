@@ -1,17 +1,29 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Box, Breadcrumbs, Typography, Grid } from "@mui/material";
+import { Box, Typography, Grid } from "@mui/material";
 import PageSpacing from "@components/PageSpacing";
 import BreadCrumb from "@components/BreadCrumb";
 import { lightColor, darkColor } from "@/utils/CustomTheme/color";
 import Image from "next/image";
-import Link from "next/link";
-import ForwardIcon from "../../../../icons/forwardIcon";
 import BlogCard from "@components/BlogCard";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import { useSelector } from "react-redux";
 import { useMobile, useTablet } from "@/utils/responsive";
+import {
+  FacebookShareButton,
+  FacebookIcon,
+  PinterestShareButton,
+  PinterestIcon,
+  TelegramShareButton,
+  TelegramIcon,
+  TwitterShareButton,
+  TwitterIcon,
+  LinkedinShareButton,
+  WhatsappIcon,
+  LinkedinIcon,
+  WhatsappShareButton,
+} from 'next-share';
 
 const Blog = ({ params }: { params: { slug: string } }) => {
   const queryParams = useSearchParams();
@@ -55,209 +67,364 @@ const Blog = ({ params }: { params: { slug: string } }) => {
       ) : (
         <>
           <PageSpacing>
-            <Box margin="2.7rem 0">
+            <Box margin="1.7rem 1rem">
               <BreadCrumb />
             </Box>
           </PageSpacing>
-          <Box display="flex" flexDirection={isMobile ? "column" : "row"}>
-            {/* Left side space */}
-            <Box
-              width="15%"
-              padding="0px 0px"
-              margin="0 2.7rem"
-              display="flex"
-              flexDirection="column"
-            >
-              <Typography
-                color={
-                  theme === "light"
-                    ? lightColor.text.fade
-                    : darkColor.text.secondary
-                }
-                textAlign="center"
-                fontSize="1.4rem"
-                fontStyle="normal"
-                fontWeight="500"
-                lineHeight="normal"
-                letterSpacing="0.02rem">
-                Links
-              </Typography>
-            </Box>
-            {/* middle space */}
-            <Box
-              display="flex"
-              flexDirection="column"
-              justifyContent="center"
-              alignItems="center"
-              gap="3.6rem"
-              alignSelf="stretch"
-              width="50%"
-              margin="0 2.7rem"
-            >
-              <Box>
-                <Typography
-                  color={
-                    theme === "light"
-                      ? lightColor.text.primary
-                      : darkColor.text.primary
-                  }
-                  textAlign="center"
-                  fontSize="4rem"
-                  fontStyle="normal"
-                  fontWeight="700"
-                  lineHeight="normal"
-                  letterSpacing="0.05rem">
-                  {blogApiRes[0].heading}
-                </Typography>
-              </Box>
-              <Box width="100%" height="auto">
-                <Image
-                  width={"1536"}
-                  height={"500"}
-                  src={blogApiRes[0].banner}
-                  alt="blogThumbnail"
-                  layout="responsive"
-                />
-              </Box>
-              <PageSpacing>
-                <Box
-                  display="flex"
-                  flexDirection="column"
-                  justifyContent="center"
-                  alignItems="flex-start"
-                  gap="2.2rem">
-                  <Typography
-                    color={
-                      theme === "light"
-                        ? lightColor.text.fade
-                        : darkColor.text.secondary
-                    }
-                    textAlign="center"
-                    fontSize="1.4rem"
-                    fontStyle="normal"
-                    fontWeight="500"
-                    lineHeight="normal"
-                    letterSpacing="0.02rem">
-                    15/01/2024
-                  </Typography>
-                  <Typography
-                    color={theme === "light"
-                      ? lightColor.text.primary
-                      : darkColor.text.primary}
-                    dangerouslySetInnerHTML={{
-                      __html: blogApiRes[0].desc,
-                    }}></Typography>
-                </Box>
-                <Box
-                  display="flex"
-                  padding="1rem 0"
-                  flexDirection="column"
-                  justifyContent="center"
-                // bgcolor="#FFF"
-                >
+          <Grid container spacing={2}>
+            {isMobile || isTablet ? (
+              <>
+                <Grid item xs={12}>
                   <Box
                     display="flex"
-                    justifyContent="space-between"
+                    flexDirection="column"
+                    justifyContent="center"
                     alignItems="center"
-                    margin="1rem 0">
+                    gap="3.6rem"
+                    width="100%"
+                    overflow="hidden"
+                    padding="0 2rem"
+                  >
+                    <Box>
+                      <Typography
+                        color={
+                          theme === "light"
+                            ? lightColor.text.primary
+                            : darkColor.text.primary
+                        }
+                        textAlign="center"
+                        fontSize="4rem"
+                        fontStyle="normal"
+                        fontWeight="700"
+                        lineHeight="normal"
+                        letterSpacing="0.05rem">
+                        {blogApiRes[0].heading}
+                      </Typography>
+                    </Box>
+                    <Box width="100%" height="auto">
+                      <Image
+                        width={"1836"}
+                        height={"800"}
+                        src={blogApiRes[0].banner}
+                        alt="blogThumbnail"
+                        layout="responsive"
+                      />
+                    </Box>
+                    <PageSpacing>
+                      <Box
+                        display="flex"
+                        flexDirection="column"
+                        gap="2.2rem"
+                        padding="0 1rem">
+                        <Typography
+                          color={
+                            theme === "light"
+                              ? lightColor.text.fade
+                              : darkColor.text.secondary
+                          }
+                          textAlign="left"
+                          fontSize="1.4rem"
+                          fontStyle="normal"
+                          fontWeight="500"
+                          lineHeight="normal"
+                          letterSpacing="0.02rem"
+                          padding="0 2rem">
+                          15/01/2024
+                        </Typography>
+                        <Typography
+                          style={{
+                            wordWrap: 'break-word',
+                            overflowWrap: 'break-word',
+                            width: isMobile ? '90vw' : '100%',
+                            boxSizing: 'border-box',
+                            marginLeft: isMobile ? '5vw' : '0',
+                          }}
+                          color={theme === "light"
+                            ? lightColor.text.primary
+                            : darkColor.text.primary}
+                          dangerouslySetInnerHTML={{
+                            __html: blogApiRes[0].desc,
+                          }}></Typography>
+                      </Box>
+                    </PageSpacing>
+                  </Box>
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Box
+                    display="flex"
+                    flexDirection="column"
+                    padding="auto"
+                    margin="auto"
+                    alignItems={'center'}
+                  >
                     <Typography
                       color={
                         theme === "light"
-                          ? lightColor.text.primary
-                          : darkColor.text.primary
+                          ? lightColor.text.fade
+                          : darkColor.text.secondary
                       }
                       textAlign="center"
-                      fontSize="2.8rem"
+                      fontSize="1.4rem"
                       fontStyle="normal"
-                      fontWeight="700"
+                      fontWeight="500"
                       lineHeight="normal"
-                      letterSpacing="0.05rem">
-                      Blogs
+                      letterSpacing="0.02rem"
+                      display={'flex'}
+                      gap={1}
+                      flexDirection={'row'}>
+                      <FacebookShareButton
+                        url={'https://github.com/next-share'}
+                        quote={'next-share is a social share buttons for your next React apps.'}
+                        hashtag={'#nextshare'}
+                      >
+                        <FacebookIcon size={32} round />
+                      </FacebookShareButton>
+                      <PinterestShareButton
+                        url={'https://github.com/next-share'}
+                        media={'next-share is a social share buttons for your next React apps.'}
+                      >
+                        <PinterestIcon size={32} round />
+                      </PinterestShareButton>
+                      <TelegramShareButton
+                        url={'https://github.com/next-share'}
+                        title={'next-share is a social share buttons for your next React apps.'}
+                      >
+                        <TelegramIcon size={32} round />
+                      </TelegramShareButton>
+                      <TwitterShareButton
+                        url={'https://github.com/next-share'}
+                        title={'next-share is a social share buttons for your next React apps.'}
+                      >
+                        <TwitterIcon size={32} round />
+                      </TwitterShareButton>
+                      <WhatsappShareButton
+                        url={'https://github.com/next-share'}
+                        title={'next-share is a social share buttons for your next React apps.'}
+                        separator=":: "
+                      >
+                        <WhatsappIcon size={32} round />
+                      </WhatsappShareButton>
+                      <LinkedinShareButton url={'https://github.com/next-share'}>
+                        <LinkedinIcon size={32} round />
+                      </LinkedinShareButton>
                     </Typography>
-                    <Link href={"blog-collection"}>
+                  </Box>
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Box
+                    display="flex"
+                    flexDirection="column"
+                    // padding="0 0 0 10px"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <Typography
+                      color={
+                        theme === "light"
+                          ? lightColor.text.fade
+                          : darkColor.text.secondary
+                      }
+                      textAlign="center"
+                      fontSize="1.4rem"
+                      fontStyle="normal"
+                      fontWeight="500"
+                      lineHeight="normal"
+                      letterSpacing="0.02rem"
+                    >
+                      {isLoading ? (
+                        "loading..."
+                      ) : (
+                        <Grid container>
+                          {otherBlogsData.length === 0
+                            ? "No other blogs found."
+                            : otherBlogsData.map((blog, index) => (
+                              <Grid key={`blog-${index}`} item xs={12}>
+                                <BlogCard data={blog} />
+                              </Grid>
+                            ))}
+                        </Grid>
+                      )}
+                    </Typography>
+                  </Box>
+                </Grid>
+              </>
+            ) : (
+              <>
+
+                <Grid item xs={12} md={2}>
+                  <Box
+                    display="flex"
+                    flexDirection="column"
+                    padding="0px 0px"
+                    margin="2.7rem 2.7rem"
+                  >
+                    <Typography
+                      color={
+                        theme === "light"
+                          ? lightColor.text.fade
+                          : darkColor.text.secondary
+                      }
+                      textAlign="center"
+                      fontSize="1.4rem"
+                      fontStyle="normal"
+                      fontWeight="500"
+                      lineHeight="normal"
+                      letterSpacing="0.02rem"
+                      display={'flex'}
+                      flexDirection={'column'}>
+                      <FacebookShareButton
+                        url={'https://github.com/next-share'}
+                        quote={'next-share is a social share buttons for your next React apps.'}
+                        hashtag={'#nextshare'}
+                      >
+                        <FacebookIcon size={32} round />
+                      </FacebookShareButton>
+                      <PinterestShareButton
+                        url={'https://github.com/next-share'}
+                        media={'next-share is a social share buttons for your next React apps.'}
+                      >
+                        <PinterestIcon size={32} round />
+                      </PinterestShareButton>
+                      <TelegramShareButton
+                        url={'https://github.com/next-share'}
+                        title={'next-share is a social share buttons for your next React apps.'}
+                      >
+                        <TelegramIcon size={32} round />
+                      </TelegramShareButton>
+                      <TwitterShareButton
+                        url={'https://github.com/next-share'}
+                        title={'next-share is a social share buttons for your next React apps.'}
+                      >
+                        <TwitterIcon size={32} round />
+                      </TwitterShareButton>
+                      <WhatsappShareButton
+                        url={'https://github.com/next-share'}
+                        title={'next-share is a social share buttons for your next React apps.'}
+                        separator=":: "
+                      >
+                        <WhatsappIcon size={32} round />
+                      </WhatsappShareButton>
+                      <LinkedinShareButton url={'https://github.com/next-share'}>
+                        <LinkedinIcon size={32} round />
+                      </LinkedinShareButton>
+                    </Typography>
+                  </Box>
+                </Grid>
+
+                <Grid item xs={12} md={6}>
+                  <Box
+                    display="flex"
+                    flexDirection="column"
+                    justifyContent="center"
+                    alignItems="center"
+                    gap="3.6rem"
+                    width="100%"
+                    margin="0 2.7rem"
+                    overflow="hidden"
+                  >
+                    <Box>
+                      <Typography
+                        color={
+                          theme === "light"
+                            ? lightColor.text.primary
+                            : darkColor.text.primary
+                        }
+                        textAlign="center"
+                        fontSize="4rem"
+                        fontStyle="normal"
+                        fontWeight="700"
+                        lineHeight="normal"
+                        letterSpacing="0.05rem">
+                        {blogApiRes[0].heading}
+                      </Typography>
+                    </Box>
+                    <Box width="100%" height="auto">
+                      <Image
+                        width={"1836"}
+                        height={"800"}
+                        src={blogApiRes[0].banner}
+                        alt="blogThumbnail"
+                        layout="responsive"
+                      />
+                    </Box>
+                    <PageSpacing>
                       <Box
                         display="flex"
-                        // width="67.3rem"
-                        justifyContent="flex-end"
-                        alignItems="center"
-                        gap="0.4rem"
-                        flexShrink="0">
+                        flexDirection="column"
+                        gap="2.2rem">
                         <Typography
-                          color={lightColor.text.link}
-                          textAlign="center"
-                          fontSize="1.8rem"
+                          color={
+                            theme === "light"
+                              ? lightColor.text.fade
+                              : darkColor.text.secondary
+                          }
+                          textAlign="left"
+                          fontSize="1.4rem"
                           fontStyle="normal"
-                          fontWeight="400"
+                          fontWeight="500"
                           lineHeight="normal"
-                          letterSpacing="0.05rem"
-                          display="flex"
-                          alignItems="center">
-                          View more
-                          <ForwardIcon />
+                          letterSpacing="0.02rem">
+                          15/01/2024
                         </Typography>
+                        <Typography
+                          textAlign="left"
+                          style={{
+                            wordWrap: 'break-word',
+                            overflowWrap: 'break-word',
+                            width: '100%',
+                            boxSizing: 'border-box',
+                          }}
+                          color={theme === "light"
+                            ? lightColor.text.primary
+                            : darkColor.text.primary}
+                          dangerouslySetInnerHTML={{
+                            __html: blogApiRes[0].desc,
+                          }}></Typography>
                       </Box>
-                    </Link>
+                    </PageSpacing>
                   </Box>
-                  {/* <Grid height="52.1rem" container spacing={4}>
-              <Grid item xs={4}>
-                <BlogCard />
-              </Grid>
-              <Grid item xs={4}>
-                <BlogCard />
-              </Grid>
-              <Grid item xs={4}>
-                <BlogCard />
-              </Grid>
-            </Grid> */}
-                </Box>
-              </PageSpacing>
-            </Box>
-
-            {/* Line */}
-            <Box
-              height="100%"
-              width="1px"
-              bgcolor={darkColor.text.secondary
-              }
-            />
-
-            {/* Right side space */}
-            <Box
-              width="35%"
-              padding="0 0 0 50px"
-              display="flex"
-              flexDirection="column"
-            >
-              <Typography
-                color={
-                  theme === "light"
-                    ? lightColor.text.fade
-                    : darkColor.text.secondary
-                }
-                textAlign="center"
-                fontSize="1.4rem"
-                fontStyle="normal"
-                fontWeight="500"
-                lineHeight="normal"
-                letterSpacing="0.02rem"
-              >
-                {isLoading ? (
-                  "loading..."
-                ) : (
-                  <Grid container spacing={4}>
-                    {otherBlogsData.length === 0
-                      ? "No other blogs found."
-                      : otherBlogsData.map((blog, index) => (
-                        <Grid key={`blog-${index}`} item xs={7}>
-                          {/* Render your BlogCard component here */}
-                          <BlogCard data={blog} />
+                </Grid>
+                
+                <Grid item xs={12} md={3}>
+                  <Box
+                    display="flex"
+                    flexDirection="column"
+                    padding="0 0 0 10px"
+                  >
+                    <Typography
+                      color={
+                        theme === "light"
+                          ? lightColor.text.fade
+                          : darkColor.text.secondary
+                      }
+                      textAlign="center"
+                      fontSize="1.4rem"
+                      fontStyle="normal"
+                      fontWeight="500"
+                      lineHeight="normal"
+                      letterSpacing="0.02rem"
+                    >
+                      {isLoading ? (
+                        "loading..."
+                      ) : (
+                        <Grid container>
+                          {otherBlogsData.length === 0
+                            ? "No other blogs found."
+                            : otherBlogsData.map((blog, index) => (
+                              <Grid key={`blog-${index}`} item xs={12}>
+                                <BlogCard data={blog} />
+                              </Grid>
+                            ))}
                         </Grid>
-                      ))}
-                  </Grid>
-                )}
-              </Typography>
-            </Box>
-          </Box>
+                      )}
+                    </Typography>
+                  </Box>
+                </Grid>
+              </>
+            )}
+          </Grid>
         </>
       )}
     </>
