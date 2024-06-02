@@ -142,8 +142,9 @@ export default function TemporaryDrawer() {
                 fontWeight="700"
                 lineHeight="normal"
                 letterSpacing="0.02rem"
+                noWrap
               >
-                {name.slice(0, 50)}...
+                {name}
               </Typography>
               <Typography
                 color={

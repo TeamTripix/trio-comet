@@ -308,24 +308,22 @@ export default function Home() {
               interval={6000}
               style={{ height: "60vh" }}
             >
-              {Array(5)
-                .fill(value)
-                .map((_, index) => (
-                  <Box key={index} sx={{ width: "100%", height: "100%" }}>
-                    <Image
-                      src="/assets/RS_Banner_MOB.webp"
-                      alt="mobile banner"
-                      // width={100}
-                      // height={20}
-                      // onLoadingComplete={(img) => {
-                      //   setBannerHeight(img.naturalHeight);
-                      //   setBannerWidth(img.naturalWidth);
-                      // }}
-                      layout="fill"
-                      objectFit="cover"
-                    />
-                  </Box>
-                ))}
+              {bannerApiRes.map((data: any, index: number) => (
+                <Box key={index} sx={{ width: "100%", height: "100%" }}>
+                  <Image
+                    src={data.mobileImageURL}
+                    alt="mobile banner"
+                    // width={100}
+                    // height={20}
+                    // onLoadingComplete={(img) => {
+                    //   setBannerHeight(img.naturalHeight);
+                    //   setBannerWidth(img.naturalWidth);
+                    // }}
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                </Box>
+              ))}
             </AutoplaySlider>
           )
         ) : bannerApiLoading ? (

@@ -280,8 +280,9 @@ const Index: React.FC<IndexProps> = ({
                 fontWeight="700"
                 lineHeight="normal"
                 letterSpacing="0.05rem"
+                noWrap
               >
-                {name.length < 35 ? name : `${name.slice(0, 35)}...`}
+                {name}
               </Typography>
               <Box display="flex" alignItems="center" gap="0.6rem">
                 {/* product color */}
