@@ -15,6 +15,7 @@ interface IndexProps {
   fullDetailCard?: boolean;
   index?: number;
   isHomePage?: boolean;
+  buyButton?:boolean
 }
 
 const Index: React.FC<IndexProps> = ({
@@ -22,6 +23,7 @@ const Index: React.FC<IndexProps> = ({
   data,
   index,
   isHomePage,
+  buyButton
 }) => {
   const favCartData = useSelector(
     (state: any) => state.addToFavCart.favCartData
@@ -119,7 +121,7 @@ const Index: React.FC<IndexProps> = ({
             ? isMobile
               ? fullDetailCard
                 ? "17rem"
-                : "16rem"
+                : "auto"
               : "35rem"
             : fullDetailCard
             ? "35rem"
@@ -505,7 +507,8 @@ const Index: React.FC<IndexProps> = ({
               alignSelf="stretch"
               width="100%"
             >
-              <ButtonBase
+              {buyButton && <ButtonBase
+            
                 onClick={() => handleAddToCartBtn(data)}
                 sx={{
                   display: "flex",
@@ -552,7 +555,7 @@ const Index: React.FC<IndexProps> = ({
                   }
                   color="black"
                 />
-              </ButtonBase>
+              </ButtonBase>}
             </Box>
           </Box>
         </Box>

@@ -36,8 +36,8 @@ const Index = (props: IndexProps) => {
         > */}
           <Box>
             <Box
-              width={isMobile ? "15rem" : " 30vw"}
-              height={isMobile ? "15rem" : "35vh"}
+              // width={isMobile ? "15rem" : " 30vw"}
+              // height={isMobile ? "15rem" : "35vh"}
               borderRadius="10rem"
             >
               <img

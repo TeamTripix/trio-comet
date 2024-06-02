@@ -95,48 +95,49 @@ const ProductCollection = ({ params }: { params: { slug: string } }) => {
             Filter
           </Typography>
         </Box> */}
-      {isMobile ? (
-        // is mobile size is active
-        <Grid container justifyContent="center" padding="0 0.5rem" spacing={0.5}>
-          {isLoading ? (
-            [...Array(4)].map((data, index) => {
-              return (
-                <Grid
-                 key={`${index}+ProductCardNewArrivalsSkeleton`}
-                  item
-                  xs={6}
-                  sm={4}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <ProductCardSkeleton />
-                </Grid>
-              );
-            })
-          ) : productApiRes.length === 0 ? (
-            <Box width="100%" textAlign="center">
-              <NoProduct isMobile={isMobile} />
-            </Box>
-          ) : (
-            productApiRes.map((data) => {
-              return (
-                <Grid
-                  key={data._id}
-                  item
-                  margin="1rem 0"
-                  justifyItems="center"
-                >
-                  <Card fullDetailCard={true} data={data}  />
-                </Grid>
-              );
-            })
-          )}
-        </Grid>
-      ) : (
-        isTablet ? (
+        {isMobile ? (
+          // is mobile size is active
+          <Grid
+            container
+            // justifyContent="center"
+            // padding="0 0.5rem"
+            spacing={1}
+          >
+            {isLoading ? (
+              [...Array(4)].map((data, index) => {
+                return (
+                  <Grid
+                    key={`${index}+ProductCardNewArrivalsSkeleton`}
+                    item
+                    xs={6}
+                    sm={4}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <ProductCardSkeleton />
+                  </Grid>
+                );
+              })
+            ) : productApiRes.length === 0 ? (
+              <Box width="100%" textAlign="center">
+                <NoProduct isMobile={isMobile} />
+              </Box>
+            ) : (
+              productApiRes.map((data) => {
+                return (
+                  <>
+                    <Grid xs={6} item key={data._id} justifyItems="center">
+                      <Card buyButton={false} data={data} />
+                    </Grid>
+                  </>
+                );
+              })
+            )}
+          </Grid>
+        ) : isTablet ? (
           // is tablet size is active
           <Box
             sx={{
@@ -161,11 +162,7 @@ const ProductCollection = ({ params }: { params: { slug: string } }) => {
                   <NoProduct isMobile={isMobile} />
                 </Box>
               ) : (
-                <Box
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                >
+                <Box display="flex" justifyContent="center" alignItems="center">
                   {productApiRes.map((data, index) => {
                     return (
                       <>
@@ -185,40 +182,40 @@ const ProductCollection = ({ params }: { params: { slug: string } }) => {
             </Box>
           </Box>
         ) : (
-        <Grid container>
-          {isLoading ? (
-            [...Array(4)].map((data, index: number) => {
-              return (
-                <Grid
-                  key={`${index}+ProductCardNewArrivalsSkeleton`}
-                  item
-                  xs={3}
-                >
-                  <ProductCardSkeleton />
-                </Grid>
-              );
-            })
-          ) : productApiRes.length === 0 ? (
-            <Box width="100%" textAlign="center">
-              <NoProduct isMobile={isMobile} />
-            </Box>
-          ) : (
-            productApiRes.map((data) => {
-              return (
-                <Grid
-                  key={data._id}
-                  item
-                  margin="5rem 0rem"
-                  xs={3}
-                  justifyItems="center"
-                >
-                  <Card fullDetailCard={true} data={data} />
-                </Grid>
-              );
-            })
-          )}
-        </Grid>
-      ))}
+          <Grid container>
+            {isLoading ? (
+              [...Array(4)].map((data, index: number) => {
+                return (
+                  <Grid
+                    key={`${index}+ProductCardNewArrivalsSkeleton`}
+                    item
+                    xs={3}
+                  >
+                    <ProductCardSkeleton />
+                  </Grid>
+                );
+              })
+            ) : productApiRes.length === 0 ? (
+              <Box width="100%" textAlign="center">
+                <NoProduct isMobile={isMobile} />
+              </Box>
+            ) : (
+              productApiRes.map((data) => {
+                return (
+                  <Grid
+                    key={data._id}
+                    item
+                    margin="5rem 0rem"
+                    xs={3}
+                    justifyItems="center"
+                  >
+                    <Card fullDetailCard={true} data={data} />
+                  </Grid>
+                );
+              })
+            )}
+          </Grid>
+        )}
       </PageSpacing>
     </>
   );

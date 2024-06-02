@@ -11,6 +11,8 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useMobile } from "@/utils/responsive";
+import EditIcon from "../../icons/editIcon";
+import EditCartProductBox from "@components/EditCartProductBox";
 
 type Anchor = "top" | "left" | "bottom" | "right";
 export default function TemporaryDrawer() {
@@ -40,11 +42,13 @@ export default function TemporaryDrawer() {
 
   interface cartItemProps {
     cartData?: any;
+    anchor?: any;
   }
-  const CartItem: React.FC<cartItemProps> = ({ cartData }) => {
+  const CartItem: React.FC<cartItemProps> = ({ cartData, anchor }) => {
     const dispatch = useDispatch();
     const { product, quantity, isCouponApply } = cartData;
-    const { name, price, image } = product;
+    const { name, price, image, productColor, productSize } = product;
+    const [isEditBoxVisible, setIsEditBoxVisible] = useState(false);
     const handleSubtractBtn = () => {
       if (quantity === 1) {
       } else {
@@ -70,10 +74,10 @@ export default function TemporaryDrawer() {
       });
     };
 
-    const handleRemoveBtn = () => {
+    const handleRemoveBtn: any = () => {
       const deletedData = {
-        id:product._id
-      }
+        id: product._id,
+      };
       dispatch({
         type: "REMOVE_FROM_CART",
         payload: { product: deletedData, isCouponApply, quantity },
@@ -84,185 +88,213 @@ export default function TemporaryDrawer() {
       });
     };
 
+    const handleEditBtn = () => {
+      console.log("testtt")
+      toggleDrawer(anchor, false); 
+      console.log("testtt = = = = =")
+
+      // setIsEditBoxVisible(true);
+    };
+
     return (
-      <Box
-        width="100%"
-        height="15.2rem"
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        gap="4rem"
-        flexShrink="0"
-      >
-        <Box borderRadius="0.8rem" width="25%" height="15.2rem">
-          <Image
-            src={image}
-            loading="lazy"
-            alt="cart thumbnail"
-            width="108"
-            height="135"
-            style={{ borderRadius: "0.8rem" }}
-          />
-        </Box>
+      <>
         <Box
-          width="60%"
-          display="flex"
+          width="100%"
           height="15.2rem"
-          padding="3.2rem 0rem"
-          flexDirection="column"
+          display="flex"
           justifyContent="center"
-          alignItems="flex-start"
+          alignItems="center"
           gap="4rem"
+          flexShrink="0"
         >
+          <Box borderRadius="0.8rem" width="25%" height="15.2rem">
+            <Image
+              src={image}
+              loading="lazy"
+              alt="cart thumbnail"
+              width="108"
+              height="135"
+              style={{ borderRadius: "0.8rem" }}
+            />
+          </Box>
           <Box
+            width="60%"
             display="flex"
+            height="15.2rem"
+            padding="3.2rem 0rem"
             flexDirection="column"
             justifyContent="center"
             alignItems="flex-start"
-            gap="0.4rem"
-            width="17rem"
+            gap="4rem"
           >
-            <Typography
-              color={
-                theme === "light"
-                  ? lightColor.text.primary
-                  : darkColor.text.primary
-              }
-              fontSize="1.6rem"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="normal"
-              letterSpacing="0.02rem"
+            <Box
+              display="flex"
+              flexDirection="column"
+              justifyContent="center"
+              alignItems="flex-start"
+              gap="0.4rem"
+              width="17rem"
             >
-              {name.slice(0, 50)}...
-            </Typography>
-            <Typography
-              color={
-                theme === "light"
-                  ? lightColor.text.primary
-                  : darkColor.text.primary
-              }
-              textAlign="center"
-              fontSize="1.6rem"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="normal"
-              letterSpacing="0.02rem"
-            >
-              ₹{parseInt(price) * parseInt(quantity)}
-            </Typography>
-          </Box>
-
-          <Box width="100%" display="flex" justifyContent="space-between">
-            {!isCouponApply ? (
+              <Typography
+                color={
+                  theme === "light"
+                    ? lightColor.text.primary
+                    : darkColor.text.primary
+                }
+                fontSize="1.6rem"
+                fontStyle="normal"
+                fontWeight="700"
+                lineHeight="normal"
+                letterSpacing="0.02rem"
+              >
+                {name.slice(0, 50)}...
+              </Typography>
+              <Typography
+                color={
+                  theme === "light"
+                    ? lightColor.text.primary
+                    : darkColor.text.primary
+                }
+                textAlign="center"
+                fontSize="1.6rem"
+                fontStyle="normal"
+                fontWeight="700"
+                lineHeight="normal"
+                letterSpacing="0.02rem"
+              >
+                ₹{parseInt(price) * parseInt(quantity)}
+              </Typography>
               <Box
                 display="flex"
-                width="7.8rem"
-                height="2rem"
-                justifyContent="space-between"
+                justifyContent="center"
                 alignItems="center"
+                gap="1rem"
               >
-                <ButtonBase
-                  onClick={handleSubtractBtn}
-                  sx={{
-                    width: "2rem",
-                    height: "2rem",
-                    flexShrink: "0",
-                    bgcolor:
-                      theme === "light"
-                        ? lightColor.text.secondary
-                        : darkColor.text.secondary,
-                    borderTopLeftRadius: "4px",
-                    borderBottomLeftRadius: "4px",
-                  }}
-                >
-                  <Minus />
-                </ButtonBase>
+                <Box
+                  width="2rem"
+                  height="2rem"
+                  borderRadius="50%"
+                  bgcolor={productColor}
+                  zIndex={99}
+                ></Box>
+                <Typography>{productSize}</Typography>
+              </Box>
+            </Box>
+
+            <Box width="100%" display="flex" justifyContent="space-between">
+              {!isCouponApply ? (
                 <Box
                   display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  width="5rem"
+                  width="7.8rem"
                   height="2rem"
-                  border="1px solid #F7F7F7"
+                  justifyContent="space-between"
+                  alignItems="center"
                 >
-                  <Typography
-                    color={
-                      theme === "light"
-                        ? lightColor.text.primary
-                        : darkColor.text.primary
-                    }
-                    textAlign="center"
-                    fontSize="1rem"
-                    fontStyle="normal"
-                    fontWeight="700"
-                    lineHeight="normal"
-                    letterSpacing="0.02rem"
+                  <ButtonBase
+                    onClick={handleSubtractBtn}
+                    sx={{
+                      width: "2rem",
+                      height: "2rem",
+                      flexShrink: "0",
+                      bgcolor:
+                        theme === "light"
+                          ? lightColor.text.secondary
+                          : darkColor.text.secondary,
+                      borderTopLeftRadius: "4px",
+                      borderBottomLeftRadius: "4px",
+                    }}
                   >
-                    {quantity}
-                  </Typography>
+                    <Minus />
+                  </ButtonBase>
+                  <Box
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    width="5rem"
+                    height="2rem"
+                    border="1px solid #F7F7F7"
+                  >
+                    <Typography
+                      color={
+                        theme === "light"
+                          ? lightColor.text.primary
+                          : darkColor.text.primary
+                      }
+                      textAlign="center"
+                      fontSize="1rem"
+                      fontStyle="normal"
+                      fontWeight="700"
+                      lineHeight="normal"
+                      letterSpacing="0.02rem"
+                    >
+                      {quantity}
+                    </Typography>
+                  </Box>
+                  <ButtonBase
+                    onClick={handleAddBtn}
+                    sx={{
+                      width: "2rem",
+                      height: "2rem",
+                      flexShrink: "0",
+                      bgcolor:
+                        theme === "light"
+                          ? lightColor.text.secondary
+                          : darkColor.text.secondary,
+                      borderTopRightRadius: "4px",
+                      borderBottomRightRadius: "4px",
+                    }}
+                  >
+                    <Plus />
+                  </ButtonBase>
                 </Box>
-                <ButtonBase
-                  onClick={handleAddBtn}
-                  sx={{
-                    width: "2rem",
-                    height: "2rem",
-                    flexShrink: "0",
-                    bgcolor:
-                      theme === "light"
-                        ? lightColor.text.secondary
-                        : darkColor.text.secondary,
-                    borderTopRightRadius: "4px",
-                    borderBottomRightRadius: "4px",
-                  }}
+              ) : (
+                <Box
+                  display="flex"
+                  width="7.8rem"
+                  height="2rem"
+                  justifyContent="space-between"
+                  alignItems="center"
                 >
-                  <Plus />
-                </ButtonBase>
-              </Box>
-            ) : (
-              <Box
-                display="flex"
-                width="7.8rem"
-                height="2rem"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <ButtonBase
-                  sx={{
-                    width: "100%",
-                    height: "2rem",
-                    flexShrink: "0",
-                    bgcolor:
-                      theme === "light"
-                        ? lightColor.theme.primary
-                        : darkColor.theme.primary,
-                    borderRadius: "4px",
-                  }}
-                >
-                  <Typography
-                    color={
-                      theme === "light"
-                        ? lightColor.text.primary
-                        : darkColor.text.primary
-                    }
-                    textAlign="center"
-                    fontSize="1rem"
-                    fontStyle="normal"
-                    fontWeight="700"
-                    lineHeight="normal"
-                    letterSpacing="0.05rem"
+                  <ButtonBase
+                    sx={{
+                      width: "100%",
+                      height: "2rem",
+                      flexShrink: "0",
+                      bgcolor:
+                        theme === "light"
+                          ? lightColor.theme.primary
+                          : darkColor.theme.primary,
+                      borderRadius: "4px",
+                    }}
                   >
-                    Applied
-                  </Typography>
-                </ButtonBase>
-              </Box>
-            )}
-            <ButtonBase onClick={handleRemoveBtn}>
-              <Bin />
-            </ButtonBase>
+                    <Typography
+                      color={
+                        theme === "light"
+                          ? lightColor.text.primary
+                          : darkColor.text.primary
+                      }
+                      textAlign="center"
+                      fontSize="1rem"
+                      fontStyle="normal"
+                      fontWeight="700"
+                      lineHeight="normal"
+                      letterSpacing="0.05rem"
+                    >
+                      Applied
+                    </Typography>
+                  </ButtonBase>
+                </Box>
+              )}
+              <ButtonBase onClick={handleEditBtn}>
+                <EditCartProductBox />
+              </ButtonBase>
+              <ButtonBase onClick={handleRemoveBtn}>
+                <Bin />
+              </ButtonBase>
+            </Box>
           </Box>
         </Box>
-      </Box>
+      </>
     );
   };
 
@@ -391,7 +423,13 @@ export default function TemporaryDrawer() {
               </>
             ) : (
               cartData.map((data: any) => {
-                return <CartItem key={data.product._id} cartData={data} />;
+                return (
+                  <CartItem
+                    anchor={anchors}
+                    key={data.product._id}
+                    cartData={data}
+                  />
+                );
               })
             )}
           </Box>
