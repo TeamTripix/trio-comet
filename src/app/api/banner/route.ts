@@ -21,10 +21,10 @@ export async function POST(req: NextRequest) {
           tokenValue.data.role === "co-admin"
         ) {
           const parsedData = await req.json();
-          const { id, imageURL, link } = parsedData;
+          const { id, imageURL, link, mobileImageURL } = parsedData;
 
           // check all feilds in requested data
-          if (!id && !imageURL && !link) {
+          if (!id && !imageURL && !link && !mobileImageURL) {
             return NextResponse.json(
               { message: "please fill all feilds", success: false },
               { status: 400 }
@@ -36,6 +36,7 @@ export async function POST(req: NextRequest) {
             const data = new bannerSchema({
               id,
               imageURL,
+              mobileImageURL,
               link,
               addUserBy: tokenValue.data._id,
               isAdmin: tokenValue.data.isAdmin,
@@ -55,6 +56,7 @@ export async function POST(req: NextRequest) {
             }
           } else {
             const update = await bannerSchema.updateOne({
+              mobileImageURL:mobileImageURL,
               imageURL: imageURL,
               link: link,
             });

@@ -40,7 +40,6 @@ const ProductCollection = ({ params }: { params: { slug: string } }) => {
               if (res.status === 200) {
                 setIsLoading(false);
                 setProductApiRes(res.data.data);
-                console.log("res.data", res.data);
               }
             })
             .catch((err) => {

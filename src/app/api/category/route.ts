@@ -23,8 +23,6 @@ export async function POST(req: NextRequest) {
           const parsedData = await req.json();
           const { id, name, image, slug } = parsedData;
 
-          console.log(parsedData)
-
           // check all feilds in requested data
           if (!name && !categorySchema && !image && !slug) {
             return NextResponse.json(

@@ -151,7 +151,6 @@ export async function GET(
   { params }: { params: { filename: string } }
 ) {
   const pid = req.nextUrl.searchParams.get("pid");
-  console.log("pid : ",pid )
   const tag = req.nextUrl.searchParams.get("tag");
   const category = req.nextUrl.searchParams.get("category");
   const onSale = req.nextUrl.searchParams.get("on-sale");

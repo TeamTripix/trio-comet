@@ -20,7 +20,6 @@ const Index: React.FC<IndexProps> = ({ videoId }) => {
   //   };
 
   const onPlayerReady: YouTubeProps['onReady'] = (event) => {
-    // console.log(event.target)
     // access to player in all event handlers via event.target
     event.target.playVideo();
   }

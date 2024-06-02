@@ -89,11 +89,7 @@ export default function TemporaryDrawer() {
     };
 
     const handleEditBtn = () => {
-      console.log("testtt")
       toggleDrawer(anchor, false); 
-      console.log("testtt = = = = =")
-
-      // setIsEditBoxVisible(true);
     };
 
     return (
@@ -285,9 +281,9 @@ export default function TemporaryDrawer() {
                   </ButtonBase>
                 </Box>
               )}
-              <ButtonBase onClick={handleEditBtn}>
+              {/* <ButtonBase onClick={handleEditBtn}>
                 <EditCartProductBox />
-              </ButtonBase>
+              </ButtonBase> */}
               <ButtonBase onClick={handleRemoveBtn}>
                 <Bin />
               </ButtonBase>

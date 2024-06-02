@@ -50,7 +50,6 @@ const Index = () => {
       url: "/api/category",
     })
       .then((res) => {
-        // console.log('category response', res.data.data);
         setCategoryApiRes(res.data.data);
       })
       .catch((err) => {

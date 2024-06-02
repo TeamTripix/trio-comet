@@ -15,7 +15,6 @@ export const addToCart: any = (
 ) => {
   switch (action.type) {
     case "ADD_TO_CART":
-      console.log(action.payload)
       const existingItemIndex = state.cartData.findIndex(
         (item: any) =>
           item.product._id === action.payload.product._id &&

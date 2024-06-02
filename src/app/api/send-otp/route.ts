@@ -41,10 +41,9 @@ export async function POST(req: Request) {
           const sendOTPRes = await client.messages.create({
             from: twilioNumber,
             to: `+91${parsedData.number}`,
-            body: `Your RoyalMobisol verification code is: ${otpValue}`,
+            body: `Your Triocomet verification code is: ${otpValue}`,
           });
           
-          console.log("test : ",sendOTPRes)
       if (sendOTPRes.errorMessage === null) {
         return NextResponse.json(
           {
