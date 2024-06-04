@@ -729,7 +729,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
               ref={ref}
               width={isMobile ? "100%" : "50%"}
               position={isMobile ? "relative" : "sticky"}
-              top={isMobile ? 0 : "6rem"}
+              top={isMobile ? -10 : "6rem"}
             >
               {!isMobile && (
                 <Box paddingLeft="0rem" margin="1rem 0rem 0rem 0rem">
@@ -741,7 +741,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
                 flexDirection={{ xs: "row", md: "row" }}
                 alignItems="center"
                 gap="1rem"
-                margin="1.2rem 0"
+                // margin="1.2rem 0"
               >
                 <Box display="flex">
                   {/* side images */}

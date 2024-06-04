@@ -1,6 +1,14 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { Box, Typography, Tab, Tabs, Grid, Skeleton } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Tab,
+  Tabs,
+  Grid,
+  Skeleton,
+  Button,
+} from "@mui/material";
 import Image from "next/image";
 import Card from "@components/Card";
 import ForwardIcon from "../../icons/forwardIcon";
@@ -757,6 +765,11 @@ export default function Home() {
                 )}
               </Grid>
             )}
+            <Box sx={{ textAlign: "center" }}>
+              <Link href="product-collection/new-drop">
+                <Button>View All</Button>
+              </Link>
+            </Box>
           </Box>
         </>
 
@@ -949,6 +962,11 @@ export default function Home() {
                 )}
               </Grid>
             )}
+            <Box sx={{ textAlign: "center" }}>
+              <Link href="product-collection/trending">
+                <Button>View All</Button>
+              </Link>
+            </Box>
           </Box>
         </HomePageSpacing>
 
@@ -1125,6 +1143,11 @@ export default function Home() {
                 )}
               </Grid>
             )}
+            <Box sx={{ textAlign: "center" }}>
+              <Link href="product-collection/best-seller">
+                <Button>View All</Button>
+              </Link>
+            </Box>
           </Box>
         </HomePageSpacing>
         {/* --------------------------------------------- */}

@@ -40,7 +40,7 @@ const Index = () => {
           <Box
             position="fixed"
             display="inline-flex"
-            // height="4.3rem"
+            height="3rem"
             padding="0.9rem 30rem"
             justifyContent="center"
             alignItems="center"
@@ -66,6 +66,8 @@ const Index = () => {
                 >
                   {blackBannerApiRes[0].bannerText}
                 </Typography>
+                
+                
                 {/* <Link href={blackBannerApiRes[0].bannerURL}>
                   <ButtonBase
                     sx={{

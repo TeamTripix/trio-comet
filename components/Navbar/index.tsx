@@ -123,7 +123,7 @@ export default function Index() {
     setMoreAnchorEl(null);
     router.push(url, { scroll: false });
   };
-  if (isMobile && isTablet) {
+  if (isMobile || isTablet) {
     return (
       <>
         <Box
@@ -482,7 +482,11 @@ export default function Index() {
               </Link>
 
               <Link href="/men">
-                <LI theme={theme} highlite={pathname === "/men" ? true : false} style={{ fontSize: 20 }}>
+                <LI
+                  theme={theme}
+                  highlite={pathname === "/men" ? true : false}
+                  style={{ fontSize: 20 }}
+                >
                   MEN
                 </LI>
               </Link>

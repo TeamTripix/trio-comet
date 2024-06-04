@@ -22,6 +22,7 @@ import ThemeState from "@components/ThemeState";
 import WhatsappIcon from "@components/WhatsappIcon";
 import { Box, Typography } from "@mui/material";
 import BlackBanner from "@components/BlackBanner";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 // export const metadata: Metadata = {
@@ -44,6 +45,9 @@ export default function RootLayout({
   };
   return (
     <html lang="en">
+      {/* <Head>
+        
+      </Head> */}
       <SessionProvider>
         <Provider store={store}>
           <ThemeState themeValue={themeValue} />

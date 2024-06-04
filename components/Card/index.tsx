@@ -15,7 +15,7 @@ interface IndexProps {
   fullDetailCard?: boolean;
   index?: number;
   isHomePage?: boolean;
-  buyButton?:boolean
+  buyButton?: boolean;
 }
 
 const Index: React.FC<IndexProps> = ({
@@ -23,7 +23,7 @@ const Index: React.FC<IndexProps> = ({
   data,
   index,
   isHomePage,
-  buyButton
+  buyButton,
 }) => {
   const favCartData = useSelector(
     (state: any) => state.addToFavCart.favCartData
@@ -116,13 +116,24 @@ const Index: React.FC<IndexProps> = ({
     <>
       <Box
         display="flex"
+        // width={
+        //   isTablet
+        //     ? isMobile
+        //       ? fullDetailCard
+        //         ? "17rem"
+        //         : "auto"
+        //       : "35rem"
+        //     : fullDetailCard
+        //     ? "35rem"
+        //     : "90%"
+        // }
         width={
           isTablet
             ? isMobile
               ? fullDetailCard
                 ? "17rem"
                 : "auto"
-              : "35rem"
+              : "auto"
             : fullDetailCard
             ? "35rem"
             : "90%"
@@ -133,12 +144,16 @@ const Index: React.FC<IndexProps> = ({
         alignItems="flex-start"
         gap="0.1rem"
         flexShrink="0"
-        borderRadius={
-          isMobile ? (fullDetailCard ? "0.8rem" : "0") : "0.5rem"
+        borderRadius={isMobile ? (fullDetailCard ? "0.8rem" : "0") : "0.5rem"}
+        border={
+          isMobile
+            ? "0px"
+            : `1px solid ${
+                theme === "light"
+                  ? lightColor.borderColor
+                  : darkColor.borderColor
+              }`
         }
-        border={isMobile ? '0px' : `1px solid ${
-          theme === "light" ? lightColor.borderColor : darkColor.borderColor
-        }`}
         bgcolor={theme === "light" ? lightColor.cardBG : darkColor.cardBG}
         overflow={"hidden"}
         position="relative"
@@ -158,10 +173,18 @@ const Index: React.FC<IndexProps> = ({
             alignItems="center"
             position="absolute"
             top="0.4rem"
-            borderRadius={isMobile ? "0.4rem 0.4rem 0.4rem 0.4rem": "0rem 0.4rem 0.4rem 0rem"}
+            borderRadius={
+              isMobile
+                ? "0.4rem 0.4rem 0.4rem 0.4rem"
+                : "0rem 0.4rem 0.4rem 0rem"
+            }
             bgcolor="#1D1D1F"
             zIndex="1"
-            sx={isMobile ? { borderTopLeftRadius: "0.4rem" } : { borderTopLeftRadius: "1rem" }}
+            sx={
+              isMobile
+                ? { borderTopLeftRadius: "0.4rem" }
+                : { borderTopLeftRadius: "1rem" }
+            }
           >
             <Typography
               color={
@@ -189,9 +212,7 @@ const Index: React.FC<IndexProps> = ({
         )}
 
         <Box width="100%" height="auto">
-          <Link
-            href={`/product/${productColor[0].slug}`}
-          >
+          <Link href={`/product/${productColor[0].slug}`}>
             <Image
               src={data.productColor[0].imageURL[0]}
               loading="lazy"
@@ -235,7 +256,12 @@ const Index: React.FC<IndexProps> = ({
               bgcolor="white"
               left="0px"
             >
-              <Box display="flex" alignItems="flex-start" gap="0.2rem" paddingLeft="0.5rem">
+              <Box
+                display="flex"
+                alignItems="flex-start"
+                gap="0.2rem"
+                paddingLeft="0.5rem"
+              >
                 {/* <Rating
                   name="simple-controlled"
                   size="small"
@@ -243,7 +269,7 @@ const Index: React.FC<IndexProps> = ({
                   value={2}
                   sx={{ fontSize: "1.1rem" }}
                 /> */}
-                <StarIcon state={true}/>
+                <StarIcon state={true} />
               </Box>
               <Typography
                 color={
@@ -421,7 +447,13 @@ const Index: React.FC<IndexProps> = ({
               {isSale ? (
                 <Box
                   display="flex"
-                  padding={isMobile ? (fullDetailCard ? "0.1rem 0.8rem" : "0.1rem 0.5rem") : "0.1rem 0.8rem"}
+                  padding={
+                    isMobile
+                      ? fullDetailCard
+                        ? "0.1rem 0.8rem"
+                        : "0.1rem 0.5rem"
+                      : "0.1rem 0.8rem"
+                  }
                   justifyContent="center"
                   alignItems="center"
                   gap="1rem"
@@ -508,55 +540,68 @@ const Index: React.FC<IndexProps> = ({
               alignSelf="stretch"
               width="100%"
             >
-              {buyButton && <ButtonBase
-            
-                onClick={() => handleAddToCartBtn(data)}
-                sx={{
-                  display: "flex",
-                  height: isMobile
-                    ? fullDetailCard
-                      ? "2.4rem"
-                      : "3.0rem"
-                    : "4.2rem",
+              {buyButton && (
+                <ButtonBase
+                  onClick={() => handleAddToCartBtn(data)}
+                  sx={{
+                    display: "flex",
+                    height: isMobile
+                      ? fullDetailCard
+                        ? "2.4rem"
+                        : "3.0rem"
+                      : "4.2rem",
 
-                  alignItems: "center",
-                  gap: "0.8rem",
-                  borderRadius: isMobile
-                    ? fullDetailCard
-                      ? "0.4rem"
-                      : "0.8rem"
-                    : "0.8rem",
-                  border: "1px solid var(--light-orange, #FBC02D)",
-                  bgcolor:
-                    theme === "light"
-                      ? lightColor.theme.primary
-                      : darkColor.theme.primary,
-                  width:isMobile ? (fullDetailCard ? "70%" : "80%") : "100%",
-                }}
-              >
-                <Typography
-                  color="#1D1D1F"
-                  textAlign="center"
-                  fontSize={
-                    isMobile ? (fullDetailCard ? "1.2rem" : "1.2rem") : "1.7rem"
-                  }
-                  fontStyle="normal"
-                  fontWeight="700"
-                  lineHeight="normal"
-                  letterSpacing="0.05rem"
+                    alignItems: "center",
+                    gap: "0.8rem",
+                    borderRadius: isMobile
+                      ? fullDetailCard
+                        ? "0.4rem"
+                        : "0.8rem"
+                      : "0.8rem",
+                    border: "1px solid var(--light-orange, #FBC02D)",
+                    bgcolor:
+                      theme === "light"
+                        ? lightColor.theme.primary
+                        : darkColor.theme.primary,
+                    width: isMobile ? (fullDetailCard ? "70%" : "80%") : "100%",
+                  }}
                 >
-                  Add To Cart
-                </Typography>
-                <CartIcon
-                  width={
-                    isMobile ? (fullDetailCard ? "1.2rem" : "1.8rem") : "1.8rem"
-                  }
-                  height={
-                    isMobile ? (fullDetailCard ? "1.2rem" : "1.8rem") : "1.8rem"
-                  }
-                  color="black"
-                />
-              </ButtonBase>}
+                  <Typography
+                    color="#1D1D1F"
+                    textAlign="center"
+                    fontSize={
+                      isMobile
+                        ? fullDetailCard
+                          ? "1.2rem"
+                          : "1.2rem"
+                        : "1.7rem"
+                    }
+                    fontStyle="normal"
+                    fontWeight="700"
+                    lineHeight="normal"
+                    letterSpacing="0.05rem"
+                  >
+                    Add To Cart
+                  </Typography>
+                  <CartIcon
+                    width={
+                      isMobile
+                        ? fullDetailCard
+                          ? "1.2rem"
+                          : "1.8rem"
+                        : "1.8rem"
+                    }
+                    height={
+                      isMobile
+                        ? fullDetailCard
+                          ? "1.2rem"
+                          : "1.8rem"
+                        : "1.8rem"
+                    }
+                    color="black"
+                  />
+                </ButtonBase>
+              )}
             </Box>
           </Box>
         </Box>
