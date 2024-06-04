@@ -12,7 +12,7 @@ import ProductCardSkeleton from "@components/Skeleton/ProductCardSkeleton";
 import { useMobile } from "@/utils/responsive";
 import { useSelector } from "react-redux";
 
-const Combos = ({ params }: { params: { slug: string } }) => {
+const Page = ({ params }: { params: { slug: string } }) => {
   const [comboProductApiRes, setComboProductApiRes] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const theme: any = useSelector<any>((state) => state.themeToggle);
@@ -53,7 +53,7 @@ const Combos = ({ params }: { params: { slug: string } }) => {
             lineHeight="normal"
             letterSpacing="0.02rem"
           >
-            Combos
+            Men
           </Typography>
         </Box>
         {/* <Box textAlign="end" gap="0.5rem">
@@ -103,4 +103,4 @@ const Combos = ({ params }: { params: { slug: string } }) => {
   );
 };
 
-export default Combos;
+export default Page;

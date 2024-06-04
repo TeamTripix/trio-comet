@@ -53,10 +53,6 @@ const ProductCollection = ({ params }: { params: { slug: string } }) => {
       });
   }, [params.slug]);
 
-  // useEffect(() => {
-
-  // }, [categoryNameApiRes]);
-
   return (
     <>
       <PageSpacing>
@@ -64,7 +60,7 @@ const ProductCollection = ({ params }: { params: { slug: string } }) => {
           <BreadCrumb />
         </Box>
 
-        <Box paddingLeft="2rem" margin={isMobile ? "5rem 0" : "10rem 0"}>
+        <Box paddingLeft="2rem" margin={isMobile ? "5rem 0" : "2rem 0"}>
           <Typography
             color={
               theme === "light"
@@ -96,12 +92,7 @@ const ProductCollection = ({ params }: { params: { slug: string } }) => {
         </Box> */}
         {isMobile ? (
           // is mobile size is active
-          <Grid
-            container
-            // justifyContent="center"
-            // padding="0 0.5rem"
-            spacing={1}
-          >
+          <Grid container spacing={1}>
             {isLoading ? (
               [...Array(4)].map((data, index) => {
                 return (
@@ -128,7 +119,13 @@ const ProductCollection = ({ params }: { params: { slug: string } }) => {
               productApiRes.map((data) => {
                 return (
                   <>
-                    <Grid xs={6} item key={data._id} justifyItems="center">
+                    <Grid
+                      xs={6}
+                      item
+                      key={data._id}
+                      justifyItems="center"
+                      alignItems="center"
+                    >
                       <Card buyButton={false} data={data} />
                     </Grid>
                   </>
@@ -161,22 +158,23 @@ const ProductCollection = ({ params }: { params: { slug: string } }) => {
                   <NoProduct isMobile={isMobile} />
                 </Box>
               ) : (
-                <Box display="flex" justifyContent="center" alignItems="center">
+                <Grid container spacing={1}>
                   {productApiRes.map((data, index) => {
                     return (
                       <>
-                        <Box key={data._id}>
-                          <Card
-                            data={data}
-                            fullDetailCard={true}
-                            index={index}
-                            isHomePage={true}
-                          />
-                        </Box>
+                        <Grid
+                          xs={4}
+                          item
+                          key={data._id}
+                          justifyItems="center"
+                          alignItems="center"
+                        >
+                          <Card data={data} />
+                        </Grid>
                       </>
                     );
                   })}
-                </Box>
+                </Grid>
               )}
             </Box>
           </Box>

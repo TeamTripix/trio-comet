@@ -34,25 +34,26 @@ export default function MaxWidthDialog(props: any) {
           onClick={handleClickOpen}
         />
       )}
-{/* 
-      <Dialog fullWidth={true} maxWidth="md" open={open} onClose={handleClose}>
-        <Box height="100rem">
+
+      <Dialog fullWidth={true} maxWidth="sm" open={open} onClose={handleClose}>
+        <Box>
           <Box
             height="5rem"
             width="100%"
-            zIndex={9}
+            zIndex={99}
             position="absolute"
             display="flex"
             justifyContent="end"
             alignItems="center"
           >
-            <Box sx={{ cursor: "pointer" }} onClick={handleClose}>
-              <CancelIcon />
+            
+            <Box zIndex={99} sx={{ cursor: "pointer" }} onClick={handleClose} boxShadow="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
+              <CancelIcon color="black" />
             </Box>
           </Box>
-          <Image src={props.image} alt="product image" fill />
+          <Image src={props.image} alt="product image" layout="responsive" width="1080" height="1350" />
         </Box>
-      </Dialog> */}
+      </Dialog>
     </React.Fragment>
   );
 }

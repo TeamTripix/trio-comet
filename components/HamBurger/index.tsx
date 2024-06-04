@@ -31,9 +31,7 @@ type Anchor = "left";
 const Index = () => {
   const isMobile = useMobile();
   const [categoryItem, setCategoryItem] = useState([]);
-  const [isCategoryVisible, setIsCategoryVisible] = useState(
-    isMobile ? false : true
-  );
+  const [isCategoryVisible, setIsCategoryVisible] = useState(true);
 
   const session: any = useSession();
   const theme: any = useSelector<any>((state) => state.themeToggle);
