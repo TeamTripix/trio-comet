@@ -1302,7 +1302,12 @@ export default function Home() {
 
             {isMobile ? (
               // Mobile view with carousel
-              <Slider {...settings} arrows={false}>
+              <Box
+              sx={{
+                overflowY: "hidden",
+              }}
+            >
+              <Box display="flex" gap="1rem">
                 {isBlogLoading ? (
                   [...Array(3)].map((_, index) => (
                     <Box key={`${index}+BlogCardSkeleton`}>
@@ -1314,13 +1319,16 @@ export default function Home() {
                     <NoProduct isMobile={isMobile} />
                   </Box>
                 ) : (
-                  blogApiRes.slice(0, 3).map((data, index) => (
-                    <Box key={data._id}>
-                      <BlogCard data={data} index={index} isHomePage={true} />
-                    </Box>
-                  ))
+                  <Slider {...settings} arrows={false}>
+                    {blogApiRes.slice(0, 3).map((data, index) => (
+                      <Box key={data._id}>
+                        <BlogCard data={data} index={index} isHomePage={true} />
+                      </Box>
+                    ))}
+                  </Slider>
                 )}
-              </Slider>
+              </Box>
+            </Box>
             ) : isTablet ? (
               // is tablet size is active
               <Box

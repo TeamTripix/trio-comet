@@ -342,107 +342,123 @@ const Index = () => {
               </Grid>
 
               <Box
-          display="flex"
-          // gap="15.6rem"
-          justifyContent="flex-start"
-          alignItems="center"
-          // marginTop="4rem"
-          padding="2rem"
-          bgcolor={
-            theme === "dark" ? lightColor.navbarBG : darkColor.navbarBG
-          }>
-          <Box>
-            <Typography
-              color={
-                theme === "dark"
-                  ? lightColor.text.primary
-                  : darkColor.text.primary
-              }
-              fontSize="1.4rem"
-              fontStyle="normal"
-              fontWeight="400"
-              lineHeight="3.2rem"
-              letterSpacing="0.02rem"
-              alignSelf="stretch">
-              1. Cash On Delivery is Available.
-            </Typography>
-            <Typography
-              color={
-                theme === "dark"
-                  ? lightColor.text.primary
-                  : darkColor.text.primary
-              }
-              fontSize="1.4rem"
-              fontStyle="normal"
-              fontWeight="400"
-              lineHeight="3.2rem"
-              letterSpacing="0.02rem"
-              alignSelf="stretch">
-              2. Free Shipping T&C Apply.
-            </Typography>
-          </Box>
-          {/* <Box
-            display="flex"
-            gap="1.6rem"
-            justifyContent="center"
-            flexDirection={"column"}
-            alignItems="center">
-            <Box width="12.5rem" height="1.7rem">
-              <Image
-                width={125}
-                height={17}
-                layout="responsive"
-                alt={"payment logo"}
-                src={`/assets/paymentLogo/1.png`}
-              />
-            </Box>
-            <Box width="4.5rem" height="1.5rem">
-              <Image
-                width={45}
-                height={15}
-                layout="responsive"
-                alt={"payment logo"}
-                src={`/assets/paymentLogo/2.png`}
-              />
-            </Box>
-            <Box width="2.6rem" height="2rem">
-              <Image
-                width={26}
-                height={20}
-                layout="responsive"
-                alt={"payment logo"}
-                src={`/assets/paymentLogo/3.png`}
-              />
-            </Box>
-            <Box width="9.9rem" height="2.7rem">
-              <Image
-                width={99}
-                height={27}
-                layout="responsive"
-                alt={"payment logo"}
-                src={`/assets/paymentLogo/4.png`}
-              />
-            </Box>
-            <Box width="2.8rem" height="2.8rem">
-              <Image
-                width={28}
-                height={28}
-                layout="responsive"
-                alt={"payment logo"}
-                src={`/assets/paymentLogo/5.png`}
-              />
-            </Box>
-            <Box width="4rem" height="1.3rem">
-              <Image
-                width={40}
-                height={13}
-                layout="responsive"
-                alt={"payment logo"}
-                src={`/assets/paymentLogo/6.png`}
-              />
-            </Box>
-          </Box> */}
-        </Box>  
+                display="flex"
+                // gap="15.6rem"
+                justifyContent="flex-start"
+                alignItems="center"
+                // marginTop="4rem"
+                paddingTop="2rem"
+                bgcolor={
+                  theme === "dark" ? lightColor.navbarBG : darkColor.navbarBG
+                }>
+                <Box>
+                  <Typography
+                    color={
+                      theme === "dark"
+                        ? lightColor.text.primary
+                        : darkColor.text.primary
+                    }
+                    fontSize="1.4rem"
+                    fontStyle="normal"
+                    fontWeight="400"
+                    lineHeight="3.2rem"
+                    letterSpacing="0.02rem"
+                    alignSelf="stretch">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -1160 960 960" width="18px" 
+                      fill={
+                        theme === "dark"
+                          ? lightColor.text.primary
+                          : darkColor.text.primary
+                      }
+                    >
+                      <path d="M560-440q-50 0-85-35t-35-85q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35ZM280-320q-33 0-56.5-23.5T200-400v-320q0-33 23.5-56.5T280-800h560q33 0 56.5 23.5T920-720v320q0 33-23.5 56.5T840-320H280Zm80-80h400q0-33 23.5-56.5T840-480v-160q-33 0-56.5-23.5T760-720H360q0 33-23.5 56.5T280-640v160q33 0 56.5 23.5T360-400Zm440 240H120q-33 0-56.5-23.5T40-240v-440h80v440h680v80ZM280-400v-320 320Z"/>
+                    </svg> Cash On Delivery is available.
+                  </Typography>
+                  <Typography
+                    color={
+                      theme === "dark"
+                        ? lightColor.text.primary
+                        : darkColor.text.primary
+                    }
+                    fontSize="1.4rem"
+                    fontStyle="normal"
+                    fontWeight="400"
+                    lineHeight="3.2rem"
+                    letterSpacing="0.02rem"
+                    alignSelf="stretch">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -1160 960 960" width="18px" 
+                      fill={
+                        theme === "dark"
+                          ? lightColor.text.primary
+                          : darkColor.text.primary
+                      }
+                    >
+                      <path d="M240-160q-50 0-85-35t-35-85H40v-440q0-33 23.5-56.5T120-800h560v160h120l120 160v200h-80q0 50-35 85t-85 35q-50 0-85-35t-35-85H360q0 50-35 85t-85 35Zm0-80q17 0 28.5-11.5T280-280q0-17-11.5-28.5T240-320q-17 0-28.5 11.5T200-280q0 17 11.5 28.5T240-240ZM120-360h32q17-18 39-29t49-11q27 0 49 11t39 29h272v-360H120v360Zm600 120q17 0 28.5-11.5T760-280q0-17-11.5-28.5T720-320q-17 0-28.5 11.5T680-280q0 17 11.5 28.5T720-240Zm-40-200h170l-90-120h-80v120ZM360-540Z"/>
+                    </svg> Free Shipping T&C Apply.
+                  </Typography>
+                </Box>
+                {/* <Box
+                  display="flex"
+                  gap="1.6rem"
+                  justifyContent="center"
+                  flexDirection={"column"}
+                  alignItems="center">
+                  <Box width="12.5rem" height="1.7rem">
+                    <Image
+                      width={125}
+                      height={17}
+                      layout="responsive"
+                      alt={"payment logo"}
+                      src={`/assets/paymentLogo/1.png`}
+                    />
+                  </Box>
+                  <Box width="4.5rem" height="1.5rem">
+                    <Image
+                      width={45}
+                      height={15}
+                      layout="responsive"
+                      alt={"payment logo"}
+                      src={`/assets/paymentLogo/2.png`}
+                    />
+                  </Box>
+                  <Box width="2.6rem" height="2rem">
+                    <Image
+                      width={26}
+                      height={20}
+                      layout="responsive"
+                      alt={"payment logo"}
+                      src={`/assets/paymentLogo/3.png`}
+                    />
+                  </Box>
+                  <Box width="9.9rem" height="2.7rem">
+                    <Image
+                      width={99}
+                      height={27}
+                      layout="responsive"
+                      alt={"payment logo"}
+                      src={`/assets/paymentLogo/4.png`}
+                    />
+                  </Box>
+                  <Box width="2.8rem" height="2.8rem">
+                    <Image
+                      width={28}
+                      height={28}
+                      layout="responsive"
+                      alt={"payment logo"}
+                      src={`/assets/paymentLogo/5.png`}
+                    />
+                  </Box>
+                  <Box width="4rem" height="1.3rem">
+                    <Image
+                      width={40}
+                      height={13}
+                      layout="responsive"
+                      alt={"payment logo"}
+                      src={`/assets/paymentLogo/6.png`}
+                    />
+                  </Box>
+                </Box> */}
+              </Box>  
               <Grid item xs={12} paddingBottom="8rem">
                 <Typography
                   color={
@@ -989,7 +1005,15 @@ const Index = () => {
               lineHeight="3.2rem"
               letterSpacing="0.02rem"
               alignSelf="stretch">
-              1. Cash On Delivery is Available.
+              <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -1160 960 960" width="18px" 
+                fill={
+                  theme === "light"
+                    ? lightColor.text.primary
+                    : darkColor.text.primary
+                }
+              >
+                <path d="M560-440q-50 0-85-35t-35-85q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35ZM280-320q-33 0-56.5-23.5T200-400v-320q0-33 23.5-56.5T280-800h560q33 0 56.5 23.5T920-720v320q0 33-23.5 56.5T840-320H280Zm80-80h400q0-33 23.5-56.5T840-480v-160q-33 0-56.5-23.5T760-720H360q0 33-23.5 56.5T280-640v160q33 0 56.5 23.5T360-400Zm440 240H120q-33 0-56.5-23.5T40-240v-440h80v440h680v80ZM280-400v-320 320Z"/>
+              </svg> Cash On Delivery is Available.
             </Typography>
             <Typography
               color={
@@ -1003,7 +1027,14 @@ const Index = () => {
               lineHeight="3.2rem"
               letterSpacing="0.02rem"
               alignSelf="stretch">
-              2. Free Shipping T&C Apply.
+              <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -1160 960 960" width="18px" fill={
+                  theme === "light"
+                    ? lightColor.text.primary
+                    : darkColor.text.primary
+                }
+              >
+                <path d="M240-160q-50 0-85-35t-35-85H40v-440q0-33 23.5-56.5T120-800h560v160h120l120 160v200h-80q0 50-35 85t-85 35q-50 0-85-35t-35-85H360q0 50-35 85t-85 35Zm0-80q17 0 28.5-11.5T280-280q0-17-11.5-28.5T240-320q-17 0-28.5 11.5T200-280q0 17 11.5 28.5T240-240ZM120-360h32q17-18 39-29t49-11q27 0 49 11t39 29h272v-360H120v360Zm600 120q17 0 28.5-11.5T760-280q0-17-11.5-28.5T720-320q-17 0-28.5 11.5T680-280q0 17 11.5 28.5T720-240Zm-40-200h170l-90-120h-80v120ZM360-540Z"/>
+              </svg> Free Shipping T&C Apply.
             </Typography>
           </Box>
           <Box
@@ -1516,7 +1547,15 @@ const Index = () => {
                 lineHeight="3.2rem"
                 letterSpacing="0.02rem"
                 alignSelf="stretch">
-                1. Cash On Delivery is Available.
+                <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -1160 960 960" width="18px" 
+                  fill={
+                    theme === "light"
+                      ? lightColor.text.primary
+                      : darkColor.text.primary
+                  }
+                >
+                  <path d="M560-440q-50 0-85-35t-35-85q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35ZM280-320q-33 0-56.5-23.5T200-400v-320q0-33 23.5-56.5T280-800h560q33 0 56.5 23.5T920-720v320q0 33-23.5 56.5T840-320H280Zm80-80h400q0-33 23.5-56.5T840-480v-160q-33 0-56.5-23.5T760-720H360q0 33-23.5 56.5T280-640v160q33 0 56.5 23.5T360-400Zm440 240H120q-33 0-56.5-23.5T40-240v-440h80v440h680v80ZM280-400v-320 320Z"/>
+                </svg> Cash On Delivery is Available.
               </Typography>
               <Typography
                 color={
@@ -1530,7 +1569,14 @@ const Index = () => {
                 lineHeight="3.2rem"
                 letterSpacing="0.02rem"
                 alignSelf="stretch">
-                2. Free Shipping T&C Apply.
+                <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -1160 960 960" width="18px" fill={
+                    theme === "light"
+                      ? lightColor.text.primary
+                      : darkColor.text.primary
+                  }
+                >
+                  <path d="M240-160q-50 0-85-35t-35-85H40v-440q0-33 23.5-56.5T120-800h560v160h120l120 160v200h-80q0 50-35 85t-85 35q-50 0-85-35t-35-85H360q0 50-35 85t-85 35Zm0-80q17 0 28.5-11.5T280-280q0-17-11.5-28.5T240-320q-17 0-28.5 11.5T200-280q0 17 11.5 28.5T240-240ZM120-360h32q17-18 39-29t49-11q27 0 49 11t39 29h272v-360H120v360Zm600 120q17 0 28.5-11.5T760-280q0-17-11.5-28.5T720-320q-17 0-28.5 11.5T680-280q0 17 11.5 28.5T720-240Zm-40-200h170l-90-120h-80v120ZM360-540Z"/>
+                </svg> Free Shipping T&C Apply.
               </Typography>
             </Box>
             <Box
