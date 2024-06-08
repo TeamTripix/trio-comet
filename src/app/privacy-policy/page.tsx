@@ -9,10 +9,7 @@ const Page = () => {
       <Box margin="1rem 2rem">
         <PageSpacing>
           <Box>
-            <Typography variant="h4" gutterBottom align="center">
-              Trio Comet
-            </Typography>
-            <Typography variant="h5" gutterBottom margin="2rem 0">
+            <Typography variant="h4" gutterBottom margin="2rem 0" align="center">
               Privacy Policy
             </Typography>
             <Typography paragraph>
