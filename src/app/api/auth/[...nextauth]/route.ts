@@ -2,6 +2,7 @@ import { User } from "../../../../../models/user";
 import { otpSchema } from "../../../../../models/otp";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+let jwt = require("jsonwebtoken");
 const authOptions: NextAuthOptions = {
   // site: process.env.NEXTAUTH_URL,
   providers: [
@@ -49,7 +50,15 @@ const authOptions: NextAuthOptions = {
               });
 
               const user = await User.find({ number: credentials.number });
-              return { name: user[0].number, email: user[0]._id };
+              const token = await jwt.sign(
+                {
+                  data: {
+                    number: user[0].number,
+                  },
+                },
+                process.env.JWT_KEY
+              );
+              return { name: user[0].number, email: user[0]._id,token,userInfo:user[0] };
             } else {
               return null;
             }

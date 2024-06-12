@@ -1,5 +1,5 @@
 "use client";
-import { useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { lightColor, darkColor } from "@/utils/CustomTheme/color";
 import { Box, ButtonBase, CircularProgress, Typography } from "@mui/material";
 import Image from "next/image";
@@ -11,12 +11,41 @@ import Logout from "../../../icons/logout";
 import { signOut, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 const SecuredComponent = () => {
+  const [name,setName] = useState("")
+  const [email,setEmail] = useState("")
+  const [number,setNumber] = useState("")
   const theme: any = useSelector<any>((state) => state.themeToggle);
   const handleLogout = () => {
     signOut();
   };
+  const session: any = useSession();
+  console.log(session)
+
+  useEffect(()=>{
+    axios({
+      method: "GET",
+      url: `/api/user-info`,
+      headers: {
+        Authorization: `Bearer ${session.data.user.token}`,
+      },
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          setName(res.data.data.name)
+          setEmail(res.data.data.email)
+          setNumber(res.data.data.number)
+          // if (!res.data.data[0]._id) {
+          //   return;
+          // }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },[])
   return (
     <Box
       display="flex"
@@ -25,15 +54,15 @@ const SecuredComponent = () => {
       flexDirection="column"
       margin="15rem 0"
     >
-      <Box height="11rem" width="11rem" borderRadius="20rem">
-        {/* <Image
+      {/* <Box height="11rem" width="11rem" borderRadius="20rem">
+        <Image
         src="/assets/productImages/84756fv84f6h73/1.png"
         loading="lazy"
         alt="profile thumbnail"
         width={"110"}
         height={"110"}
         style={{ borderRadius: "20rem" }}
-      /> */}
+      />
       </Box>
       <Box>
         <Typography
@@ -50,7 +79,7 @@ const SecuredComponent = () => {
         >
           Edit
         </Typography>
-      </Box>
+      </Box> */}
       <Box
         display="inline-flex"
         justifyContent="center"
@@ -66,7 +95,7 @@ const SecuredComponent = () => {
           lineHeight="2.4rem"
           letterSpacing="0.05rem"
         >
-          gabrial kumar
+          {name}
         </Typography>
         <ButtonBase>
           <EditIcon />
@@ -87,7 +116,7 @@ const SecuredComponent = () => {
           lineHeight="2.4rem"
           letterSpacing="0.05rem"
         >
-          gabrialkumar@gmail.com
+          {email}
         </Typography>
         <ButtonBase>
           <EditIcon />
@@ -108,7 +137,7 @@ const SecuredComponent = () => {
           lineHeight="2.4rem"
           letterSpacing="0.05rem"
         >
-          +91 456795313
+          +91{number}
         </Typography>
         <ButtonBase>
           <EditIcon />

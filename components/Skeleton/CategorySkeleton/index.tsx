@@ -9,7 +9,7 @@ const Index = () => {
       <Skeleton
         variant="rectangular"
         sx={{
-          width: isMobile ? "15rem" : "35rem",
+          width: "auto",
           height: isMobile ? "25rem" : "40rem",
           borderTopLeftRadius: "1.6rem",
           borderTopRightRadius: "1.6rem",
@@ -18,7 +18,7 @@ const Index = () => {
       />
       <Skeleton
         variant="rectangular"
-        sx={{ width: "10rem", height: "1.7rem" }}
+        sx={{ width: "auto", height: "1.7rem" }}
       />
     </Box>
   );

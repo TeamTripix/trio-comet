@@ -13,14 +13,6 @@ const getCorsHeaders = () => {
 };
 
 const nextConfig = {
-  // reactStrictMode: true,
-  // env: {
-  //   // DOMAIN: 'https://dev.royalmobisol.com',
-  //   DOMAIN: "http://localhost:3001",
-  // },
-  // experimental: {
-  //   serverActions: true,
-  // },
   images: {
     domains: ["files.edgestore.dev"],
   },

@@ -387,8 +387,9 @@ export default function Index() {
                           : "/login"
                       }
                     >
-                      <Typography>Login</Typography>
-                      {/* <ButtonBase sx={{ borderRadius: "50%" }}>
+                      {
+                        session.status === "authenticated"
+                        ? <ButtonBase sx={{ borderRadius: "50%" }}>
                         <AdminIcon
                           color={
                             theme === "light"
@@ -396,7 +397,11 @@ export default function Index() {
                               : darkColor.text.primary
                           }
                         />
-                      </ButtonBase> */}
+                      </ButtonBase>
+                        : <Typography>Login</Typography>
+                      }
+                      
+                      
                     </Link>
                   </Badge>
                 </Box>

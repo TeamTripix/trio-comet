@@ -94,6 +94,7 @@ export default function Home() {
   const [activeItemIndex, setActiveItemIndex] = useState(0);
   const chevronWidth = 40;
   const [count, setCount] = useState(0);
+  const [imageIndex, setImageIndex] = useState(0);
 
   const isTablet = useTablet();
   const isMobile = useMobile();
@@ -244,8 +245,6 @@ export default function Home() {
     );
   };
 
-  const [imageIndex, setImageIndex] = useState(0);
-
   const settings = {
     infinite: true,
     lazyLoad: true,
@@ -254,11 +253,25 @@ export default function Home() {
     centerMode: true,
     centerPadding: 0,
     arrows: !isMobile,
-    // nextArrow: <NextArrow />,
-    // prevArrow: <PrevArrow />,
     beforeChange: (current: any, next: any) => setImageIndex(next),
   };
 
+  const TredingProdSettings = {
+    // infinite: true,
+    // speed: 300,
+    // slidesToShow: isMobile ? 2 : 5,
+    // centerMode: false,
+    // centerPadding: 0,
+    // arrows: true,
+    // nextArrow: <NextArrow />,
+    // prevArrow: <PrevArrow />,
+    // beforeChange: (current: any, next: any) => setImageIndex(next),
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1
+  };
   return (
     <>
       <NextSeo
@@ -428,7 +441,7 @@ export default function Home() {
                   <NoProduct isMobile={isMobile} />
                 </Box>
               ) : (
-                caregoryApiRes.slice(0, 6).map((data, index) => {
+                caregoryApiRes.slice(0, 4).map((data, index) => {
                   return (
                     <Grid
                       xs={6}
@@ -872,17 +885,19 @@ export default function Home() {
                     <NoProduct isMobile={isMobile} />
                   </Box>
                 ) : (
-                  newArraivalApiRes.slice(0, 4).map((data, index) => (
-                    <Grid
-                      xs={6}
-                      item
-                      key={data._id}
-                      margin="1rem 0"
-                      justifyItems="center"
-                    >
-                      <Card buyButton={false} data={data} index={index} />
-                    </Grid>
-                  ))
+                  <Slider {...TredingProdSettings} arrows={false}>
+                    {newArraivalApiRes.slice(0, 4).map((data, index) => (
+                      <Grid
+                        xs={6}
+                        item
+                        key={data._id}
+                        margin="1rem 0"
+                        justifyItems="center"
+                      >
+                        <Card buyButton={false} data={data} index={index} />
+                      </Grid>
+                    ))}
+                  </Slider>
                 )}
               </Grid>
             ) : isTablet ? (
@@ -1050,8 +1065,10 @@ export default function Home() {
                   bestSellerApiRes.slice(0, 4).map((data, index) => {
                     return (
                       <Grid
-                        key={data._id}
                         item
+                        xs={6}
+                        sm={4}
+                        key={data._id}
                         margin="1rem 0"
                         justifyItems="center"
                       >
@@ -1303,32 +1320,36 @@ export default function Home() {
             {isMobile ? (
               // Mobile view with carousel
               <Box
-              sx={{
-                overflowY: "hidden",
-              }}
-            >
-              <Box display="flex" gap="1rem">
-                {isBlogLoading ? (
-                  [...Array(3)].map((_, index) => (
-                    <Box key={`${index}+BlogCardSkeleton`}>
-                      <ProductCardSkeleton />
-                    </Box>
-                  ))
-                ) : blogApiRes.length === 0 ? (
-                  <Box width="100%" textAlign="center">
-                    <NoProduct isMobile={isMobile} />
-                  </Box>
-                ) : (
-                  <Slider {...settings} arrows={false}>
-                    {blogApiRes.slice(0, 3).map((data, index) => (
-                      <Box key={data._id}>
-                        <BlogCard data={data} index={index} isHomePage={true} />
+              // sx={{
+              //   overflowY: "hidden",
+              // }}
+              >
+                <Box display="flex" gap="1rem">
+                  {isBlogLoading ? (
+                    [...Array(3)].map((_, index) => (
+                      <Box key={`${index}+BlogCardSkeleton`}>
+                        <ProductCardSkeleton />
                       </Box>
-                    ))}
-                  </Slider>
-                )}
+                    ))
+                  ) : blogApiRes.length === 0 ? (
+                    <Box width="100%" textAlign="center">
+                      <NoProduct isMobile={isMobile} />
+                    </Box>
+                  ) : (
+                    <Slider {...settings} arrows={false}>
+                      {blogApiRes.slice(0, 3).map((data, index) => (
+                        <Box key={data._id}>
+                          <BlogCard
+                            data={data}
+                            index={index}
+                            isHomePage={true}
+                          />
+                        </Box>
+                      ))}
+                    </Slider>
+                  )}
+                </Box>
               </Box>
-            </Box>
             ) : isTablet ? (
               // is tablet size is active
               <Box

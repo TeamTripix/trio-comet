@@ -22,6 +22,7 @@ const ProductCollection = ({ params }: { params: { slug: string } }) => {
   const isMobile = useMobile();
   const isTablet = useTablet();
 
+
   useEffect(() => {
     axios({
       method: "GET",

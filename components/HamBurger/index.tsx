@@ -120,8 +120,9 @@ const Index = () => {
                       lineHeight: "2.4rem",
                       letterSpacing: "0.05rem",
                     }}>
+                      {console.log(session)}
                     {session.status === "authenticated"
-                      ? session.data.user.data.name
+                      ? session?.data?.user?.userInfo?.name || session?.data?.user?.userInfo?.number
                       : "Login"}
                   </Typography>
                 </Link>
