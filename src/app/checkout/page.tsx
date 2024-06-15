@@ -15,19 +15,34 @@ import AddressForm from "@components/AddressForm";
 import PaymentForm from "@components/PaymentForm";
 import ReviewOrder from "@components/ReviewOrder";
 import PageSpacing from "@components/PageSpacing";
-import { redirect } from 'next/navigation'
+import { redirect } from "next/navigation";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
-const steps = ["Shipping address", "Payment details", "Review your order"];
+const steps = ["Shipping address", "Review your order", "Payment"];
+const defaultState = {
+  firstName: "",
+  lastName: "",
+  address1: "",
+  address2: "",
+  city: "",
+  state: "",
+  zip: "",
+  country: "",
+  phoneNumber: "",
+};
+function getStepContent(step: number, setState: any, iState: any) {
+  // const [iState, setState] = useState(defaultState);
+  const { firstName, lastName, address1, address2, city, state, zip, country } =
+    iState;
 
-function getStepContent(step: number) {
   switch (step) {
     case 0:
-      return <AddressForm />;
+      return <AddressForm setState={setState} iState={iState} />;
     case 1:
-      return <PaymentForm />;
+      return <ReviewOrder address1={address1} address2={address2} />;
     case 2:
-      return <ReviewOrder />;
+      return "";
     default:
       throw new Error("Unknown step");
   }
@@ -35,7 +50,19 @@ function getStepContent(step: number) {
 
 function Checkout() {
   const [activeStep, setActiveStep] = useState(0);
-
+  const [iState, setState] = useState(defaultState);
+  const totalPrice: any = useSelector<any>((state) => state.totalCost);
+  const {
+    firstName,
+    lastName,
+    address1,
+    address2,
+    city,
+    state,
+    zip,
+    country,
+    phoneNumber,
+  } = iState;
   const handleNext = () => {
     setActiveStep(activeStep + 1);
   };
@@ -45,19 +72,36 @@ function Checkout() {
   };
 
   const handlePaymentBTN = async () => {
-    // if (activeStep === steps.length - 1) {
     const data = {
-      name: "Vikas",
-      amount: 1,
-      number: "9999999999",
+      name: `${firstName} ${lastName}`,
+      amount: totalPrice,
+      number: phoneNumber,
       MUID: "MUID" + Date.now(),
-      transactionId: "T" + Date.now(),
+      transactionId: "TID" + Date.now(),
     };
-    let res = await axios
+    axios
       .post("/api/payment", { ...data })
       .then((res) => {
-        if (res.data && res.data.data.data.instrumentResponse.redirectInfo.url) {
-          window.location.href = res.data.data.data.instrumentResponse.redirectInfo.url;
+        if (
+          res.data &&
+          res.data.data.data.instrumentResponse.redirectInfo.url
+        ) {
+          axios
+            .post("/api/payment", { ...data })
+            .then((res) => {
+              if (
+                res.data &&
+                res.data.data.data.instrumentResponse.redirectInfo.url
+              ) {
+                window.location.href =
+                  res.data.data.data.instrumentResponse.redirectInfo.url;
+              }
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+          window.location.href =
+            res.data.data.data.instrumentResponse.redirectInfo.url;
         }
       })
       .catch((error) => {
@@ -68,13 +112,6 @@ function Checkout() {
   return (
     <>
       <CssBaseline />
-      {/* <AppBar position="absolute" color="default" elevation={0} sx={{ position: 'relative' }}>
-        <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
-            Company Name
-          </Typography>
-        </Toolbar>
-      </AppBar> */}
       <PageSpacing>
         <main>
           <Paper
@@ -97,7 +134,7 @@ function Checkout() {
               </Typography>
             ) : (
               <>
-                {getStepContent(activeStep)}
+                {getStepContent(activeStep, setState, iState)}
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
@@ -105,7 +142,7 @@ function Checkout() {
                     </Button>
                   )}
 
-                  {activeStep === steps.length - 1 ? (
+                  {activeStep === steps.length - 2 ? (
                     <Button
                       variant="contained"
                       onClick={handlePaymentBTN}

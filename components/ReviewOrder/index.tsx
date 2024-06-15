@@ -1,38 +1,117 @@
-import React from 'react';
-import { Typography, List, ListItem, ListItemText, Grid } from '@mui/material';
-
+import React from "react";
+import {
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  Grid,
+  Box,
+  CardMedia,
+  Card,
+  CardContent,
+} from "@mui/material";
+import { useSelector } from "react-redux";
+import Image from "next/image";
 const products = [
-  { name: 'Product 1', desc: 'A nice thing', price: '$9.99' },
-  { name: 'Product 2', desc: 'Another thing', price: '$3.45' },
-  { name: 'Product 3', desc: 'Something else', price: '$6.51' },
-  { name: 'Product 4', desc: 'Best thing of all', price: '$14.11' },
+  { name: "Product 1", desc: "A nice thing", price: "$9.99" },
+  { name: "Product 2", desc: "Another thing", price: "$3.45" },
+  { name: "Product 3", desc: "Something else", price: "$6.51" },
+  { name: "Product 4", desc: "Best thing of all", price: "$14.11" },
 ];
 
-const addresses = ['1 Material-UI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
+const addresses = [
+  "1 Material-UI Drive",
+  "Reactville",
+  "Anytown",
+  "99999",
+  "USA",
+];
 const payments = [
-  { name: 'Card type', detail: 'Visa' },
-  { name: 'Card holder', detail: 'Mr John Smith' },
-  { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-  { name: 'Expiry date', detail: '04/2024' },
+  { name: "Card type", detail: "Visa" },
+  { name: "Card holder", detail: "Mr John Smith" },
+  { name: "Card number", detail: "xxxx-xxxx-xxxx-1234" },
+  { name: "Expiry date", detail: "04/2024" },
 ];
 
-function ReviewOrder() {
+function ReviewOrder(props: any) {
+  const cartData: any = useSelector<any>((state) => state.addToCart.cartData);
+  const totalPrice: any = useSelector<any>((state) => state.totalCost);
+
+  console.log(cartData);
+  const { address1, address2 } = props;
   return (
     <>
       <Typography variant="h6" gutterBottom>
         Order summary
       </Typography>
       <List disablePadding>
-        {products.map((product) => (
-          <ListItem key={product.name} sx={{ py: 1, px: 0 }}>
-            <ListItemText primary={product.name} secondary={product.desc} />
-            <Typography variant="body2">{product.price}</Typography>
-          </ListItem>
+        {cartData.map((data: any) => (
+          <Card
+            sx={{
+              display: "flex",
+              gap: "2rem",
+              borderRadius: "0.4rem",
+              boxShadow: 3,
+              // transition: 'transform 0.2s',
+              // '&:hover': {
+              //   transform: 'scale(1.02)',
+              // },
+              p: 2,
+              my: 2,
+            }}
+          >
+            <CardMedia
+              component="img"
+              image={data.product.image}
+              alt="cart thumbnail"
+              sx={{
+                borderRadius: "0.4rem",
+                width: 108,
+                height: 135,
+              }}
+            />
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+              }}
+            >
+              <CardContent sx={{ flex: "1 0 auto" }}>
+                <Typography component="div" variant="h6">
+                  {data.product.name}
+                </Typography>
+                <Typography
+                  sx={{ lineHeight: "1" }}
+                  variant="subtitle1"
+                  color="text.secondary"
+                  component="div"
+                >
+                  {data.product.description}
+                </Typography>
+                <Box marginTop="1rem" display="flex" gap="2rem" alignItems="center">
+                  <Typography
+                    sx={{ fontWeight: "700" }}
+                    variant="body1"
+                    color="text.primary"
+                  >
+                    ₹{data.product.price * data.quantity}
+                  </Typography>
+                  <Box>
+                    <Typography variant="body2" >Size : {data.product.productSize}</Typography>
+                  </Box>
+                  <Box>
+                    <Typography variant="body2" >Qty : {data.quantity}</Typography>
+                  </Box>
+                </Box>
+              </CardContent>
+            </Box>
+          </Card>
         ))}
         <ListItem sx={{ py: 1, px: 0 }}>
           <ListItemText primary="Total" />
-          <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-            $34.06
+          <Typography variant="h5" sx={{ fontWeight: 700 }}>
+            ₹{totalPrice}
           </Typography>
         </ListItem>
       </List>
@@ -41,19 +120,7 @@ function ReviewOrder() {
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
             Shipping
           </Typography>
-          {addresses.join(', ')}
-        </Grid>
-        <Grid item container direction="column" xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-            Payment details
-          </Typography>
-          <Grid container>
-            {payments.map((payment) => (
-              <Grid item xs={12} key={payment.name}>
-                <Typography gutterBottom>{payment.name}: {payment.detail}</Typography>
-              </Grid>
-            ))}
-          </Grid>
+          {`${address1} ${address2}`}
         </Grid>
       </Grid>
     </>

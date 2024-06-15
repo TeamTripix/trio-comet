@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import { useMobile } from "@/utils/responsive";
 import EditIcon from "../../icons/editIcon";
 import EditCartProductBox from "@components/EditCartProductBox";
+import { useRouter } from "next/navigation";
 
 type Anchor = "top" | "left" | "bottom" | "right";
 export default function TemporaryDrawer() {
@@ -89,7 +90,7 @@ export default function TemporaryDrawer() {
     };
 
     const handleEditBtn = () => {
-      toggleDrawer(anchor, false); 
+      toggleDrawer(anchor, false);
     };
 
     return (
@@ -298,7 +299,11 @@ export default function TemporaryDrawer() {
   const CartDrawer = (props: any) => {
     // const [couponValue, setCouponValue] = useState("");
     const { anchors } = props;
+    const router = useRouter();
     const isMobile = useMobile();
+    const handleConfirmOrder = () => {
+      router.push("/checkout");
+    };
 
     // const handleApplyCoupon = () => {
     //   axios({
@@ -491,8 +496,9 @@ export default function TemporaryDrawer() {
                   Inclusive of all taxes
                 </Typography>
               </Box>
-              <Box>
+              <Box onClick={toggleDrawer(anchors,false)}>
                 <ButtonBase
+                  onClick={handleConfirmOrder}
                   sx={{
                     display: "flex",
                     width: "18rem",

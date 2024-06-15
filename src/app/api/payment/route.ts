@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
       merchantUserId: MUID,
       name,
       amount: amount * 100,
-      redirectUrl: `http://localhost:3000/status/?id=${merchantTransactionId}`,
+      redirectUrl: `https://triocomet.com/status/?id=${merchantTransactionId}`,
       redirectMode: "POST",
       mobileNumber: number,
       paymentInstrument: {
@@ -63,7 +63,6 @@ export async function POST(req: NextRequest) {
       },
     };
     const response = await axios.request(options);
-    console.log("🚀 ~ POST ~ re̥sponse:", response)
     return NextResponse.json(
       {
         message: "Payment api successfully running",
