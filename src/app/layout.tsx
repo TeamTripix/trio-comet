@@ -87,7 +87,7 @@ export default function RootLayout({
                 {pathname === "/" ? <BlackBanner /> : ""}
                 <Navbar />
                 {children}
-                <WhatsappIcon />
+                {/* <WhatsappIcon /> */}
                 {pathname === "/bulk-query" ? "" : <Footer />}
                 <ToastContainer
                   position="bottom-left"
