@@ -15,6 +15,7 @@ import AddressForm from "@components/AddressForm";
 import PaymentForm from "@components/PaymentForm";
 import ReviewOrder from "@components/ReviewOrder";
 import PageSpacing from "@components/PageSpacing";
+import { redirect } from 'next/navigation'
 import axios from "axios";
 
 const steps = ["Shipping address", "Payment details", "Review your order"];
@@ -55,10 +56,8 @@ function Checkout() {
     let res = await axios
       .post("/api/payment", { ...data })
       .then((res) => {
-        console.log(res);
-        if (res.data && res.data.data.instrumentResponse.redirectInfo.url) {
-          window.location.href =
-            res.data.data.instrumentResponse.redirectInfo.url;
+        if (res.data && res.data.data.data.instrumentResponse.redirectInfo.url) {
+          window.location.href = res.data.data.data.instrumentResponse.redirectInfo.url;
         }
       })
       .catch((error) => {

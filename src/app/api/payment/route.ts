@@ -39,41 +39,44 @@ export async function POST(req: NextRequest) {
       },
     };
 
-    
     const payload = JSON.stringify(data);
     const payloadMain = Buffer.from(payload).toString("base64");
     const keyIndex = 1;
     const string = payloadMain + "/pg/v1/pay" + salt_key;
     const sha256 = crypto.createHash("sha256").update(string).digest("hex");
     const checksum = sha256 + "###" + keyIndex;
-    
-    const prod_URL =
-    "https://api.phonepe.com/apis/hermes/pg/v1/pay";
+
+    const prod_URL = "https://api.phonepe.com/apis/hermes/pg/v1/pay";
 
     // const prod_URL = "https://api.phonepe.com/apis/hermes"
-    
+
     const options = {
-        method: "POST",
-        url: prod_URL,
-        headers: {
-            accept: "application/json",
-            "Content-Type": "application/json",
-            "X-VERIFY": checksum,
-        },
-        data: {
-            request: payloadMain,
-        },
+      method: "POST",
+      url: prod_URL,
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+        "X-VERIFY": checksum,
+      },
+      data: {
+        request: payloadMain,
+      },
     };
     const response = await axios.request(options);
+    console.log("🚀 ~ POST ~ re̥sponse:", response)
     return NextResponse.json(
-      { message: "Payment api successfully running", success: true, data: response.data },
+      {
+        message: "Payment api successfully running",
+        success: true,
+        data: response.data,
+      },
       { status: 200 }
     );
     // res.status(200).json(response.data);
   } catch (error: any) {
     return NextResponse.json(
-        { message: error.message, success: false,error },
-        { status: 500 }
-      );
+      { message: error.message, success: false, error },
+      { status: 500 }
+    );
   }
 }
