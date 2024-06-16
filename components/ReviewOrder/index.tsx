@@ -47,15 +47,12 @@ function ReviewOrder(props: any) {
       <List disablePadding>
         {cartData.map((data: any) => (
           <Card
+          key={data.product._id}
             sx={{
               display: "flex",
               gap: "2rem",
               borderRadius: "0.4rem",
               boxShadow: 3,
-              // transition: 'transform 0.2s',
-              // '&:hover': {
-              //   transform: 'scale(1.02)',
-              // },
               p: 2,
               my: 2,
             }}
