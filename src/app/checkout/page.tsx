@@ -169,20 +169,20 @@ function Checkout() {
     };
 
     dispatch({ type: "ADD_ORDER_DATA", payload: orderData });
-    // axios
-    //   .post("/api/payment", { ...data })
-    //   .then((res) => {
-    //     if (
-    //       res.data &&
-    //       res.data.data.data.instrumentResponse.redirectInfo.url
-    //     ) {
-    //       window.location.href =
-    //         res.data.data.data.instrumentResponse.redirectInfo.url;
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
+    axios
+      .post("/api/payment", { ...data })
+      .then((res) => {
+        if (
+          res.data &&
+          res.data.data.data.instrumentResponse.redirectInfo.url
+        ) {
+          window.location.href =
+            res.data.data.data.instrumentResponse.redirectInfo.url;
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
