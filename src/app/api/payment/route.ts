@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
       merchantUserId: MUID,
       name,
       amount: amount * 100,
-      redirectUrl: `https://triocomet.com/status/?id=${merchantTransactionId}`,
+      redirectUrl: `https://triocomet.com/booking?id=${merchantTransactionId}`,
       redirectMode: "POST",
       mobileNumber: number,
       paymentInstrument: {

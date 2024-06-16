@@ -3,6 +3,7 @@ import { addToCart, totalCost } from "./reducers/cartAction";
 import { addToFavCart } from "./reducers/favCartAction";
 import { searchToggle } from "./reducers/searchTriggered";
 import { themeToggle } from "./reducers/themeToggle";
+import { orderData } from "./reducers/orderAction";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { combineReducers } from "redux";
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   totalCost,
   searchToggle,
   themeToggle,
+  orderData
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

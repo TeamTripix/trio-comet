@@ -14,7 +14,7 @@ const getCorsHeaders = () => {
 
 const nextConfig = {
   images: {
-    domains: ["files.edgestore.dev"],
+    domains: ["files.edgestore.dev","undraw.co"],
   },
   headers: async () => {
     return [
