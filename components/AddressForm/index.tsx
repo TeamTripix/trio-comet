@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { TextField, Grid, Typography } from "@mui/material";
 
 function AddressForm(props: any) {
-  const { setState, iState } = props;
+  const { setState, iState, errorState, setErrorState } = props;
   const {
     firstName,
     lastName,
@@ -14,6 +14,18 @@ function AddressForm(props: any) {
     country,
     phoneNumber,
   } = iState;
+
+  const {
+    firstNameError,
+    lastNameError,
+    address1Error,
+    cityError,
+    stateError,
+    zipError,
+    countryError,
+    phoneNumberError,
+  } = errorState
+  console.log("🚀 ~ AddressForm ~ errorState:", errorState)
   return (
     <>
       <Typography variant="h6" gutterBottom>
@@ -22,6 +34,7 @@ function AddressForm(props: any) {
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <TextField
+            error={firstNameError}
             onChange={(e) => setState({ ...iState, firstName: e.target.value })}
             value={firstName}
             required
@@ -35,6 +48,7 @@ function AddressForm(props: any) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            error={lastNameError}
             onChange={(e) => setState({ ...iState, lastName: e.target.value })}
             value={lastName}
             required
@@ -48,6 +62,7 @@ function AddressForm(props: any) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            error={address1Error}
             onChange={(e) => setState({ ...iState, address1: e.target.value })}
             value={address1}
             required
@@ -61,6 +76,7 @@ function AddressForm(props: any) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            error={phoneNumberError}
             type="number"
             onChange={(e) =>
               setState({ ...iState, phoneNumber: e.target.value })
@@ -89,6 +105,7 @@ function AddressForm(props: any) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            error={cityError}
             onChange={(e) => setState({ ...iState, city: e.target.value })}
             value={city}
             required
@@ -102,6 +119,7 @@ function AddressForm(props: any) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            error={stateError}
             onChange={(e) => setState({ ...iState, state: e.target.value })}
             value={state}
             required
@@ -114,6 +132,7 @@ function AddressForm(props: any) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            error={zipError}
             onChange={(e) => setState({ ...iState, zip: e.target.value })}
             value={zip}
             required
@@ -127,6 +146,7 @@ function AddressForm(props: any) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            error={countryError}
             onChange={(e) => setState({ ...iState, country: e.target.value })}
             value={country}
             required

@@ -498,6 +498,7 @@ export default function TemporaryDrawer() {
               </Box>
               <Box onClick={toggleDrawer(anchors,false)}>
                 <ButtonBase
+                disabled={cartData.length == 0 ? true : false }
                   onClick={handleConfirmOrder}
                   sx={{
                     display: "flex",
@@ -508,10 +509,7 @@ export default function TemporaryDrawer() {
                     gap: "1.6rem",
                     flexShrink: 0,
                     borderRadius: "0.4rem",
-                    bgcolor:
-                      theme === "light"
-                        ? lightColor.text.primary
-                        : darkColor.text.primary,
+                    bgcolor:cartData.length == 0 ? lightColor.text.secondary : lightColor.text.primary
                   }}
                 >
                   <Typography
