@@ -584,6 +584,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
   };
 
   const handleAddToCartBtn = (dispatchData: any, couponState: boolean) => {
+    console.log("🚀 ~ handleAddToCartBtn ~ dispatchData:", dispatchData)
     const isProductInCart = cartData.filter(
       (cartDataInFilter: any) =>
         cartDataInFilter.product._id ===
@@ -612,6 +613,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
       _id: `${dispatchData._id}colorId${dispatchData.productColor[0].id}`,
       image: dispatchData.productColor[selectedColor].imageURL[0],
       colorId: dispatchData.productColor[selectedColor].id,
+      slug: dispatchData.productColor[selectedColor].slug
     };
     if (isCouponApply.state === true) {
       dispatch({
@@ -629,6 +631,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
             _id: "coupon" + dispatchData._id,
             image: dispatchData.productColor[selectedColor].imageURL[0],
             colorId: dispatchData.productColor[selectedColor].id,
+            slug: dispatchData.productColor[selectedColor].slug
           },
           quantity: 1,
           isCouponApply: isCouponApply.state,

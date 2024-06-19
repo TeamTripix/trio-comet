@@ -32,24 +32,25 @@ import ImageUploader from "@components/ImageUploader";
 import axios from "axios";
 import StarIcon from "@mui/icons-material/Star";
 
-export default function AlertDialog() {
+export default function AlertDialog(props: any) {
   const [open, setOpen] = React.useState(false);
   const [productAPIRes, setProductAPIRes] = React.useState<any>([]);
   //   const [productWidth, setProductWidth] = React.useState(150);
-
+  const { slug } = props
   const ref = React.useRef<HTMLImageElement>(null);
 
   React.useEffect(() => {
     axios({
       method: "GET",
-      url: `/api/product?slug=mens-brown-doggy-rider-printed-oversized-t-shirt`,
+      url: `/api/product?slug=${slug}`,
     })
       .then((res) => {
+        console.log("🚀 ~ .then ~ res:", res)
         setProductAPIRes(res.data.data);
         // setRelatedProductAppear(false);
       })
-      .catch(() => {});
-  }, []);
+      .catch(() => { });
+  }, [slug]);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -65,11 +66,12 @@ export default function AlertDialog() {
         <EditIcon />
       </ButtonBase>
       <Dialog
+        style={{ zIndex: 2000 }}
         open={open}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        // zIndex="99"
+      // zIndex="99"
       >
         <DialogTitle id="alert-dialog-title">{"Edit Product"}</DialogTitle>
         <DialogContent>
@@ -339,7 +341,7 @@ export default function AlertDialog() {
                               ((productAPIRes.price -
                                 productAPIRes.discountPrice) /
                                 productAPIRes.price) *
-                                100
+                              100
                             )}% Off`}
                           </span>
                         )}
@@ -375,44 +377,44 @@ export default function AlertDialog() {
                       <Box display="flex" alignItems="flex-start" gap="1rem">
                         {productAPIRes.length === 0
                           ? [...Array(4)].map((data, index) => {
-                              return (
-                                <Skeleton
-                                  key={`${index}+colorskeleton`}
-                                  variant="circular"
-                                  sx={{
-                                    width: "4rem",
-                                    height: "4rem",
-                                    borderRadius: "50%",
-                                    margin: "0 0.1rem ",
-                                  }}
-                                ></Skeleton>
-                              );
-                            })
+                            return (
+                              <Skeleton
+                                key={`${index}+colorskeleton`}
+                                variant="circular"
+                                sx={{
+                                  width: "4rem",
+                                  height: "4rem",
+                                  borderRadius: "50%",
+                                  margin: "0 0.1rem ",
+                                }}
+                              ></Skeleton>
+                            );
+                          })
                           : productAPIRes.productColor.map(
-                              (data: any, index: number) => {
-                                return (
-                                  <></>
-                                  //   <ButtonBase
-                                  //     onClick={() => handleChangeColor(index)}
-                                  //     key={data}
-                                  //     sx={{
-                                  //       width: "4rem",
-                                  //       height: "4rem",
-                                  //       borderRadius: "50%",
-                                  //       border:
-                                  //         parseInt(colorParamID) === index
-                                  //           ? `3px solid ${lightColor.theme.primary}`
-                                  //           : `2px solid ${
-                                  //               theme === "light"
-                                  //                 ? lightColor.text.secondary
-                                  //                 : darkColor.text.secondary
-                                  //             }`,
-                                  //       bgcolor: data.color,
-                                  //     }}
-                                  //   ></ButtonBase>
-                                );
-                              }
-                            )}
+                            (data: any, index: number) => {
+                              return (
+                                <></>
+                                //   <ButtonBase
+                                //     onClick={() => handleChangeColor(index)}
+                                //     key={data}
+                                //     sx={{
+                                //       width: "4rem",
+                                //       height: "4rem",
+                                //       borderRadius: "50%",
+                                //       border:
+                                //         parseInt(colorParamID) === index
+                                //           ? `3px solid ${lightColor.theme.primary}`
+                                //           : `2px solid ${
+                                //               theme === "light"
+                                //                 ? lightColor.text.secondary
+                                //                 : darkColor.text.secondary
+                                //             }`,
+                                //       bgcolor: data.color,
+                                //     }}
+                                //   ></ButtonBase>
+                              );
+                            }
+                          )}
                       </Box>
                     </Box>
 
@@ -759,7 +761,7 @@ export default function AlertDialog() {
                           {/* Tap to copy */}
                           <CopyToClipboard
                             text="Text to be copied"
-                            // onCopy={handleCopy}
+                          // onCopy={handleCopy}
                           >
                             <Typography
                               variant="body1"

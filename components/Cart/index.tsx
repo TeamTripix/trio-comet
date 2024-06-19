@@ -89,9 +89,9 @@ export default function TemporaryDrawer() {
       });
     };
 
-    const handleEditBtn = () => {
-      toggleDrawer(anchor, false);
-    };
+    // const handleEditBtn = () => {
+    //   toggleDrawer(anchor, false);
+    // };
 
     return (
       <>
@@ -283,9 +283,9 @@ export default function TemporaryDrawer() {
                   </ButtonBase>
                 </Box>
               )}
-              {/* <ButtonBase onClick={handleEditBtn}>
-                <EditCartProductBox />
-              </ButtonBase> */}
+              <ButtonBase>
+                <EditCartProductBox slug={product.slug}/>
+              </ButtonBase>
               <ButtonBase onClick={handleRemoveBtn}>
                 <Bin />
               </ButtonBase>
