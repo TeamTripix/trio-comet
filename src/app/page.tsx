@@ -1403,7 +1403,7 @@ export default function Home() {
             )}
           </Box>
 
-          <Box>
+          <Box height="40rem">
             <Box display="flex" justifyContent="center" alignItems="center">
               <Typography
                 color={

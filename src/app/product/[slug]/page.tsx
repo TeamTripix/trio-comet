@@ -42,13 +42,15 @@ import ImageUploader from "@components/ImageUploader";
 // import ReactImageMagnify from "react-image-magnify";
 // import Carousel from "@components/Carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from "react-responsive-carousel";
 import FullSizeProductImage from "@components/FullSizeProductImage";
 import "../../bulletStyle.module.css";
 import StarIcon from "@mui/icons-material/Star";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { NextSeo } from "next-seo";
-
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import "./vertical.css"
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -584,7 +586,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
   };
 
   const handleAddToCartBtn = (dispatchData: any, couponState: boolean) => {
-    console.log("🚀 ~ handleAddToCartBtn ~ dispatchData:", dispatchData)
+    console.log("🚀 ~ handleAddToCartBtn ~ dispatchData:", dispatchData);
     const isProductInCart = cartData.filter(
       (cartDataInFilter: any) =>
         cartDataInFilter.product._id ===
@@ -613,7 +615,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
       _id: `${dispatchData._id}colorId${dispatchData.productColor[0].id}`,
       image: dispatchData.productColor[selectedColor].imageURL[0],
       colorId: dispatchData.productColor[selectedColor].id,
-      slug: dispatchData.productColor[selectedColor].slug
+      slug: dispatchData.productColor[selectedColor].slug,
     };
     if (isCouponApply.state === true) {
       dispatch({
@@ -631,7 +633,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
             _id: "coupon" + dispatchData._id,
             image: dispatchData.productColor[selectedColor].imageURL[0],
             colorId: dispatchData.productColor[selectedColor].id,
-            slug: dispatchData.productColor[selectedColor].slug
+            slug: dispatchData.productColor[selectedColor].slug,
           },
           quantity: 1,
           isCouponApply: isCouponApply.state,
@@ -678,6 +680,17 @@ const Product = ({ params }: { params: { slug: string } }) => {
       window.removeEventListener("resize", updateHeight);
     };
   }, []);
+
+  const settings = {
+    vertical: true,
+    arrows: true,
+    prevArrow: <button className="slick-prev">↑</button>,
+    nextArrow: <button className="slick-next">↓</button>,
+    verticalSwiping: true,
+    infinite: true,
+    slidesToShow: 6,
+    slidesToScroll: 1,
+  };
 
   return (
     <>
@@ -735,7 +748,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
               top={isMobile ? -10 : "6rem"}
             >
               {!isMobile && (
-                <Box paddingLeft="0rem" margin="1rem 0rem 0rem 0rem">
+                <Box paddingLeft="0rem" margin="1rem 0rem 0rem 7rem">
                   <BreadCrumb />
                 </Box>
               )}
@@ -760,27 +773,29 @@ const Product = ({ params }: { params: { slug: string } }) => {
                           }}
                         ></Skeleton>
                       ) : (
-                        productAPIRes.productColor[0].imageURL.map(
-                          (elem: any, index: number) => {
-                            return (
-                              <Box
-                                width="6rem"
-                                height="9rem"
-                                borderRadius="0.8rem"
-                                key={`productImageLeft${index}`}
-                              >
-                                <Image
-                                  alt="product image"
-                                  width="90"
-                                  height="100"
-                                  src={elem}
-                                  style={{ borderRadius: "0.8rem" }}
-                                  layout="responsive"
-                                />
-                              </Box>
-                            );
-                          }
-                        )
+                        <Slider {...settings} className="vertical-slider">
+                          {productAPIRes.productColor[0].imageURL.map(
+                            (elem: any, index: number) => {
+                              return (
+                                <Box
+                                  width="2rem"
+                                  height="15rem"
+                                  borderRadius="0.8rem"
+                                  key={`productImageLeft${index}`}
+                                >
+                                  <Image
+                                    alt="product image"
+                                    width="90"
+                                    height="100"
+                                    src={elem}
+                                    style={{ borderRadius: "0.8rem" }}
+                                    layout="responsive"
+                                  />
+                                </Box>
+                              );
+                            }
+                          )}
+                        </Slider>
                       ))}
                   </Box>
                   {/* main image */}
@@ -800,7 +815,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
                     ) : (
                       <AwesomeSlider
                         className="slider"
-                        bullets={isMobile ? false : true}
+                        bullets={false}
                         style={{
                           height: isMobile
                             ? productWidth + 100
@@ -838,7 +853,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
               gap={isMobile ? "1rem" : "2.4rem"}
               width={isMobile ? "100%" : "50%"}
               marginLeft={isMobile ? 0 : "6rem"}
-              marginTop={isMobile ? 0 : "5rem"}
+              marginTop={isMobile ? 0 : "3rem"}
               padding={isMobile ? "0 2rem" : ""}
             >
               <Box
@@ -960,25 +975,27 @@ const Product = ({ params }: { params: { slug: string } }) => {
                         }}
                       ></Skeleton>
                     ) : (
-                      <Typography
-                        variant="body2"
-                        color={
-                          theme === "light"
-                            ? lightColor.text.primary
-                            : darkColor.text.primary
-                        }
-                        textAlign="center"
-                        fontSize={isMobile ? "1.6rem" : "2.8rem"}
-                        fontStyle="normal"
-                        fontWeight="700"
-                        lineHeight="normal"
-                        letterSpacing="0.02rem"
-                      >
-                        ₹
-                        {productAPIRes.discountPrice -
-                          (isCouponApply.offerValue / 100) *
-                            productAPIRes.discountPrice}
-                      </Typography>
+                      <>
+                        <Typography
+                          variant="body2"
+                          color={
+                            theme === "light"
+                              ? lightColor.text.primary
+                              : darkColor.text.primary
+                          }
+                          textAlign="center"
+                          fontSize={isMobile ? "1.6rem" : "2.8rem"}
+                          fontStyle="normal"
+                          fontWeight="700"
+                          lineHeight="normal"
+                          letterSpacing="0.02rem"
+                        >
+                          ₹
+                          {productAPIRes.discountPrice -
+                            (isCouponApply.offerValue / 100) *
+                              productAPIRes.discountPrice}
+                        </Typography>
+                      </>
                     )}
                   </Box>
 
@@ -1011,6 +1028,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
                       </Typography>
                     )}
                   </Box>
+
                   <Box>
                     {productAPIRes.length === 0 ? (
                       <Skeleton
@@ -1047,8 +1065,22 @@ const Product = ({ params }: { params: { slug: string } }) => {
                     )}
                   </Box>
                 </Box>
+                <Typography
+                  color={
+                    theme === "light"
+                      ? lightColor.text.primary
+                      : darkColor.text.primary
+                  }
+                  textAlign="center"
+                  fontSize={isMobile ? "1.6rem" : "1.2rem"}
+                  fontStyle="normal"
+                  fontWeight="700"
+                  lineHeight="normal"
+                  letterSpacing="0.02rem"
+                >
+                  (inclusive of all taxes)
+                </Typography>
               </Box>
-
               <Box
                 gap="2.4rem"
                 display="flex"

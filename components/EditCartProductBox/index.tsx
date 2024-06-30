@@ -32,7 +32,7 @@ import ImageUploader from "@components/ImageUploader";
 import axios from "axios";
 import StarIcon from "@mui/icons-material/Star";
 
-export default function AlertDialog(props: any) {
+export default function EditCartProductBox(props: any) {
   const [open, setOpen] = useState(false);
   const [productAPIRes, setProductAPIRes] = useState<any>([]);
   const [selectedColor, setSelectedColor] = useState(0);
@@ -40,7 +40,7 @@ export default function AlertDialog(props: any) {
   const [productWidth, setProductWidth] = useState(470);
 
   const { slug } = props
-
+console.log("slug L ",slug)
   const isMobile = useMobile();
   const isTablet = useTablet();
 
@@ -94,6 +94,7 @@ export default function AlertDialog(props: any) {
   const handleProductUpdateInCart = () => {
 
   }
+  console.log("productAPIRes  : ",productAPIRes )
   return (
     <React.Fragment>
       <ButtonBase onClick={handleClickOpen}>

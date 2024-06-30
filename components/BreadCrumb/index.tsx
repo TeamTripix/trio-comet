@@ -11,7 +11,7 @@ const BreadCrumb = () => {
       <Link
         style={{
           color: "var(--light-price-text, #B4B4B9)",
-          fontSize: "1.2rem",
+          fontSize: "1.4rem",
           fontStyle: "normal",
           fontWeight: 400,
           lineHeight: "2.4rem",
@@ -28,7 +28,7 @@ const BreadCrumb = () => {
             variant="caption"
             sx={{
               color: "var(--light-price-text, #B4B4B9)",
-              fontSize: "1.2rem",
+              fontSize: "1.4rem",
               fontStyle: "normal",
               fontWeight: 400,
               lineHeight: "2.4rem",
@@ -40,7 +40,7 @@ const BreadCrumb = () => {
             <Link
               style={{
                 color: "var(--light-price-text, #B4B4B9)",
-                fontSize: "1.2rem",
+                fontSize: "1.4rem",
                 fontStyle: "normal",
                 fontWeight: 400,
                 lineHeight: "2.4rem",

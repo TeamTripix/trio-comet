@@ -92,7 +92,7 @@ export default function TemporaryDrawer() {
     // const handleEditBtn = () => {
     //   toggleDrawer(anchor, false);
     // };
-
+console.log("product : ",product)
     return (
       <>
         <Box

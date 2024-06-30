@@ -41,7 +41,7 @@ export async function POST(req: Request) {
           const sendOTPRes = await client.messages.create({
             from: twilioNumber,
             to: `+91${parsedData.number}`,
-            body: `Your Triocomet verification code is: ${otpValue}`,
+            body: `${otpValue} is your OTP to continue your TrioComet journey. Happy Shopping!`,
           });
           
       if (sendOTPRes.errorMessage === null) {
@@ -81,7 +81,7 @@ export async function POST(req: Request) {
       const sendOTPRes = await client.messages.create({
         from: twilioNumber,
         to: `+91${parsedData.number}`,
-        body: `Your Triocomet verification code is: ${otpValue}`,
+        body: `${otpValue} is your OTP to continue your TrioComet journey. Happy Shopping!`,
       });
       if (sendOTPRes.errorMessage === null) {
         return NextResponse.json(

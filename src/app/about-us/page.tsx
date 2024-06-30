@@ -52,7 +52,7 @@ const Page = () => {
         ></Box> */}
             {/* </Box> */}
             <PageSpacing>
-              <Box>
+              <Box padding="0 2rem">
               <Typography
                   dangerouslySetInnerHTML={{ __html: aboutUsApiRes[0].desc }}
                 ></Typography>

@@ -13,7 +13,6 @@ const Page = () => {
   const data: any = useSelector<any>((state) => state.orderData);
   const queryParams = useSearchParams();
   const merchantID = queryParams.get("id");
-  console.log("🚀 ~ Page ~ orderData:", data);
   const LoadingContainer = styled(Box)({
     display: "flex",
     flexDirection: "column",
@@ -24,15 +23,13 @@ const Page = () => {
   });
 
   useEffect(() => {
-
-
     axios({
       method: "post",
       url: "/api/shiprocket-middleware",
       data: { merchantID, data },
     })
       .then((response) => {
-        console.log("🚀 ~ .then ~ response:", response)
+        console.log("🚀 ~ .then ~ response:", response);
         if (response.data.success) {
           // setIsLoading(false);
           // setOpenOTPDialogBox(true);
@@ -43,12 +40,12 @@ const Page = () => {
         }
       })
       .catch((err) => {
-        console.log("🚀 ~ useEffect ~ err:", err)
+        console.log("🚀 ~ useEffect ~ err:", err);
         // toast("some error occured");
         // setIsLoading(false);
         console.log(err);
       });
-  }, [])
+  }, []);
   return (
     <LoadingContainer>
       <Box

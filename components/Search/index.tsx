@@ -65,12 +65,14 @@ const Index = () => {
   };
 
   const handleChangeCategory = (data: any) => {
+    // console.log(data)
     setCategorySelector(data);
     router.push(`?category=${data}&query=${searchInputText}`);
   };
 
   useEffect(() => {
     const delay = 300;
+    console.log("in useEffect : ",categorySelector)
     const timerId = setTimeout(() => {
       if (searchInputText.trim() !== "") {
         fetchSuggestions(searchInputText);
@@ -281,7 +283,6 @@ const Index = () => {
           zIndex={1000}
         >
           {suggestions.slice(0, 5).map((item) =>{
-            console.log(item)
             return(
               <Link key={item.id} href={`/product/${item.productColor[0].slug}`}>
                 <MenuItem  onClick={() => handleSuggestionClick(item)}>

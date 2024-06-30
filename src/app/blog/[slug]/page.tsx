@@ -87,13 +87,14 @@ const Blog = ({ params }: { params: { slug: string } }) => {
                   >
                     <Box>
                       <Typography
+                      variant="h1"
                         color={
                           theme === "light"
                             ? lightColor.text.primary
                             : darkColor.text.primary
                         }
                         textAlign="center"
-                        fontSize="4rem"
+                        fontSize="2.4rem"
                         fontStyle="normal"
                         fontWeight="700"
                         lineHeight="normal"
@@ -326,6 +327,7 @@ const Blog = ({ params }: { params: { slug: string } }) => {
                   >
                     <Box>
                       <Typography
+                      variant="h1"
                         color={
                           theme === "light"
                             ? lightColor.text.primary

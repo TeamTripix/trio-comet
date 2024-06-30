@@ -115,6 +115,9 @@ const Index: React.FC<IndexProps> = ({
   return (
     <>
       <Box
+      sx={{'&:hover':{
+        boxShadow:"rgba(0, 0, 0, 0.35) 0px 5px 15px"  
+      }}}
         display="flex"
         // width={
         //   isTablet
