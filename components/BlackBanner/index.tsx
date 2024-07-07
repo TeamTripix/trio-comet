@@ -57,7 +57,7 @@ const Index = () => {
                 alignItems="center"
               >
                 <Typography
-                  color={lightColor.text.primary }
+                  color={lightColor.text.primary}
                   fontSize={isMobile ? "0.8rem" : "1rem"}
                   fontStyle="normal"
                   fontWeight={isMobile ? "400" : "500"}
@@ -66,8 +66,7 @@ const Index = () => {
                 >
                   {blackBannerApiRes[0].bannerText}
                 </Typography>
-                
-                
+
                 {/* <Link href={blackBannerApiRes[0].bannerURL}>
                   <ButtonBase
                     sx={{
@@ -102,6 +101,33 @@ const Index = () => {
                     </Typography>
                   </ButtonBase>
                 </Link> */}
+                <Box display="flex" gap={5}>
+                  <ButtonBase>
+                    <Typography
+                      color={lightColor.text.primary}
+                      fontSize={isMobile ? "0.8rem" : "1rem"}
+                      fontStyle="normal"
+                      fontWeight={isMobile ? "400" : "500"}
+                      lineHeight="normal"
+                      letterSpacing="0.05rem"
+                    >
+                      {"Contact Us"}
+                    </Typography>
+                  </ButtonBase>
+
+                  <ButtonBase>
+                    <Typography
+                      color={lightColor.text.primary}
+                      fontSize={isMobile ? "0.8rem" : "1rem"}
+                      fontStyle="normal"
+                      fontWeight={isMobile ? "400" : "500"}
+                      lineHeight="normal"
+                      letterSpacing="0.05rem"
+                    >
+                      {"Track Order"}
+                    </Typography>
+                  </ButtonBase>
+                </Box>
               </Box>
             </PageSpacing>
           </Box>

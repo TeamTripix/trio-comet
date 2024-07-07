@@ -4,6 +4,7 @@ const review = new mongoose.Schema({
   reviews: [
     {
       customerName: String,
+      customerEmail: String,
       heading: String,
       desc: String,
       rating: Number,

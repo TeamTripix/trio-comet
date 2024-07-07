@@ -1,7 +1,17 @@
 "use client";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { lightColor, darkColor } from "@/utils/CustomTheme/color";
-import { Box, ButtonBase, CircularProgress, Typography } from "@mui/material";
+import {
+  Box,
+  ButtonBase,
+  CircularProgress,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Grid,
+  TextField,
+  Typography,
+} from "@mui/material";
 import Image from "next/image";
 import React from "react";
 import EditIcon from "../../../icons/editIcon";
@@ -12,19 +22,22 @@ import { signOut, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import CancelIcon from "../../../icons/cancelIcon";
+import ProfileInfoDailog from "@components/ProfileInfoDailog";
 
 const SecuredComponent = () => {
-  const [name,setName] = useState("")
-  const [email,setEmail] = useState("")
-  const [number,setNumber] = useState("")
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [number, setNumber] = useState("");
+  const [isDataUpdate, setIsDataUpdate] = useState(false);
   const theme: any = useSelector<any>((state) => state.themeToggle);
   const handleLogout = () => {
     signOut();
   };
   const session: any = useSession();
-  console.log(session)
+  console.log(session);
 
-  useEffect(()=>{
+  useEffect(() => {
     axios({
       method: "GET",
       url: `/api/user-info`,
@@ -34,9 +47,9 @@ const SecuredComponent = () => {
     })
       .then((res) => {
         if (res.status === 200) {
-          setName(res.data.data.name)
-          setEmail(res.data.data.email)
-          setNumber(res.data.data.number)
+          setName(res.data.data.name);
+          setEmail(res.data.data.email);
+          setNumber(res.data.data.number);
           // if (!res.data.data[0]._id) {
           //   return;
           // }
@@ -45,7 +58,7 @@ const SecuredComponent = () => {
       .catch((err) => {
         console.log(err);
       });
-  },[])
+  }, [isDataUpdate]);
   return (
     <Box
       display="flex"
@@ -87,7 +100,9 @@ const SecuredComponent = () => {
         gap="2.4rem"
       >
         <Typography
-          color={theme==="light" ? lightColor.text.primary: darkColor.text.primary}
+          color={
+            theme === "light" ? lightColor.text.primary : darkColor.text.primary
+          }
           textAlign="center"
           fontSize="1.6rem"
           fontStyle="normal"
@@ -97,9 +112,13 @@ const SecuredComponent = () => {
         >
           {name}
         </Typography>
-        <ButtonBase>
-          <EditIcon />
-        </ButtonBase>
+
+        <ProfileInfoDailog
+          infoType="Name"
+          data={name}
+          setIsDataUpdate={setIsDataUpdate}
+          isDataUpdate={isDataUpdate}
+        />
       </Box>
       <Box
         display="inline-flex"
@@ -108,7 +127,11 @@ const SecuredComponent = () => {
         gap="2.4rem"
       >
         <Typography
-          color={theme==="light" ? lightColor.text.secondary: darkColor.text.secondary}
+          color={
+            theme === "light"
+              ? lightColor.text.secondary
+              : darkColor.text.secondary
+          }
           textAlign="center"
           fontSize="1.6rem"
           fontStyle="normal"
@@ -118,9 +141,12 @@ const SecuredComponent = () => {
         >
           {email}
         </Typography>
-        <ButtonBase>
-          <EditIcon />
-        </ButtonBase>
+        <ProfileInfoDailog
+          infoType="Email"
+          data={email}
+          setIsDataUpdate={setIsDataUpdate}
+          isDataUpdate={isDataUpdate}
+        />
       </Box>
       <Box
         display="inline-flex"
@@ -129,7 +155,11 @@ const SecuredComponent = () => {
         gap="2.4rem"
       >
         <Typography
-          color={theme==="light" ? lightColor.text.secondary: darkColor.text.secondary}
+          color={
+            theme === "light"
+              ? lightColor.text.secondary
+              : darkColor.text.secondary
+          }
           textAlign="center"
           fontSize="1.6rem"
           fontStyle="normal"
@@ -139,9 +169,7 @@ const SecuredComponent = () => {
         >
           +91{number}
         </Typography>
-        <ButtonBase>
-          <EditIcon />
-        </ButtonBase>
+        {/* <ProfileInfoDailog infoType="Number"/> */}
       </Box>
       <Box
         display="inline-flex"
@@ -162,7 +190,11 @@ const SecuredComponent = () => {
         >
           <FileOrderIcon />
           <Typography
-            color={theme==="light" ? lightColor.text.primary: darkColor.text.primary}
+            color={
+              theme === "light"
+                ? lightColor.text.primary
+                : darkColor.text.primary
+            }
             textAlign="center"
             fontSize="1.6rem"
             fontStyle="normal"
@@ -202,7 +234,11 @@ const SecuredComponent = () => {
             </svg>
           </Box>
           <Typography
-            color={theme==="light" ? lightColor.text.primary: darkColor.text.primary}
+            color={
+              theme === "light"
+                ? lightColor.text.primary
+                : darkColor.text.primary
+            }
             textAlign="center"
             fontSize="1.6rem"
             fontStyle="normal"
@@ -227,7 +263,11 @@ const SecuredComponent = () => {
         >
           <LocationIcon />
           <Typography
-            color={theme==="light" ? lightColor.text.primary: darkColor.text.primary}
+            color={
+              theme === "light"
+                ? lightColor.text.primary
+                : darkColor.text.primary
+            }
             textAlign="center"
             fontSize="1.6rem 1.5rem"
             fontStyle="normal"

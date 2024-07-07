@@ -20,10 +20,10 @@ const Index = (props: IndexProps) => {
   const isMobile = useMobile();
   return (
     <Box
-      marginLeft={isHomePage ? "1rem" : 0}
-      marginRight={
-        isHomePage ? (indexes === categoryArrayLength ? "1rem" : 0) : 0
-      }
+      // marginLeft={isHomePage ? "1rem" : 0}
+      // marginRight={
+      //   isHomePage ? (indexes === categoryArrayLength ? "1rem" : 0) : 0
+      // }
     >
       <Link href={`/category/${slug}`}>
         {/* <Box
@@ -50,7 +50,7 @@ const Index = (props: IndexProps) => {
               />
             </Box>
           </Box>
-          <Typography
+          {/* <Typography
             color={
               theme === "light"
                 ? lightColor.text.primary
@@ -64,7 +64,7 @@ const Index = (props: IndexProps) => {
             letterSpacing="0.05rem"
           >
             {name}
-          </Typography>
+          </Typography> */}
         {/* </Box> */}
       </Link>
     </Box>

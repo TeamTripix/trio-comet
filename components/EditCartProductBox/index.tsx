@@ -31,25 +31,26 @@ import CancelIcon from "../../icons/cancelIcon";
 import ImageUploader from "@components/ImageUploader";
 import axios from "axios";
 import StarIcon from "@mui/icons-material/Star";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function EditCartProductBox(props: any) {
+  const { slug, productSize, _id, colorId,productColor } = props.product;
+
   const [open, setOpen] = useState(false);
   const [productAPIRes, setProductAPIRes] = useState<any>([]);
-  const [selectedColor, setSelectedColor] = useState(0);
-  const [selectedSize, setSelectedSize] = useState(0);
+  const [selectedColor, setSelectedColor] = useState(productColor);
+  const [selectedSize, setSelectedSize] = useState(productSize);
   const [productWidth, setProductWidth] = useState(470);
 
-  const { slug } = props
-console.log("slug L ",slug)
   const isMobile = useMobile();
   const isTablet = useTablet();
+  const dispatch = useDispatch();
 
   const ref = useRef<HTMLImageElement>(null);
   const updateHeight = () => {
     if (ref.current) {
       const heightValue = ref.current.getBoundingClientRect().height;
       const widthValue = ref.current.getBoundingClientRect().width;
-      // setProductHeight(heightValue);
       setProductWidth(widthValue);
     }
   };
@@ -62,17 +63,16 @@ console.log("slug L ",slug)
       window.removeEventListener("resize", updateHeight);
     };
   }, []);
+
   React.useEffect(() => {
     axios({
       method: "GET",
       url: `/api/product?slug=${slug}`,
     })
       .then((res) => {
-        console.log("🚀 ~ .then ~ res:", res)
         setProductAPIRes(res.data.data);
-        // setRelatedProductAppear(false);
       })
-      .catch(() => { });
+      .catch(() => {});
   }, [slug]);
   const handleClickOpen = () => {
     setOpen(true);
@@ -82,19 +82,27 @@ console.log("slug L ",slug)
     setOpen(false);
   };
 
-
   const handleChangeColor = (index: any) => {
     setSelectedColor(index);
   };
 
-  const handleSizeSelection = (index: any) => {
-    setSelectedSize(index);
+  const handleSizeSelection = (size: any) => {
+    setSelectedSize(size);
   };
 
   const handleProductUpdateInCart = () => {
-
-  }
-  console.log("productAPIRes  : ",productAPIRes )
+    const payload = {
+      _id,
+      productColor: selectedColor,
+      productSize: selectedSize,
+      colorId,
+      isCouponApply:false,
+    };
+    dispatch({
+      type: "EDIT_CART",
+      payload: payload,
+    });
+  };
   return (
     <React.Fragment>
       <ButtonBase onClick={handleClickOpen}>
@@ -109,8 +117,7 @@ console.log("slug L ",slug)
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">{"Edit Product"}</DialogTitle>
-        <DialogContent
-        >
+        <DialogContent>
           <DialogContentText id="alert-dialog-description">
             <Box margin={isMobile ? "0" : "0 10rem"}>
               <Box
@@ -139,8 +146,8 @@ console.log("slug L ",slug)
                     <Box display="flex">
                       {/* main image */}
                       <Box
-                        // marginLeft={{ xs: "0", md: "1rem" }}
-                        // marginTop={{ xs: "1rem", md: "0" }}
+                      // marginLeft={{ xs: "0", md: "1rem" }}
+                      // marginTop={{ xs: "1rem", md: "0" }}
                       >
                         {productAPIRes.length === 0 ? (
                           <Skeleton
@@ -173,7 +180,10 @@ console.log("slug L ",slug)
                                     key={`${index}+productImagesSlider`}
                                   >
                                     <Image
-                                      src={productAPIRes.productColor[0].imageURL[0]}
+                                      src={
+                                        productAPIRes.productColor[0]
+                                          .imageURL[0]
+                                      }
                                       loading="lazy"
                                       alt="cart thumbnail"
                                       fill
@@ -228,7 +238,6 @@ console.log("slug L ",slug)
                         {productAPIRes.name}
                       </Typography>
                     )}
-
                   </Box>
 
                   <Box
@@ -264,8 +273,7 @@ console.log("slug L ",slug)
                             lineHeight="normal"
                             letterSpacing="0.02rem"
                           >
-                            ₹
-                            {productAPIRes.discountPrice}
+                            ₹{productAPIRes.discountPrice}
                           </Typography>
                         )}
                       </Box>
@@ -323,7 +331,7 @@ console.log("slug L ",slug)
                               ((productAPIRes.price -
                                 productAPIRes.discountPrice) /
                                 productAPIRes.price) *
-                              100
+                                100
                             )}% Off`}
                           </span>
                         )}
@@ -359,40 +367,40 @@ console.log("slug L ",slug)
                       <Box display="flex" alignItems="flex-start" gap="1rem">
                         {productAPIRes.length === 0
                           ? [...Array(4)].map((data, index) => {
-                            return (
-                              <Skeleton
-                                key={`${index}+colorskeleton`}
-                                variant="circular"
-                                sx={{
-                                  width: "4rem",
-                                  height: "4rem",
-                                  borderRadius: "50%",
-                                  margin: "0 0.1rem ",
-                                }}
-                              ></Skeleton>
-                            );
-                          })
-                          : productAPIRes.productColor.map(
-                            (data: any, index: number) => {
                               return (
-                                // <></>
-                                <ButtonBase
-                                  onClick={() => handleChangeColor(index)}
-                                  key={data}
+                                <Skeleton
+                                  key={`${index}+colorskeleton`}
+                                  variant="circular"
                                   sx={{
                                     width: "4rem",
                                     height: "4rem",
                                     borderRadius: "50%",
-                                    // border:
-                                    //   parseInt(colorParamID) === index
-                                    //     ? `3px solid ${lightColor.theme.primary}`
-                                    //     : `2px solid ${lightColor.text.secondary}`,
-                                    bgcolor: data.color,
+                                    margin: "0 0.1rem ",
                                   }}
-                                ></ButtonBase>
+                                ></Skeleton>
                               );
-                            }
-                          )}
+                            })
+                          : productAPIRes.productColor.map(
+                              (data: any, index: number) => {
+                                return (
+                                  // <></>
+                                  <ButtonBase
+                                    onClick={() => handleChangeColor(index)}
+                                    key={data}
+                                    sx={{
+                                      width: "4rem",
+                                      height: "4rem",
+                                      borderRadius: "50%",
+                                      // border:
+                                      //   parseInt(colorParamID) === index
+                                      //     ? `3px solid ${lightColor.theme.primary}`
+                                      //     : `2px solid ${lightColor.text.secondary}`,
+                                      bgcolor: data.color,
+                                    }}
+                                  ></ButtonBase>
+                                );
+                              }
+                            )}
                       </Box>
                     </Box>
 
@@ -450,7 +458,7 @@ console.log("slug L ",slug)
                             (data: any, index: any) => (
                               <Box
                                 key={data.size}
-                                onClick={() => handleSizeSelection(index)}
+                                onClick={() => handleSizeSelection(data.size)}
                                 sx={{
                                   display: "flex",
                                   justifyContent: "center",
@@ -458,7 +466,7 @@ console.log("slug L ",slug)
                                   width: "4.2rem",
                                   height: "4.2rem",
                                   bgcolor:
-                                    selectedSize === index
+                                    selectedSize === data.size
                                       ? "#C4C4C4"
                                       : "#EFF2F6",
                                   borderRadius: "0.8rem",
@@ -470,7 +478,9 @@ console.log("slug L ",slug)
                                   textAlign="center"
                                   fontSize={isMobile ? "1.6rem" : "1.8rem"}
                                   fontStyle="normal"
-                                  fontWeight={selectedSize === data.size ? 700 : 400}
+                                  fontWeight={
+                                    selectedSize === data.size ? 700 : 400
+                                  }
                                   lineHeight="normal"
                                   letterSpacing="0.02rem"
                                 >

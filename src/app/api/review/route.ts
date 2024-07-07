@@ -21,6 +21,7 @@ export async function POST(req: NextRequest) {
       if (id !== null) {
         const updatedReview = {
           customerName: reviews[0].customerName,
+          customerEmail: reviews[0].customerEmail,
           heading: reviews[0].heading,
           desc: reviews[0].desc,
           rating: reviews[0].rating,

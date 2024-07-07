@@ -89,10 +89,6 @@ export default function TemporaryDrawer() {
       });
     };
 
-    // const handleEditBtn = () => {
-    //   toggleDrawer(anchor, false);
-    // };
-console.log("product : ",product)
     return (
       <>
         <Box
@@ -284,7 +280,7 @@ console.log("product : ",product)
                 </Box>
               )}
               <ButtonBase>
-                <EditCartProductBox slug={product.slug}/>
+                <EditCartProductBox product={product}/>
               </ButtonBase>
               <ButtonBase onClick={handleRemoveBtn}>
                 <Bin />

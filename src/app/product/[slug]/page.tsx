@@ -50,7 +50,7 @@ import { NextSeo } from "next-seo";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import "./vertical.css"
+import VerticalSlider from "./VerticalSlider";
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -336,6 +336,8 @@ const Product = ({ params }: { params: { slug: string } }) => {
   const [couponInputValue, setCouponInputValue] = useState("");
   const [isReviewDialogOpen, setIsReviewDialogOpen] = useState(false);
   const [ratingStarValue, setRatingStarValue] = useState<number | null>(0);
+  const [reviewCustomerName, setReviewCustomerName] = useState("");
+  const [reviewCustomerEmail, setReviewCustomerEmail] = useState("");
   const [reviewHeading, setReviewHeading] = useState("");
   const [reviewDesc, setReviewDesc] = useState("");
   const [reviewApiRes, setReviewApiRes] = useState([]);
@@ -501,14 +503,21 @@ const Product = ({ params }: { params: { slug: string } }) => {
 
   const handleSubmitReview = () => {
     setSendReviewIsLoading(true);
-    if (reviewHeading && reviewDesc && ratingStarValue !== 0) {
+    if (
+      reviewHeading &&
+      reviewDesc &&
+      ratingStarValue !== 0 &&
+      reviewCustomerName &&
+      reviewCustomerEmail
+    ) {
       axios({
         method: "POST",
         url: `/api/review`,
         data: {
           reviews: [
             {
-              customerName: "",
+              customerName: reviewCustomerName,
+              customerEmail: reviewCustomerEmail,
               heading: reviewHeading,
               desc: reviewDesc,
               rating: ratingStarValue,
@@ -730,7 +739,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
       />
 
       <PageSpacing>
-        <Box margin={isMobile ? "0" : "0 10rem"}>
+        <Box margin={isMobile ? "0" : "0rem"}>
           <Box
             display="flex"
             width="100%"
@@ -743,7 +752,7 @@ const Product = ({ params }: { params: { slug: string } }) => {
           >
             <Box
               ref={ref}
-              width={isMobile ? "100%" : "50%"}
+              width={isMobile ? "100%" : "60%"}
               position={isMobile ? "relative" : "sticky"}
               top={isMobile ? -10 : "6rem"}
             >
@@ -773,29 +782,33 @@ const Product = ({ params }: { params: { slug: string } }) => {
                           }}
                         ></Skeleton>
                       ) : (
-                        <Slider {...settings} className="vertical-slider">
-                          {productAPIRes.productColor[0].imageURL.map(
-                            (elem: any, index: number) => {
-                              return (
-                                <Box
-                                  width="2rem"
-                                  height="15rem"
-                                  borderRadius="0.8rem"
-                                  key={`productImageLeft${index}`}
-                                >
-                                  <Image
-                                    alt="product image"
-                                    width="90"
-                                    height="100"
-                                    src={elem}
-                                    style={{ borderRadius: "0.8rem" }}
-                                    layout="responsive"
-                                  />
-                                </Box>
-                              );
-                            }
-                          )}
-                        </Slider>
+                        // <Slider {...settings} className="vertical-slider">
+                        //   {productAPIRes.productColor[0].imageURL.map(
+                        //     (elem: any, index: number) => {
+                        //       return (
+                        //         <Box
+                        //           width="5rem"
+                        //           height="15rem"
+                        //           borderRadius="0.8rem"
+                        //           key={`productImageLeft${index}`}
+                        //         >
+                        //           <Image
+                        //             alt="product image"
+                        //             width="90"
+                        //             height="100"
+                        //             src={elem}
+                        //             style={{ borderRadius: "0.8rem" }}
+                        //             layout="responsive"
+                        //           />
+                        //         </Box>
+                        //       );
+                        //     }
+                        //   )}
+                        // </Slider>
+                        <VerticalSlider
+                          items={productAPIRes.productColor[0].imageURL}
+                          slidesToShow={5}
+                        />
                       ))}
                   </Box>
                   {/* main image */}
@@ -819,8 +832,8 @@ const Product = ({ params }: { params: { slug: string } }) => {
                         style={{
                           height: isMobile
                             ? productWidth + 100
-                            : productWidth - 50,
-                          width: isMobile ? "100vw" : productWidth - 130,
+                            : productWidth + 40,
+                          width: isMobile ? "100vw" : productWidth - 140,
                         }}
                       >
                         {productAPIRes.productColor[0].imageURL.map(
@@ -851,8 +864,8 @@ const Product = ({ params }: { params: { slug: string } }) => {
               flexDirection="column"
               alignItems="flex-start"
               gap={isMobile ? "1rem" : "2.4rem"}
-              width={isMobile ? "100%" : "50%"}
-              marginLeft={isMobile ? 0 : "6rem"}
+              width={isMobile ? "100%" : "40%"}
+              marginLeft={isMobile ? 0 : "0rem"}
               marginTop={isMobile ? 0 : "3rem"}
               padding={isMobile ? "0 2rem" : ""}
             >
@@ -1818,6 +1831,32 @@ const Product = ({ params }: { params: { slug: string } }) => {
                                     flexDirection="column"
                                     gap={"1.2rem"}
                                   >
+                                    <Grid container gap={1}>
+                                      <Grid item xs={5.9}>
+                                        <TextField
+                                          fullWidth
+                                          label="Name"
+                                          size="small"
+                                          onChange={(e: any) =>
+                                            setReviewCustomerName(
+                                              e.target.value
+                                            )
+                                          }
+                                        />
+                                      </Grid>
+                                      <Grid item xs={5.9}>
+                                        <TextField
+                                          fullWidth
+                                          label="Email"
+                                          size="small"
+                                          onChange={(e: any) =>
+                                            setReviewCustomerEmail(
+                                              e.target.value
+                                            )
+                                          }
+                                        />
+                                      </Grid>
+                                    </Grid>
                                     <TextField
                                       label="Heading"
                                       size="small"

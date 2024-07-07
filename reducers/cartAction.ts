@@ -8,10 +8,11 @@ const initialState = {
 
 type addToCartAction = { type: "ADD_TO_CART"; payload: any };
 type removeFromCartAction = { type: "REMOVE_FROM_CART"; payload: any };
+type editCartAction = { type: "EDIT_CART"; payload: any };
 
 export const addToCart: any = (
   state: productState = initialState,
-  action: addToCartAction | removeFromCartAction
+  action: addToCartAction | removeFromCartAction | editCartAction
 ) => {
   switch (action.type) {
     case "ADD_TO_CART":
@@ -53,6 +54,31 @@ export const addToCart: any = (
       return {
         ...state,
         cartData: newList,
+      };
+
+    case "EDIT_CART":
+      const editCartIndex = state.cartData.findIndex(
+        (item: any) =>
+          item.product._id === action.payload._id &&
+          item.isCouponApply === action.payload.isCouponApply &&
+          item.product.colorId === action.payload.colorId
+      );
+
+      const updatedItem: any = {
+        ...state.cartData[editCartIndex],
+        product: {
+          ...state.cartData[editCartIndex].product,
+          productColor: action.payload.productColor,
+          productSize: action.payload.productSize,
+        },
+      };
+      return {
+        ...state,
+        cartData: [
+          ...state.cartData.slice(0, editCartIndex),
+          updatedItem,
+          ...state.cartData.slice(editCartIndex + 1),
+        ],
       };
 
     default:
