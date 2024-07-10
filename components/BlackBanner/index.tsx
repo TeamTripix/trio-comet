@@ -1,3 +1,4 @@
+"use client"
 import { useMobile } from "@/utils/responsive";
 import PageSpacing from "@components/PageSpacing";
 import { Box, ButtonBase, Typography } from "@mui/material";
