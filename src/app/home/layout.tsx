@@ -46,14 +46,14 @@ export default function HomeLayout({
     return state;
   };
   return (
-    <html lang="en">
+    <>
       {/* <SessionProvider> */}
           <ThemeState themeValue={themeValue} />
-          <ThemeProvider theme={LightTheme}>
-            <CssBaseline />
+          {/* <ThemeProvider theme={LightTheme}> */}
+            
             <EdgeStoreProvider>
               {/* application content */}
-              <body className={inter.className}>
+              {/* <body className={inter.className}> */}
                 {/* <Box
                   sx={{
                     display: "flex",
@@ -100,10 +100,10 @@ export default function HomeLayout({
                   pauseOnHover
                   theme="light"
                 />
-              </body>
+              {/* </body> */}
             </EdgeStoreProvider>
-          </ThemeProvider>
+          {/* </ThemeProvider> */}
       {/* </SessionProvider> */}
-    </html>
+    </>
   );
 }

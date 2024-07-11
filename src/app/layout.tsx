@@ -3,6 +3,11 @@ import Head from "next/head";
 import Script from "next/script";
 import { ReduxProvider } from "./ReduxProvider";
 import AuthProvider from "./AuthProvider";
+import { CustomThemeProvider } from "./CustomThemeProvider"
+import { ThemeProvider } from "@mui/material/styles";
+import { LightTheme } from "@/utils/CustomTheme";
+import "./globals.css"
+import { CssBaseline } from "@mui/material";
 
 export const metadata: Metadata = {
   title: "Online Fashion Shopping for Men | Buy Mens Clothing – Triocomet",
@@ -29,7 +34,12 @@ export default function RootLayout({
       </Head>
       <ReduxProvider>
         <AuthProvider>
-          {children}
+          <CssBaseline />
+          <ThemeProvider theme={LightTheme}>
+            <body>
+              {children}
+            </body>
+          </ThemeProvider>;
         </AuthProvider>
       </ReduxProvider>
     </html>
