@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Head from "next/head";
 import Script from "next/script";
+import { ReduxProvider } from "./ReduxProvider";
+import AuthProvider from "./AuthProvider";
 
 export const metadata: Metadata = {
   title: "Online Fashion Shopping for Men | Buy Mens Clothing – Triocomet",
@@ -25,7 +27,11 @@ export default function RootLayout({
           ></iframe>
         </noscript>
       </Head>
-      <body>{children}</body>
+      <ReduxProvider>
+        <AuthProvider>
+          {children}
+        </AuthProvider>
+      </ReduxProvider>
     </html>
   );
 }

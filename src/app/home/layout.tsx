@@ -23,6 +23,7 @@ import WhatsappIcon from "@components/WhatsappIcon";
 import { Box, Typography } from "@mui/material";
 import BlackBanner from "@components/BlackBanner";
 import Head from "next/head";
+import AuthProvider from "../AuthProvider";
 
 // export const metadata: Metadata = {
 //   title: "Create Next App",
@@ -46,11 +47,9 @@ export default function HomeLayout({
   };
   return (
     <html lang="en">
-      <SessionProvider>
-        <Provider store={store}>
+      {/* <SessionProvider> */}
           <ThemeState themeValue={themeValue} />
           <ThemeProvider theme={LightTheme}>
-            {/* // theme={LightTheme}> */}
             <CssBaseline />
             <EdgeStoreProvider>
               {/* application content */}
@@ -82,11 +81,13 @@ export default function HomeLayout({
                       : darkColor.theme.primary
                   },0 0 5px ${lightColor.theme.primary}`}
                 /> */}
+                {/* <AuthProvider> */}
                 {pathname === "/" ? <BlackBanner /> : ""}
-                <Navbar />
+                  <Navbar/>
                 {children}
                 {/* <WhatsappIcon /> */}
                 {pathname === "/bulk-query" ? "" : <Footer />}
+                {/* </AuthProvider> */}
                 <ToastContainer
                   position="bottom-left"
                   autoClose={3000}
@@ -102,9 +103,7 @@ export default function HomeLayout({
               </body>
             </EdgeStoreProvider>
           </ThemeProvider>
-          {/* </PersistGate> */}
-        </Provider>
-      </SessionProvider>
+      {/* </SessionProvider> */}
     </html>
   );
 }
