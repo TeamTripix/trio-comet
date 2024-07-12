@@ -72,7 +72,6 @@ const Index = () => {
 
   useEffect(() => {
     const delay = 300;
-    console.log("in useEffect : ",categorySelector)
     const timerId = setTimeout(() => {
       if (searchInputText.trim() !== "") {
         fetchSuggestions(searchInputText);

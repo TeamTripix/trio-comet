@@ -12,7 +12,10 @@ import ProductCardSkeleton from "@components/Skeleton/ProductCardSkeleton";
 import { useSearchParams } from "next/navigation";
 import { useSelector } from "react-redux";
 
-const ProductCollection = ({ params }: { params: { slug: string } }) => {
+const ProductCollection = (props: any) => {
+  const { params, product } = props
+  console.log("🚀 ~ ProductCollection ~ product:", product)
+  
   const queryParams = useSearchParams();
   const pid = queryParams.get("pid");
   const [productApiRes, setProductApiRes] = useState<any[]>([]);
