@@ -13,49 +13,48 @@ import { useSearchParams } from "next/navigation";
 import { useSelector } from "react-redux";
 
 const ProductCollection = (props: any) => {
-  const { params, product } = props
-  console.log("🚀 ~ ProductCollection ~ product:", product)
+  const { params, product,categoryName } = props
   
   const queryParams = useSearchParams();
   const pid = queryParams.get("pid");
-  const [productApiRes, setProductApiRes] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [categoryNameApiRes, setCategoryNameApiRes] = useState("");
+  const [productApiRes, setProductApiRes] = useState<any[]>(product.data);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [categoryNameApiRes, setCategoryNameApiRes] = useState(categoryName);
   const theme: any = useSelector<any>((state) => state.themeToggle);
   const isMobile = useMobile();
   const isTablet = useTablet();
 
 
-  useEffect(() => {
-    axios({
-      method: "GET",
-      url: `/api/category/?cid=${params.slug}`,
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          if (!res.data.data[0]._id) {
-            return;
-          }
-          axios({
-            method: "GET",
-            url: `/api/product/?category=${res.data.data[0]._id}`,
-          })
-            .then((res) => {
-              if (res.status === 200) {
-                setIsLoading(false);
-                setProductApiRes(res.data.data);
-              }
-            })
-            .catch((err) => {
-              console.log(err);
-              setIsLoading(false);
-            });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [params.slug]);
+  // useEffect(() => {
+  //   axios({
+  //     method: "GET",
+  //     url: `/api/category/?cid=${params.slug}`,
+  //   })
+  //     .then((res) => {
+  //       if (res.status === 200) {
+  //         if (!res.data.data[0]._id) {
+  //           return;
+  //         }
+  //         axios({
+  //           method: "GET",
+  //           url: `/api/product/?category=${res.data.data[0]._id}`,
+  //         })
+  //           .then((res) => {
+  //             if (res.status === 200) {
+  //               setIsLoading(false);
+  //               setProductApiRes(res.data.data);
+  //             }
+  //           })
+  //           .catch((err) => {
+  //             console.log(err);
+  //             setIsLoading(false);
+  //           });
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, [params.slug]);
 
   return (
     <>
