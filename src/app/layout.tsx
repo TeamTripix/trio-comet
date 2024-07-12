@@ -3,11 +3,17 @@ import Head from "next/head";
 import Script from "next/script";
 import { ReduxProvider } from "./ReduxProvider";
 import AuthProvider from "./AuthProvider";
-import { CustomThemeProvider } from "./CustomThemeProvider"
 import { ThemeProvider } from "@mui/material/styles";
 import { LightTheme } from "@/utils/CustomTheme";
 import "./globals.css"
 import { CssBaseline } from "@mui/material";
+import Navbar from "@components/Navbar";
+import BlackBanner from "@components/BlackBanner";
+import Footer from "@components/Footer";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { EdgeStoreProvider } from "@components/EdgeStore";
+
 
 export const metadata: Metadata = {
   title: "Online Fashion Shopping for Men | Buy Mens Clothing – Triocomet",
@@ -36,10 +42,28 @@ export default function RootLayout({
         <AuthProvider>
           <CssBaseline />
           <ThemeProvider theme={LightTheme}>
-            <body>
-              {children}
-            </body>
-          </ThemeProvider>;
+            <EdgeStoreProvider>
+              <body>
+                <BlackBanner />
+                <Navbar />
+                {children}
+                <Footer />
+                {/* toaster container */}
+                <ToastContainer
+                  position="bottom-left"
+                  autoClose={3000}
+                  hideProgressBar
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                  theme="light"
+                />
+              </body>
+            </EdgeStoreProvider>
+          </ThemeProvider>
         </AuthProvider>
       </ReduxProvider>
     </html>
