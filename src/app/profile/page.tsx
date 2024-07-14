@@ -35,7 +35,6 @@ const SecuredComponent = () => {
     signOut();
   };
   const session: any = useSession();
-  console.log(session);
 
   useEffect(() => {
     axios({

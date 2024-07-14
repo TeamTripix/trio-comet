@@ -13,7 +13,6 @@ const order = {
 };
 
 const Page = ({ params }: { params: { merchantID: string } }) => {
-    console.log(params)
   return (
     <Container maxWidth="md" style={{ marginTop: '2rem' }}>
     <Typography variant="h4" gutterBottom>

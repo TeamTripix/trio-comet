@@ -29,7 +29,6 @@ const Page = () => {
       data: { merchantID, data },
     })
       .then((response) => {
-        console.log("🚀 ~ .then ~ response:", response);
         if (response.data.success) {
           // setIsLoading(false);
           // setOpenOTPDialogBox(true);
@@ -40,7 +39,6 @@ const Page = () => {
         }
       })
       .catch((err) => {
-        console.log("🚀 ~ useEffect ~ err:", err);
         // toast("some error occured");
         // setIsLoading(false);
         console.log(err);

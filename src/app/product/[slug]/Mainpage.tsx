@@ -512,7 +512,6 @@ const Product = (props: any) => {
   };
 
   const handleAddToCartBtn = (dispatchData: any, couponState: boolean) => {
-    console.log("🚀 ~ handleAddToCartBtn ~ dispatchData:", dispatchData);
     const isProductInCart = cartData.filter(
       (cartDataInFilter: any) =>
         cartDataInFilter.product._id ===
@@ -620,7 +619,7 @@ const Product = (props: any) => {
 
   return (
     <>
-      <NextSeo
+      {/* <NextSeo
         title={productAPIRes?.specificationItems?.pageTitle}
         description="This example uses more of the available config options."
         canonical="https://www.triocomet.com"
@@ -653,7 +652,7 @@ const Product = (props: any) => {
           site: "@site",
           cardType: "summary_large_image",
         }}
-      />
+      /> */}
 
       <PageSpacing>
         <Box margin={isMobile ? "0" : "0rem"}>
@@ -669,7 +668,7 @@ const Product = (props: any) => {
           >
             <Box
               ref={ref}
-              width={isMobile ? "100%" : "60%"}
+              width={isMobile ? "100%" : "55%"}
               position={isMobile ? "relative" : "sticky"}
               top={isMobile ? -10 : "6rem"}
             >
@@ -781,7 +780,7 @@ const Product = (props: any) => {
               flexDirection="column"
               alignItems="flex-start"
               gap={isMobile ? "1rem" : "2.4rem"}
-              width={isMobile ? "100%" : "40%"}
+              width={isMobile ? "100%" : "45%"}
               marginLeft={isMobile ? 0 : "0rem"}
               marginTop={isMobile ? 0 : "3rem"}
               padding={isMobile ? "0 2rem" : ""}

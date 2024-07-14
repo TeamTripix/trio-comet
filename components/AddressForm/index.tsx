@@ -25,7 +25,6 @@ function AddressForm(props: any) {
     countryError,
     phoneNumberError,
   } = errorState
-  console.log("🚀 ~ AddressForm ~ errorState:", errorState)
   return (
     <>
       <Typography variant="h6" gutterBottom>

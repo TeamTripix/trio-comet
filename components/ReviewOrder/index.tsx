@@ -37,7 +37,6 @@ function ReviewOrder(props: any) {
   const cartData: any = useSelector<any>((state) => state.addToCart.cartData);
   const totalPrice: any = useSelector<any>((state) => state.totalCost);
 
-  console.log(cartData);
   const { address1, address2 } = props;
   return (
     <>
