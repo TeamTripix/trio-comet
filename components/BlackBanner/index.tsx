@@ -45,7 +45,7 @@ const Index = () => {
               position="fixed"
               display="inline-flex"
               height="3rem"
-              padding="0.9rem 30rem"
+              padding={`0.9rem ${isMobile ? "1rem" : "10rem"}`}
               justifyContent="center"
               alignItems="center"
               gap="68.9rem"
@@ -53,7 +53,7 @@ const Index = () => {
               width="100%"
               zIndex="99"
             >
-              <PageSpacing>
+              {/* <PageSpacing> */}
                 <Box
                   display="flex"
                   width="100%"
@@ -133,7 +133,7 @@ const Index = () => {
                     </ButtonBase>
                   </Box>
                 </Box>
-              </PageSpacing>
+              {/* </PageSpacing> */}
             </Box>
             <Box width="100%" height="3rem"></Box>
           </>

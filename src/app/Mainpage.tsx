@@ -99,7 +99,7 @@ function a11yProps(index: number) {
 }
 
 export default function Home(props: any) {
-    const {banner, onSale,dailyDeals,bestSeller,newArrival,category,blog} = props
+  const { banner, onSale, dailyDeals, bestSeller, newArrival, category, blog } = props
   const [value, setValue] = useState(0);
   const [onSaleApiRes, setOnSaleApiRes] = useState<any[]>(onSale.data);
   const [dailyDealsApiRes, setDailyDealsApiRes] = useState<any[]>(dailyDeals.data);
@@ -205,7 +205,7 @@ export default function Home(props: any) {
         keywords="{seoData.keywords}"
         author="{seoData.author}"
       /> */}
-      <NextSeo
+      {/* <NextSeo
         title={"this is title"}
         description="This example uses more of the available config options."
         canonical="https://www.triocomet.com"
@@ -238,7 +238,7 @@ export default function Home(props: any) {
           site: "@site",
           cardType: "summary_large_image",
         }}
-      />
+      /> */}
       <Box>
         {isMobile ? (
           bannerApiLoading ? (
@@ -437,7 +437,7 @@ export default function Home(props: any) {
           >
             <Box display="flex">
               {isCategoryLoading ? (
-                [...Array(6)].map((data, index) => {
+                [...Array(3)].map((data, index) => {
                   return (
                     <Grid key={`categorySkeletonMobile+${index}`} item xs={3}>
                       <CategorySkeleton />
@@ -449,21 +449,43 @@ export default function Home(props: any) {
                   <NoProduct isMobile={isMobile} />
                 </Box>
               ) : (
-                caregoryApiRes.slice(0, 5).map((data, index) => {
-                  return (
-                    <>
-                      {/* <Box key={data._id}> */}
-                      <CategoryCard
-                        data={data}
-                        isHomePage={true}
-                        indexes={index}
-                        categoryArrayLength={caregoryApiRes.length - 1}
-                      />
-                      {/* </Box> */}
-                    </>
-                  );
-                })
-              )}
+                <Box>
+                  <Grid container spacing={2} sx={{ margin: "0 3rem" }}>
+                    {caregoryApiRes.slice(0, 3).map((data, index) => {
+                      return (
+                        <>
+                          <Grid item xs={4} key={data._id}>
+                            <CategoryCard
+                              data={data}
+                              isHomePage={true}
+                              indexes={index}
+                              categoryArrayLength={caregoryApiRes.length - 1}
+                            />
+                          </Grid>
+                        </>
+                      );
+                    }
+                    )}
+                  </Grid>
+                  <Grid container spacing={2} sx={{ margin: "0 3rem" }}>
+                    {caregoryApiRes.slice(3, 7).map((data, index) => {
+                      return (
+                        <>
+                          <Grid item xs={3} key={data._id}>
+                            <CategoryCard
+                              data={data}
+                              isHomePage={true}
+                              indexes={index}
+                              categoryArrayLength={caregoryApiRes.length - 1}
+                            />
+                          </Grid>
+                        </>
+                      );
+                    }
+                    )}
+                  </Grid></Box>
+              )
+              }
             </Box>
           </Box>
         )}

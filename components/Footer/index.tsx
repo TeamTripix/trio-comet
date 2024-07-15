@@ -1835,11 +1835,11 @@ const Index = () => {
             <p>
               We all know that our fashion has changed in the 21st century.This
               is also the time where there should be more fashionable choices
-              for men, isn’t it?. Established in 2024 with love for new trends
-              in men's fashion, TrioComet is a Clothing brand for Men that
+              for men, isn&apos;t it?. Established in 2024 with love for new trends
+              in men&apos;s fashion, TrioComet is a Clothing brand for Men that
               offers amazing clothing options that we can guarantee you would
               have never seen before. We realize the fact that dressing up in a
-              stylish way is an important part of every one’s day. So, if you
+              stylish way is an important part of every one&apos;s day. So, if you
               want to pick an outfit for an important meeting with your boss, a
               normal hang out session with friends, or a date with your loved
               one, our wide range of products will give you all the options that
@@ -1866,7 +1866,7 @@ const Index = () => {
               in India. We have come much farther from the times when we had to
               go to multiple stores in the real world just to buy a single
               clothing item. More often than not, we also had to face defeat and
-              come back home empty-handed and disappointed. What’s worse is that
+              come back home empty-handed and disappointed. What&apos;s worse is that
               there used to be far fewer options back in the day.
             </p>
 
@@ -1898,11 +1898,11 @@ const Index = () => {
             </p>
 
             <p>
-              Don’t like a product? You can always return it! TrioComet also
+              Don&apos;t like a product? You can always return it! TrioComet also
               offers easy and convenient returns on all our products within a
               certain period of time (check our policies for detailed
               information). If you are a first-timer, try choosing Cash on
-              Delivery (COD) so that you don’t worry at all. If you want to know
+              Delivery (COD) so that you don&apos;t worry at all. If you want to know
               more, read our Shipping Policy and Return and Exchange Policy. You
               can find them at the bottom of our website.
             </p>
@@ -1930,7 +1930,7 @@ const Index = () => {
               piece, and one day, you found it on a website. You get excited and
               hop on your phone to purchase it right away. However, when you
               open up the product page, you realize that they do not have the
-              size that fits you. Isn’t that one of the worst feelings ever?
+              size that fits you. Isn&apos;t that one of the worst feelings ever?
             </p>
 
             <p>
@@ -1950,7 +1950,7 @@ const Index = () => {
               solve your queries in a matter of minutes!
             </p>
 
-            <h1>TRIOCOMET’S PHILOSOPHY</h1>
+            <h1>TRIOCOMET&apos;S PHILOSOPHY</h1>
 
             <h2>
               Our philosophy can be categorized into three simple terms:

@@ -5,10 +5,10 @@ import { apiClient } from "../utils/axiosMiddleware";
 
 export const metadata = {
   title: "Online Fashion Shopping for Men | Buy Mens Clothing – Triocomet",
-  description:"The hottest trends in men's fashion at Triocomet. Shop stylish, Online fashion shopping for men. Shop now and stand out. ✔ Free Shipping ✔ COD Available!",
+  description: "The hottest trends in men's fashion at Triocomet. Shop stylish, Online fashion shopping for men. Shop now and stand out. ✔ Free Shipping ✔ COD Available!",
   openGraph: {
     title: "Online Fashion Shopping for Men | Buy Mens Clothing – Triocomet",
-    description:"The hottest trends in men's fashion at Triocomet. Shop stylish, Online fashion shopping for men. Shop now and stand out. ✔ Free Shipping ✔ COD Available!",
+    description: "The hottest trends in men's fashion at Triocomet. Shop stylish, Online fashion shopping for men. Shop now and stand out. ✔ Free Shipping ✔ COD Available!",
   },
 };
 
@@ -22,13 +22,13 @@ const Page = async ({ params }: { params: { slug: string } }) => {
   let blog = await apiClient.get(`/api/blog`);
   return (
     <Mainpage
-    banner={banner}
-    onSale={onSale}
-    dailyDeals={dailyDeals}
-    bestSeller={bestSeller}
-    newArrival={newArrival}
-    category={category}
-    blog={blog}
+      banner={banner}
+      onSale={onSale}
+      dailyDeals={dailyDeals}
+      bestSeller={bestSeller}
+      newArrival={newArrival}
+      category={category}
+      blog={blog}
     />
   );
 };

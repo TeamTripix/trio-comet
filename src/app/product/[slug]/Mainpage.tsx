@@ -2182,7 +2182,7 @@ const Product = (props: any) => {
 
       <PageSpacing>
         {/* FAQ section */}
-        <Box
+        {/* <Box
           display="flex"
           flexDirection="column"
           justifyContent="center"
@@ -2207,7 +2207,7 @@ const Product = (props: any) => {
             Frequently Asked Questions
           </Typography>
           <FAQs pid={pidState} />
-        </Box>
+        </Box> */}
 
         {/* review section */}
         {/* <Box
