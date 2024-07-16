@@ -51,6 +51,10 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import VerticalSlider from "./VerticalSlider";
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import DescriptionIcon from '@mui/icons-material/Description';
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
+
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -103,7 +107,7 @@ function FAQs(props: any) {
       .then((res) => {
         setFAQApiRes(res.data.data[0].FAQs);
       })
-      .catch(() => {});
+      .catch(() => { });
   }, [pid]);
   return (
     <Box width={isTablet ? "100%" : "80%"} padding="0 2.4rem">
@@ -315,7 +319,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ isImageInReveiw, data }) => {
 };
 
 const Product = (props: any) => {
-  const { product, params, combo,categoryRelatedProduct,productCoupon,productReview } = props;
+  const { product, params, combo, categoryRelatedProduct, productCoupon, productReview } = props;
   const queryParams = useSearchParams();
   const subpageValue = queryParams.get("sub_page_id");
   const colorParamID: any = queryParams.get("color_id");
@@ -341,7 +345,7 @@ const Product = (props: any) => {
   const [reviewCustomerEmail, setReviewCustomerEmail] = useState("");
   const [reviewHeading, setReviewHeading] = useState("");
   const [reviewDesc, setReviewDesc] = useState("");
-  const [reviewApiRes, setReviewApiRes] = useState(productReview.data.length === 0 ? [] :  productReview.data[0].reviews.reverse());
+  const [reviewApiRes, setReviewApiRes] = useState(productReview.data.length === 0 ? [] : productReview.data[0].reviews.reverse());
   const [sendReviewIsLoading, setSendReviewIsLoading] = useState(false);
   const [productImageHeight, setProductImageHeight] = useState(570);
   const [productImageWidth, setProductImageWidth] = useState();
@@ -515,7 +519,7 @@ const Product = (props: any) => {
     const isProductInCart = cartData.filter(
       (cartDataInFilter: any) =>
         cartDataInFilter.product._id ===
-          `coupon${dispatchData._id}colorId${dispatchData.productColor[0].id}` &&
+        `coupon${dispatchData._id}colorId${dispatchData.productColor[0].id}` &&
         cartDataInFilter.isCouponApply === true
     );
     if (isCouponApply.state) {
@@ -682,7 +686,7 @@ const Product = (props: any) => {
                 flexDirection={{ xs: "row", md: "row" }}
                 alignItems="center"
                 gap="1rem"
-                // margin="1.2rem 0"
+              // margin="1.2rem 0"
               >
                 <Box display="flex">
                   {/* side images */}
@@ -922,7 +926,7 @@ const Product = (props: any) => {
                           ₹
                           {productAPIRes.discountPrice -
                             (isCouponApply.offerValue / 100) *
-                              productAPIRes.discountPrice}
+                            productAPIRes.discountPrice}
                         </Typography>
                       </>
                     )}
@@ -988,7 +992,7 @@ const Product = (props: any) => {
                         {`${Math.round(
                           ((productAPIRes.price - productAPIRes.discountPrice) /
                             productAPIRes.price) *
-                            100
+                          100
                         )}% Off`}
                       </span>
                     )}
@@ -1042,43 +1046,42 @@ const Product = (props: any) => {
                   <Box display="flex" alignItems="flex-start" gap="1rem">
                     {productAPIRes.length === 0
                       ? [...Array(4)].map((data, index) => {
+                        return (
+                          <Skeleton
+                            key={`${index}+colorskeleton`}
+                            variant="circular"
+                            sx={{
+                              width: "4rem",
+                              height: "4rem",
+                              borderRadius: "50%",
+                              margin: "0 0.1rem ",
+                            }}
+                          ></Skeleton>
+                        );
+                      })
+                      : productAPIRes.productColor.map(
+                        (data: any, index: number) => {
                           return (
-                            <Skeleton
-                              key={`${index}+colorskeleton`}
-                              variant="circular"
+                            <ButtonBase
+                              onClick={() => handleChangeColor(index)}
+                              key={data}
                               sx={{
                                 width: "4rem",
                                 height: "4rem",
                                 borderRadius: "50%",
-                                margin: "0 0.1rem ",
+                                border:
+                                  parseInt(colorParamID) === index
+                                    ? `3px solid ${lightColor.theme.primary}`
+                                    : `2px solid ${theme === "light"
+                                      ? lightColor.text.secondary
+                                      : darkColor.text.secondary
+                                    }`,
+                                bgcolor: data.color,
                               }}
-                            ></Skeleton>
+                            ></ButtonBase>
                           );
-                        })
-                      : productAPIRes.productColor.map(
-                          (data: any, index: number) => {
-                            return (
-                              <ButtonBase
-                                onClick={() => handleChangeColor(index)}
-                                key={data}
-                                sx={{
-                                  width: "4rem",
-                                  height: "4rem",
-                                  borderRadius: "50%",
-                                  border:
-                                    parseInt(colorParamID) === index
-                                      ? `3px solid ${lightColor.theme.primary}`
-                                      : `2px solid ${
-                                          theme === "light"
-                                            ? lightColor.text.secondary
-                                            : darkColor.text.secondary
-                                        }`,
-                                  bgcolor: data.color,
-                                }}
-                              ></ButtonBase>
-                            );
-                          }
-                        )}
+                        }
+                      )}
                   </Box>
                 </Box>
 
@@ -1449,7 +1452,10 @@ const Product = (props: any) => {
                   }}
                 >
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <Typography>Offers</Typography>
+                    <Box display="flex" gap="1rem">
+
+                      <LocalOfferIcon /><Typography>Offers</Typography>
+                    </Box>
                   </AccordionSummary>
                   <AccordionDetails>
                     {/* Offers content */}
@@ -1496,7 +1502,10 @@ const Product = (props: any) => {
                   }}
                 >
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <Typography>Description</Typography>
+                    <Box display="flex" gap="1rem">
+
+                      <DescriptionIcon /> <Typography>Description</Typography>
+                    </Box>
                   </AccordionSummary>
                   <AccordionDetails>
                     {/* Description content */}
@@ -1530,7 +1539,10 @@ const Product = (props: any) => {
                   }}
                 >
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <Typography>Rating</Typography>
+                    <Box display="flex" gap="1rem">
+
+                      <TrendingUpIcon /> <Typography>Rating</Typography>
+                    </Box>
                   </AccordionSummary>
                   <AccordionDetails>
                     {/* Rating content */}
@@ -1574,7 +1586,7 @@ const Product = (props: any) => {
                                 <NoReview isMobile={isMobile} />
                               </Box>
                             ) : (
-                              reviewApiRes.map((data:any, index:any) => {
+                              reviewApiRes.map((data: any, index: any) => {
                                 return (
                                   <ReviewCard
                                     data={data}
@@ -1860,31 +1872,31 @@ const Product = (props: any) => {
                               {reviewApiRes.length === 0
                                 ? ""
                                 : reviewApiRes.map((data: any) => {
-                                    if (data.image === "") {
-                                      return "";
-                                    } else {
-                                      return (
-                                        <Grid
-                                          key={data.image}
-                                          item
-                                          width="17.8rem"
-                                          height="15.3rem"
-                                          borderRadius="0.8rem"
-                                          overflow="hidden"
-                                        >
-                                          <Image
-                                            src={data.image}
-                                            alt="banner"
-                                            loading="lazy"
-                                            width={180}
-                                            height={155}
-                                            layout="responsive"
-                                            style={{ borderRadius: "0.8rem" }}
-                                          />
-                                        </Grid>
-                                      );
-                                    }
-                                  })}
+                                  if (data.image === "") {
+                                    return "";
+                                  } else {
+                                    return (
+                                      <Grid
+                                        key={data.image}
+                                        item
+                                        width="17.8rem"
+                                        height="15.3rem"
+                                        borderRadius="0.8rem"
+                                        overflow="hidden"
+                                      >
+                                        <Image
+                                          src={data.image}
+                                          alt="banner"
+                                          loading="lazy"
+                                          width={180}
+                                          height={155}
+                                          layout="responsive"
+                                          style={{ borderRadius: "0.8rem" }}
+                                        />
+                                      </Grid>
+                                    );
+                                  }
+                                })}
                             </Grid>
                           </Box>
                         </Grid>
@@ -1987,40 +1999,70 @@ const Product = (props: any) => {
         {productAPIRes.length === 0
           ? ""
           : productAPIRes.descImage.descItems.map(
-              (data: any, index: number) => {
-                return (
-                  <Box
-                    key={`${index}desc`}
-                    width="100%"
-                    height="auto"
-                    display="flex"
-                    bgcolor={productAPIRes.descImage.bgcolor}
-                    justifyContent="space-between"
-                    flexDirection={isTablet ? "column" : "row"}
-                  >
-                    {data.textSide === "right" ? (
-                      <>
+            (data: any, index: number) => {
+              return (
+                <Box
+                  key={`${index}desc`}
+                  width="100%"
+                  height="auto"
+                  display="flex"
+                  bgcolor={productAPIRes.descImage.bgcolor}
+                  justifyContent="space-between"
+                  flexDirection={isTablet ? "column" : "row"}
+                >
+                  {data.textSide === "right" ? (
+                    <>
+                      <Box
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
+                        flexDirection="column"
+                        bgcolor={productAPIRes.descImage.bgcolor}
+                        width={isTablet ? "100%" : "50%"}
+                      >
+                        <Box width="70%" margin={"10rem 0"}>
+                          <Box
+                            dangerouslySetInnerHTML={{
+                              __html: data.desc,
+                            }}
+                          ></Box>
+                        </Box>
+                      </Box>
+                      <Box
+                        width="100%"
+                        display="flex"
+                        alignItems="center"
+                        justifyContent={isTablet ? "center" : "end"}
+                      >
                         <Box
+                          width={isTablet ? "60%" : "50%"}
+                          height="40%"
                           display="flex"
                           justifyContent="center"
                           alignItems="center"
-                          flexDirection="column"
-                          bgcolor={productAPIRes.descImage.bgcolor}
-                          width={isTablet ? "100%" : "50%"}
                         >
-                          <Box width="70%" margin={"10rem 0"}>
-                            <Box
-                              dangerouslySetInnerHTML={{
-                                __html: data.desc,
-                              }}
-                            ></Box>
-                          </Box>
+                          <Image
+                            src={data.imageURL}
+                            alt="banner"
+                            loading="lazy"
+                            width={640}
+                            height={360}
+                            layout="responsive"
+                          />
                         </Box>
+                      </Box>
+                    </>
+                  ) : (
+                    <>
+                      <Box
+                        display="flex"
+                        flexDirection={isTablet ? "column-reverse" : "row"}
+                      >
                         <Box
                           width="100%"
                           display="flex"
                           alignItems="center"
-                          justifyContent={isTablet ? "center" : "end"}
+                          justifyContent={isTablet ? "center" : "start"}
                         >
                           <Box
                             width={isTablet ? "60%" : "50%"}
@@ -2039,59 +2081,29 @@ const Product = (props: any) => {
                             />
                           </Box>
                         </Box>
-                      </>
-                    ) : (
-                      <>
                         <Box
                           display="flex"
-                          flexDirection={isTablet ? "column-reverse" : "row"}
+                          justifyContent="center"
+                          alignItems="center"
+                          flexDirection="column"
+                          bgcolor={productAPIRes.descImage.bgcolor}
+                          width={isTablet ? "100%" : "50%"}
                         >
-                          <Box
-                            width="100%"
-                            display="flex"
-                            alignItems="center"
-                            justifyContent={isTablet ? "center" : "start"}
-                          >
+                          <Box width="70%" margin={"10rem 0"}>
                             <Box
-                              width={isTablet ? "60%" : "50%"}
-                              height="40%"
-                              display="flex"
-                              justifyContent="center"
-                              alignItems="center"
-                            >
-                              <Image
-                                src={data.imageURL}
-                                alt="banner"
-                                loading="lazy"
-                                width={640}
-                                height={360}
-                                layout="responsive"
-                              />
-                            </Box>
-                          </Box>
-                          <Box
-                            display="flex"
-                            justifyContent="center"
-                            alignItems="center"
-                            flexDirection="column"
-                            bgcolor={productAPIRes.descImage.bgcolor}
-                            width={isTablet ? "100%" : "50%"}
-                          >
-                            <Box width="70%" margin={"10rem 0"}>
-                              <Box
-                                dangerouslySetInnerHTML={{
-                                  __html: data.desc,
-                                }}
-                              ></Box>
-                            </Box>
+                              dangerouslySetInnerHTML={{
+                                __html: data.desc,
+                              }}
+                            ></Box>
                           </Box>
                         </Box>
-                      </>
-                    )}
-                  </Box>
-                );
-              }
-            )}
+                      </Box>
+                    </>
+                  )}
+                </Box>
+              );
+            }
+          )}
       </CustomTabPanel>
 
       {/* <CustomTabPanel value={parseInt(value)} index={1}>
