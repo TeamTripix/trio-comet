@@ -34,7 +34,7 @@ export async function POST(req: Request) {
                 {
                   headers: {
                     'Content-Type': 'application/json',
-                    Authorization: "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQ4MTAyMjUsInNvdXJjZSI6InNyLWF1dGgtaW50IiwiZXhwIjoxNzE5OTk1NTA0LCJqdGkiOiJQQzdKZkx4QW9EdTVENU1GIiwiaWF0IjoxNzE5MTMxNTA0LCJpc3MiOiJodHRwczovL3NyLWF1dGguc2hpcHJvY2tldC5pbi9hdXRob3JpemUvdXNlciIsIm5iZiI6MTcxOTEzMTUwNCwiY2lkIjo0NTc5NTA4LCJ0YyI6MzYwLCJ2ZXJib3NlIjpmYWxzZSwidmVuZG9yX2lkIjowLCJ2ZW5kb3JfY29kZSI6IiJ9.ED273Ng_DXqjqD4VSNGuquwvctrtWOze4TvnsoZbqZo"
+                    Authorization: "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQ4MTAyMjUsInNvdXJjZSI6InNyLWF1dGgtaW50IiwiZXhwIjoxNzIyMzE2MzYyLCJqdGkiOiJFM3BuNWJPTERXWFRubGN3IiwiaWF0IjoxNzIxNDUyMzYyLCJpc3MiOiJodHRwczovL3NyLWF1dGguc2hpcHJvY2tldC5pbi9hdXRob3JpemUvdXNlciIsIm5iZiI6MTcyMTQ1MjM2MiwiY2lkIjo0NTc5NTA4LCJ0YyI6MzYwLCJ2ZXJib3NlIjpmYWxzZSwidmVuZG9yX2lkIjowLCJ2ZW5kb3JfY29kZSI6IiJ9.7D6zw5zv9yvTViIS3oBXiTt2ptCfs-eFmqpwfrlD69I"
                   },
                 }
               )

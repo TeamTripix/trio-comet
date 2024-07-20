@@ -21,19 +21,22 @@ const LI = styled.li<any>`
 const Page = () => {
   return (
     <>
+      <Container>
       <Box
-        width="100vw"
-        height="100vh"
+        width="50vw"
+        height="50vh"
         display="flex"
         justifyContent="center"
         alignItems="center"
+        // bgcolor="pink"
+        position="relative"
+        left="10rem"
       >
         <For0for />
       </Box>
-      <Container>
         {/* <Box display="flex" justifyContent="center" alignItems="center"> */}
         <Box sx={{marginBottom:"2.5rem"}}>
-          <Typography>Maybe you`&apos;`ll find it in one of these categories:</Typography>
+          <Typography >Maybe you&apos;ll find it in one of these categories:</Typography>
         </Box>
         <Grid item xs={3} >
              

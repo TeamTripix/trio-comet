@@ -173,6 +173,7 @@ export default function Home(props: any) {
   };
 
   const settings = {
+    dots:true,
     lazyLoad: true,
     speed: 300,
     slidesToShow: isMobile ? 1 : 5,
@@ -183,6 +184,7 @@ export default function Home(props: any) {
   };
 
   const TredingProdSettings = {
+    dots: true,
     centerPadding: 0,
     arrows: true,
     speed: 300,
@@ -439,7 +441,7 @@ export default function Home(props: any) {
               {isCategoryLoading ? (
                 [...Array(3)].map((data, index) => {
                   return (
-                    <Grid key={`categorySkeletonMobile+${index}`} item xs={3}>
+                    <Grid key={`categorySkeletonMobile+${index}`} item xs={4}>
                       <CategorySkeleton />
                     </Grid>
                   );
@@ -450,7 +452,7 @@ export default function Home(props: any) {
                 </Box>
               ) : (
                 <Box>
-                  <Grid container spacing={2} sx={{ margin: "0 3rem" }}>
+                  <Grid container spacing={2} sx={{ padding: "0 3rem" }}>
                     {caregoryApiRes.slice(0, 3).map((data, index) => {
                       return (
                         <>
@@ -467,7 +469,7 @@ export default function Home(props: any) {
                     }
                     )}
                   </Grid>
-                  <Grid container spacing={2} sx={{ margin: "0 3rem" }}>
+                  <Grid container spacing={2} sx={{ padding: "0 3rem" }}>
                     {caregoryApiRes.slice(3, 7).map((data, index) => {
                       return (
                         <>
@@ -729,7 +731,7 @@ export default function Home(props: any) {
                 )}
               </Grid>
             )}
-            <Box sx={{ textAlign: "center" }}>
+            <Box sx={{ textAlign: "center", marginTop:"1rem" }}>
               <Link href="product-collection/new-drop">
                 <Button>View All</Button>
               </Link>
@@ -744,7 +746,7 @@ export default function Home(props: any) {
               alt="label"
               layout="responsive"
               width="1920"
-              height="50"
+              height="20"
             />
           </Box>
         ) : (
@@ -927,7 +929,7 @@ export default function Home(props: any) {
                 )}
               </Grid>
             )}
-            <Box sx={{ textAlign: "center" }}>
+            <Box sx={{ textAlign: "center", marginTop:"1rem" }}>
               <Link href="product-collection/trending">
                 <Button>View All</Button>
               </Link>
@@ -1117,7 +1119,7 @@ export default function Home(props: any) {
                 )}
               </Grid>
             )}
-            <Box sx={{ textAlign: "center" }}>
+            <Box sx={{ textAlign: "center", marginTop:"1rem" }}>
               <Link href="product-collection/best-seller">
                 <Button>View All</Button>
               </Link>

@@ -142,6 +142,7 @@ export default function Index() {
             justifyContent="space-between"
             alignItems="center"
             alignSelf="stretch"
+            gap="2rem"
           >
             <HamBurger />
             <Link href="/">

@@ -24,16 +24,16 @@ export const LightTheme = createTheme({
         root: {
           padding: "0rem 1.6rem",
           alignItems: "center",
-          background: "#FBC02D",
+          background: "rgb(55, 56, 61)",
           borderRadius: 4,
           color: "white",
           height: 40,
           textTransform: "none",
           "&:hover": {
-            background: "#f3ae00",
+            background: "rgb(68 69 75)",
           },
           "&:disabled": {
-            background: "#ffe095",
+            background: "rgb(116 116 116)",
           },
         },
       },

@@ -677,7 +677,7 @@ const Product = (props: any) => {
               top={isMobile ? -10 : "6rem"}
             >
               {!isMobile && (
-                <Box paddingLeft="0rem" margin="1rem 0rem 0rem 7rem">
+                <Box paddingLeft="0rem" margin="1rem 0rem 2rem 7rem">
                   <BreadCrumb />
                 </Box>
               )}
@@ -749,6 +749,8 @@ const Product = (props: any) => {
                       <AwesomeSlider
                         className="slider"
                         bullets={false}
+                        organicArrows={false}
+                        mobileTouch={true}
                         style={{
                           height: isMobile
                             ? productWidth + 100
@@ -786,7 +788,7 @@ const Product = (props: any) => {
               gap={isMobile ? "1rem" : "2.4rem"}
               width={isMobile ? "100%" : "45%"}
               marginLeft={isMobile ? 0 : "0rem"}
-              marginTop={isMobile ? 0 : "3rem"}
+              marginTop={isMobile ? 0 : "5rem"}
               padding={isMobile ? "0 2rem" : ""}
             >
               <Box
@@ -1540,7 +1542,6 @@ const Product = (props: any) => {
                 >
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     <Box display="flex" gap="1rem">
-
                       <TrendingUpIcon /> <Typography>Rating</Typography>
                     </Box>
                   </AccordionSummary>
@@ -2560,7 +2561,7 @@ const Product = (props: any) => {
             display="flex"
             justifyContent="space-between"
             alignItems="center"
-            padding="0 2.4rem"
+            // padding="0 2.4rem"
           >
             <Typography
               color={

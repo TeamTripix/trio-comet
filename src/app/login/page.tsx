@@ -256,11 +256,7 @@ const Page = () => {
                   }}
                   onClick={handleSumbitOTP}>
                   <Typography
-                    color={
-                      theme === "light"
-                        ? lightColor.text.primary
-                        : darkColor.text.primary
-                    }
+                    color={darkColor.text.primary}
                     textAlign="center"
                     fontSize={isMobile ? "1.2rem" : "1.6rem"}
                     fontStyle="normal"
@@ -373,7 +369,7 @@ const Page = () => {
                     width: isMobile ? "22rem" : "20rem",
                   }}>
                   <Typography
-                    color={lightColor.text.primary}
+                    color={darkColor.text.primary}
                     textAlign="center"
                     fontSize={isMobile ? "1.2rem" : "1.6rem"}
                     fontStyle="normal"

@@ -59,18 +59,19 @@ const ProductCollection = (props: any) => {
   return (
     <>
       <PageSpacing>
-        <Box paddingLeft="2rem" marginTop="2rem">
+        {isMobile ? "" : <Box paddingLeft="2rem" marginTop="2rem">
           <BreadCrumb />
-        </Box>
+        </Box> }
+        
 
-        <Box paddingLeft="2rem" margin={isMobile ? "5rem 0" : "2rem 0"}>
+        <Box paddingLeft="2rem" margin={"2rem 0"}>
           <Typography
             color={
               theme === "light"
                 ? lightColor.text.primary
                 : darkColor.text.primary
             }
-            fontSize="2.8rem"
+            fontSize={isMobile ? "1.8rem" : "2.8rem" }
             fontStyle="normal"
             fontWeight="700"
             lineHeight="normal"
@@ -95,7 +96,7 @@ const ProductCollection = (props: any) => {
         </Box> */}
         {isMobile ? (
           // is mobile size is active
-          <Grid container spacing={1}>
+          <Grid container spacing={1} padding="0 1rem">
             {isLoading ? (
               [...Array(4)].map((data, index) => {
                 return (

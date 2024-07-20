@@ -115,9 +115,9 @@ const Index: React.FC<IndexProps> = ({
   return (
     <>
       <Box
-      sx={{'&:hover':{
-        boxShadow:"rgba(0, 0, 0, 0.35) 0px 5px 15px"  
-      }}}
+      // sx={{'&:hover':{
+      //   boxShadow:"rgba(0, 0, 0, 0.35) 0px 5px 15px"  
+      // }}}
         display="flex"
         // width={
         //   isTablet
@@ -181,25 +181,18 @@ const Index: React.FC<IndexProps> = ({
                 ? "0.4rem 0.4rem 0.4rem 0.4rem"
                 : "0rem 0.4rem 0.4rem 0rem"
             }
-            bgcolor="#1D1D1F"
+            bgcolor="#373737"
             zIndex="1"
-            sx={
-              isMobile
-                ? { borderTopLeftRadius: "0.4rem" }
-                : { borderTopLeftRadius: "1rem" }
-            }
+            sx={{borderTopLeftRadius: "0.4rem"} }
+            
           >
             <Typography
-              color={
-                theme === "light"
-                  ? lightColor.text.tagOffer
-                  : darkColor.text.tagOffer
-              }
+              color={ darkColor.text.primary }
               fontSize={
                 isMobile ? (fullDetailCard ? "0.8rem" : "1.0rem") : "1.2rem"
               }
               fontStyle="normal"
-              fontWeight="700"
+              fontWeight="200"
               lineHeight="normal"
               letterSpacing="0.05rem"
             >
@@ -223,6 +216,7 @@ const Index: React.FC<IndexProps> = ({
               width={"1080"}
               height={"1350"}
               layout="responsive"
+              
             />
           </Link>
         </Box>

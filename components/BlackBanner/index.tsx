@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useMobile } from "@/utils/responsive";
 import PageSpacing from "@components/PageSpacing";
 import { Box, ButtonBase, Typography } from "@mui/material";
@@ -32,7 +32,7 @@ const Index = () => {
       });
   }, []);
 
-  if(pathname === "/"){
+  if (!isMobile) {
     return (
       <>
         {blackBannerApiLoading ? (
@@ -54,24 +54,24 @@ const Index = () => {
               zIndex="99"
             >
               {/* <PageSpacing> */}
-                <Box
-                  display="flex"
-                  width="100%"
-                  justifyContent="space-between"
-                  alignItems="center"
+              <Box
+                display="flex"
+                width="100%"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Typography
+                  color={lightColor.text.primary}
+                  fontSize={isMobile ? "0.8rem" : "1rem"}
+                  fontStyle="normal"
+                  fontWeight={isMobile ? "400" : "500"}
+                  lineHeight="normal"
+                  letterSpacing="0.05rem"
                 >
-                  <Typography
-                    color={lightColor.text.primary}
-                    fontSize={isMobile ? "0.8rem" : "1rem"}
-                    fontStyle="normal"
-                    fontWeight={isMobile ? "400" : "500"}
-                    lineHeight="normal"
-                    letterSpacing="0.05rem"
-                  >
-                    {blackBannerApiRes[0].bannerText}
-                  </Typography>
-  
-                  {/* <Link href={blackBannerApiRes[0].bannerURL}>
+                  {blackBannerApiRes[0].bannerText}
+                </Typography>
+
+                {/* <Link href={blackBannerApiRes[0].bannerURL}>
                     <ButtonBase
                       sx={{
                         display: "flex",
@@ -105,7 +105,20 @@ const Index = () => {
                       </Typography>
                     </ButtonBase>
                   </Link> */}
-                  <Box display="flex" gap={5}>
+                <Box display="flex" gap={5}>
+                  <ButtonBase>
+                    <Typography
+                      color={lightColor.text.primary}
+                      fontSize={isMobile ? "0.8rem" : "1rem"}
+                      fontStyle="normal"
+                      fontWeight={isMobile ? "400" : "500"}
+                      lineHeight="normal"
+                      letterSpacing="0.05rem"
+                    >
+                      {"Contact Us"}
+                    </Typography>
+                  </ButtonBase>
+                  <Link href="/order/asdasdsd">
                     <ButtonBase>
                       <Typography
                         color={lightColor.text.primary}
@@ -115,24 +128,12 @@ const Index = () => {
                         lineHeight="normal"
                         letterSpacing="0.05rem"
                       >
-                        {"Contact Us"}
+                        {"My Order"}
                       </Typography>
                     </ButtonBase>
-  
-                    <ButtonBase>
-                      <Typography
-                        color={lightColor.text.primary}
-                        fontSize={isMobile ? "0.8rem" : "1rem"}
-                        fontStyle="normal"
-                        fontWeight={isMobile ? "400" : "500"}
-                        lineHeight="normal"
-                        letterSpacing="0.05rem"
-                      >
-                        {"Track Order"}
-                      </Typography>
-                    </ButtonBase>
-                  </Box>
+                  </Link>
                 </Box>
+              </Box>
               {/* </PageSpacing> */}
             </Box>
             <Box width="100%" height="3rem"></Box>
@@ -140,10 +141,9 @@ const Index = () => {
         )}
       </>
     );
-  }else{
-    return <></>
+  } else {
+    return <></>;
   }
-
 };
 
 export default Index;

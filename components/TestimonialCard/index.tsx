@@ -11,7 +11,7 @@ const Index = () => {
   const theme: any = useSelector<any>((state) => state.themeToggle);
   return (
     <Box
-      width={isMobile ? "70vw" :isTablet ? "33rem" : "100%"}
+      width={isMobile ? "90vw" :isTablet ? "33rem" : "100%"}
       padding="1rem"
       height={isMobile ? "auto" : "20rem"}
       sx={{

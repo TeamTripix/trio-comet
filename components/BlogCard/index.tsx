@@ -19,7 +19,7 @@ const Index = (props: any) => {
     <Link href={`/blog/${slug}`}>
       <Box
         display="flex"
-        width={isMobile ? "62vw" : isTablet ? "43.7rem" : "70%"}
+        width={isMobile ? "90vw" : isTablet ? "43.7rem" : "70%"}
         height={"auto"}
         flexDirection="column"
         justifyContent="center"

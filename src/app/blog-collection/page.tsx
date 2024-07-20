@@ -40,7 +40,7 @@ const BlogCollection = ({ params }: { params: { slug: string } }) => {
           <BreadCrumb />
         </Box>
 
-        <Box paddingLeft={isMobile || isTablet ? "1rem" : "2rem"} margin="4rem 0">
+        <Box paddingLeft={isMobile || isTablet ? "1rem" : "2rem"} margin="2rem 0">
           <Typography
             color={
               theme === "light"
@@ -91,7 +91,7 @@ const BlogCollection = ({ params }: { params: { slug: string } }) => {
                     key={`${index}blog`}
                     item
                     xs={isTablet ? 6 : 4}
-                    margin={"5rem 0"}
+                    margin={"3rem 0"}
                   >
                     <BlogCard data={data} />
                   </Grid>
