@@ -326,7 +326,7 @@ export default function Home(props: any) {
         )}
 
         {/* Categories */}
-        <Box display="flex" justifyContent="center" margin="1rem">
+        <Box display="flex" justifyContent={isMobile ? "start" : "center"} margin="1rem">
           <Typography
             color={
               theme === "light"
@@ -334,13 +334,13 @@ export default function Home(props: any) {
                 : darkColor.text.primary
             }
             // textAlign="center"
-            fontSize={isMobile ? "2.2rem" : "2.8rem"}
+            fontSize={isMobile ? "1.8rem" : "2.8rem"}
             fontStyle="normal"
             fontWeight="700"
             lineHeight="normal"
             letterSpacing="0.05rem"
           >
-            TRENDING CATEGORIES
+            {isMobile ? "Trending Categories" : "TRENDING CATEGORIES"}
           </Typography>
         </Box>
         {isMobile ? (
@@ -543,7 +543,7 @@ export default function Home(props: any) {
             {/* {isMobile ? (
                 ""
               ) : ( */}
-            <Box display="flex" justifyContent="center" alignItems="center">
+            <Box display="flex" justifyContent={isMobile ? "start" : "center" } alignItems="center">
               <Typography
                 color={
                   theme === "light"
@@ -551,15 +551,15 @@ export default function Home(props: any) {
                     : darkColor.text.primary
                 }
                 textAlign="center"
-                fontSize={isMobile ? "2.2rem" : "2.8rem"}
+                fontSize={isMobile ? "1.8rem" : "2.8rem"}
                 fontStyle="normal"
                 fontWeight="700"
                 lineHeight="normal"
                 letterSpacing="0.05rem"
                 margin="1rem 0"
-                marginLeft={isMobile || isTablet ? "2rem" : 0}
+                marginLeft={isMobile || isTablet ? "1rem" : 0}
               >
-                NEW DROPS
+               {isMobile ? "New Drops" : "NEW DROPS" } 
               </Typography>
               {/* {isMobile ? (
                     ""
@@ -762,8 +762,8 @@ export default function Home(props: any) {
         )}
 
         <HomePageSpacing>
-          <Box sx={{ margin: "5rem 0" }}>
-            <Box display="flex" justifyContent="center" alignItems="center">
+          <Box sx={{ margin: "1rem 0" }}>
+            <Box display="flex" justifyContent={isMobile ? "start" : "center" } alignItems="center">
               <Typography
                 color={
                   theme === "light"
@@ -771,14 +771,15 @@ export default function Home(props: any) {
                     : darkColor.text.primary
                 }
                 textAlign="center"
-                fontSize={isMobile ? "2.2rem" : "2.8rem"}
+                fontSize={isMobile ? "1.8rem" : "2.8rem"}
                 fontStyle="normal"
                 fontWeight="700"
                 lineHeight="normal"
                 letterSpacing="0.05rem"
                 margin="1rem 0"
+                marginLeft={isMobile || isTablet ? "1rem" : 0}
               >
-                TRENDING
+               {isMobile ? "Trending" : "TRENDING" } 
               </Typography>
               {/* <Link href="product-collection/new_arrivals">
                 <Box
@@ -939,7 +940,7 @@ export default function Home(props: any) {
 
         <HomePageSpacing>
           <Box sx={{ margin: "5rem 0" }}>
-            <Box display="flex" justifyContent="center" alignItems="center">
+            <Box display="flex" justifyContent={isMobile ? "start" : "center" } alignItems="center">
               <Typography
                 color={
                   theme === "light"
@@ -947,15 +948,15 @@ export default function Home(props: any) {
                     : darkColor.text.primary
                 }
                 textAlign="center"
-                fontSize={isMobile ? "2.2rem" : "2.8rem"}
+                fontSize={isMobile ? "1.8rem" : "2.8rem"}
                 fontStyle="normal"
                 fontWeight="700"
                 lineHeight="normal"
                 letterSpacing="0.05rem"
                 margin="1rem 0"
-                marginLeft={isMobile || isTablet ? "2rem" : 0}
+                marginLeft={isMobile || isTablet ? "1rem" : 0}
               >
-                BEST SELLER
+                {isMobile ? "Best Seller" : "BEST SELLER" }
               </Typography>
               {/* <Link href="product-collection/best_seller">
                 <Box
@@ -987,7 +988,7 @@ export default function Home(props: any) {
               // is mobile size is active
               <Grid
                 container
-                justifyContent="center"
+                // justifyContent="center"
                 padding="0 0.5rem"
                 spacing={0.5}
               >
@@ -1231,7 +1232,7 @@ export default function Home(props: any) {
             justifyContent="center"
             sx={{ margin: "5rem 0" }}
           >
-            <Box display="flex" justifyContent="center" alignItems="center">
+            <Box display="flex" justifyContent={isMobile ? "start" : "center" } alignItems="center">
               <Typography
                 color={
                   theme === "light"
@@ -1239,15 +1240,15 @@ export default function Home(props: any) {
                     : darkColor.text.primary
                 }
                 textAlign="center"
-                fontSize={isMobile ? "2.2rem" : "2.8rem"}
+                fontSize={isMobile ? "1.8rem" : "2.8rem"}
                 fontStyle="normal"
                 fontWeight="700"
                 lineHeight="normal"
                 letterSpacing="0.05rem"
                 margin="1rem 0"
-                marginLeft={isMobile || isTablet ? "2rem" : 0}
+                marginLeft={isMobile || isTablet ? "1rem" : 0}
               >
-                OUR BLOGS
+                {isMobile ? "Our Blogs" : "OUR BLOGS" }
               </Typography>
               {/* <Link href={"blog-collection"}>
                 <Box
@@ -1367,7 +1368,7 @@ export default function Home(props: any) {
           </Box>
 
           <Box height="40rem">
-            <Box display="flex" justifyContent="center" alignItems="center">
+            <Box display="flex" justifyContent={isMobile ? "start" : "center" } alignItems="center">
               <Typography
                 color={
                   theme === "light"
@@ -1375,11 +1376,12 @@ export default function Home(props: any) {
                     : darkColor.text.primary
                 }
                 textAlign="center"
-                fontSize={isMobile ? "2.2rem" : "2.8rem"}
+                fontSize={isMobile ? "1.8rem" : "2.8rem"}
                 fontStyle="normal"
                 fontWeight="700"
                 lineHeight="normal"
                 letterSpacing="0.05rem"
+                marginLeft={isMobile ? "1rem" : 0 }
               >
                 What our customer says
               </Typography>
