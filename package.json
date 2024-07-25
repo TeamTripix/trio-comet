@@ -40,6 +40,7 @@
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "18.2.0",
     "react-dropzone": "^14.2.3",
+    "react-id-swiper": "^4.0.0",
     "react-items-carousel": "^2.8.0",
     "react-material-ui-carousel": "^3.4.2",
     "react-player": "^2.14.1",

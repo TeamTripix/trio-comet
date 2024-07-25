@@ -1,61 +1,68 @@
-.slider-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100px; /* Fixed width for the container */
-    margin: 0 auto;
-  }
-  
-  .slider-button {
-    font-size: 0px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    border-radius: 50%;
-    background-color: #fff;
-    color: black;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    margin: 5px 0;
-  }
-  
-  .slider-button:disabled {
-    background-color: #d3d3d3;
-    cursor: not-allowed;
-  }
-  
-  .slider-content {
-    height: 700px; /* Adjust this based on the number of slides you want visible at once (6 * 133px) */
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-  }
-  
-  .slider-track {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 1rem;
-    transition: transform 0.3s ease; /* Smooth transition for sliding effect */
-  }
-  
-  .slider-item {
-    width: 100px; /* Fixed width */
-    height: 133px; /* Fixed height */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-  }
-  
-  .slider-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain; /* Ensures the image covers the entire div */
-    
-  }
-  
+.swiper {
+  width: 100px;
+  height: 100px;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+  /* Center slide text vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.swiper {
+  width: 100px;
+  height: 300px;
+  /* margin-left: auto;
+  margin-right: auto; */
+}
+
+.swiper-slide {
+  background-size: cover;
+  background-position: center;
+}
+
+.mySwiper2 {
+  height: 67rem;
+  width: 60rem;
+}
+
+.mySwiper {
+  height: 10rem;
+  width: 12rem;
+  box-sizing: border-box;
+  padding: 10px 0;
+  display: block;
+}
+
+.mySwiper .swiper-wrapper {
+  display: block;
+}
+
+.mySwiper .swiper-slide {
+  width: 25%;
+  height: 100%;
+  opacity: 0.4;
+}
+
+.mySwiper .swiper-slide-thumb-active {
+  opacity: 1;
+}
+
+.swiper-slide img {
+  /* display: block; */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

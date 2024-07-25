@@ -99,12 +99,19 @@ function a11yProps(index: number) {
 }
 
 export default function Home(props: any) {
-  const { banner, onSale, dailyDeals, bestSeller, newArrival, category, blog } = props
+  const { banner, onSale, dailyDeals, bestSeller, newArrival, category, blog } =
+    props;
   const [value, setValue] = useState(0);
   const [onSaleApiRes, setOnSaleApiRes] = useState<any[]>(onSale.data);
-  const [dailyDealsApiRes, setDailyDealsApiRes] = useState<any[]>(dailyDeals.data);
-  const [bestSellerApiRes, setBestSellerApiRes] = useState<any[]>(bestSeller.data);
-  const [newArraivalApiRes, setNewArraivalApiRes] = useState<any[]>(newArrival.data);
+  const [dailyDealsApiRes, setDailyDealsApiRes] = useState<any[]>(
+    dailyDeals.data
+  );
+  const [bestSellerApiRes, setBestSellerApiRes] = useState<any[]>(
+    bestSeller.data
+  );
+  const [newArraivalApiRes, setNewArraivalApiRes] = useState<any[]>(
+    newArrival.data
+  );
   const [caregoryApiRes, setCaregoryApiRes] = useState<any[]>(category.data);
   const [blogApiRes, setBlogApiRes] = useState<any[]>(blog.data);
   const [bannerHeight, setBannerHeight] = useState(760);
@@ -173,7 +180,7 @@ export default function Home(props: any) {
   };
 
   const settings = {
-    dots:true,
+    dots: true,
     lazyLoad: true,
     speed: 300,
     slidesToShow: isMobile ? 1 : 5,
@@ -191,6 +198,43 @@ export default function Home(props: any) {
     slidesToShow: isMobile ? 2 : 5,
     slidesToScroll: 1,
   };
+
+  const mobileBannerSettings = {
+    dots: true,
+    centerPadding: 0,
+    arrows: false,
+    speed: 300,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
+
+  const desktopBannerSettings = {
+    dots: true,
+    centerPadding: 0,
+    arrows: false,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
+
+  const categorySettings = {
+    dots: true,
+    // centerPadding: 0,
+    // arrows: false,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
+
+  function chunkArray(array: any, chunkSize: number) {
+    const result = [];
+    for (let i = 0; i < array.length; i += chunkSize) {
+      result.push(array.slice(i, i + chunkSize));
+    }
+    console.log("ddddddddddddddddd", result);
+    return result;
+  }
+
   return (
     <>
       {/* <Head>
@@ -255,30 +299,33 @@ export default function Home(props: any) {
           ) : bannerApiRes.length === 0 ? (
             ""
           ) : (
-            <AutoplaySlider
-              bullets={false}
-              play={true}
-              cancelOnInteraction={false}
-              interval={6000}
-              style={{ height: "60vh" }}
-            >
+            // <AutoplaySlider
+            //   bullets={false}
+            //   play={true}
+            //   cancelOnInteraction={false}
+            //   interval={6000}
+            //   style={{ height: "auto" }}
+            // >
+            <Slider {...mobileBannerSettings}>
               {bannerApiRes.map((data: any, index: number) => (
-                <Box key={index} sx={{ width: "100%", height: "100%" }}>
-                  <Image
-                    src={data.mobileImageURL}
-                    alt="mobile banner"
-                    // width={100}
-                    // height={20}
-                    // onLoadingComplete={(img) => {
-                    //   setBannerHeight(img.naturalHeight);
-                    //   setBannerWidth(img.naturalWidth);
-                    // }}
-                    layout="fill"
-                    objectFit="cover"
-                  />
-                </Box>
+                // <Box key={index} sx={{ width: "100%", height: "auto" }}>
+                <img
+                  src={data.mobileImageURL}
+                  alt="mobile banner"
+                  // width={100}
+                  // height={500}
+                  // onLoadingComplete={(img) => {
+                  //   setBannerHeight(img.naturalHeight);
+                  //   setBannerWidth(img.naturalWidth);
+                  // }}
+                  // layout="fill"
+                  // objectFit="cover"
+                  style={{ width: "100vh", height: "auto" }}
+                />
+                // </Box>
               ))}
-            </AutoplaySlider>
+            </Slider>
+            // </AutoplaySlider>
           )
         ) : bannerApiLoading ? (
           <Skeleton
@@ -292,13 +339,14 @@ export default function Home(props: any) {
         ) : bannerApiRes.length === 0 ? (
           ""
         ) : (
-          <AutoplaySlider
-            bullets={false}
-            play={true}
-            cancelOnInteraction={false}
-            interval={6000}
-            style={{ height: bannerHeight - 10 }}
-          >
+          // <AutoplaySlider
+          //   bullets={false}
+          //   play={true}
+          //   cancelOnInteraction={false}
+          //   interval={6000}
+          //   style={{ height: bannerHeight - 10 }}
+          // >
+          <Slider {...desktopBannerSettings}>
             {bannerApiRes.map((data: any) => {
               return (
                 // <Box key={data.id} width="100%" height={bannerHeight}>
@@ -321,7 +369,8 @@ export default function Home(props: any) {
                 </Box>
               );
             })}
-          </AutoplaySlider>
+            {/* </AutoplaySlider> */}
+          </Slider>
           // <Slider data={bannerApiRes}/>
         )}
 
@@ -344,55 +393,79 @@ export default function Home(props: any) {
           </Typography>
         </Box>
         {isMobile ? (
-          <Grid
-            container
-            justifyContent="center"
-            padding="0 0.5rem"
-            spacing={0.5}
-          >
+          <>
             {isCategoryLoading ? (
-              [...Array(4)].map((data, index) => {
-                return (
-                  <Grid
-                    key={`categorySkeletonMobile+${index}`}
-                    item
-                    xs={6}
-                    sm={4}
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <CategorySkeleton />
-                  </Grid>
-                );
-              })
+              <>
+                <Grid
+                  container
+                  justifyContent="center"
+                  padding="0 0.5rem"
+                  spacing={0.5}
+                >
+                  {[...Array(4)].map((data, index) => {
+                    return (
+                      <Grid
+                        key={`categorySkeletonMobile+${index}`}
+                        item
+                        xs={6}
+                        sm={4}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <CategorySkeleton />
+                      </Grid>
+                    );
+                  })}
+                </Grid>
+              </>
             ) : caregoryApiRes.length === 0 ? (
               <Box width="100%" textAlign="center">
                 <NoProduct isMobile={isMobile} />
               </Box>
             ) : (
-              caregoryApiRes.slice(0, 4).map((data, index) => {
-                return (
-                  <Grid
-                    xs={6}
-                    key={data._id}
-                    item
-                    margin="1rem 0"
-                    justifyItems="center"
-                  >
-                    <CategoryCard
-                      data={data}
-                      // isHomePage={true}
-                      indexes={index}
-                      categoryArrayLength={caregoryApiRes.length - 1}
-                    />
-                  </Grid>
-                );
-              })
+              <>
+                <Slider {...categorySettings}>
+                  {chunkArray(caregoryApiRes, 4).map((data, index) => {
+                    return (
+                      <>
+                        <Grid
+                          container
+                          justifyContent="center"
+                          padding="0 1rem"
+                          spacing={1}
+                          marginBottom="1rem"
+                        >
+                          {data.map((categoryData: any, index: number) => {
+                            console.log("himanshu : ", categoryData);
+                            return (
+                              <Grid
+                                xs={6}
+                                key={data._id}
+                                item
+                                justifyItems="center"
+                              >
+                                <CategoryCard
+                                  data={categoryData}
+                                  // isHomePage={true}
+                                  indexes={index}
+                                  categoryArrayLength={
+                                    caregoryApiRes.length - 1
+                                  }
+                                />
+                              </Grid>
+                            );
+                          })}
+                        </Grid>
+                      </>
+                    );
+                  })}
+                </Slider>
+              </>
             )}
-          </Grid>
+          </>
         ) : isTablet ? (
           // is tablet size is active
           <Box
@@ -466,8 +539,7 @@ export default function Home(props: any) {
                           </Grid>
                         </>
                       );
-                    }
-                    )}
+                    })}
                   </Grid>
                   <Grid container spacing={2} sx={{ padding: "0 3rem" }}>
                     {caregoryApiRes.slice(3, 7).map((data, index) => {
@@ -483,11 +555,10 @@ export default function Home(props: any) {
                           </Grid>
                         </>
                       );
-                    }
-                    )}
-                  </Grid></Box>
-              )
-              }
+                    })}
+                  </Grid>
+                </Box>
+              )}
             </Box>
           </Box>
         )}
@@ -731,7 +802,7 @@ export default function Home(props: any) {
                 )}
               </Grid>
             )}
-            <Box sx={{ textAlign: "center", marginTop:"1rem" }}>
+            <Box sx={{ textAlign: "center", marginTop: "1rem" }}>
               <Link href="product-collection/new-drop">
                 <Button>View All</Button>
               </Link>
@@ -929,7 +1000,7 @@ export default function Home(props: any) {
                 )}
               </Grid>
             )}
-            <Box sx={{ textAlign: "center", marginTop:"1rem" }}>
+            <Box sx={{ textAlign: "center", marginTop: "1rem" }}>
               <Link href="product-collection/trending">
                 <Button>View All</Button>
               </Link>
@@ -1119,7 +1190,7 @@ export default function Home(props: any) {
                 )}
               </Grid>
             )}
-            <Box sx={{ textAlign: "center", marginTop:"1rem" }}>
+            <Box sx={{ textAlign: "center", marginTop: "1rem" }}>
               <Link href="product-collection/best-seller">
                 <Button>View All</Button>
               </Link>
