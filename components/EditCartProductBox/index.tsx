@@ -70,6 +70,7 @@ export default function EditCartProductBox(props: any) {
       url: `/api/product?slug=${slug}`,
     })
       .then((res) => {
+        console.log(res)
         setProductAPIRes(res.data.data);
       })
       .catch(() => {});
@@ -149,7 +150,7 @@ export default function EditCartProductBox(props: any) {
                       // marginLeft={{ xs: "0", md: "1rem" }}
                       // marginTop={{ xs: "1rem", md: "0" }}
                       >
-                        {productAPIRes.length === 0 ? (
+                        {productAPIRes?.length === 0 ? (
                           <Skeleton
                             variant="rectangular"
                             sx={{
@@ -169,7 +170,7 @@ export default function EditCartProductBox(props: any) {
                               width: isMobile ? "100vw" : productWidth - 130,
                             }}
                           >
-                            {productAPIRes.productColor[0].imageURL.map(
+                            {productAPIRes?.productColor[0].imageURL.map(
                               (data: any, index: number) => {
                                 return (
                                   <Box
@@ -181,7 +182,7 @@ export default function EditCartProductBox(props: any) {
                                   >
                                     <Image
                                       src={
-                                        productAPIRes.productColor[0]
+                                        productAPIRes?.productColor[0]
                                           .imageURL[0]
                                       }
                                       loading="lazy"
@@ -217,7 +218,7 @@ export default function EditCartProductBox(props: any) {
                     gap="0.8rem"
                     width="100%"
                   >
-                    {productAPIRes.length === 0 ? (
+                    {productAPIRes?.length === 0 ? (
                       <Skeleton
                         variant="rectangular"
                         sx={{
@@ -235,7 +236,7 @@ export default function EditCartProductBox(props: any) {
                         lineHeight="normal"
                         letterSpacing="0.02rem"
                       >
-                        {productAPIRes.name}
+                        {productAPIRes?.name}
                       </Typography>
                     )}
                   </Box>
@@ -253,7 +254,7 @@ export default function EditCartProductBox(props: any) {
                       gap="0.5rem"
                     >
                       <Box>
-                        {productAPIRes.length === 0 ? (
+                        {productAPIRes?.length === 0 ? (
                           <Skeleton
                             variant="rectangular"
                             sx={{
@@ -273,13 +274,13 @@ export default function EditCartProductBox(props: any) {
                             lineHeight="normal"
                             letterSpacing="0.02rem"
                           >
-                            ₹{productAPIRes.discountPrice}
+                            ₹{productAPIRes?.discountPrice}
                           </Typography>
                         )}
                       </Box>
 
                       <Box>
-                        {productAPIRes.length === 0 ? (
+                        {productAPIRes?.length === 0 ? (
                           <Skeleton
                             variant="rectangular"
                             sx={{
@@ -299,12 +300,12 @@ export default function EditCartProductBox(props: any) {
                             letterSpacing="0.02rem"
                             sx={{ textDecorationLine: "line-through" }}
                           >
-                            ₹{productAPIRes.price}
+                            ₹{productAPIRes?.price}
                           </Typography>
                         )}
                       </Box>
                       <Box>
-                        {productAPIRes.length === 0 ? (
+                        {productAPIRes?.length === 0 ? (
                           <Skeleton
                             variant="rectangular"
                             sx={{
@@ -328,9 +329,9 @@ export default function EditCartProductBox(props: any) {
                             }}
                           >
                             {`${Math.round(
-                              ((productAPIRes.price -
-                                productAPIRes.discountPrice) /
-                                productAPIRes.price) *
+                              ((productAPIRes?.price -
+                                productAPIRes?.discountPrice) /
+                                productAPIRes?.price) *
                                 100
                             )}% Off`}
                           </span>
@@ -365,7 +366,7 @@ export default function EditCartProductBox(props: any) {
                         </Typography>
                       </Box>
                       <Box display="flex" alignItems="flex-start" gap="1rem">
-                        {productAPIRes.length === 0
+                        {productAPIRes?.length === 0
                           ? [...Array(4)].map((data, index) => {
                               return (
                                 <Skeleton
@@ -380,7 +381,7 @@ export default function EditCartProductBox(props: any) {
                                 ></Skeleton>
                               );
                             })
-                          : productAPIRes.productColor.map(
+                          : productAPIRes?.productColor.map(
                               (data: any, index: number) => {
                                 return (
                                   // <></>
@@ -425,7 +426,7 @@ export default function EditCartProductBox(props: any) {
                         width="100%"
                         marginTop="1rem"
                       >
-                        {productAPIRes.length === 0 ? (
+                        {productAPIRes?.length === 0 ? (
                           <>
                             <Skeleton
                               variant="rectangular"
@@ -454,7 +455,7 @@ export default function EditCartProductBox(props: any) {
                             />
                           </>
                         ) : (
-                          productAPIRes.productColor[0].size.map(
+                          productAPIRes?.productColor[0].size.map(
                             (data: any, index: any) => (
                               <Box
                                 key={data.size}

@@ -57,11 +57,11 @@ import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 
 // import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import 'swiper/css';
-import 'swiper/css/free-mode';
-import 'swiper/css/navigation';
-import 'swiper/css/thumbs';
-import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/navigation";
+import "swiper/css/thumbs";
+import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 // Import Swiper styles
 // import "swiper/swiper-bundle.css";
 
@@ -635,7 +635,7 @@ const Product = (props: any) => {
   }, []);
 
   const settings = {
-    customPaging: function(i:any) {
+    customPaging: function (i: any) {
       return (
         <a>
           <img src={productAPIRes.productColor[0].imageURL[i]} />
@@ -647,7 +647,16 @@ const Product = (props: any) => {
     infinite: true,
     speed: 500,
     slidesToShow: 1,
-    slidesToScroll: 1
+    slidesToScroll: 1,
+  };
+
+  const mobileBannerSettings = {
+    dots: true,
+    centerPadding: 0,
+    arrows: false,
+    speed: 300,
+    slidesToShow: 1,
+    slidesToScroll: 1,
   };
 
   return (
@@ -716,12 +725,18 @@ const Product = (props: any) => {
                 alignItems="center"
                 gap="1rem"
                 // margin="1.2rem 0"
+                width="100%"
               >
-                <Box display="flex">
+                <Box display="flex" width="100%">
                   {/* side images */}
-                  <Box display="flex" flexDirection="column" height="100">
-                    {!isMobile &&
-                      (productAPIRes.length === 0 ? (
+                  <Box
+                    display="flex"
+                    flexDirection="column"
+                    height="100"
+                    width="100%"
+                  >
+                    {!isMobile ? (
+                      productAPIRes.length === 0 ? (
                         <Skeleton
                           variant="rectangular"
                           sx={{
@@ -731,166 +746,35 @@ const Product = (props: any) => {
                           }}
                         ></Skeleton>
                       ) : (
-                        // <div style={{ width: '300px', margin: '0 auto' }}>
-                        // <Slider {...settings} className="vertical-slider">
-                        //   {productAPIRes.productColor[0].imageURL.map(
-                        //     (elem: any, index: number) => {
-                        //       return (
-                        //         // <Box
-                        //         //   width="5rem"
-                        //         //   height="15rem"
-                        //         //   borderRadius="0.8rem"
-                        //         //   key={`productImageLeft${index}`}
-                        //         // >
-                        //           <Image
-                        //             alt="product image"
-                        //             width="90"
-                        //             height="100"
-                        //             src={elem}
-                        //             style={{ borderRadius: "0.8rem" }}
-                        //             layout="responsive"
-                        //           />
-                        //         // </Box>
-                        //       );
-                        //     }
-                        //   )}
-                        // </Slider>
-                        // </div>
                         <VerticalSlider
-                          // items={productAPIRes.productColor[0].imageURL}
-                          // slidesToShow={5}
+                          items={productAPIRes.productColor[0].imageURL}
                         />
-                      //   <>
-                      //   <Swiper
-                      //   // style={{
-                      //   //   '--swiper-navigation-color': '#fff',
-                      //   //   '--swiper-pagination-color': '#fff',
-                      //   // }}
-                      //   spaceBetween={10}
-                      //   navigation={true}
-                      //   thumbs={{ swiper: thumbsSwiper }}
-                      //   modules={[FreeMode, Navigation, Thumbs]}
-                      //   className="mySwiper2"
-                      // >
-                      //   <SwiperSlide>
-                      //     <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
-                      //   </SwiperSlide>
-                      //   <SwiperSlide>
-                      //     <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
-                      //   </SwiperSlide>
-                      //   <SwiperSlide>
-                      //     <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
-                      //   </SwiperSlide>
-                      //   <SwiperSlide>
-                      //     <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
-                      //   </SwiperSlide>
-                      //   <SwiperSlide>
-                      //     <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
-                      //   </SwiperSlide>
-                      //   <SwiperSlide>
-                      //     <img src="https://swiperjs.com/demos/images/nature-6.jpg" />
-                      //   </SwiperSlide>
-                      //   <SwiperSlide>
-                      //     <img src="https://swiperjs.com/demos/images/nature-7.jpg" />
-                      //   </SwiperSlide>
-                      //   <SwiperSlide>
-                      //     <img src="https://swiperjs.com/demos/images/nature-8.jpg" />
-                      //   </SwiperSlide>
-                      //   <SwiperSlide>
-                      //     <img src="https://swiperjs.com/demos/images/nature-9.jpg" />
-                      //   </SwiperSlide>
-                      //   <SwiperSlide>
-                      //     <img src="https://swiperjs.com/demos/images/nature-10.jpg" />
-                      //   </SwiperSlide>
-                      // </Swiper>
-                      // <Swiper
-                      //   onSwiper={setThumbsSwiper}
-                      //   spaceBetween={10}
-                      //   slidesPerView={4}
-                      //   freeMode={true}
-                      //   watchSlidesProgress={true}
-                      //   modules={[FreeMode, Navigation, Thumbs]}
-                      //   className="mySwiper"
-                      // >
-                      //   <SwiperSlide>
-                      //     <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
-                      //   </SwiperSlide>
-                      //   <SwiperSlide>
-                      //     <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
-                      //   </SwiperSlide>
-                      //   <SwiperSlide>
-                      //     <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
-                      //   </SwiperSlide>
-                      //   <SwiperSlide>
-                      //     <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
-                      //   </SwiperSlide>
-                      //   <SwiperSlide>
-                      //     <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
-                      //   </SwiperSlide>
-                      //   <SwiperSlide>
-                      //     <img src="https://swiperjs.com/demos/images/nature-6.jpg" />
-                      //   </SwiperSlide>
-                      //   <SwiperSlide>
-                      //     <img src="https://swiperjs.com/demos/images/nature-7.jpg" />
-                      //   </SwiperSlide>
-                      //   <SwiperSlide>
-                      //     <img src="https://swiperjs.com/demos/images/nature-8.jpg" />
-                      //   </SwiperSlide>
-                      //   <SwiperSlide>
-                      //     <img src="https://swiperjs.com/demos/images/nature-9.jpg" />
-                      //   </SwiperSlide>
-                      //   <SwiperSlide>
-                      //     <img src="https://swiperjs.com/demos/images/nature-10.jpg" />
-                      //   </SwiperSlide>
-                      // </Swiper>
-                      // </>
-                      ))}
-                  </Box>
-                  {/* main image */}
-                  {/* <Box
-                    marginLeft={{ xs: "0", md: "1rem" }}
-                    marginTop={{ xs: "1rem", md: "0" }}
-                  >
-                    {productAPIRes.length === 0 ? (
-                      <Skeleton
-                        variant="rectangular"
-                        sx={{
-                          width: "100%",
-                          height: "57rem",
-                          borderRadius: "0.8rem",
-                        }}
-                      ></Skeleton>
+                      )
                     ) : (
-                      <AwesomeSlider
-                        className="slider"
-                        bullets={false}
-                        organicArrows={false}
-                        mobileTouch={true}
-                        style={{
-                          height: isMobile
-                            ? productWidth + 100
-                            : productWidth + 40,
-                          width: isMobile ? "100vw" : productWidth - 140,
-                        }}
-                      >
+                      <Slider {...mobileBannerSettings}>
                         {productAPIRes.productColor[0].imageURL.map(
-                          (data: any, index: number) => {
-                            return (
-                              <Box
-                                ref={ref}
-                                borderRadius="0.8rem"
-                                // width="57rem"
-                                // height="auto"
-                                key={`${index}+productImagesSlider`}
-                              >
-                                <FullSizeProductImage image={data} />
-                              </Box>
-                            );
-                          }
+                          (data: any, index: number) => (
+                            // <Box key={index} sx={{ width: "100%", height: "auto" }}>
+                            <img
+                            key={data}
+                              src={data}
+                              alt="mobile banner"
+                              // width={100}
+                              // height={500}
+                              // onLoadingComplete={(img) => {
+                              //   setBannerHeight(img.naturalHeight);
+                              //   setBannerWidth(img.naturalWidth);
+                              // }}
+                              // layout="fill"
+                              // objectFit="cover"
+                              style={{ width: "100vh", height: "auto" }}
+                            />
+                            // </Box>
+                          )
                         )}
-                      </AwesomeSlider>
+                      </Slider>
                     )}
-                  </Box> */}
+                  </Box>
                 </Box>
               </Box>
             </Box>
