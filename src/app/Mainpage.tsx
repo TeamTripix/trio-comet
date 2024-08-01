@@ -206,12 +206,12 @@ export default function Home(props: any) {
     speed: 300,
     slidesToShow: 1,
     slidesToScroll: 1,
+    infinite: false,
   };
 
   const desktopBannerSettings = {
     dots: true,
-    centerPadding: 0,
-    arrows: false,
+    infinite: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -224,6 +224,7 @@ export default function Home(props: any) {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    infinite: false,
   };
 
   function chunkArray(array: any, chunkSize: number) {
@@ -231,7 +232,6 @@ export default function Home(props: any) {
     for (let i = 0; i < array.length; i += chunkSize) {
       result.push(array.slice(i, i + chunkSize));
     }
-    console.log("ddddddddddddddddd", result);
     return result;
   }
 
@@ -706,14 +706,24 @@ export default function Home(props: any) {
                 ) : (
                   onSaleApiRes.slice(0, 4).map((data, index) => {
                     return (
-                      <Grid
-                        key={data._id}
-                        item
-                        margin="1rem 0"
-                        justifyItems="center"
-                      >
-                        <Card data={data} />
-                      </Grid>
+                        <Grid
+                          item
+                          xs={6}
+                          sm={4}
+                          key={data._id}
+                          margin="1rem 0"
+                          justifyItems="center"
+                        >
+                          <Card data={data} index={index} />
+                        </Grid>
+                      // <Grid
+                      //   key={data._id}
+                      //   item
+                      //   margin="1rem 0"
+                      //   justifyItems="center"
+                      // >
+                      //   <Card data={data} />
+                      // </Grid>
                     );
                   })
                 )}
