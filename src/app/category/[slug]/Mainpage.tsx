@@ -13,8 +13,8 @@ import { useSearchParams } from "next/navigation";
 import { useSelector } from "react-redux";
 
 const ProductCollection = (props: any) => {
-  const { params, product,categoryName } = props
-  
+  const { params, product, categoryName } = props;
+
   const queryParams = useSearchParams();
   const pid = queryParams.get("pid");
   const [productApiRes, setProductApiRes] = useState<any[]>(product.data);
@@ -23,7 +23,6 @@ const ProductCollection = (props: any) => {
   const theme: any = useSelector<any>((state) => state.themeToggle);
   const isMobile = useMobile();
   const isTablet = useTablet();
-
 
   // useEffect(() => {
   //   axios({
@@ -59,10 +58,13 @@ const ProductCollection = (props: any) => {
   return (
     <>
       <PageSpacing>
-        {isMobile ? "" : <Box paddingLeft="2rem" marginTop="2rem">
-          <BreadCrumb />
-        </Box> }
-        
+        {isMobile ? (
+          ""
+        ) : (
+          <Box paddingLeft="2rem" marginTop="2rem">
+            <BreadCrumb />
+          </Box>
+        )}
 
         <Box paddingLeft="2rem" margin={"2rem 0"}>
           <Typography
@@ -71,7 +73,7 @@ const ProductCollection = (props: any) => {
                 ? lightColor.text.primary
                 : darkColor.text.primary
             }
-            fontSize={isMobile ? "1.8rem" : "2.8rem" }
+            fontSize={isMobile ? "1.8rem" : "2.8rem"}
             fontStyle="normal"
             fontWeight="700"
             lineHeight="normal"
@@ -94,14 +96,20 @@ const ProductCollection = (props: any) => {
             Filter
           </Typography>
         </Box> */}
-        {isMobile ? (
-          // is mobile size is active
-          <Grid container spacing={1} padding="0 1rem">
+
+        {isMobile || isTablet ? (
+          // is mobile and tablet size is active
+          <Grid
+            container
+            justifyContent="center"
+            padding="0 2rem"
+            spacing={0.5}
+          >
             {isLoading ? (
               [...Array(4)].map((data, index) => {
                 return (
                   <Grid
-                    key={`${index}+ProductCardNewArrivalsSkeleton`}
+                    key={`${index}+ProductCardOnSaleSkeletonMobile`}
                     item
                     xs={6}
                     sm={4}
@@ -120,77 +128,37 @@ const ProductCollection = (props: any) => {
                 <NoProduct isMobile={isMobile} />
               </Box>
             ) : (
-              productApiRes.map((data) => {
+              productApiRes.map((data, index) => {
                 return (
-                  <>
-                    <Grid
-                      xs={6}
-                      item
-                      key={data._id}
-                      justifyItems="center"
-                      alignItems="center"
-                    >
-                      <Card buyButton={false} data={data} />
-                    </Grid>
-                  </>
+                  <Grid
+                    item
+                    xs={6}
+                    sm={4}
+                    key={data._id}
+                    margin="1rem 0"
+                    justifyItems="center"
+                  >
+                    <Card data={data} index={index} />
+                  </Grid>
                 );
               })
             )}
           </Grid>
-        ) : isTablet ? (
-          // is tablet size is active
-          <Box
-            sx={{
-              overflowY: "hidden",
-            }}
-          >
-            <Box display="flex" gap="1rem">
-              {isLoading ? (
-                [...Array(4)].map((data, index: number) => {
-                  return (
-                    <Grid
-                      key={`${index}+ProductCardNewArrivalsSkeleton`}
-                      item
-                      xs={3}
-                    >
-                      <ProductCardSkeleton />
-                    </Grid>
-                  );
-                })
-              ) : productApiRes.length === 0 ? (
-                <Box width="100%" textAlign="center">
-                  <NoProduct isMobile={isMobile} />
-                </Box>
-              ) : (
-                <Grid container spacing={1}>
-                  {productApiRes.map((data, index) => {
-                    return (
-                      <>
-                        <Grid
-                          xs={4}
-                          item
-                          key={data._id}
-                          justifyItems="center"
-                          alignItems="center"
-                        >
-                          <Card data={data} />
-                        </Grid>
-                      </>
-                    );
-                  })}
-                </Grid>
-              )}
-            </Box>
-          </Box>
         ) : (
-          <Grid container>
+          // is desktop size is active
+          <Grid container spacing={2}>
             {isLoading ? (
-              [...Array(4)].map((data, index: number) => {
+              [...Array(8)].map((data, index) => {
                 return (
                   <Grid
-                    key={`${index}+ProductCardNewArrivalsSkeleton`}
+                    key={`${index}+ProductCardOnSaleSkeleton`}
                     item
                     xs={3}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
                   >
                     <ProductCardSkeleton />
                   </Grid>
@@ -198,20 +166,25 @@ const ProductCollection = (props: any) => {
               })
             ) : productApiRes.length === 0 ? (
               <Box width="100%" textAlign="center">
-                <NoProduct isMobile={isMobile} />
+                <NoProduct />
               </Box>
             ) : (
-              productApiRes.map((data) => {
+              productApiRes.slice(0, 8).map((data, index) => {
                 return (
-                  <Grid
-                    key={data._id}
-                    item
-                    margin="5rem 0rem"
-                    xs={3}
-                    justifyItems="center"
-                  >
-                    <Card fullDetailCard={true} data={data} />
-                  </Grid>
+                  <>
+                    <Grid
+                      key={data._id}
+                      item
+                      xs={3}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Card data={data} isHomePage={true} />
+                    </Grid>
+                  </>
                 );
               })
             )}

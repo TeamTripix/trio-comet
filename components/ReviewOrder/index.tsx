@@ -9,35 +9,18 @@ import {
   CardMedia,
   Card,
   CardContent,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
 } from "@mui/material";
 import { useSelector } from "react-redux";
-import Image from "next/image";
-const products = [
-  { name: "Product 1", desc: "A nice thing", price: "$9.99" },
-  { name: "Product 2", desc: "Another thing", price: "$3.45" },
-  { name: "Product 3", desc: "Something else", price: "$6.51" },
-  { name: "Product 4", desc: "Best thing of all", price: "$14.11" },
-];
-
-const addresses = [
-  "1 Material-UI Drive",
-  "Reactville",
-  "Anytown",
-  "99999",
-  "USA",
-];
-const payments = [
-  { name: "Card type", detail: "Visa" },
-  { name: "Card holder", detail: "Mr John Smith" },
-  { name: "Card number", detail: "xxxx-xxxx-xxxx-1234" },
-  { name: "Expiry date", detail: "04/2024" },
-];
 
 function ReviewOrder(props: any) {
   const cartData: any = useSelector<any>((state) => state.addToCart.cartData);
   const totalPrice: any = useSelector<any>((state) => state.totalCost);
 
-  const { address1, address2 } = props;
+  const { address1, address2, handlePaymentMethodChange, paymentRadioValue } =
+    props;
   return (
     <>
       <Typography variant="h6" gutterBottom>
@@ -46,7 +29,7 @@ function ReviewOrder(props: any) {
       <List disablePadding>
         {cartData.map((data: any) => (
           <Card
-          key={data.product._id}
+            key={data.product._id}
             sx={{
               display: "flex",
               gap: "2rem",
@@ -85,7 +68,12 @@ function ReviewOrder(props: any) {
                 >
                   {data.product.description}
                 </Typography>
-                <Box marginTop="1rem" display="flex" gap="2rem" alignItems="center">
+                <Box
+                  marginTop="1rem"
+                  display="flex"
+                  gap="2rem"
+                  alignItems="center"
+                >
                   <Typography
                     sx={{ fontWeight: "700" }}
                     variant="body1"
@@ -94,10 +82,14 @@ function ReviewOrder(props: any) {
                     ₹{data.product.price * data.quantity}
                   </Typography>
                   <Box>
-                    <Typography variant="body2" >Size : {data.product.productSize}</Typography>
+                    <Typography variant="body2">
+                      Size : {data.product.productSize}
+                    </Typography>
                   </Box>
                   <Box>
-                    <Typography variant="body2" >Qty : {data.quantity}</Typography>
+                    <Typography variant="body2">
+                      Qty : {data.quantity}
+                    </Typography>
                   </Box>
                 </Box>
               </CardContent>
@@ -119,6 +111,16 @@ function ReviewOrder(props: any) {
           {`${address1} ${address2}`}
         </Grid>
       </Grid>
+      <Typography marginTop="2rem">Payment Method</Typography>
+      <RadioGroup
+        aria-labelledby="demo-controlled-radio-buttons-group"
+        name="controlled-radio-buttons-group"
+        value={paymentRadioValue}
+        onChange={(e)=>handlePaymentMethodChange(e.target.value)}
+      >
+        <FormControlLabel value="prepaid" control={<Radio />} label="Prepaid" />
+        <FormControlLabel value="cod" control={<Radio />} label="COD" />
+      </RadioGroup>
     </>
   );
 }

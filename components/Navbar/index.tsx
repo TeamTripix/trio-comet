@@ -146,13 +146,11 @@ export default function Index() {
           >
             <HamBurger />
             <Link href="/">
-              <Box width="10rem" sx={{ cursor: "pointer" }}>
+              <Box width="3rem" sx={{ cursor: "pointer" }}>
                 <Image
-                  src={`/assets/logo/${
-                    theme === "light" ? "logo-light.png" : "logo-dark.png"
-                  }`}
+                  src={`/assets/logo/mobileLogo.png`}
                   alt="Logo"
-                  width="160"
+                  width="50"
                   height="50"
                   layout="responsive"
                 />

@@ -99,12 +99,12 @@ function a11yProps(index: number) {
 }
 
 export default function Home(props: any) {
-  const { banner, onSale, dailyDeals, bestSeller, newArrival, category, blog } =
+  const { banner, newDrop, trending, bestSeller, newArrival, category, blog } =
     props;
   const [value, setValue] = useState(0);
-  const [onSaleApiRes, setOnSaleApiRes] = useState<any[]>(onSale.data);
-  const [dailyDealsApiRes, setDailyDealsApiRes] = useState<any[]>(
-    dailyDeals.data
+  const [newDropApiRes, setNewDropApiRes] = useState<any[]>(newDrop.data);
+  const [trendingApiRes, setTrendingApiRes] = useState<any[]>(
+    trending.data
   );
   const [bestSellerApiRes, setBestSellerApiRes] = useState<any[]>(
     bestSeller.data
@@ -119,7 +119,7 @@ export default function Home(props: any) {
   const [isOnSaleLoading, setIsOnsaleLoading] = useState(false);
   const [isDailyDealsLoading, setIsDailyDealsLoading] = useState(false);
   const [isBestSellerLoading, setIsBestSellerLoading] = useState(false);
-  const [isNewArrivalLoading, setIsNewArrivalLoading] = useState(false);
+  const [isTrendingLoading, setIsTrendingLoading] = useState(false);
   const [isCategoryLoading, setIsCategoryLoading] = useState(false);
   const [isBlogLoading, setIsBlogLoading] = useState(false);
   const [bannerApiRes, setBannerApiRes] = useState<any>(banner.data);
@@ -183,7 +183,7 @@ export default function Home(props: any) {
     dots: true,
     lazyLoad: true,
     speed: 300,
-    slidesToShow: isMobile ? 1 : 5,
+    slidesToShow: isMobile ? 1 : 2,
     centerMode: true,
     centerPadding: 0,
     arrows: !isMobile,
@@ -215,6 +215,7 @@ export default function Home(props: any) {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    arrows: false,
   };
 
   const categorySettings = {
@@ -237,54 +238,6 @@ export default function Home(props: any) {
 
   return (
     <>
-      {/* <Head>
-        <title>{seoData.title}</title>
-        <meta name="description" content={seoData.description} />
-        <meta name="keywords" content={seoData.keywords} />
-        <meta name="author" content={seoData.author} />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head> */}
-      {/* <Seo
-        title="{seoData.title}"
-        description="{seoData.description}"
-        keywords="{seoData.keywords}"
-        author="{seoData.author}"
-      /> */}
-      {/* <NextSeo
-        title={"this is title"}
-        description="This example uses more of the available config options."
-        canonical="https://www.triocomet.com"
-        openGraph={{
-          url: "https://www.url.ie/a",
-          title: "Open Graph Title",
-          description: "Open Graph Description",
-          images: [
-            {
-              url: "https://www.example.ie/og-image-01.jpg",
-              width: 800,
-              height: 600,
-              alt: "Og Image Alt",
-              type: "image/jpeg",
-            },
-            {
-              url: "https://www.example.ie/og-image-02.jpg",
-              width: 900,
-              height: 800,
-              alt: "Og Image Alt Second",
-              type: "image/jpeg",
-            },
-            { url: "https://www.example.ie/og-image-03.jpg" },
-            { url: "https://www.example.ie/og-image-04.jpg" },
-          ],
-          siteName: "SiteName",
-        }}
-        twitter={{
-          handle: "@handle",
-          site: "@site",
-          cardType: "summary_large_image",
-        }}
-      /> */}
       <Box>
         {isMobile ? (
           bannerApiLoading ? (
@@ -299,34 +252,16 @@ export default function Home(props: any) {
           ) : bannerApiRes.length === 0 ? (
             ""
           ) : (
-            // <AutoplaySlider
-            //   bullets={false}
-            //   play={true}
-            //   cancelOnInteraction={false}
-            //   interval={6000}
-            //   style={{ height: "auto" }}
-            // >
-            <Slider {...mobileBannerSettings}>
+            <Slider className="mobileBanner" {...mobileBannerSettings}>
               {bannerApiRes.map((data: any, index: number) => (
-                // <Box key={index} sx={{ width: "100%", height: "auto" }}>
                 <img
                   key={data.mobileImageURL}
                   src={data.mobileImageURL}
                   alt="mobile banner"
-                  // width={100}
-                  // height={500}
-                  // onLoadingComplete={(img) => {
-                  //   setBannerHeight(img.naturalHeight);
-                  //   setBannerWidth(img.naturalWidth);
-                  // }}
-                  // layout="fill"
-                  // objectFit="cover"
                   style={{ width: "100vh", height: "auto" }}
                 />
-                // </Box>
               ))}
             </Slider>
-            // </AutoplaySlider>
           )
         ) : bannerApiLoading ? (
           <Skeleton
@@ -340,17 +275,9 @@ export default function Home(props: any) {
         ) : bannerApiRes.length === 0 ? (
           ""
         ) : (
-          // <AutoplaySlider
-          //   bullets={false}
-          //   play={true}
-          //   cancelOnInteraction={false}
-          //   interval={6000}
-          //   style={{ height: bannerHeight - 10 }}
-          // >
           <Slider {...desktopBannerSettings}>
             {bannerApiRes.map((data: any) => {
               return (
-                // <Box key={data.id} width="100%" height={bannerHeight}>
                 <Box key={data.id}>
                   <Link href={data.link}>
                     <Image
@@ -370,16 +297,14 @@ export default function Home(props: any) {
                 </Box>
               );
             })}
-            {/* </AutoplaySlider> */}
           </Slider>
-          // <Slider data={bannerApiRes}/>
         )}
 
         {/* Categories */}
         <Box
           display="flex"
           justifyContent={isMobile ? "start" : "center"}
-          margin="1rem"
+          margin="2rem 1rem"
         >
           <Typography
             color={
@@ -444,7 +369,6 @@ export default function Home(props: any) {
                           marginBottom="1rem"
                         >
                           {data.map((categoryData: any, index: number) => {
-                            console.log("himanshu : ", categoryData);
                             return (
                               <Grid
                                 xs={6}
@@ -454,7 +378,6 @@ export default function Home(props: any) {
                               >
                                 <CategoryCard
                                   data={categoryData}
-                                  // isHomePage={true}
                                   indexes={index}
                                   categoryArrayLength={
                                     caregoryApiRes.length - 1
@@ -570,55 +493,6 @@ export default function Home(props: any) {
 
         <>
           <Box sx={{ margin: "5rem 0", marginTop: "3rem" }}>
-            {/* <Box display="flex" justifyContent="center">
-              <Box
-              sx={{
-                width: "21rem",
-                marginTop: "2rem",
-                marginBottom: isMobile ? "6rem" : 0,
-                }}
-              >
-                <Tabs
-                  value={value}
-                  onChange={handleChange}
-                  aria-label="basic tabs example"
-                >
-                  <Tab
-                    sx={{
-                      textAlign: "center",
-                      fontSize: "1.6rem",
-                      fontStyle: "normal",
-                      fontWeight: 700,
-                      lineHeight: "normal",
-                      letterSpacing: "0.05rem",
-                      textTransform: "capitalize",
-                      height: "1.9rem",
-                    }}
-                    label="On sale"
-                    {...a11yProps(0)}
-                  />
-                  <Tab
-                    sx={{
-                      textAlign: "center",
-                      fontSize: "1.6rem",
-                      fontStyle: "normal",
-                      fontWeight: 700,
-                      lineHeight: "normal",
-                      letterSpacing: "0.05rem",
-                      textTransform: "capitalize",
-                      height: "1.9rem",
-                    }}
-                    label="Daily deals"
-                    {...a11yProps(1)}
-                  />
-                </Tabs>
-              </Box>
-            </Box> */}
-
-            {/* <CustomTabPanel value={value} index={0}> */}
-            {/* {isMobile ? (
-                ""
-              ) : ( */}
             <Box
               display="flex"
               justifyContent={isMobile ? "start" : "center"}
@@ -641,40 +515,11 @@ export default function Home(props: any) {
               >
                 {isMobile ? "New Drops" : "NEW DROPS"}
               </Typography>
-              {/* {isMobile ? (
-                    ""
-                  ) : ( */}
-              {/* <Link href="product-collection/sale">
-                <Box
-                  display="flex"
-                  justifyContent="flex-end"
-                  alignItems="center"
-                  gap="0.4rem"
-                  flexShrink="0"
-                >
-                  <Typography
-                    color={lightColor.text.link}
-                    textAlign="center"
-                    fontSize={isMobile ? "1.4rem" : "1.8rem"}
-                    fontStyle="normal"
-                    fontWeight="400"
-                    lineHeight="normal"
-                    letterSpacing="0.05rem"
-                    display="flex"
-                    alignItems="center"
-                    marginRight={isMobile ? "2rem" : ""}
-                  >
-                    View more
-                    {!isMobile && <ForwardIcon />}
-                  </Typography>
-                </Box>
-              </Link> */}
-              {/* )} */}
+             
             </Box>
-            {/* )} */}
 
-            {isMobile ? (
-              // is mobile size is active
+            {isMobile || isTablet? (
+              // is mobile and tablet size is active
               <Grid
                 container
                 justifyContent="center"
@@ -699,12 +544,12 @@ export default function Home(props: any) {
                       </Grid>
                     );
                   })
-                ) : onSaleApiRes.length === 0 ? (
+                ) : newDropApiRes.length === 0 ? (
                   <Box width="100%" textAlign="center">
                     <NoProduct isMobile={isMobile} />
                   </Box>
                 ) : (
-                  onSaleApiRes.slice(0, 4).map((data, index) => {
+                  newDropApiRes.slice(0, isTablet ? 6 : 4).map((data, index) => {
                     return (
                         <Grid
                           item
@@ -716,66 +561,12 @@ export default function Home(props: any) {
                         >
                           <Card data={data} index={index} />
                         </Grid>
-                      // <Grid
-                      //   key={data._id}
-                      //   item
-                      //   margin="1rem 0"
-                      //   justifyItems="center"
-                      // >
-                      //   <Card data={data} />
-                      // </Grid>
                     );
                   })
                 )}
               </Grid>
-            ) : isTablet ? (
-              // is tablet size is active
-              <Box
-                sx={{
-                  overflowY: "hidden",
-                }}
-              >
-                <Box display="flex" gap="1rem">
-                  {isOnSaleLoading ? (
-                    [...Array(8)].map((data, index) => {
-                      return (
-                        <Grid
-                          key={`${index}+ProductCardOnSaleSkeletonOnTabView`}
-                          item
-                          xs={3}
-                        >
-                          <ProductCardSkeleton />
-                        </Grid>
-                      );
-                    })
-                  ) : onSaleApiRes.length === 0 ? (
-                    <Box width="100%" textAlign="center">
-                      <NoProduct isMobile={isMobile} />
-                    </Box>
-                  ) : (
-                    <Box
-                      display="flex"
-                      justifyContent="center"
-                      alignItems="center"
-                    >
-                      {onSaleApiRes.slice(0, 8).map((data, index) => {
-                        return (
-                          <>
-                            <Box key={data._id}>
-                              <Card
-                                data={data}
-                                index={index}
-                                isHomePage={true}
-                              />
-                            </Box>
-                          </>
-                        );
-                      })}
-                    </Box>
-                  )}
-                </Box>
-              </Box>
-            ) : (
+            ) : 
+             (
               // is desktop size is active
               <Grid container spacing={2}>
                 {isOnSaleLoading ? (
@@ -795,12 +586,12 @@ export default function Home(props: any) {
                       </Grid>
                     );
                   })
-                ) : onSaleApiRes.length === 0 ? (
+                ) : newDropApiRes.length === 0 ? (
                   <Box width="100%" textAlign="center">
                     <NoProduct />
                   </Box>
                 ) : (
-                  onSaleApiRes.slice(0, 8).map((data, index) => {
+                  newDropApiRes.slice(0, 8).map((data, index) => {
                     return (
                       <>
                         <Grid
@@ -875,44 +666,19 @@ export default function Home(props: any) {
               >
                 {isMobile ? "Trending" : "TRENDING"}
               </Typography>
-              {/* <Link href="product-collection/new_arrivals">
-                <Box
-                  display="flex"
-                  justifyContent="flex-end"
-                  alignItems="center"
-                  gap="0.4rem"
-                  flexShrink="0"
-                >
-                  <Typography
-                    color={lightColor.text.link}
-                    textAlign="center"
-                    fontSize={isMobile ? "1.4rem" : "1.8rem"}
-                    fontStyle="normal"
-                    fontWeight="400"
-                    lineHeight="normal"
-                    letterSpacing="0.05rem"
-                    display="flex"
-                    alignItems="center"
-                    marginRight={isMobile ? "2rem" : ""}
-                  >
-                    View more
-                    {!isMobile && <ForwardIcon />}
-                  </Typography>
-                </Box>
-              </Link> */}
-              {/*  )} */}
+             
             </Box>
 
-            {isMobile ? (
+            {isMobile || isTablet? (
               // Mobile view
               <Grid container justifyContent="center" padding="0 0.5rem">
-                {isNewArrivalLoading ? (
+                {isTrendingLoading ? (
                   [...Array(4)].map((data, index) => (
                     <Grid
                       item
                       xs={6}
                       sm={4}
-                      key={`${index}+ProductCardNewArrivalSkeletonOnMobileView`}
+                      key={`${index}+ProductCardTrendingSkeletonOnMobileView`}
                       sx={{
                         display: "flex",
                         justifyContent: "center",
@@ -922,7 +688,7 @@ export default function Home(props: any) {
                       <ProductCardSkeleton />
                     </Grid>
                   ))
-                ) : newArraivalApiRes.length === 0 ? (
+                ) : trendingApiRes.length === 0 ? (
                   <Box width="100%" textAlign="center">
                     <NoProduct isMobile={isMobile} />
                   </Box>
@@ -930,10 +696,10 @@ export default function Home(props: any) {
                   <Slider
                     {...TredingProdSettings}
                     arrows={false}
-                    infinite={newArraivalApiRes.length > 2}
+                    infinite={trendingApiRes.length > 2}
                     style={{ width: "100%" }}
                   >
-                    {newArraivalApiRes.slice(0, 4).map((data, index) => (
+                    {trendingApiRes.slice(0, 4).map((data, index) => (
                       <Grid
                         xs={11.8}
                         item
@@ -947,48 +713,11 @@ export default function Home(props: any) {
                   </Slider>
                 )}
               </Grid>
-            ) : isTablet ? (
-              // is tablet size is active
-              <Box
-                sx={{
-                  overflowY: "hidden",
-                }}
-              >
-                <Box display="flex" gap="1rem">
-                  {isNewArrivalLoading ? (
-                    [...Array(4)].map((data, index) => {
-                      return (
-                        <Grid
-                          key={`${index}+ProductCardNewArrivalSkeletonOnTabView`}
-                          item
-                          xs={3}
-                        >
-                          <ProductCardSkeleton />
-                        </Grid>
-                      );
-                    })
-                  ) : newArraivalApiRes.length === 0 ? (
-                    <Box width="100%" textAlign="center">
-                      <NoProduct isMobile={isMobile} />
-                    </Box>
-                  ) : (
-                    newArraivalApiRes.slice(0, 4).map((data, index) => {
-                      return (
-                        <>
-                          <Box key={data._id}>
-                            <Card data={data} index={index} isHomePage={true} />
-                          </Box>
-                        </>
-                      );
-                    })
-                  )}
-                </Box>
-              </Box>
-            ) : (
+            ) :  (
               // is desktop size is active
 
               <Grid container spacing={2}>
-                {isNewArrivalLoading ? (
+                {isTrendingLoading ? (
                   [...Array(4)].map((data, index: number) => {
                     return (
                       <Grid
@@ -1000,12 +729,12 @@ export default function Home(props: any) {
                       </Grid>
                     );
                   })
-                ) : newArraivalApiRes.length === 0 ? (
+                ) : trendingApiRes.length === 0 ? (
                   <Box width="100%" textAlign="center">
                     <NoProduct />
                   </Box>
                 ) : (
-                  newArraivalApiRes.slice(0, 4).map((data, index) => {
+                  trendingApiRes.slice(0, 4).map((data, index) => {
                     return (
                       <Grid
                         key={data._id}
@@ -1056,37 +785,11 @@ export default function Home(props: any) {
               >
                 {isMobile ? "Best Seller" : "BEST SELLER"}
               </Typography>
-              {/* <Link href="product-collection/best_seller">
-                <Box
-                  display="flex"
-                  justifyContent="flex-end"
-                  alignItems="center"
-                  gap="0.4rem"
-                  flexShrink="0"
-                >
-                  <Typography
-                    color={lightColor.text.link}
-                    textAlign="center"
-                    fontSize={isMobile ? "1.4rem" : "1.8rem"}
-                    fontStyle="normal"
-                    fontWeight="400"
-                    lineHeight="normal"
-                    letterSpacing="0.05rem"
-                    display="flex"
-                    alignItems="center"
-                    marginRight={isMobile ? "2rem" : ""}
-                  >
-                    View more
-                    {!isMobile && <ForwardIcon />}
-                  </Typography>
-                </Box>
-              </Link> */}
             </Box>
-            {isMobile ? (
+            {isMobile || isTablet ? (
               // is mobile size is active
               <Grid
                 container
-                // justifyContent="center"
                 padding="0 0.5rem"
                 spacing={0.5}
               >
@@ -1113,7 +816,7 @@ export default function Home(props: any) {
                     <NoProduct isMobile={isMobile} />
                   </Box>
                 ) : (
-                  bestSellerApiRes.slice(0, 4).map((data, index) => {
+                  bestSellerApiRes.slice(0, isTablet && isMobile ? 4 : 6).map((data, index) => {
                     return (
                       <Grid
                         item
@@ -1129,50 +832,6 @@ export default function Home(props: any) {
                   })
                 )}
               </Grid>
-            ) : isTablet ? (
-              // is tablet size is active
-              <Box
-                sx={{
-                  overflowY: "hidden",
-                }}
-              >
-                <Box display="flex" gap="1rem">
-                  {isBestSellerLoading ? (
-                    [...Array(4)].map((data, index) => {
-                      return (
-                        <Grid
-                          key={`${index}+ProductCardBestSellerSkeletonOnTabView`}
-                          item
-                          xs={3}
-                        >
-                          <ProductCardSkeleton />
-                        </Grid>
-                      );
-                    })
-                  ) : bestSellerApiRes.length === 0 ? (
-                    <Box width="100%" textAlign="center">
-                      <NoProduct isMobile={isMobile} />
-                    </Box>
-                  ) : (
-                    bestSellerApiRes.slice(0, 8).map((data, index) => {
-                      return (
-                        <>
-                          <Grid
-                            item
-                            xs={6}
-                            sm={4}
-                            key={data._id}
-                            margin="1rem 0"
-                            justifyItems="center"
-                          >
-                            <Card data={data} index={index} isHomePage={true} />
-                          </Grid>
-                        </>
-                      );
-                    })
-                  )}
-                </Box>
-              </Box>
             ) : (
               // is desktop size is active
 
@@ -1225,104 +884,8 @@ export default function Home(props: any) {
             </Box>
           </Box>
         </HomePageSpacing>
-        {/* --------------------------------------------- */}
-        {/* <div className="App">
-            <Slider {...settings}>
-              {isCategoryLoading ? (
-                [...Array(11)].map((d, i) => {
-                  return (
-                    <Box key={`categorySkeleton+${i}`}>
-                      <CategorySkeleton />
-                    </Box>
-                  );
-                })
-              ) : caregoryApiRes.length === 0 ? (
-                <Box width="100%" textAlign="center">
-                  <NoProduct isMobile={isMobile} />
-                </Box>
-              ) : (
-                caregoryApiRes.map((data, index) => {
-                  return (
-                    <>
-                      <div
-                        className={
-                          index === imageIndex ? "slide activeSlide" : "slide"
-                        }
-                      >
-                        <CategoryCard
-                          key={data._id}
-                          data={data}
-                          isHomePage={true}
-                          indexes={index}
-                          categoryArrayLength={caregoryApiRes.length - 1}
-                        />
-                      </div>
-                    </>
-                  );
-                })
-              )}
-            </Slider>
-          </div> */}
-
-        {/* +++++++++++++++++++++++++++++++++++ */}
-
-        {/* <div style={{ padding: `0 ${chevronWidth}px` }}>
-              <ItemsCarousel
-                requestToChangeActive={setActiveItemIndex}
-                activeItemIndex={activeItemIndex}
-                numberOfCards={6}
-                gutter={20}
-                leftChevron={<button>{"<"}</button>}
-                rightChevron={<button>{">"}</button>}
-                outsideChevron
-                chevronWidth={chevronWidth}
-              >
-                {isCategoryLoading ? (
-                  [...Array(11)].map((d, i) => {
-                    return (
-                      <Box key={`categorySkeleton+${i}`}>
-                        <CategorySkeleton />
-                      </Box>
-                    );
-                  })
-                ) : caregoryApiRes.length === 0 ? (
-                  <Box width="100%" textAlign="center">
-                    <NoProduct isMobile={isMobile} />
-                  </Box>
-                ) : (
-                  caregoryApiRes.map((data, index) => {
-                    return (
-                      <>
-                        <CategoryCard
-                          key={data._id}
-                          data={data}
-                          isHomePage={true}
-                          indexes={index}
-                          categoryArrayLength={caregoryApiRes.length - 1}
-                        />
-                      </>
-                    );
-                  })
-                )}
-                {/* <div style={{ height: 200, background: "#EEE" }}>
-                  First card
-                </div>
-                <div style={{ height: 200, background: "#EEE" }}>
-                  Second card
-                </div>
-                <div style={{ height: 200, background: "#EEE" }}>
-                  Third card
-                </div>
-                <div style={{ height: 200, background: "#EEE" }}>
-                  Fourth card
-                </div> */}
-        {/* </ItemsCarousel>
-            </div> */}
-
-        {/* <Box width={10} height={"auto"}>
-          <YTPlayer videoId="bmD-tZe8HBA" />
-        </Box> */}
-
+      
+       
         <HomePageSpacing>
           <Box
             display="flex"
@@ -1352,36 +915,12 @@ export default function Home(props: any) {
               >
                 {isMobile ? "Our Blogs" : "OUR BLOGS"}
               </Typography>
-              {/* <Link href={"blog-collection"}>
-                <Box
-                  display="flex"
-                  justifyContent="flex-end"
-                  alignItems="center"
-                  gap="0.4rem"
-                  flexShrink="0"
-                >
-                  <Typography
-                    color={lightColor.text.link}
-                    textAlign="center"
-                    fontSize={isMobile ? "1.4rem" : "1.8rem"}
-                    fontStyle="normal"
-                    fontWeight="400"
-                    lineHeight="normal"
-                    letterSpacing="0.05rem"
-                    display="flex"
-                    alignItems="center"
-                    marginRight={isMobile ? "2rem" : ""}
-                  >
-                    View more
-                    {!isMobile && <ForwardIcon />}
-                  </Typography>
-                </Box>
-              </Link> */}
+            
             </Box>
 
-            {isMobile ? (
+            {isMobile || isTablet ? (
               // Mobile view with carousel
-              <Box>
+              <Box >
                 {isBlogLoading ? (
                   [...Array(3)].map((_, index) => (
                     <Box key={`${index}+BlogCardSkeleton`}>
@@ -1396,52 +935,17 @@ export default function Home(props: any) {
                   <Slider
                     {...settings}
                     arrows={false}
-                    infinite={blogApiRes.length > 1}
+                    // infinite={blogApiRes.length > 1}
                   >
-                    {blogApiRes.slice(0, 3).map((data, index) => (
-                      <Box key={data._id}>
+                    {blogApiRes.slice(0, 2).map((data, index) => (
+                      <Box key={index} padding="0 1rem">
                         <BlogCard data={data} index={index} isHomePage={true} />
                       </Box>
                     ))}
                   </Slider>
                 )}
               </Box>
-            ) : isTablet ? (
-              // is tablet size is active
-              <Box
-                sx={{
-                  overflowY: "hidden",
-                }}
-              >
-                <Box display="flex" gap="1rem">
-                  {isBlogLoading ? (
-                    [...Array(3)].map((data, index) => {
-                      return (
-                        <Grid key={`${index}+BlogCardSkeleton`} item xs={4}>
-                          <ProductCardSkeleton />
-                        </Grid>
-                      );
-                    })
-                  ) : blogApiRes.length === 0 ? (
-                    <Box width="100%" textAlign="center">
-                      <NoProduct isMobile={isMobile} />
-                    </Box>
-                  ) : (
-                    blogApiRes.slice(0, 3).map((data, index) => {
-                      return (
-                        <Box key={data._id}>
-                          <BlogCard
-                            data={data}
-                            isHomePage={true}
-                            index={index}
-                          />
-                        </Box>
-                      );
-                    })
-                  )}
-                </Box>
-              </Box>
-            ) : (
+            ) :  (
               // is desktop size is active
               <Grid container spacing={0}>
                 {isBlogLoading ? (

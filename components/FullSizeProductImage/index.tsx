@@ -1,11 +1,57 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
 import Dialog from "@mui/material/Dialog";
-import Image from "next/image";
-import CancelIcon from "../../icons/cancelIcon";
-import ReactPlayer from "react-player/lazy";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import Slide from "@mui/material/Slide";
+import { TransitionProps } from "@mui/material/transitions";
+import { Box } from "@mui/material";
+import './DoubleTapZoom.css'; // We'll define styles here
 
-export default function MaxWidthDialog(props: any) {
+const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & {
+    children: React.ReactElement;
+  },
+  ref: React.Ref<unknown>
+) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+
+const DoubleTapZoom = ({ src, alt }:any) => {
+  const [scale, setScale] = React.useState(1);
+  const [lastTap, setLastTap] = React.useState(0);
+  const imageRef = React.useRef(null);
+
+  const handleDoubleTap = (e:any) => {
+    console.log("sjdks")
+    const currentTime = new Date().getTime();
+    const tapGap = currentTime - lastTap;
+
+    if (tapGap < 100 && tapGap > 0) {
+      if (scale === 1) {
+        setScale(2);
+      } else {
+        setScale(1);
+      }
+    } else {
+      setLastTap(currentTime);
+    }
+  };
+
+  return (
+    <div
+      className="image-container"
+      onDoubleClick={handleDoubleTap}
+      style={{ transform: `scale(${scale})` }}
+      ref={imageRef}
+    >
+      <img src={src} alt={alt} className="zoom-image" style={{ height: "100vh", width: "auto" }} />
+    </div>
+  );
+};
+
+
+export default function FullScreenDialog({ img }: any) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -18,40 +64,43 @@ export default function MaxWidthDialog(props: any) {
 
   return (
     <React.Fragment>
-      {props.image
-        .substring(props.image.lastIndexOf("/") + 1)
-        .substring(
-          props.image
-            .substring(props.image.lastIndexOf("/") + 1)
-            .lastIndexOf(".") + 1
-        ) === "mp4" ? (
-        <ReactPlayer url={props.image} playing={true} loop={true} />
-      ) : (
-        <Image
-          src={props.image}
-          fill
-          alt="product image"
-          onClick={handleClickOpen}
-        />
-      )}
-
-      <Dialog fullWidth={true} maxWidth="sm" open={open} onClose={handleClose}>
-        <Box>
-          <Box
-            height="5rem"
-            width="100%"
-            zIndex={99}
-            position="absolute"
-            display="flex"
-            justifyContent="end"
-            alignItems="center"
-          >
-            
-            <Box zIndex={99} sx={{ cursor: "pointer" }} onClick={handleClose} boxShadow="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
-              <CancelIcon color="black" />
-            </Box>
+      <img
+        onClick={handleClickOpen}
+        style={{
+          transition: "transform 0.3s ease",
+          cursor: "pointer",
+        }}
+        src={img}
+      />
+      <Dialog
+        fullScreen
+        open={open}
+        onClose={handleClose}
+        TransitionComponent={Transition}
+      >
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          flexDirection="column"
+        >
+          <Box>
+            <IconButton
+              sx={{
+                position: "absolute",
+                zIndex: "100",
+                top: "0",
+                right: "10px",
+              }}
+              edge="start"
+              color="inherit"
+              onClick={handleClose}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+           <DoubleTapZoom src={img} alt="zoomed image"/>
           </Box>
-          <Image src={props.image} alt="product image" layout="responsive" width="1080" height="1350" />
         </Box>
       </Dialog>
     </React.Fragment>

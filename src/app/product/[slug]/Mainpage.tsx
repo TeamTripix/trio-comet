@@ -343,7 +343,6 @@ const Product = (props: any) => {
   const categoryID = queryParams.get("category_id");
   const pid = queryParams.get("pid");
   const offerTag = queryParams.get("offerTag");
-  // const [colorId, setColorId] = useState<any>(colorParamID);
   const [value, setValue] = useState<any>(subpageValue);
   const [categoryId, setCategoryId] = useState(categoryID);
   const [pidState, setPidState] = useState(pid);
@@ -653,49 +652,14 @@ const Product = (props: any) => {
   const mobileBannerSettings = {
     dots: true,
     centerPadding: 0,
-    arrows: false,
     speed: 300,
     slidesToShow: 1,
     slidesToScroll: 1,
+    arrows: false,
   };
 
   return (
     <>
-      {/* <NextSeo
-        title={productAPIRes?.specificationItems?.pageTitle}
-        description="This example uses more of the available config options."
-        canonical="https://www.triocomet.com"
-        openGraph={{
-          url: "https://www.url.ie/a",
-          title: "Open Graph Title",
-          description: "Open Graph Description",
-          images: [
-            {
-              url: "https://www.example.ie/og-image-01.jpg",
-              width: 800,
-              height: 600,
-              alt: "Og Image Alt",
-              type: "image/jpeg",
-            },
-            {
-              url: "https://www.example.ie/og-image-02.jpg",
-              width: 900,
-              height: 800,
-              alt: "Og Image Alt Second",
-              type: "image/jpeg",
-            },
-            { url: "https://www.example.ie/og-image-03.jpg" },
-            { url: "https://www.example.ie/og-image-04.jpg" },
-          ],
-          siteName: "SiteName",
-        }}
-        twitter={{
-          handle: "@handle",
-          site: "@site",
-          cardType: "summary_large_image",
-        }}
-      /> */}
-
       <PageSpacing>
         <Box margin={isMobile ? "0" : "0rem"}>
           <Box
@@ -704,17 +668,17 @@ const Product = (props: any) => {
             justifyContent="space-between"
             alignItems="start"
             height="auto"
-            marginBottom={isMobile ? "0rem" : "5.7rem"}
-            padding={isMobile ? "" : "0 2rem"}
-            flexDirection={isMobile ? "column" : "row"}
+            marginBottom={isMobile || isTablet ? "0rem" : "5.7rem"}
+            padding={isMobile || isTablet ? "" : "0 2rem"}
+            flexDirection={isMobile || isTablet ? "column" : "row"}
           >
             <Box
               ref={ref}
-              width={isMobile ? "100%" : "55%"}
-              position={isMobile ? "relative" : "sticky"}
-              top={isMobile ? -10 : "6rem"}
+              width={isMobile || isTablet ? "100%" : "55%"}
+              position={isMobile || isTablet? "relative" : "sticky"}
+              top={isMobile || isTablet? -10 : "6rem"}
             >
-              {!isMobile && (
+              {!isMobile || !isTablet && (
                 <Box paddingLeft="0rem" margin="1rem 0rem 2rem 7rem">
                   <BreadCrumb />
                 </Box>
@@ -735,7 +699,7 @@ const Product = (props: any) => {
                     height="100"
                     width="100%"
                   >
-                    {!isMobile ? (
+                    {!isMobile && !isTablet ? (
                       productAPIRes.length === 0 ? (
                         <Skeleton
                           variant="rectangular"
@@ -751,25 +715,15 @@ const Product = (props: any) => {
                         />
                       )
                     ) : (
-                      <Slider {...mobileBannerSettings}>
+                      <Slider {...mobileBannerSettings} className="mobileBanner">
                         {productAPIRes.productColor[0].imageURL.map(
                           (data: any, index: number) => (
-                            // <Box key={index} sx={{ width: "100%", height: "auto" }}>
                             <img
-                            key={data}
+                              key={data}
                               src={data}
                               alt="mobile banner"
-                              // width={100}
-                              // height={500}
-                              // onLoadingComplete={(img) => {
-                              //   setBannerHeight(img.naturalHeight);
-                              //   setBannerWidth(img.naturalWidth);
-                              // }}
-                              // layout="fill"
-                              // objectFit="cover"
                               style={{ width: "100vh", height: "auto" }}
                             />
-                            // </Box>
                           )
                         )}
                       </Slider>
@@ -784,11 +738,11 @@ const Product = (props: any) => {
               display="flex"
               flexDirection="column"
               alignItems="flex-start"
-              gap={isMobile ? "1rem" : "2.4rem"}
-              width={isMobile ? "100%" : "45%"}
-              marginLeft={isMobile ? 0 : "0rem"}
-              marginTop={isMobile ? 0 : "5rem"}
-              padding={isMobile ? "0 2rem" : ""}
+              gap={isMobile || isTablet ? "1rem" : "2.4rem"}
+              width={isMobile|| isTablet ? "100%" : "45%"}
+              marginLeft={isMobile|| isTablet ? 0 : "0rem"}
+              marginTop={isMobile|| isTablet ? 0 : "5rem"}
+              padding={isMobile|| isTablet ? "0 2rem" : ""}
             >
               <Box
                 display="flex"
@@ -2569,18 +2523,18 @@ const Product = (props: any) => {
                   : darkColor.text.primary
               }
               textAlign="center"
-              fontSize={isMobile ? "2.2rem" : "2.8rem"}
+              fontSize={isMobile ? "1.8rem" : "2.8rem"}
               fontStyle="normal"
               fontWeight="700"
               lineHeight="normal"
               letterSpacing="0.05rem"
-              margin={isMobile ? "4rem 0" : "6rem 0"}
+              margin={isMobile || isTablet ? "4rem 0 1rem 2rem" : "6rem 0"}
             >
               Products related to this item
             </Typography>
           </Box>
 
-          {isMobile ? (
+          {isMobile || isTablet ? (
             <Grid padding="0 2rem" container spacing={1}>
               {relatedProductAppear ? (
                 [...Array(4)].map((_, index) => (
@@ -2607,8 +2561,6 @@ const Product = (props: any) => {
                     sm={4}
                     sx={{
                       display: "flex",
-                      // justifyContent: "center",
-                      // alignItems: "center",
                     }}
                   >
                     <ProductCardSkeleton />
@@ -2634,53 +2586,6 @@ const Product = (props: any) => {
                 ))
               )}
             </Grid>
-          ) : isTablet ? (
-            // is tablet size is active
-            <Box
-              sx={{
-                overflowY: "hidden",
-              }}
-            >
-              <Box display="flex" gap="1rem">
-                {relatedProductAppear ? (
-                  [...Array(4)].map((data, index) => {
-                    return (
-                      <Grid
-                        key={`${index}+ProductCardOnSaleSkeleton`}
-                        item
-                        xs={3}
-                      >
-                        <ProductCardSkeleton />
-                      </Grid>
-                    );
-                  })
-                ) : isByCategoryProductLoading ? (
-                  [...Array(4)].map((data, index) => {
-                    return (
-                      <Grid
-                        key={`${index}+ProductCardOnSaleSkeleton`}
-                        item
-                        xs={3}
-                      >
-                        <ProductCardSkeleton />
-                      </Grid>
-                    );
-                  })
-                ) : byCategoryProductApiRes.length === 0 ? (
-                  <Box width="100%" textAlign="center">
-                    <NoProduct isMobile={isMobile} />
-                  </Box>
-                ) : (
-                  byCategoryProductApiRes.slice(0, 4).map((data, index) => {
-                    return (
-                      <Box key={data._id}>
-                        <Card data={data} index={index} isHomePage={true} />
-                      </Box>
-                    );
-                  })
-                )}
-              </Box>
-            </Box>
           ) : (
             // is desktop size is active
             <Grid container spacing={2} height="52.1rem">

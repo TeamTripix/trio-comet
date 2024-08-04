@@ -6,6 +6,7 @@ import { themeToggle } from "./reducers/themeToggle";
 import { orderData } from "./reducers/orderAction";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import { screenSize } from "./reducers/responsive";
 import { combineReducers } from "redux";
 
 import thunk from "redux-thunk";
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
   totalCost,
   searchToggle,
   themeToggle,
-  orderData
+  orderData,
+  screenSize
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

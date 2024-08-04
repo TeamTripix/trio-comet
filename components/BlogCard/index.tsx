@@ -19,7 +19,7 @@ const Index = (props: any) => {
     <Link href={`/blog/${slug}`}>
       <Box
         display="flex"
-        width={isMobile ? "90vw" : isTablet ? "43.7rem" : "70%"}
+        width={"100%"}
         height={"auto"}
         flexDirection="column"
         justifyContent="center"
@@ -30,10 +30,11 @@ const Index = (props: any) => {
         }
         bgcolor={theme === "light" ? lightColor.cardBG : darkColor.cardBG}
         overflow="hidden"
-        marginLeft={isHomePage ? (isMobile ? "auto" : index === 0 ? "2rem" : 0) : "7rem"}
-        marginRight={isHomePage ? (isMobile ? "auto" : index === 2 ? "2rem" : 0) : "7rem"}
-        marginTop={isMobile ? "1rem" : 0}
-        marginBottom={isMobile ? "1rem" : 0}>
+        // marginLeft={isHomePage ? (isMobile ? "auto" : index === 0 ? "2rem" : 0) : "7rem"}
+        // marginRight={isHomePage ? (isMobile ? "auto" : index === 2 ? "2rem" : 0) : "7rem"}
+        // marginTop={isMobile ? "1rem" : 0}
+        // marginBottom={isMobile ? "1rem" : 0}
+        >
         <Box width="100%" height="auto">
           <Image
             src={banner}

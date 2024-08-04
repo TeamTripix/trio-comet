@@ -6,7 +6,7 @@ import { lightColor, darkColor } from "@/utils/CustomTheme/color";
 import Card from "@components/Card";
 import axios from "axios";
 import BreadCrumb from "@components/BreadCrumb";
-import { useMobile } from "@/utils/responsive";
+import { useMobile, useTablet } from "@/utils/responsive";
 import ProductCardSkeleton from "@components/Skeleton/ProductCardSkeleton";
 import NoProduct from "../../../icons/noProduct";
 import { useSearchParams } from "next/navigation";
@@ -22,6 +22,7 @@ const Search = (props: any) => {
   const [productApiRes, setProductApiRes] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const isMobile = useMobile();
+  const isTablet = useTablet();
   const pathname = usePathname();
   const toggleState = useSelector((state: any) => state.searchToggle);
   const theme: any = useSelector<any>((state) => state.themeToggle);
@@ -96,42 +97,101 @@ const Search = (props: any) => {
           </Typography>
         </Box> */}
 
-        <Grid
-          justifyContent="center"
-          padding="0 0.5rem"
-          container
-          spacing={isMobile ? 0.5 : 2}>
-          {isLoading ? (
-            [...Array(4)].map((data, index: number) => {
-              return (
-                <Grid
-                  key={`${index}+ProductCardNewArrivalsSkeleton`}
-                  item
-                  // xs={3}
-                  margin={isMobile ? "1rem 0" : "5rem 0rem"}
-                  justifyItems="center">
-                  <ProductCardSkeleton />
-                </Grid>
-              );
-            })
-          ) : productApiRes.length === 0 ? (
-            <Box width="100%" textAlign="center">
-              <NoProduct isMobile={isMobile} />
-            </Box>
-          ) : (
-            productApiRes.map((data) => {
-              return (
-                <Grid
-                  key={data._id}
-                  item
-                  margin={isMobile ? "1rem 0" : "5rem 0rem"}
-                  justifyItems="center">
-                  <Card fullDetailCard={true} data={data} />
-                </Grid>
-              );
-            })
-          )}
-        </Grid>
+
+        {isMobile || isTablet? (
+              // is mobile and tablet size is active
+              <Grid
+                container
+                justifyContent="center"
+                padding="0 2rem"
+                spacing={0.5}
+              >
+                {isLoading ? (
+                  [...Array(4)].map((data, index) => {
+                    return (
+                      <Grid
+                        key={`${index}+ProductCardOnSaleSkeletonMobile`}
+                        item
+                        xs={6}
+                        sm={4}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <ProductCardSkeleton />
+                      </Grid>
+                    );
+                  })
+                ) : productApiRes.length === 0 ? (
+                  <Box width="100%" textAlign="center">
+                    <NoProduct isMobile={isMobile} />
+                  </Box>
+                ) : (
+                  productApiRes.map((data, index) => {
+                    return (
+                        <Grid
+                          item
+                          xs={6}
+                          sm={4}
+                          key={data._id}
+                          margin="1rem 0"
+                          justifyItems="center"
+                        >
+                          <Card data={data} index={index} />
+                        </Grid>
+                    );
+                  })
+                )}
+              </Grid>
+            ) : 
+             (
+              // is desktop size is active
+              <Grid container spacing={2}>
+                {isLoading ? (
+                  [...Array(8)].map((data, index) => {
+                    return (
+                      <Grid
+                        key={`${index}+ProductCardOnSaleSkeleton`}
+                        item
+                        xs={3}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <ProductCardSkeleton />
+                      </Grid>
+                    );
+                  })
+                ) : productApiRes.length === 0 ? (
+                  <Box width="100%" textAlign="center">
+                    <NoProduct />
+                  </Box>
+                ) : (
+                  productApiRes.slice(0, 8).map((data, index) => {
+                    return (
+                      <>
+                        <Grid
+                          key={data._id}
+                          item
+                          xs={3}
+                          sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Card data={data} isHomePage={true} />
+                        </Grid>
+                      </>
+                    );
+                  })
+                )}
+              </Grid>
+            )}
       </PageSpacing>
     </>
   );

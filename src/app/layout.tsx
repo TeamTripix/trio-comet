@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import Head from "next/head";
-import Script from "next/script";
 import { ReduxProvider } from "./ReduxProvider";
 import AuthProvider from "./AuthProvider";
 import { ThemeProvider } from "@mui/material/styles";
 import { LightTheme } from "@/utils/CustomTheme";
-import "./globals.css"
+import "./globals.css";
 import { CssBaseline } from "@mui/material";
 import Navbar from "@components/Navbar";
 import BlackBanner from "@components/BlackBanner";
@@ -13,7 +12,7 @@ import Footer from "@components/Footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { EdgeStoreProvider } from "@components/EdgeStore";
-
+import LoaderProvider from "./LoaderProvider";
 
 export const metadata: Metadata = {
   title: "Online Fashion Shopping for Men | Buy Mens Clothing – Triocomet",
@@ -38,34 +37,47 @@ export default function RootLayout({
           ></iframe>
         </noscript>
       </Head>
-      <ReduxProvider>
-        <AuthProvider>
-          <CssBaseline />
-          <ThemeProvider theme={LightTheme}>
-            <EdgeStoreProvider>
-              <body>
-                <BlackBanner />
-                <Navbar />
-                {children}
-                <Footer />
-                {/* toaster container */}
-                <ToastContainer
-                  position="bottom-left"
-                  autoClose={3000}
-                  hideProgressBar
-                  newestOnTop={false}
-                  closeOnClick
-                  rtl={false}
-                  pauseOnFocusLoss
-                  draggable
-                  pauseOnHover
-                  theme="light"
-                />
-              </body>
-            </EdgeStoreProvider>
-          </ThemeProvider>
-        </AuthProvider>
-      </ReduxProvider>
+      <LoaderProvider>
+        <ReduxProvider>
+          <AuthProvider>
+            <CssBaseline />
+            <ThemeProvider theme={LightTheme}>
+              <EdgeStoreProvider>
+                {/* <NextTopLoader
+                color="black"
+                initialPosition={0.08}
+                crawlSpeed={200}
+                height={3}
+                crawl={true}
+                easing="ease"
+                speed={200}
+                template="loader...."
+              /> */}
+                {/* <ScreenProvider/> */}
+                <body>
+                  <BlackBanner />
+                  <Navbar />
+                  {children}
+                  <Footer />
+                  {/* toaster container */}
+                  <ToastContainer
+                    position="bottom-left"
+                    autoClose={3000}
+                    hideProgressBar
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                  />
+                </body>
+              </EdgeStoreProvider>
+            </ThemeProvider>
+          </AuthProvider>
+        </ReduxProvider>
+      </LoaderProvider>
     </html>
   );
 }

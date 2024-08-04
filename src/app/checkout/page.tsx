@@ -10,7 +10,10 @@ import {
   StepLabel,
   Button,
   CssBaseline,
-  CircularProgress
+  CircularProgress,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
 } from "@mui/material";
 import AddressForm from "@components/AddressForm";
 import PaymentForm from "@components/PaymentForm";
@@ -21,6 +24,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 // import { orderDataAction } from "../../../reducers/orderAction";
 import { toast } from "react-toastify";
+import { useRouter } from 'next/navigation'
 
 const steps = ["Shipping address", "Review your order", "Payment"];
 const defaultState = {
@@ -45,16 +49,38 @@ const defaultErrorState = {
   countryError: false,
   phoneNumberError: false,
 };
-function getStepContent(step: number, setState: any, iState: any, errorState: any, setErrorState: any) {
-
+function getStepContent(
+  step: number,
+  setState: any,
+  iState: any,
+  errorState: any,
+  setErrorState: any,
+  paymentMethod: string,
+  setPaymentMethod: any
+) {
   const { firstName, lastName, address1, address2, city, state, zip, country } =
     iState;
 
   switch (step) {
     case 0:
-      return <AddressForm setState={setState} iState={iState} errorState={errorState} setErrorState={setErrorState} />;
+      return (
+        <AddressForm
+          setState={setState}
+          iState={iState}
+          errorState={errorState}
+          setErrorState={setErrorState}
+        />
+      );
     case 1:
-      return <ReviewOrder address1={address1} address2={address2} />;
+      return (
+        <ReviewOrder
+          address1={address1}
+          address2={address2}
+          paymentRadioValue={paymentMethod}
+          handlePaymentMethodChange={setPaymentMethod}
+
+        />
+      );
     case 2:
       return "";
     default:
@@ -66,10 +92,12 @@ function Checkout() {
   const [activeStep, setActiveStep] = useState(0);
   const [iState, setState] = useState(defaultState);
   const [errorState, setErrorState] = useState(defaultErrorState);
-  const [isPlaceOrderLoading,setIsPlaceOrderLoading] = useState(false)
+  const [isPlaceOrderLoading, setIsPlaceOrderLoading] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("prepaid");
   const cartData: any = useSelector<any>((state) => state.addToCart.cartData);
   const totalPrice: any = useSelector<any>((state) => state.totalCost);
   const dispatch = useDispatch();
+  const router = useRouter()
   const {
     firstName,
     lastName,
@@ -82,49 +110,48 @@ function Checkout() {
     phoneNumber,
   } = iState;
 
-
   const formValidation = () => {
-    let isFormValid = true
-    let firstNameError = false
-    let lastNameError = false
-    let address1Error = false
-    let cityError = false
-    let stateError = false
-    let zipError = false
-    let countryError = false
-    let phoneNumberError = false
-    setErrorState(defaultErrorState)
+    let isFormValid = true;
+    let firstNameError = false;
+    let lastNameError = false;
+    let address1Error = false;
+    let cityError = false;
+    let stateError = false;
+    let zipError = false;
+    let countryError = false;
+    let phoneNumberError = false;
+    setErrorState(defaultErrorState);
     if (!firstName.trim()) {
-      firstNameError = true
-      isFormValid = false
+      firstNameError = true;
+      isFormValid = false;
     }
     if (!lastName) {
-      lastNameError = true
-      isFormValid = false
+      lastNameError = true;
+      isFormValid = false;
     }
     if (!address1) {
-      address1Error = true
-      isFormValid = false
+      address1Error = true;
+      isFormValid = false;
     }
     if (!phoneNumber) {
-      phoneNumberError = true
-      isFormValid = false
+      phoneNumberError = true;
+      isFormValid = false;
     }
     if (!city) {
-      cityError = true
-      isFormValid = false
+      cityError = true;
+      isFormValid = false;
     }
     if (!zip) {
-      zipError = true
-      isFormValid = false
+      zipError = true;
+      isFormValid = false;
     }
     if (!state) {
-      stateError = true
-      isFormValid = false
+      stateError = true;
+      isFormValid = false;
     }
     if (!country) {
-      countryError = true
-      isFormValid = false
+      countryError = true;
+      isFormValid = false;
     }
     setErrorState({
       firstNameError,
@@ -135,9 +162,9 @@ function Checkout() {
       zipError,
       countryError,
       phoneNumberError,
-    })
-    return isFormValid
-  }
+    });
+    return isFormValid;
+  };
 
   const productArray: any = [];
 
@@ -174,10 +201,10 @@ function Checkout() {
   }
 
   const handleNext = () => {
-    const isFormValid = formValidation()
+    const isFormValid = formValidation();
     if (!isFormValid) {
       // toast.error("please fill the form properly")
-      return
+      return;
     }
     setActiveStep(activeStep + 1);
   };
@@ -187,7 +214,7 @@ function Checkout() {
   };
 
   const handlePaymentBTN = async () => {
-    setIsPlaceOrderLoading(true)
+    setIsPlaceOrderLoading(true);
     const data = {
       name: `${firstName} ${lastName}`,
       amount: totalPrice,
@@ -230,12 +257,12 @@ function Checkout() {
       // shipping_email: "",
       // shipping_phone: "",
       order_items: productArray,
-      payment_method: "prepaid",
+      payment_method: paymentMethod,
       // shipping_charges: "",
       // giftwrap_charges: "",
       // transaction_charges: "",
       // total_discount: "",
-      sub_total: "10",
+      sub_total: totalPrice,
       length: 0.5,
       breadth: 0.5,
       height: 0.5,
@@ -247,6 +274,12 @@ function Checkout() {
     };
 
     dispatch({ type: "ADD_ORDER_DATA", payload: orderData });
+
+    if(paymentMethod==="cod"){
+      router.push(`/booking?id=${orderID}`, { scroll: false })
+      return
+    }
+
     axios
       .post("/api/payment", { ...data })
       .then((res) => {
@@ -288,7 +321,15 @@ function Checkout() {
               </Typography>
             ) : (
               <>
-                {getStepContent(activeStep, setState, iState, errorState, setErrorState)}
+                {getStepContent(
+                  activeStep,
+                  setState,
+                  iState,
+                  errorState,
+                  setErrorState,
+                  paymentMethod,
+                  setPaymentMethod
+                )}
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
@@ -302,7 +343,11 @@ function Checkout() {
                       onClick={handlePaymentBTN}
                       sx={{ mt: 3, ml: 1 }}
                     >
-                      {isPlaceOrderLoading ? <CircularProgress size={25}/> : "Place order"}
+                      {isPlaceOrderLoading ? (
+                        <CircularProgress size={25} />
+                      ) : (
+                        "Place order"
+                      )}
                     </Button>
                   ) : (
                     <Button

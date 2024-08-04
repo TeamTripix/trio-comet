@@ -6,13 +6,14 @@ import { Box, CircularProgress, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 import Image from "next/image";
 import { useTablet, useMobile } from "../../utils/responsive";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const Page = () => {
   const isMobile = useMobile();
   const data: any = useSelector<any>((state) => state.orderData);
   const queryParams = useSearchParams();
   const merchantID = queryParams.get("id");
+  const router = useRouter()
   const LoadingContainer = styled(Box)({
     display: "flex",
     flexDirection: "column",
@@ -29,7 +30,9 @@ const Page = () => {
       data: { merchantID, data },
     })
       .then((response) => {
+        console.log(response)
         if (response.data.success) {
+          router.push(`/order`, { scroll: false })
           // setIsLoading(false);
           // setOpenOTPDialogBox(true);
           // toast(response.data.message);
@@ -41,7 +44,7 @@ const Page = () => {
       .catch((err) => {
         // toast("some error occured");
         // setIsLoading(false);
-        console.log(err);
+        console.log("error : ",err);
       });
   }, []);
   return (

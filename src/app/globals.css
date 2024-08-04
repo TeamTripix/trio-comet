@@ -236,6 +236,10 @@ a {
   text-align: center;
 }
 
+.mobileBanner ul{
+  bottom: -15px !important;
+}
+
 @media(max-width: 600px) {
   .footer-text{
     font-weight: 100;

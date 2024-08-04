@@ -23,7 +23,7 @@ import {
   WhatsappIcon,
   LinkedinIcon,
   WhatsappShareButton,
-} from 'next-share';
+} from "next-share";
 
 const Blog = ({ params }: { params: { slug: string } }) => {
   const queryParams = useSearchParams();
@@ -66,11 +66,16 @@ const Blog = ({ params }: { params: { slug: string } }) => {
         "loading..."
       ) : (
         <>
-          <PageSpacing>
-            <Box margin="1.7rem 1rem">
-              <BreadCrumb />
-            </Box>
-          </PageSpacing>
+          {isMobile ? (
+            ""
+          ) : (
+            <PageSpacing>
+              <Box margin="1.7rem 1rem">
+                <BreadCrumb />
+              </Box>
+            </PageSpacing>
+          )}
+
           <Grid container spacing={2}>
             {isMobile || isTablet ? (
               <>
@@ -87,7 +92,7 @@ const Blog = ({ params }: { params: { slug: string } }) => {
                   >
                     <Box>
                       <Typography
-                      variant="h1"
+                        variant="h1"
                         color={
                           theme === "light"
                             ? lightColor.text.primary
@@ -98,7 +103,8 @@ const Blog = ({ params }: { params: { slug: string } }) => {
                         fontStyle="normal"
                         fontWeight="700"
                         lineHeight="normal"
-                        letterSpacing="0.05rem">
+                        letterSpacing="0.05rem"
+                      >
                         {blogApiRes[0].heading}
                       </Typography>
                     </Box>
@@ -116,7 +122,8 @@ const Blog = ({ params }: { params: { slug: string } }) => {
                         display="flex"
                         flexDirection="column"
                         gap="2.2rem"
-                        padding="0 1rem">
+                        padding="0 1rem"
+                      >
                         <Typography
                           color={
                             theme === "light"
@@ -129,23 +136,27 @@ const Blog = ({ params }: { params: { slug: string } }) => {
                           fontWeight="500"
                           lineHeight="normal"
                           letterSpacing="0.02rem"
-                          padding="0 2rem">
+                          padding="0 2rem"
+                        >
                           15/01/2024
                         </Typography>
                         <Typography
                           style={{
-                            wordWrap: 'break-word',
-                            overflowWrap: 'break-word',
-                            width: isMobile ? '90vw' : '100%',
-                            boxSizing: 'border-box',
-                            marginLeft: isMobile ? '5vw' : '0',
+                            wordWrap: "break-word",
+                            overflowWrap: "break-word",
+                            width: isMobile ? "90vw" : "100%",
+                            boxSizing: "border-box",
+                            marginLeft: isMobile ? "5vw" : "0",
                           }}
-                          color={theme === "light"
-                            ? lightColor.text.primary
-                            : darkColor.text.primary}
+                          color={
+                            theme === "light"
+                              ? lightColor.text.primary
+                              : darkColor.text.primary
+                          }
                           dangerouslySetInnerHTML={{
                             __html: blogApiRes[0].desc,
-                          }}></Typography>
+                          }}
+                        ></Typography>
                       </Box>
                     </PageSpacing>
                   </Box>
@@ -157,7 +168,7 @@ const Blog = ({ params }: { params: { slug: string } }) => {
                     flexDirection="column"
                     padding="auto"
                     margin="auto"
-                    alignItems={'center'}
+                    alignItems={"center"}
                   >
                     <Typography
                       color={
@@ -171,42 +182,55 @@ const Blog = ({ params }: { params: { slug: string } }) => {
                       fontWeight="500"
                       lineHeight="normal"
                       letterSpacing="0.02rem"
-                      display={'flex'}
+                      display={"flex"}
                       gap={1}
-                      flexDirection={'row'}>
+                      flexDirection={"row"}
+                    >
                       <FacebookShareButton
-                        url={'https://github.com/next-share'}
-                        quote={'next-share is a social share buttons for your next React apps.'}
-                        hashtag={'#nextshare'}
+                        url={"https://github.com/next-share"}
+                        quote={
+                          "next-share is a social share buttons for your next React apps."
+                        }
+                        hashtag={"#nextshare"}
                       >
                         <FacebookIcon size={32} round />
                       </FacebookShareButton>
                       <PinterestShareButton
-                        url={'https://github.com/next-share'}
-                        media={'next-share is a social share buttons for your next React apps.'}
+                        url={"https://github.com/next-share"}
+                        media={
+                          "next-share is a social share buttons for your next React apps."
+                        }
                       >
                         <PinterestIcon size={32} round />
                       </PinterestShareButton>
                       <TelegramShareButton
-                        url={'https://github.com/next-share'}
-                        title={'next-share is a social share buttons for your next React apps.'}
+                        url={"https://github.com/next-share"}
+                        title={
+                          "next-share is a social share buttons for your next React apps."
+                        }
                       >
                         <TelegramIcon size={32} round />
                       </TelegramShareButton>
                       <TwitterShareButton
-                        url={'https://github.com/next-share'}
-                        title={'next-share is a social share buttons for your next React apps.'}
+                        url={"https://github.com/next-share"}
+                        title={
+                          "next-share is a social share buttons for your next React apps."
+                        }
                       >
                         <TwitterIcon size={32} round />
                       </TwitterShareButton>
                       <WhatsappShareButton
-                        url={'https://github.com/next-share'}
-                        title={'next-share is a social share buttons for your next React apps.'}
+                        url={"https://github.com/next-share"}
+                        title={
+                          "next-share is a social share buttons for your next React apps."
+                        }
                         separator=":: "
                       >
                         <WhatsappIcon size={32} round />
                       </WhatsappShareButton>
-                      <LinkedinShareButton url={'https://github.com/next-share'}>
+                      <LinkedinShareButton
+                        url={"https://github.com/next-share"}
+                      >
                         <LinkedinIcon size={32} round />
                       </LinkedinShareButton>
                     </Typography>
@@ -241,10 +265,10 @@ const Blog = ({ params }: { params: { slug: string } }) => {
                           {otherBlogsData.length === 0
                             ? "No other blogs found."
                             : otherBlogsData.map((blog, index) => (
-                              <Grid key={`blog-${index}`} item xs={12}>
-                                <BlogCard data={blog} />
-                              </Grid>
-                            ))}
+                                <Grid key={`blog-${index}`} item xs={12}>
+                                  <BlogCard data={blog} />
+                                </Grid>
+                              ))}
                         </Grid>
                       )}
                     </Typography>
@@ -253,7 +277,6 @@ const Blog = ({ params }: { params: { slug: string } }) => {
               </>
             ) : (
               <>
-
                 <Grid item xs={12} md={2}>
                   <Box
                     display="flex"
@@ -273,41 +296,54 @@ const Blog = ({ params }: { params: { slug: string } }) => {
                       fontWeight="500"
                       lineHeight="normal"
                       letterSpacing="0.02rem"
-                      display={'flex'}
-                      flexDirection={'column'}>
+                      display={"flex"}
+                      flexDirection={"column"}
+                    >
                       <FacebookShareButton
-                        url={'https://github.com/next-share'}
-                        quote={'next-share is a social share buttons for your next React apps.'}
-                        hashtag={'#nextshare'}
+                        url={"https://github.com/next-share"}
+                        quote={
+                          "next-share is a social share buttons for your next React apps."
+                        }
+                        hashtag={"#nextshare"}
                       >
                         <FacebookIcon size={32} round />
                       </FacebookShareButton>
                       <PinterestShareButton
-                        url={'https://github.com/next-share'}
-                        media={'next-share is a social share buttons for your next React apps.'}
+                        url={"https://github.com/next-share"}
+                        media={
+                          "next-share is a social share buttons for your next React apps."
+                        }
                       >
                         <PinterestIcon size={32} round />
                       </PinterestShareButton>
                       <TelegramShareButton
-                        url={'https://github.com/next-share'}
-                        title={'next-share is a social share buttons for your next React apps.'}
+                        url={"https://github.com/next-share"}
+                        title={
+                          "next-share is a social share buttons for your next React apps."
+                        }
                       >
                         <TelegramIcon size={32} round />
                       </TelegramShareButton>
                       <TwitterShareButton
-                        url={'https://github.com/next-share'}
-                        title={'next-share is a social share buttons for your next React apps.'}
+                        url={"https://github.com/next-share"}
+                        title={
+                          "next-share is a social share buttons for your next React apps."
+                        }
                       >
                         <TwitterIcon size={32} round />
                       </TwitterShareButton>
                       <WhatsappShareButton
-                        url={'https://github.com/next-share'}
-                        title={'next-share is a social share buttons for your next React apps.'}
+                        url={"https://github.com/next-share"}
+                        title={
+                          "next-share is a social share buttons for your next React apps."
+                        }
                         separator=":: "
                       >
                         <WhatsappIcon size={32} round />
                       </WhatsappShareButton>
-                      <LinkedinShareButton url={'https://github.com/next-share'}>
+                      <LinkedinShareButton
+                        url={"https://github.com/next-share"}
+                      >
                         <LinkedinIcon size={32} round />
                       </LinkedinShareButton>
                     </Typography>
@@ -327,7 +363,7 @@ const Blog = ({ params }: { params: { slug: string } }) => {
                   >
                     <Box>
                       <Typography
-                      variant="h1"
+                        variant="h1"
                         color={
                           theme === "light"
                             ? lightColor.text.primary
@@ -338,7 +374,8 @@ const Blog = ({ params }: { params: { slug: string } }) => {
                         fontStyle="normal"
                         fontWeight="700"
                         lineHeight="normal"
-                        letterSpacing="0.05rem">
+                        letterSpacing="0.05rem"
+                      >
                         {blogApiRes[0].heading}
                       </Typography>
                     </Box>
@@ -352,10 +389,7 @@ const Blog = ({ params }: { params: { slug: string } }) => {
                       />
                     </Box>
                     <PageSpacing>
-                      <Box
-                        display="flex"
-                        flexDirection="column"
-                        gap="2.2rem">
+                      <Box display="flex" flexDirection="column" gap="2.2rem">
                         <Typography
                           color={
                             theme === "light"
@@ -367,28 +401,32 @@ const Blog = ({ params }: { params: { slug: string } }) => {
                           fontStyle="normal"
                           fontWeight="500"
                           lineHeight="normal"
-                          letterSpacing="0.02rem">
+                          letterSpacing="0.02rem"
+                        >
                           15/01/2024
                         </Typography>
                         <Typography
                           textAlign="left"
                           style={{
-                            wordWrap: 'break-word',
-                            overflowWrap: 'break-word',
-                            width: '100%',
-                            boxSizing: 'border-box',
+                            wordWrap: "break-word",
+                            overflowWrap: "break-word",
+                            width: "100%",
+                            boxSizing: "border-box",
                           }}
-                          color={theme === "light"
-                            ? lightColor.text.primary
-                            : darkColor.text.primary}
+                          color={
+                            theme === "light"
+                              ? lightColor.text.primary
+                              : darkColor.text.primary
+                          }
                           dangerouslySetInnerHTML={{
                             __html: blogApiRes[0].desc,
-                          }}></Typography>
+                          }}
+                        ></Typography>
                       </Box>
                     </PageSpacing>
                   </Box>
                 </Grid>
-                
+
                 <Grid item xs={12} md={3}>
                   <Box
                     display="flex"
@@ -415,10 +453,10 @@ const Blog = ({ params }: { params: { slug: string } }) => {
                           {otherBlogsData.length === 0
                             ? "No other blogs found."
                             : otherBlogsData.map((blog, index) => (
-                              <Grid key={`blog-${index}`} item xs={12}>
-                                <BlogCard data={blog} />
-                              </Grid>
-                            ))}
+                                <Grid key={`blog-${index}`} item xs={12}>
+                                  <BlogCard data={blog} />
+                                </Grid>
+                              ))}
                         </Grid>
                       )}
                     </Typography>

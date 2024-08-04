@@ -36,46 +36,57 @@ const BlogCollection = ({ params }: { params: { slug: string } }) => {
   return (
     <>
       <PageSpacing>
-        <Box paddingLeft={isMobile || isTablet ? "1rem" : "2rem"} marginTop="2rem">
-          <BreadCrumb />
-        </Box>
+        {isMobile ? (
+          ""
+        ) : (
+          <Box
+            paddingLeft={isMobile || isTablet ? "1rem" : "2rem"}
+            marginTop="2rem"
+          >
+            <BreadCrumb />
+          </Box>
+        )}
 
-        <Box paddingLeft={isMobile || isTablet ? "1rem" : "2rem"} margin="2rem 0">
+        <Box
+          paddingLeft={isMobile || isTablet ? "1rem" : "2rem"}
+          margin="2rem 0"
+        >
           <Typography
             color={
               theme === "light"
                 ? lightColor.text.primary
                 : darkColor.text.primary
             }
-            fontSize="2.8rem"
+            fontSize={isMobile ? "2rem" : "2.8rem" }
             fontStyle="normal"
             fontWeight="700"
             lineHeight="normal"
-            letterSpacing="0.02rem">
+            letterSpacing="0.02rem"
+            margin={isMobile || isTablet ? "0 1rem" : 0 }
+          >
             {"Blogs"}
           </Typography>
         </Box>
 
-        <Grid container spacing={isMobile ? 2 : 4}>
+        <Grid container spacing={isMobile || isTablet ? 2 : 4}>
           {isLoading === true
             ? [...Array(3)].map((data, index) => {
-              return (
-                <Grid
-                  key={`${index}+BlogCardSkeleton`}
-                  item
-                  xs={isMobile ? 12 : isTablet ? 6 : 4}
-                  display="flex"
-                  justifyContent="center"
-                >
-                  <ProductCardSkeleton />
-                </Grid>
-              );
-            })
-            : blogApiRes.length === 0
-              ? "no blog found"
-              : blogApiRes.map((data, index) => {
                 return (
-                  isMobile ? 
+                  <Grid
+                    key={`${index}+BlogCardSkeleton`}
+                    item
+                    xs={isMobile || isTablet ? 12  : 4}
+                    display="flex"
+                    justifyContent="center"
+                  >
+                    <ProductCardSkeleton />
+                  </Grid>
+                );
+              })
+            : blogApiRes.length === 0
+            ? "no blog found"
+            : blogApiRes.map((data, index) => {
+                return isMobile ? (
                   <Grid
                     key={`${index}blog`}
                     item
@@ -86,12 +97,13 @@ const BlogCollection = ({ params }: { params: { slug: string } }) => {
                   >
                     <BlogCard data={data} />
                   </Grid>
-                  :
+                ) : (
                   <Grid
                     key={`${index}blog`}
                     item
                     xs={isTablet ? 6 : 4}
-                    margin={"3rem 0"}
+                    justifyContent="center"
+                    alignItems="center"
                   >
                     <BlogCard data={data} />
                   </Grid>
