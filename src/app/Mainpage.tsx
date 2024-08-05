@@ -221,7 +221,7 @@ export default function Home(props: any) {
   const categorySettings = {
     dots: true,
     // centerPadding: 0,
-    // arrows: false,
+    arrows: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -549,7 +549,7 @@ export default function Home(props: any) {
                     <NoProduct isMobile={isMobile} />
                   </Box>
                 ) : (
-                  newDropApiRes.slice(0, isTablet ? 6 : 4).map((data, index) => {
+                  newDropApiRes.slice(0, isTablet && isMobile ? 6 : 4).map((data, index) => {
                     return (
                         <Grid
                           item
@@ -947,7 +947,7 @@ export default function Home(props: any) {
               </Box>
             ) :  (
               // is desktop size is active
-              <Grid container spacing={0}>
+              <Grid container spacing={3}>
                 {isBlogLoading ? (
                   [...Array(3)].map((data, index) => {
                     return (

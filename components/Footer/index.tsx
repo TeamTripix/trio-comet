@@ -328,7 +328,7 @@ const Index = () => {
                     <Box display="flex" flexWrap="wrap" alignItems="center">
                       <Link
                         target="_blank"
-                        href="https://facebook.com/profile.php?id=100090222109795"
+                        href=" https://www.facebook.com/triocometcom"
                       >
                         <Box>
                           <svg
@@ -364,7 +364,7 @@ const Index = () => {
                       <Typography mx={1}></Typography>
                       <Link
                         target="_blank"
-                        href="https://www.instagram.com/royalmobisol_india?igsh=bnd6NTZxc2RsMDMy&utm_source=qr"
+                        href="https://www.instagram.com/triocomet/"
                       >
                         <Box>
                           <svg
@@ -386,7 +386,7 @@ const Index = () => {
                         </Box>
                       </Link>
                       <Typography mx={1}></Typography>
-                      <Link
+                      {/* <Link
                         target="_blank"
                         href="https://youtube.com/@royalmobisol_india2159?si=gYtU-4Aq07kl_1ON"
                       >
@@ -409,49 +409,51 @@ const Index = () => {
                           </svg>
                         </Box>
                       </Link>
-                      <Typography mx={1}></Typography>
-                      <Box>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="20"
-                          height="20"
-                          viewBox="0 0 30 29"
-                          fill="none"
-                        >
-                          <g clipPath="url(#clip0_445_787)">
-                            <path
-                              d="M15.0002 28.9997C23.0083 28.9997 29.5001 22.5079 29.5001 14.4999C29.5001 6.49181 23.0083 0 15.0002 0C6.99218 0 0.500366 6.49181 0.500366 14.4999C0.500366 22.5079 6.99218 28.9997 15.0002 28.9997Z"
-                              fill={
-                                theme === "dark"
-                                  ? lightColor.text.primary
-                                  : darkColor.text.primary
-                              }
-                            />
-                            <path
-                              d="M23.8819 10.4207C23.2605 10.6962 22.5921 10.8826 21.8911 10.9658C22.6068 10.537 23.1561 9.85851 23.4153 9.04871C22.7456 9.44599 22.0035 9.73419 21.2144 9.88953C20.5822 9.21621 19.6814 8.79541 18.684 8.79541C16.7702 8.79541 15.2181 10.3475 15.2181 12.2613C15.2181 12.5329 15.2488 12.7974 15.3083 13.0512C12.4279 12.9067 9.87387 11.527 8.16432 9.42945C7.86604 9.94122 7.69493 10.537 7.69493 11.1721C7.69493 12.3742 8.30726 13.4355 9.23673 14.0569C8.66886 14.0391 8.13408 13.8832 7.66702 13.6229C7.66676 13.6377 7.66676 13.6524 7.66676 13.6669C7.66676 15.3462 8.86194 16.7468 10.4472 17.065C10.1566 17.1446 9.84983 17.1868 9.53424 17.1868C9.3104 17.1868 9.09354 17.1653 8.88211 17.125C9.32306 18.5016 10.6028 19.5037 12.1198 19.5319C10.9334 20.4616 9.43912 21.0155 7.81487 21.0155C7.53571 21.0155 7.25915 20.9993 6.98853 20.9669C8.52153 21.9507 10.3438 22.5243 12.3009 22.5243C18.6759 22.5243 22.1622 17.2431 22.1622 12.6627C22.1622 12.5125 22.1589 12.3629 22.1522 12.2145C22.8299 11.726 23.4174 11.1157 23.8819 10.4207Z"
-                              fill={
-                                theme === "light"
-                                  ? lightColor.text.primary
-                                  : darkColor.text.white
-                              }
-                            />
-                          </g>
-                          <defs>
-                            <clipPath id="clip0_445_787">
-                              <rect
-                                width="29"
-                                height="29"
-                                fill="white"
-                                transform="translate(0.5)"
+                      <Typography mx={1}></Typography> */}
+                      <Link target="_blank" href="https://x.com/triocomet">
+                        <Box>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 30 29"
+                            fill="none"
+                          >
+                            <g clipPath="url(#clip0_445_787)">
+                              <path
+                                d="M15.0002 28.9997C23.0083 28.9997 29.5001 22.5079 29.5001 14.4999C29.5001 6.49181 23.0083 0 15.0002 0C6.99218 0 0.500366 6.49181 0.500366 14.4999C0.500366 22.5079 6.99218 28.9997 15.0002 28.9997Z"
+                                fill={
+                                  theme === "dark"
+                                    ? lightColor.text.primary
+                                    : darkColor.text.primary
+                                }
                               />
-                            </clipPath>
-                          </defs>
-                        </svg>
-                      </Box>
-                      <Typography mx={1}></Typography>
-                      <Link target="_blank" href={"mailto:info@triocomet.com"}>
-                        <LI theme={!theme}>Email</LI>
+                              <path
+                                d="M23.8819 10.4207C23.2605 10.6962 22.5921 10.8826 21.8911 10.9658C22.6068 10.537 23.1561 9.85851 23.4153 9.04871C22.7456 9.44599 22.0035 9.73419 21.2144 9.88953C20.5822 9.21621 19.6814 8.79541 18.684 8.79541C16.7702 8.79541 15.2181 10.3475 15.2181 12.2613C15.2181 12.5329 15.2488 12.7974 15.3083 13.0512C12.4279 12.9067 9.87387 11.527 8.16432 9.42945C7.86604 9.94122 7.69493 10.537 7.69493 11.1721C7.69493 12.3742 8.30726 13.4355 9.23673 14.0569C8.66886 14.0391 8.13408 13.8832 7.66702 13.6229C7.66676 13.6377 7.66676 13.6524 7.66676 13.6669C7.66676 15.3462 8.86194 16.7468 10.4472 17.065C10.1566 17.1446 9.84983 17.1868 9.53424 17.1868C9.3104 17.1868 9.09354 17.1653 8.88211 17.125C9.32306 18.5016 10.6028 19.5037 12.1198 19.5319C10.9334 20.4616 9.43912 21.0155 7.81487 21.0155C7.53571 21.0155 7.25915 20.9993 6.98853 20.9669C8.52153 21.9507 10.3438 22.5243 12.3009 22.5243C18.6759 22.5243 22.1622 17.2431 22.1622 12.6627C22.1622 12.5125 22.1589 12.3629 22.1522 12.2145C22.8299 11.726 23.4174 11.1157 23.8819 10.4207Z"
+                                fill={
+                                  theme === "light"
+                                    ? lightColor.text.primary
+                                    : darkColor.text.white
+                                }
+                              />
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_445_787">
+                                <rect
+                                  width="29"
+                                  height="29"
+                                  fill="white"
+                                  transform="translate(0.5)"
+                                />
+                              </clipPath>
+                            </defs>
+                          </svg>
+                        </Box>
                       </Link>
+                      <Typography mx={1}></Typography>
+                      {/* <Link target="_blank" href={"mailto:info@triocomet.com"}>
+                        <LI theme={!theme}>Email</LI>
+                      </Link> */}
                     </Box>
                   </Grid>
 
@@ -685,177 +687,186 @@ const Index = () => {
                       </ButtonBase>
                     </Box>
                   </Grid>
-                      <Box width="100vh" bgcolor="white" height="0.5px"></Box>
+                  <Box width="100vh" bgcolor="white" height="0.5px"></Box>
                 </Grid>
               </Grid>
               {pathname === "/" ? (
-            <Box color="white" className="footer-text" marginTop="4rem">
-              <h1>TROCOMET THE ONE STOP SHOP FOR ALL THE MENS CLOTHING</h1>
-              <p>
-                We all know that our fashion has changed in the 21st
-                century.This is also the time where there should be more
-                fashionable choices for men, isn&apos;t it?. Established in 2024
-                with love for new trends in men&apos;s fashion, TrioComet is a
-                Clothing brand for Men that offers amazing clothing options that
-                we can guarantee you would have never seen before. We realize
-                the fact that dressing up in a stylish way is an important part
-                of every one&apos;s day. So, if you want to pick an outfit for
-                an important meeting with your boss, a normal hang out session
-                with friends, or a date with your loved one, our wide range of
-                products will give you all the options that you need to feel
-                confident and stylish.
-              </p>
+                <Box color="white" className="footer-text" marginTop="4rem">
+                  <h1>TROCOMET THE ONE STOP SHOP FOR ALL THE MENS CLOTHING</h1>
+                  <p>
+                    We all know that our fashion has changed in the 21st
+                    century.This is also the time where there should be more
+                    fashionable choices for men, isn&apos;t it?. Established in
+                    2024 with love for new trends in men&apos;s fashion,
+                    TrioComet is a Clothing brand for Men that offers amazing
+                    clothing options that we can guarantee you would have never
+                    seen before. We realize the fact that dressing up in a
+                    stylish way is an important part of every one&apos;s day.
+                    So, if you want to pick an outfit for an important meeting
+                    with your boss, a normal hang out session with friends, or a
+                    date with your loved one, our wide range of products will
+                    give you all the options that you need to feel confident and
+                    stylish.
+                  </p>
 
-              <p>
-                We are a small team of fashion lovers who have come together to
-                offer you the best of what is available on the internet. We love
-                to research trends, invent what is loved by our customers, and
-                deliver fashion statements on our t shirt store that keep
-                evolving as time progresses. Moreover, we are extremely mindful
-                of our impact on the environment. We try our best to keep
-                environmental damage to the absolute minimum and use methods
-                that are eco-friendly.
-              </p>
+                  <p>
+                    We are a small team of fashion lovers who have come together
+                    to offer you the best of what is available on the internet.
+                    We love to research trends, invent what is loved by our
+                    customers, and deliver fashion statements on our t shirt
+                    store that keep evolving as time progresses. Moreover, we
+                    are extremely mindful of our impact on the environment. We
+                    try our best to keep environmental damage to the absolute
+                    minimum and use methods that are eco-friendly.
+                  </p>
 
-              <h2>
-                SIMPLE, QUICK, AND EFFICIENT MENS CLOTHING SHOPPING AT TRIOCOMET
-              </h2>
+                  <h2>
+                    SIMPLE, QUICK, AND EFFICIENT MENS CLOTHING SHOPPING AT
+                    TRIOCOMET
+                  </h2>
 
-              <p>
-                It is no secret that the majority of people love online shopping
-                in India. We have come much farther from the times when we had
-                to go to multiple stores in the real world just to buy a single
-                clothing item. More often than not, we also had to face defeat
-                and come back home empty-handed and disappointed. What&apos;s
-                worse is that there used to be far fewer options back in the
-                day.
-              </p>
+                  <p>
+                    It is no secret that the majority of people love online
+                    shopping in India. We have come much farther from the times
+                    when we had to go to multiple stores in the real world just
+                    to buy a single clothing item. More often than not, we also
+                    had to face defeat and come back home empty-handed and
+                    disappointed. What&apos;s worse is that there used to be far
+                    fewer options back in the day.
+                  </p>
 
-              <p>
-                However, the times have changed. You can now buy clothes online.
-                With the arrival of online fashion, people have had a lot of
-                options and platforms to choose from. In such a world, TrioComet
-                strives to stand out and offer you what is the best of the best.
-                So, if you are looking to dress yourselves with the latest
-                fashion pieces, this is just the platform for you! Browse a wide
-                variety of t-shirts online and a lot more goodies that will
-                change the way you appear. After all, you are defined by what
-                you wear, how you dress, and how people see you. Also, do not
-                miss out on the offers we have in store! This is one of the best
-                places for online fashion shopping for men. Keep coming back to
-                stay up to date with the most exciting offers and discounts!
-              </p>
+                  <p>
+                    However, the times have changed. You can now buy clothes
+                    online. With the arrival of online fashion, people have had
+                    a lot of options and platforms to choose from. In such a
+                    world, TrioComet strives to stand out and offer you what is
+                    the best of the best. So, if you are looking to dress
+                    yourselves with the latest fashion pieces, this is just the
+                    platform for you! Browse a wide variety of t-shirts online
+                    and a lot more goodies that will change the way you appear.
+                    After all, you are defined by what you wear, how you dress,
+                    and how people see you. Also, do not miss out on the offers
+                    we have in store! This is one of the best places for online
+                    fashion shopping for men. Keep coming back to stay up to
+                    date with the most exciting offers and discounts!
+                  </p>
 
-              <h2>ORDERING AND DELIVERY ARE SIMPLER THAN EVER AT TRIOCOMET!</h2>
+                  <h2>
+                    ORDERING AND DELIVERY ARE SIMPLER THAN EVER AT TRIOCOMET!
+                  </h2>
 
-              <p>
-                No matter where you live in India, we will get your favorite
-                products delivered right to your doorstep! Simply explore our
-                website, choose what items you would like to purchase, add them
-                to your cart, and then checkout! Fill in the right address, and
-                we will have t-shirts for men delivered to your house in no
-                time! We offer all kinds of payment options, so you never have
-                to worry about having to pay only a certain way.
-              </p>
+                  <p>
+                    No matter where you live in India, we will get your favorite
+                    products delivered right to your doorstep! Simply explore
+                    our website, choose what items you would like to purchase,
+                    add them to your cart, and then checkout! Fill in the right
+                    address, and we will have t-shirts for men delivered to your
+                    house in no time! We offer all kinds of payment options, so
+                    you never have to worry about having to pay only a certain
+                    way.
+                  </p>
 
-              <p>
-                Don&apos;t like a product? You can always return it! TrioComet
-                also offers easy and convenient returns on all our products
-                within a certain period of time (check our policies for detailed
-                information). If you are a first-timer, try choosing Cash on
-                Delivery (COD) so that you don&apos;t worry at all. If you want
-                to know more, read our Shipping Policy and Return and Exchange
-                Policy. You can find them at the bottom of our website.
-              </p>
+                  <p>
+                    Don&apos;t like a product? You can always return it!
+                    TrioComet also offers easy and convenient returns on all our
+                    products within a certain period of time (check our policies
+                    for detailed information). If you are a first-timer, try
+                    choosing Cash on Delivery (COD) so that you don&apos;t worry
+                    at all. If you want to know more, read our Shipping Policy
+                    and Return and Exchange Policy. You can find them at the
+                    bottom of our website.
+                  </p>
 
-              <h2>NEW MENSWEAR LAUNCHES: ALWAYS INTRODUCING NEW TRENDS</h2>
+                  <h2>NEW MENSWEAR LAUNCHES: ALWAYS INTRODUCING NEW TRENDS</h2>
 
-              <p>
-                Who keeps wearing the same-old stuff? We like to keep up with
-                the latest trends that our customers love. We keep introducing
-                new ranges of products on our website. Let us bust the myth
-                together that men do not have enough clothing options. That time
-                is gone! For men who like an active lifestyle, we have cool
-                formal varieties. For men who are laid-back and just want to
-                chill, we have casual menswear. For men looking for cool
-                outfits, we also have them in stock! All in all, we cover the
-                needs of all users who come on this platform with our casual
-                t-shirts for men! Customer satisfaction is a must, and we aim to
-                make your experience an unforgettable one!
-              </p>
+                  <p>
+                    Who keeps wearing the same-old stuff? We like to keep up
+                    with the latest trends that our customers love. We keep
+                    introducing new ranges of products on our website. Let us
+                    bust the myth together that men do not have enough clothing
+                    options. That time is gone! For men who like an active
+                    lifestyle, we have cool formal varieties. For men who are
+                    laid-back and just want to chill, we have casual menswear.
+                    For men looking for cool outfits, we also have them in
+                    stock! All in all, we cover the needs of all users who come
+                    on this platform with our casual t-shirts for men! Customer
+                    satisfaction is a must, and we aim to make your experience
+                    an unforgettable one!
+                  </p>
 
-              <h2>PRODUCTS THAT ARE PERFECT FOR EVERY ONE OF YOU!</h2>
+                  <h2>PRODUCTS THAT ARE PERFECT FOR EVERY ONE OF YOU!</h2>
 
-              <p>
-                Imagine this. You had been wishing for a particular clothing
-                piece, and one day, you found it on a website. You get excited
-                and hop on your phone to purchase it right away. However, when
-                you open up the product page, you realize that they do not have
-                the size that fits you. Isn&apos;t that one of the worst
-                feelings ever?
-              </p>
+                  <p>
+                    Imagine this. You had been wishing for a particular clothing
+                    piece, and one day, you found it on a website. You get
+                    excited and hop on your phone to purchase it right away.
+                    However, when you open up the product page, you realize that
+                    they do not have the size that fits you. Isn&apos;t that one
+                    of the worst feelings ever?
+                  </p>
 
-              <p>
-                At TrioComet, we offer plenty of size options for all latest
-                t-shirt collections. From small to large, people of all sizes
-                can feel confident in themselves. After all, we do build up on
-                what we wear. We leave no man behind and take into consideration
-                the needs of all people.{" "}
-              </p>
+                  <p>
+                    At TrioComet, we offer plenty of size options for all latest
+                    t-shirt collections. From small to large, people of all
+                    sizes can feel confident in themselves. After all, we do
+                    build up on what we wear. We leave no man behind and take
+                    into consideration the needs of all people.{" "}
+                  </p>
 
-              <h2>CUSTOMER SUPPORT AND FREQUENTLY ASKED QUESTIONS</h2>
+                  <h2>CUSTOMER SUPPORT AND FREQUENTLY ASKED QUESTIONS</h2>
 
-              <p>
-                Still confused about something? You can always contact us! You
-                can also check out the FAQs to see if we have the answer to your
-                question already. Our customer representatives are always ready
-                to solve your queries in a matter of minutes!
-              </p>
+                  <p>
+                    Still confused about something? You can always contact us!
+                    You can also check out the FAQs to see if we have the answer
+                    to your question already. Our customer representatives are
+                    always ready to solve your queries in a matter of minutes!
+                  </p>
 
-              <h2>TRIOCOMET&apos;S PHILOSOPHY</h2>
+                  <h2>TRIOCOMET&apos;S PHILOSOPHY</h2>
 
-              <h3>
-                Our philosophy can be categorized into three simple terms:
-                Quality, Innovation, and Versatility.{" "}
-              </h3>
+                  <h3>
+                    Our philosophy can be categorized into three simple terms:
+                    Quality, Innovation, and Versatility.{" "}
+                  </h3>
 
-              <p>
-                Quality is as simple as it sounds. Nobody wants to wear
-                low-quality outfits, and we understand that. We make sure that
-                every clothing piece is tailored to perfection. The products we
-                manufacture, the designs we implement, and the raw material we
-                use are all high-quality and we assure you that you will always
-                get what is the best for you.
-              </p>
+                  <p>
+                    Quality is as simple as it sounds. Nobody wants to wear
+                    low-quality outfits, and we understand that. We make sure
+                    that every clothing piece is tailored to perfection. The
+                    products we manufacture, the designs we implement, and the
+                    raw material we use are all high-quality and we assure you
+                    that you will always get what is the best for you.
+                  </p>
 
-              <p>
-                Innovation is what keeps us on our toes. At TrioComet, we do
-                wish to just reproduce what is already being offered online. We
-                aim to stand out and offer what is new, loved by you, and does
-                not harm nature. We experiment with designs, create unique
-                pieces, and use cutting-edge technology.
-              </p>
+                  <p>
+                    Innovation is what keeps us on our toes. At TrioComet, we do
+                    wish to just reproduce what is already being offered online.
+                    We aim to stand out and offer what is new, loved by you, and
+                    does not harm nature. We experiment with designs, create
+                    unique pieces, and use cutting-edge technology.
+                  </p>
 
-              <p>
-                Versatility is the area where we shine. More often than not, men
-                face the problem of not having enough clothes to wear for a
-                certain event. Here, we offer products that are versatile,
-                meaning you can wear them on multiple occasions. Live a
-                lifestyle that is dynamic, not one that is outdated and boring.
-              </p>
+                  <p>
+                    Versatility is the area where we shine. More often than not,
+                    men face the problem of not having enough clothes to wear
+                    for a certain event. Here, we offer products that are
+                    versatile, meaning you can wear them on multiple occasions.
+                    Live a lifestyle that is dynamic, not one that is outdated
+                    and boring.
+                  </p>
 
-              <p>
-                Besides, we know that manufacturing and production take a toll
-                on the environment. We wish to keep it to a minimum. We are
-                committed to reducing fabric waste and using sustainable
-                packaging. No amount of fashion in the world can reverse the
-                damage to the environment. Hence, we take careful steps at all
-                times to be eco-friendly!{" "}
-              </p>
-            </Box>
-          ) : (
-            ""
-          )}
+                  <p>
+                    Besides, we know that manufacturing and production take a
+                    toll on the environment. We wish to keep it to a minimum. We
+                    are committed to reducing fabric waste and using sustainable
+                    packaging. No amount of fashion in the world can reverse the
+                    damage to the environment. Hence, we take careful steps at
+                    all times to be eco-friendly!{" "}
+                  </p>
+                </Box>
+              ) : (
+                ""
+              )}
             </Grid>
           </Box>
         </>
@@ -878,17 +889,15 @@ const Index = () => {
             flexDirection="column"
             alignItems="flex-start"
             gap="0.8rem"
-            paddingTop={"10rem"}
+            paddingTop={"3rem"}
           >
-            <Box width="11.3rem" height="5.6rem">
+            <Box width="16rem" height="10rem">
               <Image
-                src={`/assets/logo/${
-                  theme === "light" ? "logo-light.png" : "logo-dark.png"
-                }`}
+                src={`/assets/logo/footer-logo.png`}
                 loading="lazy"
                 alt="Logo"
                 width={160}
-                height={50}
+                height={100}
               />
             </Box>
           </Box>
@@ -988,10 +997,11 @@ const Index = () => {
                   </Link>
                 );
               })} */}
+              <Box display="flex" gap="2rem">
 
                 <Link
                   target="_blank"
-                  href="https://facebook.com/profile.php?id=100090222109795"
+                  href="https://www.facebook.com/triocometcom"
                 >
                   <Box>
                     <svg
@@ -1027,7 +1037,7 @@ const Index = () => {
 
                 <Link
                   target="_blank"
-                  href="https://www.instagram.com/royalmobisol_india?igsh=bnd6NTZxc2RsMDMy&utm_source=qr"
+                  href="https://www.instagram.com/triocomet/"
                 >
                   <Box>
                     <svg
@@ -1049,7 +1059,7 @@ const Index = () => {
                   </Box>
                 </Link>
 
-                <Link
+                {/* <Link
                   target="_blank"
                   href="https://youtube.com/@royalmobisol_india2159?si=gYtU-4Aq07kl_1ON"
                 >
@@ -1071,50 +1081,52 @@ const Index = () => {
                       />
                     </svg>
                   </Box>
-                </Link>
+                </Link> */}
 
-                <Box>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="30"
-                    height="29"
-                    viewBox="0 0 30 29"
-                    fill="none"
-                  >
-                    <g clipPath="url(#clip0_445_787)">
-                      <path
-                        d="M15.0002 28.9997C23.0083 28.9997 29.5001 22.5079 29.5001 14.4999C29.5001 6.49181 23.0083 0 15.0002 0C6.99218 0 0.500366 6.49181 0.500366 14.4999C0.500366 22.5079 6.99218 28.9997 15.0002 28.9997Z"
-                        fill={
-                          theme === "dark"
-                            ? lightColor.text.primary
-                            : darkColor.text.primary
-                        }
-                      />
-                      <path
-                        d="M23.8819 10.4207C23.2605 10.6962 22.5921 10.8826 21.8911 10.9658C22.6068 10.537 23.1561 9.85851 23.4153 9.04871C22.7456 9.44599 22.0035 9.73419 21.2144 9.88953C20.5822 9.21621 19.6814 8.79541 18.684 8.79541C16.7702 8.79541 15.2181 10.3475 15.2181 12.2613C15.2181 12.5329 15.2488 12.7974 15.3083 13.0512C12.4279 12.9067 9.87387 11.527 8.16432 9.42945C7.86604 9.94122 7.69493 10.537 7.69493 11.1721C7.69493 12.3742 8.30726 13.4355 9.23673 14.0569C8.66886 14.0391 8.13408 13.8832 7.66702 13.6229C7.66676 13.6377 7.66676 13.6524 7.66676 13.6669C7.66676 15.3462 8.86194 16.7468 10.4472 17.065C10.1566 17.1446 9.84983 17.1868 9.53424 17.1868C9.3104 17.1868 9.09354 17.1653 8.88211 17.125C9.32306 18.5016 10.6028 19.5037 12.1198 19.5319C10.9334 20.4616 9.43912 21.0155 7.81487 21.0155C7.53571 21.0155 7.25915 20.9993 6.98853 20.9669C8.52153 21.9507 10.3438 22.5243 12.3009 22.5243C18.6759 22.5243 22.1622 17.2431 22.1622 12.6627C22.1622 12.5125 22.1589 12.3629 22.1522 12.2145C22.8299 11.726 23.4174 11.1157 23.8819 10.4207Z"
-                        fill={
-                          theme === "dark"
-                            ? lightColor.text.primary
-                            : darkColor.text.white
-                        }
-                      />
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_445_787">
-                        <rect
-                          width="29"
-                          height="29"
-                          fill="white"
-                          transform="translate(0.5)"
+                <Link target="_blank" href="https://x.com/triocomet">
+                  <Box>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="30"
+                      height="29"
+                      viewBox="0 0 30 29"
+                      fill="none"
+                    >
+                      <g clipPath="url(#clip0_445_787)">
+                        <path
+                          d="M15.0002 28.9997C23.0083 28.9997 29.5001 22.5079 29.5001 14.4999C29.5001 6.49181 23.0083 0 15.0002 0C6.99218 0 0.500366 6.49181 0.500366 14.4999C0.500366 22.5079 6.99218 28.9997 15.0002 28.9997Z"
+                          fill={
+                            theme === "dark"
+                              ? lightColor.text.primary
+                              : darkColor.text.primary
+                          }
                         />
-                      </clipPath>
-                    </defs>
-                  </svg>
-                </Box>
-
-                <Link target="_blank" href={"mailto:info@triocomet.com"}>
-                  <LI theme={theme}>Email</LI>
+                        <path
+                          d="M23.8819 10.4207C23.2605 10.6962 22.5921 10.8826 21.8911 10.9658C22.6068 10.537 23.1561 9.85851 23.4153 9.04871C22.7456 9.44599 22.0035 9.73419 21.2144 9.88953C20.5822 9.21621 19.6814 8.79541 18.684 8.79541C16.7702 8.79541 15.2181 10.3475 15.2181 12.2613C15.2181 12.5329 15.2488 12.7974 15.3083 13.0512C12.4279 12.9067 9.87387 11.527 8.16432 9.42945C7.86604 9.94122 7.69493 10.537 7.69493 11.1721C7.69493 12.3742 8.30726 13.4355 9.23673 14.0569C8.66886 14.0391 8.13408 13.8832 7.66702 13.6229C7.66676 13.6377 7.66676 13.6524 7.66676 13.6669C7.66676 15.3462 8.86194 16.7468 10.4472 17.065C10.1566 17.1446 9.84983 17.1868 9.53424 17.1868C9.3104 17.1868 9.09354 17.1653 8.88211 17.125C9.32306 18.5016 10.6028 19.5037 12.1198 19.5319C10.9334 20.4616 9.43912 21.0155 7.81487 21.0155C7.53571 21.0155 7.25915 20.9993 6.98853 20.9669C8.52153 21.9507 10.3438 22.5243 12.3009 22.5243C18.6759 22.5243 22.1622 17.2431 22.1622 12.6627C22.1622 12.5125 22.1589 12.3629 22.1522 12.2145C22.8299 11.726 23.4174 11.1157 23.8819 10.4207Z"
+                          fill={
+                            theme === "dark"
+                              ? lightColor.text.primary
+                              : darkColor.text.white
+                          }
+                        />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_445_787">
+                          <rect
+                            width="29"
+                            height="29"
+                            fill="white"
+                            transform="translate(0.5)"
+                          />
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  </Box>
                 </Link>
+                {/* <Link target="_blank" href={"mailto:info@triocomet.com"}>
+                  <LI theme={theme}>Email</LI>
+                </Link> */}
+                </Box>
               </Grid>
 
               <Grid item xs={3}>

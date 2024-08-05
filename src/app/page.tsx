@@ -18,6 +18,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
   let bestSeller = await apiClient.get(`/api/product/?tag=best-seller`);
   let newArrival = await apiClient.get(`/api/product/?tag=new-drop`);
   let category = await apiClient.get(`/api/category`);
+  console.log(category)
   let blog = await apiClient.get(`/api/blog`);
   return (
     <Mainpage

@@ -449,7 +449,7 @@ const Blog = ({ params }: { params: { slug: string } }) => {
                       {isLoading ? (
                         "loading..."
                       ) : (
-                        <Grid container>
+                        <Grid container spacing={2} marginLeft="2rem">
                           {otherBlogsData.length === 0
                             ? "No other blogs found."
                             : otherBlogsData.map((blog, index) => (
