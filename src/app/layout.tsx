@@ -5,7 +5,7 @@ import AuthProvider from "./AuthProvider";
 import { ThemeProvider } from "@mui/material/styles";
 import { LightTheme } from "@/utils/CustomTheme";
 import "./globals.css";
-import { CssBaseline } from "@mui/material";
+import { Box, CssBaseline, Typography } from "@mui/material";
 import Navbar from "@components/Navbar";
 import BlackBanner from "@components/BlackBanner";
 import Footer from "@components/Footer";
@@ -55,11 +55,14 @@ export default function RootLayout({
               /> */}
                 {/* <ScreenProvider/> */}
                 <body>
-                  <BlackBanner />
+                  <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+
+                  <Typography sx={{textAlign:"center",fontSize:"5rem"}}>Coming Soon</Typography>
+                  </Box>
+                  {/* <BlackBanner />
                   <Navbar />
                   {children}
                   <Footer />
-                  {/* toaster container */}
                   <ToastContainer
                     position="bottom-left"
                     autoClose={3000}
@@ -71,7 +74,7 @@ export default function RootLayout({
                     draggable
                     pauseOnHover
                     theme="light"
-                  />
+                  /> */}
                 </body>
               </EdgeStoreProvider>
             </ThemeProvider>
