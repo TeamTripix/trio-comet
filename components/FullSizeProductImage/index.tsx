@@ -23,7 +23,6 @@ const DoubleTapZoom = ({ src, alt }:any) => {
   const imageRef = React.useRef(null);
 
   const handleDoubleTap = (e:any) => {
-    console.log("sjdks")
     const currentTime = new Date().getTime();
     const tapGap = currentTime - lastTap;
 

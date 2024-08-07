@@ -30,7 +30,6 @@ const Page = () => {
       data: { merchantID, data },
     })
       .then((response) => {
-        console.log(response)
         if (response.data.success) {
           router.push(`/order`, { scroll: false })
           // setIsLoading(false);

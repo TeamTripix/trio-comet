@@ -8,7 +8,6 @@ function LoaderProvider({ children }:any) {
   const router:any = useRouter();
 
   useEffect(() => {
-    console.log("loadinf : ",isLoading)
     const handleStart = () => {
       setIsLoading(true);
     };

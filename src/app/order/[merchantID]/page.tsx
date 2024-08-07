@@ -95,7 +95,6 @@ const OrderPage = () => {
         console.log(error);
       })
     },[])
-    console.log(orderData)
   return (
     <Container>
       <Typography variant="h4" gutterBottom>

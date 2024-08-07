@@ -55,11 +55,11 @@ export default function RootLayout({
               /> */}
                 {/* <ScreenProvider/> */}
                 <body>
-                  <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+                  {/* <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
 
                   <Typography sx={{textAlign:"center",fontSize:"5rem"}}>Coming Soon</Typography>
-                  </Box>
-                  {/* <BlackBanner />
+                  </Box> */}
+                  <BlackBanner />
                   <Navbar />
                   {children}
                   <Footer />
@@ -74,7 +74,7 @@ export default function RootLayout({
                     draggable
                     pauseOnHover
                     theme="light"
-                  /> */}
+                  />
                 </body>
               </EdgeStoreProvider>
             </ThemeProvider>

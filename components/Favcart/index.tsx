@@ -69,48 +69,46 @@ export default function TemporaryDrawer() {
     return (
       <Box
         width={isMobile ? "100%" : "38rem"}
-        height="15.2rem"
         display="flex"
-        justifyContent="center"
+        justifyContent="start"
         alignItems="center"
         gap="4rem"
-        flexShrink="0">
-        <Box borderRadius="1.6rem" width="40%" height="15.2rem">
+        flexShrink="0"
+      >
+        <Box borderRadius="0.8rem" width="25%" height="auto">
           <Image
             src={favCartData.productColor[0].imageURL[0]}
             loading="lazy"
             alt="cart thumbnail"
-            width="150"
-            height="150"
-            style={{ borderRadius: "1.6rem" }}
+            width="108"
+            height="135"
+            style={{ borderRadius: "0.8rem" }}
           />
         </Box>
         <Box
           display="flex"
-          height="15.2rem"
-          padding="3.2rem 0rem"
           flexDirection="column"
           justifyContent="center"
-          alignItems="flex-start"
-          gap="4rem">
+          alignItems="space-between"
+          width="22rem"
+        >
           <Box
             display="flex"
             flexDirection="column"
             justifyContent="center"
             alignItems="flex-start"
             gap="0.4rem"
-            width="17rem">
+            width="22rem"
+            marginBottom="3rem"
+          >
             <Typography
-              color={
-                theme === "light"
-                  ? lightColor.text.primary
-                  : darkColor.text.primary
-              }
+              color={lightColor.text.primary}
               fontSize="1.6rem"
               fontStyle="normal"
               fontWeight="700"
               lineHeight="normal"
-              letterSpacing="0.02rem">
+              letterSpacing="0.02rem"
+            >
               {favCartData.name}
             </Typography>
             <Typography
@@ -124,7 +122,8 @@ export default function TemporaryDrawer() {
               fontStyle="normal"
               fontWeight="700"
               lineHeight="normal"
-              letterSpacing="0.02rem">
+              letterSpacing="0.02rem"
+            >
               ₹{favCartData.discountPrice}
             </Typography>
           </Box>
@@ -135,7 +134,8 @@ export default function TemporaryDrawer() {
               width="7.8rem"
               height="2rem"
               justifyContent="space-between"
-              alignItems="center">
+              alignItems="center"
+            >
               <ButtonBase
                 onClick={handleMoveToCart}
                 sx={{
@@ -147,19 +147,17 @@ export default function TemporaryDrawer() {
                       ? lightColor.text.primary
                       : darkColor.text.primary,
                   borderRadius: "4px",
-                }}>
+                }}
+              >
                 <Typography
-                  color={
-                    theme === "light"
-                      ? lightColor.text.primary
-                      : darkColor.text.primary
-                  }
+                  color={darkColor.text.primary}
                   textAlign="center"
                   fontSize="1rem"
                   fontStyle="normal"
                   fontWeight="700"
                   lineHeight="normal"
-                  letterSpacing="0.05rem">
+                  letterSpacing="0.05rem"
+                >
                   Move to Cart
                 </Typography>
               </ButtonBase>
@@ -171,7 +169,8 @@ export default function TemporaryDrawer() {
                   type: "REMOVE_FROM_FAV_CART",
                   payload: favCartData._id,
                 })
-              }>
+              }
+            >
               <FavourateIcon color="#FF0000" fill="#FF0000" />
             </ButtonBase>
           </Box>
@@ -186,14 +185,16 @@ export default function TemporaryDrawer() {
     return (
       <Box
         sx={{ width: isMobile ? "100vw" : "40rem", height: "100vh" }}
-        role="presentation">
+        role="presentation"
+      >
         <Box
           display="flex"
           width={isMobile ? "100vw" : "40rem"}
           padding="0rem 1.6rem"
           justifyContent="space-between"
           alignItems="center"
-          marginTop="2rem">
+          marginTop="2rem"
+        >
           <Typography
             color={
               theme === "light"
@@ -205,11 +206,12 @@ export default function TemporaryDrawer() {
             fontStyle="normal"
             fontWeight="700"
             lineHeight="normal"
-            letterSpacing="0.05rem">
+            letterSpacing="0.05rem"
+          >
             Wishlist
           </Typography>
           <ButtonBase onClick={toggleDrawer(anchor, false)}>
-          <CancelIcon
+            <CancelIcon
               color={
                 theme === "light"
                   ? lightColor.text.primary
@@ -225,7 +227,8 @@ export default function TemporaryDrawer() {
           justifyContent="space-between"
           alignItems="center"
           gap="4rem"
-          height="93vh">
+          height="93vh"
+        >
           <Box
             padding="0 1.5rem"
             width={isMobile ? "100vw" : "40rem"}
@@ -252,7 +255,8 @@ export default function TemporaryDrawer() {
                     : darkColor.text.secondary,
                 borderRadius: "4rem",
               },
-            }}>
+            }}
+          >
             {favCartData.length === 0 ? (
               <>
                 <Box
@@ -260,7 +264,8 @@ export default function TemporaryDrawer() {
                   height="100vh"
                   display="flex"
                   justifyContent="center"
-                  flexDirection="column">
+                  flexDirection="column"
+                >
                   <Box display="flex" justifyContent="center">
                     <Image
                       src={`/assets/emptyCart/1.png`}
@@ -281,7 +286,8 @@ export default function TemporaryDrawer() {
                     fontStyle="normal"
                     fontWeight="700"
                     lineHeight="normal"
-                    letterSpacing="0.05rem">
+                    letterSpacing="0.05rem"
+                  >
                     Your wishlist is Empty
                   </Typography>
                 </Box>
@@ -308,7 +314,8 @@ export default function TemporaryDrawer() {
                 height="19"
                 viewBox="0 0 22 19"
                 fill="none"
-                xmlns="http://www.w3.org/2000/svg">
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <path
                   fillRule="evenodd"
                   clipRule="evenodd"
@@ -326,7 +333,8 @@ export default function TemporaryDrawer() {
           <Drawer
             anchor={anchor}
             open={state[anchor]}
-            onClose={toggleDrawer(anchor, false)}>
+            onClose={toggleDrawer(anchor, false)}
+          >
             <FavCartDrawer anchor={anchor} />
           </Drawer>
         </Box>

@@ -254,12 +254,14 @@ export default function Home(props: any) {
           ) : (
             <Slider className="mobileBanner" {...mobileBannerSettings}>
               {bannerApiRes.map((data: any, index: number) => (
+                <Link href={data.link} key={data.mobileImageURL} >
                 <img
-                  key={data.mobileImageURL}
+                  
                   src={data.mobileImageURL}
                   alt="mobile banner"
-                  style={{ width: "100vh", height: "auto" }}
+                  style={{ width: "100vw", height: "auto" }}
                 />
+                </Link>
               ))}
             </Slider>
           )

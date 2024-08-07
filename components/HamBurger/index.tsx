@@ -216,11 +216,10 @@ const Index = () => {
                   {categoryItem.length === 0
                     ? "loading..."
                     : categoryItem.slice(0, 9).map((data: any) => {
-                      console.log(data)
                         return (
                           <Grid item xs={4} key={data._id}>
                             <Link
-                              href={`/category/${data.slug}`}>
+                              href={`/category/${data.slug}`} onClick={toggleDrawer(anchor,false)}>
                               <Box
                                 width="6rem"
                                 display="flex"
@@ -267,8 +266,9 @@ const Index = () => {
               ""
             )}
 
-            <Link href="/combos" onClick={toggleDrawer(anchor, false)}>
+            <Link href="/combos" >
               <Box
+              onClick={toggleDrawer(anchor, false)}
                 display="flex"
                 width="12.5rem"
                 alignItems="center"

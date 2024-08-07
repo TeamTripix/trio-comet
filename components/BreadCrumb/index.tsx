@@ -2,10 +2,15 @@ import { Typography } from "@mui/material";
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useMobile } from "@/utils/responsive";
 const BreadCrumb = () => {
   const pathname = usePathname();
   const pathArray = pathname.split("/").filter((item) => item);
+  const isMobile = useMobile()
 
+  if(isMobile){
+    return <></>
+  }
   return (
     <div>
       <Link
