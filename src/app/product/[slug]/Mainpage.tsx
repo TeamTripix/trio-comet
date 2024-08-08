@@ -18,6 +18,7 @@ import {
   TextField,
   CircularProgress,
   IconButton,
+  Button,
 } from "@mui/material";
 import PageSpacing from "@components/PageSpacing";
 import { lightColor, darkColor } from "@/utils/CustomTheme/color";
@@ -62,6 +63,7 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
+import SizeChart from "@components/SizeChart";
 // Import Swiper styles
 // import "swiper/swiper-bundle.css";
 
@@ -675,14 +677,15 @@ const Product = (props: any) => {
             <Box
               ref={ref}
               width={isMobile || isTablet ? "100%" : "55%"}
-              position={isMobile || isTablet? "relative" : "sticky"}
-              top={isMobile || isTablet? -10 : "6rem"}
+              position={isMobile || isTablet ? "relative" : "sticky"}
+              top={isMobile || isTablet ? -10 : "6rem"}
             >
-              {!isMobile || !isTablet && (
-                <Box paddingLeft="0rem" margin="1rem 0rem 2rem 7rem">
-                  <BreadCrumb />
-                </Box>
-              )}
+              {!isMobile ||
+                (!isTablet && (
+                  <Box paddingLeft="0rem" margin="1rem 0rem 2rem 7rem">
+                    <BreadCrumb />
+                  </Box>
+                ))}
               <Box
                 display="flex"
                 flexDirection={{ xs: "row", md: "row" }}
@@ -715,7 +718,10 @@ const Product = (props: any) => {
                         />
                       )
                     ) : (
-                      <Slider {...mobileBannerSettings} className="mobileBanner">
+                      <Slider
+                        {...mobileBannerSettings}
+                        className="mobileBanner"
+                      >
                         {productAPIRes.productColor[0].imageURL.map(
                           (data: any, index: number) => (
                             <img
@@ -739,10 +745,10 @@ const Product = (props: any) => {
               flexDirection="column"
               alignItems="flex-start"
               gap={isMobile || isTablet ? "1rem" : "2.4rem"}
-              width={isMobile|| isTablet ? "100%" : "45%"}
-              marginLeft={isMobile|| isTablet ? 0 : "0rem"}
-              marginTop={isMobile|| isTablet ? 0 : "5rem"}
-              padding={isMobile|| isTablet ? "0 2rem" : ""}
+              width={isMobile || isTablet ? "100%" : "45%"}
+              marginLeft={isMobile || isTablet ? 0 : "0rem"}
+              marginTop={isMobile || isTablet ? 0 : "5rem"}
+              padding={isMobile || isTablet ? "0 2rem" : ""}
             >
               <Box
                 display="flex"
@@ -1136,7 +1142,10 @@ const Product = (props: any) => {
                     )}
                   </Box>
                 </Box>
-
+                <Box display="flex" gap="2rem">
+                  <SizeChart title="Regular Size Chart" img="/assets/sizeChart/Regular-fit-size.jpg"/>
+                  <SizeChart title="Oversize Chart" img="/assets/sizeChart/Oversized-fit-size.jpg"/>
+                </Box>
                 <Box>
                   <Box
                     display="flex"

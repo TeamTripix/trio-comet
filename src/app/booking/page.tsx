@@ -30,12 +30,14 @@ const Page = () => {
       data: { merchantID, data },
     })
       .then((response) => {
+        console.log("res : ",response)
         if (response.data.success) {
-          router.push(`/order`, { scroll: false })
+          router.push(`/order/${response.data.data.order_id}`, { scroll: false })
           // setIsLoading(false);
           // setOpenOTPDialogBox(true);
           // toast(response.data.message);
         } else {
+          router.push("/")
           // toast(response.data.message);
           // setIsLoading(false);
         }
@@ -43,6 +45,7 @@ const Page = () => {
       .catch((err) => {
         // toast("some error occured");
         // setIsLoading(false);
+        router.push("/")
         console.log("error : ",err);
       });
   }, []);

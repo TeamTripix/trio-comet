@@ -418,6 +418,44 @@ const Index = () => {
                 </Typography>
               </Box>
             </Link>
+
+            <Link href="/order/TC00859101" onClick={toggleDrawer(anchor, false)}>
+              <Box
+                display="flex"
+                width="12.5rem"
+                alignItems="center"
+                gap="2rem ">
+                {/* <AboutUsIcon
+                  color={
+                    pathname === "/order/TC00859101"
+                      ? theme === "light"
+                        ? lightColor.text.chevron
+                        : darkColor.text.chevron
+                      : theme === "light"
+                      ? lightColor.text.secondary
+                      : darkColor.text.secondary
+                  }
+                /> */}
+                <Typography
+                  color={
+                    pathname === "/order/TC00859101"
+                      ? theme === "light"
+                        ? lightColor.text.chevron
+                        : darkColor.text.chevron
+                      : theme === "light"
+                      ? lightColor.text.secondary
+                      : darkColor.text.secondary
+                  }
+                  textAlign="center"
+                  fontSize="1.6rem"
+                  fontStyle="normal"
+                  fontWeight="500"
+                  lineHeight="2.4rem"
+                  letterSpacing="0.05rem">
+                  My Order
+                </Typography>
+              </Box>
+            </Link>
           </Box>
           <Box>
             {isLoggedIn ? (

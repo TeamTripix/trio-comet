@@ -1,4 +1,4 @@
-"use client"
+"use client";
 // import React from 'react'
 // import { Container, Typography, Card, CardContent, Grid, List, ListItem, ListItemText, Divider } from '@mui/material';
 
@@ -55,7 +55,7 @@
 // export default Page
 
 // src/components/OrderPage.js
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Typography,
@@ -67,34 +67,75 @@ import {
   TableRow,
   Paper,
   Button,
-} from '@mui/material';
-import axios from 'axios';
-import { useSession } from 'next-auth/react';
-
-
+} from "@mui/material";
+import axios from "axios";
+import { useSession } from "next-auth/react";
 
 const OrderPage = () => {
-    const [orderData,setOrderData] = useState([])
-    const session:any = useSession()
-    if(session.status === "unauthenticated"){
-        window.location.href="/login"
-    }
-    
+  const shipToken:any = localStorage.getItem("accessToken");
+  const [orderData, setOrderData] = useState([]);
+  const [shipRocketToken,setShipRocketToken] = useState(shipToken)
+  const session: any = useSession();
+  if (session.status === "unauthenticated") {
+    window.location.href = "/login";
+  }
 
-    useEffect(()=>{
-        axios.get('https://apiv2.shiprocket.in/v1/external/orders',{
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQ4MTAyMjUsInNvdXJjZSI6InNyLWF1dGgtaW50IiwiZXhwIjoxNzIzNjM4NDAxLCJqdGkiOiJoSmFvZVFwSzUzbmVvM1pwIiwiaWF0IjoxNzIyNzc0NDAxLCJpc3MiOiJodHRwczovL3NyLWF1dGguc2hpcHJvY2tldC5pbi9hdXRob3JpemUvdXNlciIsIm5iZiI6MTcyMjc3NDQwMSwiY2lkIjo0NTc5NTA4LCJ0YyI6MzYwLCJ2ZXJib3NlIjpmYWxzZSwidmVuZG9yX2lkIjowLCJ2ZW5kb3JfY29kZSI6IiJ9.MBtbiMQ9L0V1jktVr5zjqDgey5-sQ0jdRZpXhBoS3l8"
-            },
-          })
+  if (shipToken) {
+    axios
+      .get("https://apiv2.shiprocket.in/v1/external/orders", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization:
+            "Bearer " +
+            shipRocketToken,
+        },
+      })
       .then(function (response) {
         setOrderData(response.data.data);
       })
       .catch(function (error) {
         console.log(error);
-      })
-    },[])
+      });
+  } else {
+      const data = {
+        email: "marketing@triocomet.com",
+        password: "ivHSFughsyt457e@Y%$@#&I#",
+      };
+      axios
+        .post("https://apiv2.shiprocket.in/v1/external/auth/login",data)
+        .then(function (response) {
+          if(response.status === 200){
+            setShipRocketToken(response.data.token)
+            localStorage.setItem("accessToken",response.data.token)
+          }
+          // setOrderData(response.data.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+  }
+
+const handleTrack = (shipping_id:number)=>{
+  axios
+  .get(`https://apiv2.shiprocket.in/v1/external/courier/track/shipment/${shipping_id}`,{
+    headers: {
+      // "Content-Type": "application/json",
+      Authorization:
+        "Bearer " +
+        shipRocketToken,
+    },
+  })
+  .then(function (response) {
+    if(response.status === 200){
+      console.log(response.data)
+      window.location.href = response.data.tracking_data.track_url
+    }
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+
+}
   return (
     <Container>
       <Typography variant="h4" gutterBottom>
@@ -114,23 +155,26 @@ const OrderPage = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {orderData.filter((data:any)=>data.customer_phone===session?.data?.user?.userInfo?.number).map((order:any) => (
-              <TableRow key={order.channel_order_id
-              }>
-                <TableCell>{order.channel_order_id
-                }</TableCell>
-                <TableCell>{order.products[0].name}</TableCell>
-                <TableCell>{order.products[0].quantity}</TableCell>
-                <TableCell>₹{order.products[0].price}</TableCell>
-                <TableCell>{order.created_at}</TableCell>
-                <TableCell>{order.products[0].status}</TableCell>
-                <TableCell>
-                  <Button variant="outlined" color="primary" size='small'>
-                    Track
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
+            {orderData
+              .filter(
+                (data: any) =>
+                  data.customer_phone === session?.data?.user?.userInfo?.number
+              )
+              .map((order: any) => (
+                <TableRow key={order.channel_order_id}>
+                  <TableCell>{order.channel_order_id}</TableCell>
+                  <TableCell>{order.products[0].name}</TableCell>
+                  <TableCell>{order.products[0].quantity}</TableCell>
+                  <TableCell>₹{order.products[0].price}</TableCell>
+                  <TableCell>{order.created_at}</TableCell>
+                  <TableCell>{order.products[0].status}</TableCell>
+                  <TableCell>
+                    <Button onClick={()=>handleTrack(order.shipments[0].id)} variant="outlined" color="primary" size="small">
+                      Track
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
