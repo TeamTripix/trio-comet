@@ -2,7 +2,7 @@ import axios from "axios"
 
 // Create an Axios instance with default configuration
 export const apiClient = axios.create({
-  baseURL: 'https://triocomet.com',
+  // baseURL: 'https://triocomet.com',
   // baseURL: 'http://localhost:3000',
   timeout: 10000,
   headers: {
