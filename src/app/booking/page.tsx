@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { styled } from "@mui/system";
@@ -9,10 +9,10 @@ import { useTablet, useMobile } from "../../utils/responsive";
 import { useRouter, useSearchParams } from "next/navigation";
 
 const Page = () => {
-  const shipToken: any = localStorage.getItem("accessToken");
+ 
   const isMobile = useMobile();
   const data: any = useSelector<any>((state) => state.orderData);
-  const [shipRocketToken, setShipRocketToken] = useState(shipToken);
+  const [shipRocketToken, setShipRocketToken] = useState();
   const queryParams = useSearchParams();
   const merchantID = queryParams.get("id");
   const router = useRouter();
@@ -26,12 +26,12 @@ const Page = () => {
   });
 
   useEffect(() => {
-    if (shipRocketToken) {
+    if (localStorage.getItem("accessToken")) {
       axios
         .get("https://apiv2.shiprocket.in/v1/external/orders", {
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + shipRocketToken,
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
           },
         })
         .then(function (response) {
@@ -39,7 +39,7 @@ const Page = () => {
           axios({
             method: "post",
             url: "/api/shiprocket-middleware",
-            data: { data, token:shipRocketToken },
+            data: { data, token:localStorage.getItem("accessToken") },
           })
             .then((response) => {
               if (response.data.success) {
