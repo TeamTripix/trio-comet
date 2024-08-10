@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@edgestore/react": "^0.1.4",
+    "@edgestore/react": "0.1.4",
     "@edgestore/server": "^0.1.4",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -31,7 +31,7 @@
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.292.0",
     "mongoose": "^7.5.3",
-    "next": "^14.2.5",
+    "next": "14.2.5",
     "next-auth": "^4.24.3",
     "next-seo": "^6.5.0",
     "next-share": "^0.27.0",
