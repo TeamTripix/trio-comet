@@ -10,9 +10,14 @@ export const metadata = {
   },
 };
 
+export const dynamic = "force-dynamic"
+
 const Page = async ({ params }: { params: { slug: string } }) => {
-    let response = await apiClient.get(`/api/category/?cid=${params.slug}`);
-    let product = await apiClient.get(`/api/product/?category=${response.data[0]._id}`);
+    let responseRes = await fetch(`http://localhost:3000/api/category/?cid=${params.slug}`);
+    let response = await responseRes.json()
+
+    let productRes = await fetch(`http://localhost:3000/api/product/?category=${response.data[0]._id}`);
+    let product = await productRes.json()
   return (
     <Mainpage params={params} product={product} categoryName={response.data[0].name}/>
     // <></>

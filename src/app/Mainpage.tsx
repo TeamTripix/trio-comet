@@ -1002,15 +1002,15 @@ export default function Home(props: any) {
             {isMobile ? (
               // Mobile view with carousel
               <Slider {...settings} infinite={"true"}>
-                <Box padding="1rem" display="flex" justifyContent="center">
-                  <TestimonialCard />
-                </Box>
-                <Box padding="1rem">
-                  <TestimonialCard />
-                </Box>
-                <Box padding="1rem">
-                  <TestimonialCard />
-                </Box>
+                <Box>
+                    <TestimonialCard content="Absolutely love this t-shirt! The print is vibrant, and the fabric feels amazing." />
+                  </Box>
+                  <Box>
+                    <TestimonialCard content="Dragon print is stunning, and the oversized fit is super comfortable! Amazing fabric."/>
+                  </Box>
+                  <Box>
+                    <TestimonialCard content="I am so delighted in your clothing! It is absolutely gorgeous... everything."/>
+                  </Box>
               </Slider>
             ) : isTablet ? (
               // is tablet size is active
@@ -1022,13 +1022,13 @@ export default function Home(props: any) {
               >
                 <Box display="flex" gap="4rem">
                   <Box>
-                    <TestimonialCard />
+                    <TestimonialCard content="Absolutely love this t-shirt! The print is vibrant, and the fabric feels amazing." />
                   </Box>
                   <Box>
-                    <TestimonialCard />
+                    <TestimonialCard content="Dragon print is stunning, and the oversized fit is super comfortable! Amazing fabric."/>
                   </Box>
                   <Box>
-                    <TestimonialCard />
+                    <TestimonialCard content="I am so delighted in your clothing! It is absolutely gorgeous... everything."/>
                   </Box>
                 </Box>
               </Box>
@@ -1037,15 +1037,15 @@ export default function Home(props: any) {
 
               <Grid container spacing={4}>
                 <Grid item xs={4}>
-                  <TestimonialCard />
+                <TestimonialCard content="Absolutely love this t-shirt! The print is vibrant, and the fabric feels amazing." />
                 </Grid>
 
                 <Grid item xs={4}>
-                  <TestimonialCard />
+                <TestimonialCard content="Dragon print is stunning, and the oversized fit is super comfortable! Amazing fabric."/>
                 </Grid>
 
                 <Grid item xs={4}>
-                  <TestimonialCard />
+                <TestimonialCard content="I am so delighted in your clothing! It is absolutely gorgeous... everything."/>
                 </Grid>
               </Grid>
             )}

@@ -10,16 +10,28 @@ export const metadata = {
   },
 };
 
+export const dynamic = "force-dynamic"
+
 const Page = async ({ params }: { params: { slug: string } }) => {
-  let product = await apiClient.get(`/api/product?slug=${params.slug}`);
-  let combo = await apiClient.get(`/api/product?tag=combo`);
-  let categoryRelatedProduct = await apiClient.get(
-    `/api/product/?category=${product.data.category}`
+  let productRes = await fetch(`http://localhost:3000/api/product?slug=${params.slug}`);
+  let product = await productRes.json()
+
+  let comboRes = await fetch(`http://localhost:3000/api/product?tag=combo`);
+  let combo = await comboRes.json()
+
+  let categoryRelatedProductRes = await fetch(
+    `http://localhost:3000/api/product/?category=${product.data.category}`
   );
-  let productCoupon = await apiClient.get(
-    `/api/coupon/?pid=${product.data._id}`
+  let categoryRelatedProduct = await categoryRelatedProductRes.json()
+
+  let productCouponRes = await fetch(
+    `http://localhost:3000/api/coupon/?pid=${product.data._id}`
   );
-  let productReview = await apiClient.get(`/api/review?id=${product.data._id}`);
+  let productCoupon = await productCouponRes.json()
+  
+  let productReviewRes = await fetch(`http://localhost:3000/api/review?id=${product.data._id}`);
+  let productReview = await productReviewRes.json()
+
   return (
     <Mainpage
       params={params}
