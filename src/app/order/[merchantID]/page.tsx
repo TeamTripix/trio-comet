@@ -72,21 +72,20 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 
 const OrderPage = () => {
-  const shipToken: any = localStorage.getItem("accessToken");
   const [orderData, setOrderData] = useState([]);
-  const [shipRocketToken, setShipRocketToken] = useState(shipToken);
+  const [shipRocketToken, setShipRocketToken] = useState();
   const session: any = useSession();
   if (session.status === "unauthenticated") {
     window.location.href = "/login";
   }
 
   useEffect(() => {
-    if (shipRocketToken) {
+    if (localStorage.getItem("accessToken")) {
       axios
         .get("https://apiv2.shiprocket.in/v1/external/orders", {
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + shipRocketToken,
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
           },
         })
         .then(function (response) {
@@ -137,7 +136,7 @@ const OrderPage = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + shipRocketToken,
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
           },
         }
       )
