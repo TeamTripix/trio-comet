@@ -2,8 +2,8 @@ import axios from "axios"
 
 // Create an Axios instance with default configuration
 export const apiClient = axios.create({
-  baseURL: 'https://triocomet.com',
-  // baseURL: 'http://localhost:3000',
+  // baseURL: 'https://triocomet.com',
+  baseURL: 'http://localhost:3000',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -13,6 +13,7 @@ export const apiClient = axios.create({
 apiClient.interceptors.request.use(
   config => {
     // config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
+    // config.headers.next.tags = ['collection']
     return config;
   },
   error => {
