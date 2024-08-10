@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { styled } from "@mui/system";
@@ -8,7 +8,7 @@ import Image from "next/image";
 import { useTablet, useMobile } from "../../utils/responsive";
 import { useRouter, useSearchParams } from "next/navigation";
 
-const Page = () => {
+const Component = ()=>{
   const isMobile = useMobile();
   const data: any = useSelector<any>((state) => state.orderData);
   const queryParams = useSearchParams();
@@ -73,6 +73,12 @@ const Page = () => {
       </Box>
     </LoadingContainer>
   );
+}
+
+const Page = () => {
+  <Suspense>
+    <Component/>
+  </Suspense>
 };
 
 export default Page;

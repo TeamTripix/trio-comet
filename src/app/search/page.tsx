@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { Box, Typography, Grid } from "@mui/material";
 import PageSpacing from "@components/PageSpacing";
 import { lightColor, darkColor } from "@/utils/CustomTheme/color";
@@ -13,7 +13,7 @@ import { useSearchParams } from "next/navigation";
 import { usePathname } from "next/navigation";
 import { useSelector } from "react-redux";
 import MobileSearch from "@components/Search";
-const Search = (props: any) => {
+const Component = (props: any) => {
   const queryParams = useSearchParams();
   const category = queryParams.get("category");
   const query = queryParams.get("query");
@@ -195,6 +195,12 @@ const Search = (props: any) => {
       </PageSpacing>
     </>
   );
+};
+
+const Search = () => {
+  <Suspense>
+    <Component/>
+  </Suspense>
 };
 
 export default Search;
