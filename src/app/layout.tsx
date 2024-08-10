@@ -13,7 +13,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { EdgeStoreProvider } from "@components/EdgeStore";
 import LoaderProvider from "./LoaderProvider";
-
+import { GoogleTagManager } from '@next/third-parties/google'
 export const metadata: Metadata = {
   title: "Online Fashion Shopping for Men | Buy Mens Clothing – Triocomet",
   description:
@@ -27,16 +27,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <Head>
-        <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-5V45F9TN"
-            height="0"
-            width="0"
-            style={{ display: "none", visibility: "hidden" }}
-          ></iframe>
-        </noscript>
-      </Head>
+      <GoogleTagManager gtmId="GTM-5V45F9TN" />
       <LoaderProvider>
         <ReduxProvider>
           <AuthProvider>
@@ -76,6 +67,7 @@ export default function RootLayout({
                     theme="light"
                   />
                 </body>
+                {/* <GoogleTagManager gtmId="GTM-XYZ" /> */}
               </EdgeStoreProvider>
             </ThemeProvider>
           </AuthProvider>
