@@ -680,12 +680,9 @@ const Product = (props: any) => {
               position={isMobile || isTablet ? "relative" : "sticky"}
               top={isMobile || isTablet ? -10 : "6rem"}
             >
-              {!isMobile ||
-                (!isTablet && (
-                  <Box paddingLeft="0rem" margin="1rem 0rem 2rem 7rem">
-                    <BreadCrumb />
-                  </Box>
-                ))}
+              <Box paddingLeft="0rem" margin="1rem 0rem 2rem 7rem">
+                <BreadCrumb />
+              </Box>
               <Box
                 display="flex"
                 flexDirection={{ xs: "row", md: "row" }}
@@ -1143,8 +1140,14 @@ const Product = (props: any) => {
                   </Box>
                 </Box>
                 <Box display="flex" gap="2rem">
-                  <SizeChart title="Regular Size Chart" img="/assets/sizeChart/Regular-fit-size.jpg"/>
-                  <SizeChart title="Oversize Chart" img="/assets/sizeChart/Oversized-fit-size.jpg"/>
+                  <SizeChart
+                    title="Regular Size Chart"
+                    img="/assets/sizeChart/Regular-fit-size.jpg"
+                  />
+                  <SizeChart
+                    title="Oversize Chart"
+                    img="/assets/sizeChart/Oversized-fit-size.jpg"
+                  />
                 </Box>
                 <Box>
                   <Box
@@ -1363,6 +1366,10 @@ const Product = (props: any) => {
                     ></Skeleton>
                   ) : (
                     <ButtonBase
+                      onClick={() => {
+                        handleAddToCartBtn(productAPIRes, isCouponApply.state);
+                        router.push("/checkout");
+                      }}
                       sx={{
                         display: "flex",
                         width: "100%",

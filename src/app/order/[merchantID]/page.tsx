@@ -72,70 +72,85 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 
 const OrderPage = () => {
-  const shipToken:any = localStorage.getItem("accessToken");
+  const shipToken: any = localStorage.getItem("accessToken");
   const [orderData, setOrderData] = useState([]);
-  const [shipRocketToken,setShipRocketToken] = useState(shipToken)
+  const [shipRocketToken, setShipRocketToken] = useState(shipToken);
   const session: any = useSession();
   if (session.status === "unauthenticated") {
     window.location.href = "/login";
   }
 
-  if (shipToken) {
-    axios
-      .get("https://apiv2.shiprocket.in/v1/external/orders", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization:
-            "Bearer " +
-            shipRocketToken,
-        },
-      })
-      .then(function (response) {
-        setOrderData(response.data.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  } else {
+  useEffect(() => {
+    if (shipRocketToken) {
+      axios
+        .get("https://apiv2.shiprocket.in/v1/external/orders", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + shipRocketToken,
+          },
+        })
+        .then(function (response) {
+          setOrderData(response.data.data);
+        })
+        .catch(function (error) {
+          if (error.response.status === 401) {
+            const data = {
+              email: "marketing@triocomet.com",
+              password: "ivHSFughsyt457e@Y%$@#&I#",
+            };
+            axios
+              .post("https://apiv2.shiprocket.in/v1/external/auth/login", data)
+              .then(function (response) {
+                if (response.status === 200) {
+                  setShipRocketToken(response.data.token);
+                  localStorage.setItem("accessToken", response.data.token);
+                }
+                // setOrderData(response.data.data);
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+          }
+        });
+    } else {
       const data = {
         email: "marketing@triocomet.com",
         password: "ivHSFughsyt457e@Y%$@#&I#",
       };
       axios
-        .post("https://apiv2.shiprocket.in/v1/external/auth/login",data)
+        .post("https://apiv2.shiprocket.in/v1/external/auth/login", data)
         .then(function (response) {
-          if(response.status === 200){
-            setShipRocketToken(response.data.token)
-            localStorage.setItem("accessToken",response.data.token)
+          if (response.status === 200) {
+            setShipRocketToken(response.data.token);
+            localStorage.setItem("accessToken", response.data.token);
           }
-          // setOrderData(response.data.data);
         })
         .catch(function (error) {
           console.log(error);
         });
-  }
-
-const handleTrack = (shipping_id:number)=>{
-  axios
-  .get(`https://apiv2.shiprocket.in/v1/external/courier/track/shipment/${shipping_id}`,{
-    headers: {
-      // "Content-Type": "application/json",
-      Authorization:
-        "Bearer " +
-        shipRocketToken,
-    },
-  })
-  .then(function (response) {
-    if(response.status === 200){
-      console.log(response.data)
-      window.location.href = response.data.tracking_data.track_url
     }
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-
-}
+  }, []);
+  const handleTrack = (order_id: number,channel_id:number) => {
+    axios
+      .get(
+        `https://apiv2.shiprocket.in/v1/external/courier/track?order_id=${order_id}&channel_id=${channel_id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + shipRocketToken,
+          },
+        }
+      )
+      .then(function (response) {
+        if (response.status === 200) {
+          console.log("eeeeeeeeeeeee : ",response.data);
+          window.location.href = response.data.tracking_data.track_url;
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
   return (
     <Container>
       <Typography variant="h4" gutterBottom>
@@ -169,7 +184,13 @@ const handleTrack = (shipping_id:number)=>{
                   <TableCell>{order.created_at}</TableCell>
                   <TableCell>{order.products[0].status}</TableCell>
                   <TableCell>
-                    <Button onClick={()=>handleTrack(order.shipments[0].id)} variant="outlined" color="primary" size="small">
+                    <Button
+                      // onClick={() => handleTrack(order.shipments[0].id)}
+                      onClick={() => handleTrack(order.id,order.channel_id)}
+                      variant="outlined"
+                      color="primary"
+                      size="small"
+                    >
                       Track
                     </Button>
                   </TableCell>

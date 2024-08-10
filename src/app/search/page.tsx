@@ -13,7 +13,8 @@ import { useSearchParams } from "next/navigation";
 import { usePathname } from "next/navigation";
 import { useSelector } from "react-redux";
 import MobileSearch from "@components/Search";
-const Component = (props: any) => {
+
+const Search = () => {
   const queryParams = useSearchParams();
   const category = queryParams.get("category");
   const query = queryParams.get("query");
@@ -195,12 +196,6 @@ const Component = (props: any) => {
       </PageSpacing>
     </>
   );
-};
-
-const Search = () => {
-  <Suspense>
-    <Component/>
-  </Suspense>
 };
 
 export default Search;

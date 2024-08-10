@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { styled } from "@mui/system";
@@ -8,12 +8,14 @@ import Image from "next/image";
 import { useTablet, useMobile } from "../../utils/responsive";
 import { useRouter, useSearchParams } from "next/navigation";
 
-const Component = ()=>{
+const Page = () => {
+  const shipToken: any = localStorage.getItem("accessToken");
   const isMobile = useMobile();
   const data: any = useSelector<any>((state) => state.orderData);
+  const [shipRocketToken, setShipRocketToken] = useState(shipToken);
   const queryParams = useSearchParams();
   const merchantID = queryParams.get("id");
-  const router = useRouter()
+  const router = useRouter();
   const LoadingContainer = styled(Box)({
     display: "flex",
     flexDirection: "column",
@@ -24,30 +26,74 @@ const Component = ()=>{
   });
 
   useEffect(() => {
-    axios({
-      method: "post",
-      url: "/api/shiprocket-middleware",
-      data: { merchantID, data },
-    })
-      .then((response) => {
-        console.log("res : ",response)
-        if (response.data.success) {
-          router.push(`/order/${response.data.data.order_id}`, { scroll: false })
-          // setIsLoading(false);
-          // setOpenOTPDialogBox(true);
-          // toast(response.data.message);
-        } else {
-          router.push("/")
-          // toast(response.data.message);
-          // setIsLoading(false);
-        }
-      })
-      .catch((err) => {
-        // toast("some error occured");
-        // setIsLoading(false);
-        router.push("/")
-        console.log("error : ",err);
-      });
+    if (shipRocketToken) {
+      axios
+        .get("https://apiv2.shiprocket.in/v1/external/orders", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + shipRocketToken,
+          },
+        })
+        .then(function (response) {
+          // console.log("responseereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee : ",response)
+          axios({
+            method: "post",
+            url: "/api/shiprocket-middleware",
+            data: { data, token:shipRocketToken },
+          })
+            .then((response) => {
+              if (response.data.success) {
+                router.push(`/order/${response.data.data.order_id}`, {
+                  scroll: false,
+                });
+              } else {
+                router.push("/");
+              }
+            })
+            .catch((err) => {
+              router.push("/");
+              console.log("error : ", err);
+            });
+        })
+        .catch(function (error) {
+          if (error.response.status === 401) {
+            const data = {
+              email: "marketing@triocomet.com",
+              password: "ivHSFughsyt457e@Y%$@#&I#",
+            };
+            axios
+              .post("https://apiv2.shiprocket.in/v1/external/auth/login", data)
+              .then(function (response) {
+                if (response.status === 200) {
+                  setShipRocketToken(response.data.token);
+                  localStorage.setItem("accessToken", response.data.token);
+                  router.refresh()
+                }
+                // setOrderData(response.data.data);
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+          }
+        });
+    } else {
+      const data = {
+        email: "marketing@triocomet.com",
+        password: "ivHSFughsyt457e@Y%$@#&I#",
+      };
+      axios
+        .post("https://apiv2.shiprocket.in/v1/external/auth/login", data)
+        .then(function (response) {
+          if (response.status === 200) {
+            setShipRocketToken(response.data.token);
+            localStorage.setItem("accessToken", response.data.token);
+            router.refresh()
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
   }, []);
   return (
     <LoadingContainer>
@@ -73,12 +119,6 @@ const Component = ()=>{
       </Box>
     </LoadingContainer>
   );
-}
-
-const Page = () => {
-  <Suspense>
-    <Component/>
-  </Suspense>
 };
 
 export default Page;
