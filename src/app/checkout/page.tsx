@@ -169,9 +169,10 @@ function Checkout() {
   const productArray: any = [];
 
   for (let item of cartData) {
+    console.log("item : ",item)
     const data = {
       name: item.product.name,
-      sku: item.product._id,
+      sku: item.product.sku,
       units: item.quantity,
       selling_price: item.product.price,
       discount: "",

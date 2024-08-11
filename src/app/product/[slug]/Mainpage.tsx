@@ -541,6 +541,7 @@ const Product = (props: any) => {
   };
 
   const handleAddToCartBtn = (dispatchData: any, couponState: boolean) => {
+    console.log("dispatchData : ",dispatchData)
     const isProductInCart = cartData.filter(
       (cartDataInFilter: any) =>
         cartDataInFilter.product._id ===
@@ -570,6 +571,7 @@ const Product = (props: any) => {
       image: dispatchData.productColor[selectedColor].imageURL[0],
       colorId: dispatchData.productColor[selectedColor].id,
       slug: dispatchData.productColor[selectedColor].slug,
+      sku: dispatchData.productColor[selectedColor].size[selectedSize]?.sku ? dispatchData.productColor[selectedColor].size[selectedSize]?.sku : "null"  
     };
     if (isCouponApply.state === true) {
       dispatch({
@@ -588,6 +590,7 @@ const Product = (props: any) => {
             image: dispatchData.productColor[selectedColor].imageURL[0],
             colorId: dispatchData.productColor[selectedColor].id,
             slug: dispatchData.productColor[selectedColor].slug,
+            sku:dispatchData.productColor[selectedColor]?.sku ? dispatchData.productColor[selectedColor]?.sku : "null"  
           },
           quantity: 1,
           isCouponApply: isCouponApply.state,
