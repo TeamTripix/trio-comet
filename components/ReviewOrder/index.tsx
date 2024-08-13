@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Typography,
   List,
@@ -17,17 +17,32 @@ import { useSelector } from "react-redux";
 
 function ReviewOrder(props: any) {
   const cartData: any = useSelector<any>((state) => state.addToCart.cartData);
+  const buyNowData: any = useSelector<any>((state) => state.buyNow.cartData);
   const totalPrice: any = useSelector<any>((state) => state.totalCost);
+  const [Data, setData] = useState([]);
+  const {
+    address1,
+    address2,
+    handlePaymentMethodChange,
+    paymentRadioValue,
+    isBuyNow,
+  } = props;
 
-  const { address1, address2, handlePaymentMethodChange, paymentRadioValue } =
-    props;
+  useEffect(()=>{
+
+    if (isBuyNow === "true") {
+      setData(buyNowData)
+    }else{
+      setData(cartData)
+    }
+  },[])
   return (
     <>
       <Typography variant="h6" gutterBottom>
         Order summary
       </Typography>
       <List disablePadding>
-        {cartData.map((data: any) => (
+        {Data.map((data: any) => (
           <Card
             key={data.product._id}
             sx={{
@@ -116,7 +131,7 @@ function ReviewOrder(props: any) {
         aria-labelledby="demo-controlled-radio-buttons-group"
         name="controlled-radio-buttons-group"
         value={paymentRadioValue}
-        onChange={(e)=>handlePaymentMethodChange(e.target.value)}
+        onChange={(e) => handlePaymentMethodChange(e.target.value)}
       >
         <FormControlLabel value="prepaid" control={<Radio />} label="Prepaid" />
         <FormControlLabel value="cod" control={<Radio />} label="COD" />

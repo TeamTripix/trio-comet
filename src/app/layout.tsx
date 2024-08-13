@@ -13,8 +13,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { EdgeStoreProvider } from "@components/EdgeStore";
 import LoaderProvider from "./LoaderProvider";
-import { GoogleTagManager } from '@next/third-parties/google'
-import { GoogleAnalytics } from '@next/third-parties/google'
+import { GoogleTagManager } from "@next/third-parties/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 export const metadata: Metadata = {
   title: "Online Fashion Shopping for Men | Buy Mens Clothing – Triocomet",
   description:
@@ -28,7 +28,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      
       <LoaderProvider>
         <ReduxProvider>
           <AuthProvider>
@@ -46,13 +45,13 @@ export default function RootLayout({
                 template="loader...."
               /> */}
                 {/* <ScreenProvider/> */}
-                
+
                 <body>
-                <GoogleTagManager gtmId="GTM-5V45F9TN" />
+                  <GoogleTagManager gtmId="GTM-5V45F9TN" />
                   {/* <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
 
-                  <Typography sx={{textAlign:"center",fontSize:"5rem"}}>Coming Soon</Typography>
-                  </Box> */}
+<Typography sx={{textAlign:"center",fontSize:"5rem"}}>Coming Soon</Typography>
+</Box> */}
                   <BlackBanner />
                   <Navbar />
                   {children}
@@ -69,8 +68,8 @@ export default function RootLayout({
                     pauseOnHover
                     theme="light"
                   />
+                  <GoogleAnalytics gaId="'G-JCEYHJ8L95" />
                 </body>
-                <GoogleAnalytics gaId="'G-JCEYHJ8L95" />
                 {/* <GoogleTagManager gtmId="GTM-XYZ" /> */}
               </EdgeStoreProvider>
             </ThemeProvider>

@@ -517,9 +517,14 @@ const Product = (props: any) => {
   const handleApplyCoupon = () => {
     axios({
       method: "GET",
-      url: `/api/coupon/?pid=${pidState}`,
+      url: `/api/coupon?pid=${productAPIRes._id}`,
     })
       .then((res) => {
+        console.log(res.data.data)
+        if(res.data.data.length === 0){
+          toast.error("Invalid coupon");
+          return
+        }
         if (res.data.data[0].name === couponInputValue) {
           if (res.data.data[0].quantity >= 1) {
             setIsCouponApply({
@@ -535,13 +540,13 @@ const Product = (props: any) => {
           toast.error("Invalid coupon");
         }
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err)
         toast.error("some error occured");
       });
   };
 
   const handleAddToCartBtn = (dispatchData: any, couponState: boolean) => {
-    console.log("dispatchData : ",dispatchData)
     const isProductInCart = cartData.filter(
       (cartDataInFilter: any) =>
         cartDataInFilter.product._id ===
@@ -617,6 +622,83 @@ const Product = (props: any) => {
       state: false,
     });
     toast.success("Your product added to cart");
+  };
+
+  const handleBuyNowBtn = (dispatchData: any, couponState: boolean) => {
+    dispatch({
+      type: "BUY_NOW_EMPTY",
+    });
+    const isProductInCart = cartData.filter(
+      (cartDataInFilter: any) =>
+        cartDataInFilter.product._id ===
+          `coupon${dispatchData._id}colorId${dispatchData.productColor[0].id}` &&
+        cartDataInFilter.isCouponApply === true
+    );
+    if (isCouponApply.state) {
+      if (isProductInCart.length === 1) {
+        setIsCouponApply({
+          offerValue: 0,
+          state: false,
+        });
+        toast.error("Product already in cart");
+        return;
+      }
+    }
+    const data = {
+      description: dispatchData.description,
+      price:
+        dispatchData.discountPrice -
+        (isCouponApply.offerValue / 100) * dispatchData.discountPrice,
+      name: dispatchData.name,
+      productColor: dispatchData.productColor[selectedColor].color,
+      productSize:
+        dispatchData.productColor[selectedColor].size[selectedSize].size,
+      _id: `${dispatchData._id}colorId${dispatchData.productColor[0].id}`,
+      image: dispatchData.productColor[selectedColor].imageURL[0],
+      colorId: dispatchData.productColor[selectedColor].id,
+      slug: dispatchData.productColor[selectedColor].slug,
+      sku: dispatchData.productColor[selectedColor].size[selectedSize]?.sku ? dispatchData.productColor[selectedColor].size[selectedSize]?.sku : "null"  
+    };
+    if (isCouponApply.state === true) {
+      dispatch({
+        type: "BUY_NOW",
+        payload: {
+          product: {
+            description: dispatchData.description,
+            price:
+              dispatchData.discountPrice -
+              (isCouponApply.offerValue / 100) * dispatchData.discountPrice,
+            name: dispatchData.name,
+            productColor: dispatchData.productColor[selectedColor].color,
+            productSize:
+              dispatchData.productColor[selectedColor].size[selectedSize].size,
+            _id: "coupon" + dispatchData._id,
+            image: dispatchData.productColor[selectedColor].imageURL[0],
+            colorId: dispatchData.productColor[selectedColor].id,
+            slug: dispatchData.productColor[selectedColor].slug,
+            sku:dispatchData.productColor[selectedColor]?.sku ? dispatchData.productColor[selectedColor]?.sku : "null"  
+          },
+          quantity: 1,
+          isCouponApply: isCouponApply.state,
+        },
+      });
+      router.push("/checkout?isBuyNow=true");
+    } else {
+      dispatch({
+        type: "BUY_NOW",
+        payload: {
+          product: data,
+          quantity: 1,
+          isCouponApply: isCouponApply.state,
+        },
+      });
+      router.push("/checkout?isBuyNow=true");
+    }
+
+    setIsCouponApply({
+      offerValue: 0,
+      state: false,
+    });
   };
 
   const ref = useRef<HTMLImageElement>(null);
@@ -1370,8 +1452,8 @@ const Product = (props: any) => {
                   ) : (
                     <ButtonBase
                       onClick={() => {
-                        handleAddToCartBtn(productAPIRes, isCouponApply.state);
-                        router.push("/checkout");
+                        handleBuyNowBtn(productAPIRes, isCouponApply.state);
+                        
                       }}
                       sx={{
                         display: "flex",

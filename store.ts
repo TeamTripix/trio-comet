@@ -7,6 +7,7 @@ import { orderData } from "./reducers/orderAction";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { screenSize } from "./reducers/responsive";
+import { buyNow } from "./reducers/buyNow";
 import { combineReducers } from "redux";
 
 import thunk from "redux-thunk";
@@ -23,7 +24,8 @@ const rootReducer = combineReducers({
   searchToggle,
   themeToggle,
   orderData,
-  screenSize
+  screenSize,
+  buyNow
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -19,7 +19,7 @@ import AddressForm from "@components/AddressForm";
 import PaymentForm from "@components/PaymentForm";
 import ReviewOrder from "@components/ReviewOrder";
 import PageSpacing from "@components/PageSpacing";
-import { redirect } from "next/navigation";
+import { redirect, useSearchParams } from "next/navigation";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 // import { orderDataAction } from "../../../reducers/orderAction";
@@ -56,7 +56,8 @@ function getStepContent(
   errorState: any,
   setErrorState: any,
   paymentMethod: string,
-  setPaymentMethod: any
+  setPaymentMethod: any,
+  isBuyNow:string
 ) {
   const { firstName, lastName, address1, address2, city, state, zip, country } =
     iState;
@@ -78,7 +79,7 @@ function getStepContent(
           address2={address2}
           paymentRadioValue={paymentMethod}
           handlePaymentMethodChange={setPaymentMethod}
-
+          isBuyNow={isBuyNow}
         />
       );
     case 2:
@@ -98,6 +99,8 @@ function Checkout() {
   const totalPrice: any = useSelector<any>((state) => state.totalCost);
   const dispatch = useDispatch();
   const router = useRouter()
+  const queryParams = useSearchParams();
+  const isBuyNow:any = queryParams.get("isBuyNow");
   const {
     firstName,
     lastName,
@@ -329,7 +332,8 @@ function Checkout() {
                   errorState,
                   setErrorState,
                   paymentMethod,
-                  setPaymentMethod
+                  setPaymentMethod,
+                  isBuyNow
                 )}
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
                   {activeStep !== 0 && (
