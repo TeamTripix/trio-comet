@@ -27,72 +27,73 @@ const Page = () => {
 
   useEffect(() => {
     if (localStorage.getItem("accessToken")) {
+     const reqData = {
+        url:"https://apiv2.shiprocket.in/v1/external/orders",
+        token:localStorage.getItem("accessToken")
+      }
       axios
-        .get("https://apiv2.shiprocket.in/v1/external/orders", {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem("accessToken"),
-          },
-        })
+        .post("/api/shiprocket-fetching", reqData)
         .then(function (response) {
-          // console.log("responseereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee : ",response)
-          axios({
-            method: "post",
-            url: "/api/shiprocket-middleware",
-            data: { data, token:localStorage.getItem("accessToken") },
-          })
-            .then((response) => {
-              if (response.data.success) {
-                router.push(`/order/${response.data.data.order_id}`, {
-                  scroll: false,
-                });
-              } else {
-                router.push("/");
-              }
+          if(response.status === 200){
+
+            axios({
+              method: "post",
+              url: "/api/shiprocket-middleware",
+              data: { data, token:localStorage.getItem("accessToken") },
             })
-            .catch((err) => {
-              router.push("/");
-              console.log("error : ", err);
-            });
-        })
-        .catch(function (error) {
-          if (error.response.status === 401) {
-            const data = {
-              email: "marketing@triocomet.com",
-              password: "ivHSFughsyt457e@Y%$@#&I#",
-            };
-            axios
-              .post("https://apiv2.shiprocket.in/v1/external/auth/login", data)
-              .then(function (response) {
-                if (response.status === 200) {
-                  setShipRocketToken(response.data.token);
-                  localStorage.setItem("accessToken", response.data.token);
-                  router.refresh()
+              .then((response) => {
+                if (response.data.success) {
+                  router.push(`/order/${response.data.data.order_id}`, {
+                    scroll: false,
+                  });
+                } else {
+                  router.push("/");
                 }
-                // setOrderData(response.data.data);
               })
-              .catch(function (error) {
-                console.log(error);
+              .catch((err) => {
+                router.push("/");
+                console.log("error : ", err);
               });
           }
-        });
-    } else {
-      const data = {
-        email: "marketing@triocomet.com",
-        password: "ivHSFughsyt457e@Y%$@#&I#",
-      };
-      axios
-        .post("https://apiv2.shiprocket.in/v1/external/auth/login", data)
-        .then(function (response) {
-          if (response.status === 200) {
-            setShipRocketToken(response.data.token);
-            localStorage.setItem("accessToken", response.data.token);
-            router.refresh()
-          }
         })
         .catch(function (error) {
-          console.log(error);
+          // if (error.response.status === 401) {
+          //   const data = {
+          //     email: "marketing@triocomet.com",
+          //     password: "ivHSFughsyt457e@Y%$@#&I#",
+          //   };
+          //   axios
+          //     .post("https://apiv2.shiprocket.in/v1/external/auth/login", data)
+          //     .then(function (response) {
+          //       if (response.status === 200) {
+          //         setShipRocketToken(response.data.token);
+          //         localStorage.setItem("accessToken", response.data.token);
+          //         router.refresh()
+          //       }
+          //       // setOrderData(response.data.data);
+          //     })
+          //     .catch(function (error) {
+          //       console.log(error);
+          //     });
+          // }
         });
+    } else {
+      // const data = {
+      //   email: "marketing@triocomet.com",
+      //   password: "ivHSFughsyt457e@Y%$@#&I#",
+      // };
+      // axios
+      //   .post("https://apiv2.shiprocket.in/v1/external/auth/login", data)
+      //   .then(function (response) {
+      //     if (response.status === 200) {
+      //       setShipRocketToken(response.data.token);
+      //       localStorage.setItem("accessToken", response.data.token);
+      //       router.refresh()
+      //     }
+      //   })
+      //   .catch(function (error) {
+      //     console.log(error);
+      //   });
     }
   }, []);
   return (

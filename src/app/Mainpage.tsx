@@ -187,7 +187,8 @@ export default function Home(props: any) {
     centerMode: true,
     centerPadding: 0,
     arrows: !isMobile,
-    beforeChange: (current: any, next: any) => setImageIndex(next),
+    infinite: false,
+    // beforeChange: (current: any, next: any) => setImageIndex(next),
   };
 
   const TredingProdSettings = {
@@ -207,15 +208,18 @@ export default function Home(props: any) {
     slidesToShow: 1,
     slidesToScroll: 1,
     infinite: false,
+    autoplaySpeed: 2000
   };
 
   const desktopBannerSettings = {
     dots: true,
-    infinite: false,
+    infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
+    autoplaySpeed: 2000,
+    autoplay: true,
   };
 
   const categorySettings = {
@@ -937,7 +941,6 @@ export default function Home(props: any) {
                   <Slider
                     {...settings}
                     arrows={false}
-                    // infinite={blogApiRes.length > 1}
                   >
                     {blogApiRes.slice(0, 2).map((data, index) => (
                       <Box key={index} padding="0 1rem">
@@ -975,7 +978,7 @@ export default function Home(props: any) {
             )}
           </Box>
 
-          <Box height="40rem">
+          <Box>
             <Box
               display="flex"
               justifyContent={isMobile ? "start" : "center"}

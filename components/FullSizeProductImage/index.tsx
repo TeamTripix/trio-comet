@@ -5,7 +5,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import { Box } from "@mui/material";
-import './DoubleTapZoom.css'; // We'll define styles here
+import "./DoubleTapZoom.css"; // We'll define styles here
+import DoubleTapToZoom from "@components/DoubleTapToZoom";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -16,13 +17,12 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-
-const DoubleTapZoom = ({ src, alt }:any) => {
+const DoubleTapZoom = ({ src, alt }: any) => {
   const [scale, setScale] = React.useState(1);
   const [lastTap, setLastTap] = React.useState(0);
   const imageRef = React.useRef(null);
 
-  const handleDoubleTap = (e:any) => {
+  const handleDoubleTap = (e: any) => {
     const currentTime = new Date().getTime();
     const tapGap = currentTime - lastTap;
 
@@ -43,12 +43,9 @@ const DoubleTapZoom = ({ src, alt }:any) => {
       onDoubleClick={handleDoubleTap}
       style={{ transform: `scale(${scale})` }}
       ref={imageRef}
-    >
-      <img src={src} alt={alt} className="zoom-image" style={{ height: "100vh", width: "auto" }} />
-    </div>
+    ></div>
   );
 };
-
 
 export default function FullScreenDialog({ img }: any) {
   const [open, setOpen] = React.useState(false);
@@ -98,7 +95,14 @@ export default function FullScreenDialog({ img }: any) {
             >
               <CloseIcon />
             </IconButton>
-           <DoubleTapZoom src={img} alt="zoomed image"/>
+            <DoubleTapToZoom>
+              <img
+                src={img}
+                alt={"alt"}
+                className="zoom-image"
+                style={{ height: "100vh", width: "auto" }}
+              />
+            </DoubleTapToZoom>
           </Box>
         </Box>
       </Dialog>

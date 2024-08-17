@@ -172,7 +172,6 @@ function Checkout() {
   const productArray: any = [];
 
   for (let item of cartData) {
-    console.log("item : ",item)
     const data = {
       name: item.product.name,
       sku: item.product.sku,

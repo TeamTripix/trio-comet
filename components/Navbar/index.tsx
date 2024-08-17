@@ -478,7 +478,7 @@ export default function Index() {
               <Link href="/new-arrivals">
                 <LI
                   theme={theme}
-                  highlite={pathname === "/bulk-query" ? true : false}
+                  highlite={pathname === "/new-arrivals" ? true : false}
                   style={{ fontSize: 20 }}
                 >
                   NEW ARRIVALS

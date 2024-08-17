@@ -5,11 +5,12 @@ import axios from "axios";
 export async function POST(req: Request) {
   try {
     const parsedData = await req.json();
-    const { data, token } = parsedData;
+    const { url,token } = parsedData;
+
     // if (shiprocketToken) {
-    const res = await axios.post(
-      "https://apiv2.shiprocket.in/v1/external/orders/create/adhoc",
-      data,
+    //   console.log("shiprocketToken : ",shiprocketToken )
+    const res = await axios.get(
+      url,
       {
         headers: {
           "Content-Type": "application/json",
@@ -18,24 +19,24 @@ export async function POST(req: Request) {
       }
     );
     if (res.status === 200) {
+        console.log(res)
       return NextResponse.json(
         {
-          message: "Your Product Order Successfully",
+          message: "Your Product fetch Successfully",
           success: true,
           data: res.data,
         },
-        { status: 201 }
+        { status: res.status }
       );
     }
     return NextResponse.json(
-      { message: "Order Failed", success: false },
-      { status: 400 }
+      { message: "Failed", success: false },
+      { status:  res.status }
     );
-  } catch (err) {
-    console.log(err);
+  } catch (err:any) {
     return NextResponse.json(
       { message: "Internal server error", success: false },
-      { status: 500 }
+      { status: err.response.status }
     );
   }
 }

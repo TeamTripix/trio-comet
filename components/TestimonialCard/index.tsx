@@ -12,8 +12,9 @@ const Index = ({content}:{content:string}) => {
   return (
     <Box
       width={isMobile ? "90vw" : isTablet ? "33rem" : "100%"}
-      padding="1rem"
-      height={isMobile ? "auto" : "20rem"}
+      padding="2rem"
+      
+      // height={isMobile ? "auto" : "10rem"}
       sx={{
         filter: "drop-shadow(0px 6px 15px rgba(0, 0, 0, 0.05))",
         marginLeft: isMobile ? "auto" : 0,
@@ -24,8 +25,8 @@ const Index = ({content}:{content:string}) => {
         width="100%"
         display="flex"
         justifyContent="center"
-        position="relative"
-        top="5rem"
+        // position="relative"
+        // top="5rem"
       >
         {/* <Box
           width="11.1rem"
@@ -49,7 +50,7 @@ const Index = ({content}:{content:string}) => {
 
       <Box
         width="100%"
-        height="20rem"
+        // height="20rem"
         flexShrink="0"
         borderRadius="1.6rem"
         border={`2px solid ${
@@ -71,8 +72,9 @@ const Index = ({content}:{content:string}) => {
           lineHeight="normal"
           letterSpacing="0.05rem"
           width="100%"
-          position="relative"
-          top="2rem"
+          padding="1rem"
+          // position="relative"
+          // top="2rem"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

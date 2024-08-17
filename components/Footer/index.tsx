@@ -42,7 +42,7 @@ const Index = () => {
       });
   }, []);
 
-  if (pathname === "/bulk-query") {
+  if (pathname === "/contact-us") {
     return <></>;
   } else {
     if (isMobile || isTablet) {

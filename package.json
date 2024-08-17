@@ -42,6 +42,7 @@
     "react-dom": "18.2.0",
     "react-dropzone": "^14.2.3",
     "react-id-swiper": "^4.0.0",
+    "react-inner-image-zoom": "^3.0.2",
     "react-items-carousel": "^2.8.0",
     "react-material-ui-carousel": "^3.4.2",
     "react-medium-image-zoom": "^5.2.8",

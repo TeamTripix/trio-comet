@@ -520,7 +520,6 @@ const Product = (props: any) => {
       url: `/api/coupon?pid=${productAPIRes._id}`,
     })
       .then((res) => {
-        console.log(res.data.data)
         if(res.data.data.length === 0){
           toast.error("Invalid coupon");
           return
@@ -850,6 +849,7 @@ const Product = (props: any) => {
                   ></Skeleton>
                 ) : (
                   <Typography
+                  variant="h1"
                     color={
                       theme === "light"
                         ? lightColor.text.primary

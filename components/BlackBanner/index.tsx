@@ -106,6 +106,7 @@ const Index = () => {
                     </ButtonBase>
                   </Link> */}
                 <Box display="flex" gap={5}>
+                <Link href="/contact-us">
                   <ButtonBase>
                     <Typography
                       color={lightColor.text.primary}
@@ -118,6 +119,7 @@ const Index = () => {
                       {"Contact Us"}
                     </Typography>
                   </ButtonBase>
+                  </Link>
                   <Link href="/order/asdasdsd">
                     <ButtonBase>
                       <Typography

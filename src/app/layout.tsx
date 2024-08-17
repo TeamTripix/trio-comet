@@ -48,10 +48,6 @@ export default function RootLayout({
 
                 <body>
                   <GoogleTagManager gtmId="GTM-5V45F9TN" />
-                  {/* <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
-
-<Typography sx={{textAlign:"center",fontSize:"5rem"}}>Coming Soon</Typography>
-</Box> */}
                   <BlackBanner />
                   <Navbar />
                   {children}
@@ -70,7 +66,6 @@ export default function RootLayout({
                   />
                   <GoogleAnalytics gaId="'G-JCEYHJ8L95" />
                 </body>
-                {/* <GoogleTagManager gtmId="GTM-XYZ" /> */}
               </EdgeStoreProvider>
             </ThemeProvider>
           </AuthProvider>

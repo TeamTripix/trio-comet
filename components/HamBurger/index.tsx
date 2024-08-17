@@ -305,7 +305,7 @@ const Index = () => {
               </Box>
             </Link>
 
-            <Link href="/bulk-query" onClick={toggleDrawer(anchor, false)}>
+            <Link href="/contact-us" onClick={toggleDrawer(anchor, false)}>
               <Box
                 display="flex"
                 width="12.5rem"
@@ -313,7 +313,7 @@ const Index = () => {
                 gap="2rem ">
                 <BulkQueryIcon
                   color={
-                    pathname === "/bulk-query"
+                    pathname === "/contact-us"
                       ? theme === "light"
                         ? lightColor.text.chevron
                         : darkColor.text.chevron
@@ -324,7 +324,7 @@ const Index = () => {
                 />
                 <Typography
                   color={
-                    pathname === "/bulk-query"
+                    pathname === "/contact-us"
                       ? theme === "light"
                         ? lightColor.text.chevron
                         : darkColor.text.chevron
@@ -338,7 +338,7 @@ const Index = () => {
                   fontWeight="500"
                   lineHeight="2.4rem"
                   letterSpacing="0.05rem">
-                  Bulk Query
+                  Contact Us
                 </Typography>
               </Box>
             </Link>
