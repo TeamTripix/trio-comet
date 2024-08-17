@@ -24,7 +24,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 // import { orderDataAction } from "../../../reducers/orderAction";
 import { toast } from "react-toastify";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 
 const steps = ["Shipping address", "Review your order", "Payment"];
 const defaultState = {
@@ -57,7 +57,7 @@ function getStepContent(
   setErrorState: any,
   paymentMethod: string,
   setPaymentMethod: any,
-  isBuyNow:string
+  isBuyNow: string
 ) {
   const { firstName, lastName, address1, address2, city, state, zip, country } =
     iState;
@@ -96,11 +96,13 @@ function Checkout() {
   const [isPlaceOrderLoading, setIsPlaceOrderLoading] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("prepaid");
   const cartData: any = useSelector<any>((state) => state.addToCart.cartData);
+  const buyNowData: any = useSelector<any>((state) => state.buyNow.cartData);
+
   const totalPrice: any = useSelector<any>((state) => state.totalCost);
   const dispatch = useDispatch();
-  const router = useRouter()
+  const router = useRouter();
   const queryParams = useSearchParams();
-  const isBuyNow:any = queryParams.get("isBuyNow");
+  const isBuyNow: any = queryParams.get("isBuyNow");
   const {
     firstName,
     lastName,
@@ -171,17 +173,32 @@ function Checkout() {
 
   const productArray: any = [];
 
-  for (let item of cartData) {
-    const data = {
-      name: item.product.name,
-      sku: item.product.sku,
-      units: item.quantity,
-      selling_price: item.product.price,
-      discount: "",
-      tax: "",
-      hsn: "",
-    };
-    productArray.push(data);
+  if (isBuyNow === "true") {
+    for (let item of buyNowData) {
+      const data = {
+        name: item.product.name,
+        sku: item.product.sku,
+        units: item.quantity,
+        selling_price: item.product.price,
+        discount: "",
+        tax: "",
+        hsn: "",
+      };
+      productArray.push(data);
+    }
+  } else {
+    for (let item of cartData) {
+      const data = {
+        name: item.product.name,
+        sku: item.product.sku,
+        units: item.quantity,
+        selling_price: item.product.price,
+        discount: "",
+        tax: "",
+        hsn: "",
+      };
+      productArray.push(data);
+    }
   }
 
   function generateOrderId() {
@@ -220,7 +237,7 @@ function Checkout() {
     setIsPlaceOrderLoading(true);
     const data = {
       name: `${firstName} ${lastName}`,
-      amount: totalPrice,
+      amount: isBuyNow === "true" ? buyNowData[0].product.price : totalPrice,
       number: phoneNumber,
       MUID: "MUID" + Date.now(),
       transactionId: "TID" + Date.now(),
@@ -265,7 +282,7 @@ function Checkout() {
       // giftwrap_charges: "",
       // transaction_charges: "",
       // total_discount: "",
-      sub_total: totalPrice,
+      sub_total: isBuyNow === "true" ? buyNowData[0].product.price : totalPrice,
       length: 0.5,
       breadth: 0.5,
       height: 0.5,
@@ -278,9 +295,9 @@ function Checkout() {
 
     dispatch({ type: "ADD_ORDER_DATA", payload: orderData });
 
-    if(paymentMethod==="cod"){
-      router.push(`/booking?id=${orderID}`, { scroll: false })
-      return
+    if (paymentMethod === "cod") {
+      router.push(`/booking?id=${orderID}`, { scroll: false });
+      return;
     }
 
     axios

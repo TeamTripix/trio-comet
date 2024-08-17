@@ -29,7 +29,7 @@ function ReviewOrder(props: any) {
   } = props;
 
   useEffect(()=>{
-
+console.log("isBuyNow : ",buyNowData)
     if (isBuyNow === "true") {
       setData(buyNowData)
     }else{
@@ -114,7 +114,7 @@ function ReviewOrder(props: any) {
         <ListItem sx={{ py: 1, px: 0 }}>
           <ListItemText primary="Total" />
           <Typography variant="h5" sx={{ fontWeight: 700 }}>
-            ₹{totalPrice}
+            ₹{isBuyNow === "true" ? buyNowData[0].product.price : totalPrice}
           </Typography>
         </ListItem>
       </List>
