@@ -7,6 +7,7 @@ import { styled } from "@mui/system";
 import Image from "next/image";
 import { useTablet, useMobile } from "../../utils/responsive";
 import { useRouter, useSearchParams } from "next/navigation";
+import { toast } from "react-toastify";
 
 const Page = () => {
  
@@ -57,43 +58,26 @@ const Page = () => {
           }
         })
         .catch(function (error) {
-          // if (error.response.status === 401) {
-          //   const data = {
-          //     email: "marketing@triocomet.com",
-          //     password: "ivHSFughsyt457e@Y%$@#&I#",
-          //   };
-          //   axios
-          //     .post("https://apiv2.shiprocket.in/v1/external/auth/login", data)
-          //     .then(function (response) {
-          //       if (response.status === 200) {
-          //         setShipRocketToken(response.data.token);
-          //         localStorage.setItem("accessToken", response.data.token);
-          //         router.refresh()
-          //       }
-          //       // setOrderData(response.data.data);
-          //     })
-          //     .catch(function (error) {
-          //       console.log(error);
-          //     });
-          // }
+          toast.error("Your order is not booked, There was some error in Delivery agent")
         });
     } else {
-      // const data = {
-      //   email: "marketing@triocomet.com",
-      //   password: "ivHSFughsyt457e@Y%$@#&I#",
-      // };
-      // axios
-      //   .post("https://apiv2.shiprocket.in/v1/external/auth/login", data)
-      //   .then(function (response) {
-      //     if (response.status === 200) {
-      //       setShipRocketToken(response.data.token);
-      //       localStorage.setItem("accessToken", response.data.token);
-      //       router.refresh()
-      //     }
-      //   })
-      //   .catch(function (error) {
-      //     console.log(error);
-      //   });
+      const data = {
+        email: "marketing@triocomet.com",
+        password: "ivHSFughsyt457e@Y%$@#&I#",
+      };
+      axios
+        .post("https://apiv2.shiprocket.in/v1/external/auth/login", data)
+        .then(function (response) {
+          if (response.status === 200) {
+            setShipRocketToken(response.data.token);
+            localStorage.setItem("accessToken", response.data.token);
+            window.location.reload();
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+          toast.error("Your token is not regenerate, There was some error in Delivery agent")
+        });
     }
   }, []);
   return (

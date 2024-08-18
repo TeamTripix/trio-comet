@@ -15,6 +15,7 @@ import {
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation';
+import { toast } from "react-toastify";
 
 const OrderPage = () => {
   const [orderData, setOrderData] = useState([]);
@@ -47,10 +48,8 @@ const OrderPage = () => {
                 if (response.status === 200) {
                   setShipRocketToken(response.data.token);
                   localStorage.setItem("accessToken", response.data.token);
-                  router.refresh()
-                  // window.reload();
+                  window.location.reload();
                 }
-                // setOrderData(response.data.data);
               })
               .catch(function (error) {
                 console.log(error);
@@ -69,7 +68,7 @@ const OrderPage = () => {
               if (response.status === 200) {
                 setShipRocketToken(response.data.token);
                 localStorage.setItem("accessToken", response.data.token);
-                router.refresh()
+                window.location.reload();
               }
               // setOrderData(response.data.data);
             })
@@ -79,22 +78,23 @@ const OrderPage = () => {
           }
         });
     } else {
-      // const data = {
-      //   email: "marketing@triocomet.com",
-      //   password: "ivHSFughsyt457e@Y%$@#&I#",
-      // };
-      // axios
-      //   .post("https://apiv2.shiprocket.in/v1/external/auth/login", data)
-      //   .then(function (response) {
-      //     if (response.status === 200) {
-      //       setShipRocketToken(response.data.token);
-      //       localStorage.setItem("accessToken", response.data.token);
-      //       router.refresh()
-      //     }
-      //   })
-      //   .catch(function (error) {
-      //     console.log(error);
-      //   });
+      const data = {
+        email: "marketing@triocomet.com",
+        password: "ivHSFughsyt457e@Y%$@#&I#",
+      };
+      axios
+        .post("https://apiv2.shiprocket.in/v1/external/auth/login", data)
+        .then(function (response) {
+          if (response.status === 200) {
+            setShipRocketToken(response.data.token);
+            localStorage.setItem("accessToken", response.data.token);
+            window.location.reload();
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+          toast.error("Your token is not regenerate, There was some error in Delivery agent")
+        });
     }
   }, []);
   const handleTrack = (order_id: number, channel_id: number) => {
