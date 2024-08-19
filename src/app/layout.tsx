@@ -19,6 +19,9 @@ export const metadata: Metadata = {
   title: "Online Fashion Shopping for Men | Buy Mens Clothing – Triocomet",
   description:
     "The hottest trends in men's fashion at Triocomet. Shop stylish, Online fashion shopping for men. Shop now and stand out. ✔ Free Shipping ✔ COD Available!",
+    verification: {
+      google: "_kYmh_pf4WXGLIQ7OUe6ANa_k7L6Uh_vso_LR312ZPU",
+    },
 };
 
 export default function RootLayout({

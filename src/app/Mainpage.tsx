@@ -42,6 +42,7 @@ import { NextSeo } from "next-seo";
 import Seo from "@components/Seo";
 // import { Head } from "next/document";
 import { Metadata } from "next";
+import { useRouter } from "next/navigation";
 
 // export const metadata: Metadata = {
 //   title: 'Acme Dashboard',
@@ -131,6 +132,7 @@ export default function Home(props: any) {
 
   const isTablet = useTablet();
   const isMobile = useMobile();
+  const router = useRouter()
   const AutoplaySlider: any = withAutoplay(AwesomeSlider);
   const theme: any = useSelector<any>((state) => state.themeToggle);
 
@@ -240,6 +242,10 @@ export default function Home(props: any) {
     return result;
   }
 
+  const handleBannerDoubleClick = (url:string)=>{
+    router.push(url)
+  }
+
   return (
     <>
       <Box>
@@ -284,8 +290,9 @@ export default function Home(props: any) {
           <Slider {...desktopBannerSettings}>
             {bannerApiRes.map((data: any) => {
               return (
-                <Box key={data.id}>
-                  <Link href={data.link}>
+                <Box key={data.id} onDoubleClick={()=>handleBannerDoubleClick(data.link)}>
+                  {/* <Link href={data.link}> */}
+                  
                     <Image
                       ref={ref}
                       src={data.imageURL}
@@ -299,7 +306,7 @@ export default function Home(props: any) {
                       }}
                       layout="responsive"
                     />
-                  </Link>
+                  {/* </Link> */}
                 </Box>
               );
             })}
