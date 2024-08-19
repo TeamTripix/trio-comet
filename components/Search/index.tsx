@@ -10,6 +10,8 @@ import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import Image from "next/image";
+import ClickAwayListener from '@mui/material/ClickAwayListener';
+
 interface Product {
   id: number;
   name: string;
@@ -57,7 +59,7 @@ const Index = () => {
       });
   }, []);
 
-  useEffect(() => { }, [setSearchResult, searchInputText, setSeachApiRes]);
+  // useEffect(() => { }, [setSearchResult, searchInputText, setSeachApiRes]);
 
   const handleInput = (data: string) => {
     setSearchInputText(data);
@@ -68,12 +70,14 @@ const Index = () => {
     // console.log(data)
     setCategorySelector(data);
     router.push(`?category=${data}&query=${searchInputText}`);
+    // fetchSuggestions(searchInputText);
   };
 
   useEffect(() => {
     const delay = 300;
     const timerId = setTimeout(() => {
-      if (searchInputText.trim() !== "") {
+      console.log("categorySelector : ",categorySelector)
+      if (searchInputText.trim() !== "" || categorySelector !== "all") {
         fetchSuggestions(searchInputText);
       } else {
         setSuggestions([]);
@@ -271,6 +275,7 @@ const Index = () => {
           </Link>
 
         </Box>
+        <ClickAwayListener onClickAway={()=>setSuggestions([])}>
         <Box
           width="100%"
           position="absolute"
@@ -286,7 +291,7 @@ const Index = () => {
               <Link key={item.id} href={`/product/${item.productColor[0].slug}`}>
                 <MenuItem  onClick={() => handleSuggestionClick(item)}>
                   <Box display="flex" alignItems="center">
-                    <Image src={item.productColor[0].imageURL[0]} alt={item.name} width="75" height="75" style={{margin:'1rem'}} />
+                    <Image src={item.productColor[0].imageURL[0]} alt={item.name} width="1080" height="1350" style={{width:"78px",height:"105px", margin:'1rem', borderRadius:"4px"}} />
                     <Box>
                       <Typography
                         variant="body1"
@@ -325,6 +330,7 @@ const Index = () => {
             </Link>
           )}
         </Box>
+        </ClickAwayListener>
       </Box>
     </>
   );
