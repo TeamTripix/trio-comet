@@ -44,8 +44,40 @@ const Page = async ({ params }: { params: { slug: string } }) => {
     `http://localhost:3000/api/review?id=${product.data._id}`
   );
   let productReview = await productReviewRes.json();
+  const jsonLd = {
+    "@context": "https://schema.org/", 
+    "@type": "Product", 
+    name: product.data.name,
+    image: product.data.productColor[0].imageURL[0],
+    description: product.data.description,
+    brand: {
+      "@type": "Brand",
+      name: "Triocomet"
+    },
+    sku: product.data.productColor[0].size[0].sku,
+    offers: {
+      "@type": "AggregateOffer",
+      url: `https://www.triocomet.com/product/${product.data.productColor[0].slug}`,
+      priceCurrency: "INR",
+      lowPrice: product.data.discountPrice,
+      highPrice: product.data.price
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "5",
+      bestRating: "5",
+      worstRating: "3",
+    ratingCount: "20"
+    }
+  }
+  
 
   return (
+    <>
+    <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     <Mainpage
       params={params}
       product={product}
@@ -53,7 +85,8 @@ const Page = async ({ params }: { params: { slug: string } }) => {
       categoryRelatedProduct={categoryRelatedProduct}
       productCoupon={productCoupon}
       productReview={productReview}
-    />
+      />
+      </>
   );
 };
 export default Page;
