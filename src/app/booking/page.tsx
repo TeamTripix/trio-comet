@@ -35,6 +35,7 @@ const Page = () => {
       axios
         .post("/api/shiprocket-fetching", reqData)
         .then(function (response) {
+          console.log("response : ",response)
           if(response.status === 200){
 
             axios({
@@ -58,7 +59,23 @@ const Page = () => {
           }
         })
         .catch(function (error) {
-          toast.error("Your order is not booked, There was some error in Delivery agent")
+          const data = {
+            email: "marketing@triocomet.com",
+            password: "ivHSFughsyt457e@Y%$@#&I#",
+          };
+          axios
+            .post("https://apiv2.shiprocket.in/v1/external/auth/login", data)
+            .then(function (response) {
+              if (response.status === 200) {
+                setShipRocketToken(response.data.token);
+                localStorage.setItem("accessToken", response.data.token);
+                window.location.reload();
+              }
+            })
+            .catch(function (error) {
+              console.log(error);
+              toast.error("Your token is not regenerate, There was some error in Delivery agent")
+            });
         });
     } else {
       const data = {
