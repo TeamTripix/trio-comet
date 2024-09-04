@@ -27,6 +27,7 @@ import AdminIcon from "../../icons/adminIcon";
 import SearchIconMobile from "../../icons/SearchIconMobile";
 import ThemeToggleBtn from "@components/ThemeToggleBtn";
 import PageSpacing from "@components/PageSpacing";
+import MobileView from "@/utils/MobileView";
 
 interface LIProps {
   highlite?: boolean;
@@ -39,8 +40,8 @@ const LI = styled.div<LIProps>`
         ? lightColor.text.primary
         : darkColor.text.primary
       : props.theme === "light"
-      ? lightColor.text.primary
-      : darkColor.text.primary};
+        ? lightColor.text.primary
+        : darkColor.text.primary};
   text-align: center;
   font-size: 2.2rem;
   font-style: normal;
@@ -51,17 +52,17 @@ const LI = styled.div<LIProps>`
 
   &:hover {
     color: ${(props) =>
-      props.theme === "light"
-        ? lightColor.text.primary
-        : darkColor.text.primary};
+    props.theme === "light"
+      ? lightColor.text.primary
+      : darkColor.text.primary};
     cursor: pointer;
   }
 
   &:active {
     color: ${(props) =>
-      props.theme === "light"
-        ? lightColor.text.primary
-        : darkColor.text.primary};
+    props.theme === "light"
+      ? lightColor.text.primary
+      : darkColor.text.primary};
   }
 `;
 
@@ -126,269 +127,154 @@ export default function Index() {
   if (isMobile || isTablet) {
     return (
       <>
-        <Box
-          display="flex"
-          height="5rem"
-          width="100%"
-          padding="0rem 2.4rem"
-          justifyContent="space-between"
-          alignItems="center"
-          bgcolor={theme === "light" ? lightColor.navbarBG : darkColor.navbarBG}
-          position="fixed"
-          zIndex="99"
-        >
+        <MobileView loader={false}>
           <Box
             display="flex"
+            height="5rem"
+            width="100%"
+            padding="0rem 2.4rem"
             justifyContent="space-between"
             alignItems="center"
-            alignSelf="stretch"
-            gap="2rem"
+            bgcolor={theme === "light" ? lightColor.navbarBG : darkColor.navbarBG}
+            position="fixed"
+            zIndex="99"
           >
-            <HamBurger />
-            <Link href="/">
-              <Box width="3rem" sx={{ cursor: "pointer" }}>
-                <Image
-                  src={`/assets/logo/mobileLogo.png`}
-                  alt="Logo"
-                  width="50"
-                  height="50"
-                  layout="responsive"
-                />
-              </Box>
-            </Link>
-          </Box>
-          <Box display="flex" alignItems="center" gap="0.4rem">
             <Box
               display="flex"
+              justifyContent="space-between"
               alignItems="center"
-              justifyContent="center"
-              gap="0.8rem"
-            >
-              <Link href="/search?category=all&query=">
-                <ButtonBase sx={{ borderRadius: "50%", padding: "3px" }}>
-                  <SearchIconMobile
-                    color={
-                      theme === "light"
-                        ? lightColor.text.primary
-                        : darkColor.text.primary
-                    }
-                  />
-                </ButtonBase>
-              </Link>
-
-              <Box sx={{ borderRadius: "50%", padding: "3px" }}>
-                <Badge
-                  badgeContent={
-                    isClient
-                      ? favCartData.length === 0
-                        ? 0
-                        : favCartData.length
-                      : 0
-                  }
-                  color="error"
-                >
-                  <FavCart />
-                </Badge>
-              </Box>
-
-              <Box sx={{ borderRadius: "50%", padding: "3px" }}>
-                <Badge
-                  badgeContent={
-                    isClient ? (cartData.length === 0 ? 0 : cartData.length) : 0
-                  }
-                  color="error"
-                >
-                  <Cart />
-                </Badge>
-              </Box>
-            </Box>
-          </Box>
-        </Box>
-        <Box width="100%" height="5rem"></Box>
-      </>
-    );
-  }
-
-  if (isTablet) {
-    return (
-      <>
-        <Box
-          display="flex"
-          height="8rem"
-          padding="0.8rem 4.8rem"
-          justifyContent="space-between"
-          alignItems="center"
-          borderBottom={
-            theme === "light" ? lightColor.borderColor : darkColor.borderColor
-          }
-          bgcolor={theme === "light" ? lightColor.navbarBG : darkColor.navbarBG}
-          position="fixed"
-          zIndex="99"
-          width="100%"
-        >
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            flex="1 0 0"
-          >
-            <Box
-              display="flex"
+              alignSelf="stretch"
               gap="2rem"
-              justifyContent="center"
-              alignItems="center"
             >
               <HamBurger />
               <Link href="/">
-                <Box width="16rem" height="5rem" sx={{ cursor: "pointer" }}>
+                <Box width="3rem" sx={{ cursor: "pointer" }}>
                   <Image
-                    src={`/assets/logo/${
-                      theme === "light" ? "logo-light.png" : "logo-dark.png"
-                    }`}
+                    src={`/assets/logo/mobileLogo.png`}
                     alt="Logo"
-                    width="160"
+                    width="50"
                     height="50"
                     layout="responsive"
                   />
                 </Box>
               </Link>
             </Box>
-            <Search />
-            <Box>
-              <ThemeToggleBtn />
-            </Box>
-            <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              gap="0.8rem"
-            >
-              <Box sx={{ borderRadius: "50%", padding: "3px" }}>
-                <Badge invisible={true}>
-                  <Link
-                    href={
-                      session.status === "authenticated" ? "/profile" : "/login"
-                    }
-                  >
-                    <ButtonBase sx={{ borderRadius: "50%" }}>
-                      <AdminIcon
-                        color={
-                          theme === "light"
-                            ? lightColor.text.primary
-                            : darkColor.text.primary
-                        }
-                      />
-                    </ButtonBase>
-                  </Link>
-                </Badge>
-              </Box>
-
-              <Box sx={{ borderRadius: "50%", padding: "3px" }}>
-                <Badge
-                  badgeContent={
-                    isClient
-                      ? favCartData.length === 0
-                        ? 0
-                        : favCartData.length
-                      : 0
-                  }
-                  color="error"
-                >
-                  <FavCart />
-                </Badge>
-              </Box>
-
-              <Box sx={{ borderRadius: "50%", padding: "3px" }}>
-                <Badge
-                  badgeContent={
-                    isClient ? (cartData.length === 0 ? 0 : cartData.length) : 0
-                  }
-                  color="error"
-                >
-                  <Cart />
-                </Badge>
-              </Box>
-            </Box>
-          </Box>
-        </Box>
-        <Box width="100%" height="8rem"></Box>
-      </>
-    );
-  }
-
-  function handleClick(event: any) {
-    if (anchorElHover !== event.currentTarget) {
-      setAnchorElHover(event.currentTarget);
-    }
-  }
-
-  function handleClose() {
-    setAnchorElHover(null);
-  }
-
-  return (
-    <>
-      <Box
-        // display="flex"
-        width="100vw"
-        // height="11rem"
-        // padding="0.8rem 0rem"
-        justifyContent="space-between"
-        alignItems="center"
-        flexShrink="0"
-        bgcolor="white"
-        position="fixed"
-        zIndex="99"
-      >
-        <PageSpacing>
-          <Box
-            margin="0 12rem"
-            display="flex"
-            height="5rem"
-            justifyContent="space-around"
-            alignItems="center"
-            flexShrink="0"
-            bgcolor="white"
-            zIndex="99"
-          >
-            <Link href="/">
-              <Box width="15rem" height="8rem" sx={{ cursor: "pointer" }}>
-                <Image
-                  src={`/assets/logo/logo-light.png`}
-                  alt="Logo"
-                  width="1500"
-                  height="800"
-                  layout="responsive"
-                />
-              </Box>
-            </Link>
-
-            <Box display="flex" alignItems="center" gap="4rem">
-              <Search />
-            </Box>
-            <Box display="flex" alignItems="center" gap="4rem">
+            <Box display="flex" alignItems="center" gap="0.4rem">
               <Box
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
                 gap="0.8rem"
               >
-                {/* <Box>
-                  <ThemeToggleBtn />
-                </Box> */}
+                <Link href="/search?category=all&query=">
+                  <ButtonBase sx={{ borderRadius: "50%", padding: "3px" }}>
+                    <SearchIconMobile
+                      color={
+                        theme === "light"
+                          ? lightColor.text.primary
+                          : darkColor.text.primary
+                      }
+                    />
+                  </ButtonBase>
+                </Link>
+
+                <Box sx={{ borderRadius: "50%", padding: "3px" }}>
+                  <Badge
+                    badgeContent={
+                      isClient
+                        ? favCartData.length === 0
+                          ? 0
+                          : favCartData.length
+                        : 0
+                    }
+                    color="error"
+                  >
+                    <FavCart />
+                  </Badge>
+                </Box>
+
+                <Box sx={{ borderRadius: "50%", padding: "3px" }}>
+                  <Badge
+                    badgeContent={
+                      isClient ? (cartData.length === 0 ? 0 : cartData.length) : 0
+                    }
+                    color="error"
+                  >
+                    <Cart />
+                  </Badge>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+          <Box width="100%" height="5rem"></Box>
+        </MobileView>
+      </>
+
+    );
+  }
+
+  if (isTablet) {
+    return (
+      <>
+        <MobileView loader={false}>
+          <Box
+            display="flex"
+            height="8rem"
+            padding="0.8rem 4.8rem"
+            justifyContent="space-between"
+            alignItems="center"
+            borderBottom={
+              theme === "light" ? lightColor.borderColor : darkColor.borderColor
+            }
+            bgcolor={theme === "light" ? lightColor.navbarBG : darkColor.navbarBG}
+            position="fixed"
+            zIndex="99"
+            width="100%"
+          >
+            <Box
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
+              flex="1 0 0"
+            >
+              <Box
+                display="flex"
+                gap="2rem"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <HamBurger />
+                <Link href="/">
+                  <Box width="16rem" height="5rem" sx={{ cursor: "pointer" }}>
+                    <Image
+                      src={`/assets/logo/${theme === "light" ? "logo-light.png" : "logo-dark.png"
+                        }`}
+                      alt="Logo"
+                      width="160"
+                      height="50"
+                      layout="responsive"
+                    />
+                  </Box>
+                </Link>
+              </Box>
+              <Search />
+              <Box>
+                <ThemeToggleBtn />
+              </Box>
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                gap="0.8rem"
+              >
                 <Box sx={{ borderRadius: "50%", padding: "3px" }}>
                   <Badge invisible={true}>
-                    {/* <Profile /> */}
                     <Link
                       href={
-                        session.status === "authenticated"
-                          ? "/profile"
-                          : "/login"
+                        session.status === "authenticated" ? "/profile" : "/login"
                       }
                     >
-                      {
-                        session.status === "authenticated"
-                        ? <ButtonBase sx={{ borderRadius: "50%" }}>
+                      <ButtonBase sx={{ borderRadius: "50%" }}>
                         <AdminIcon
                           color={
                             theme === "light"
@@ -397,10 +283,6 @@ export default function Index() {
                           }
                         />
                       </ButtonBase>
-                        : <Typography>Login</Typography>
-                      }
-                      
-                      
                     </Link>
                   </Badge>
                 </Box>
@@ -423,11 +305,7 @@ export default function Index() {
                 <Box sx={{ borderRadius: "50%", padding: "3px" }}>
                   <Badge
                     badgeContent={
-                      isClient
-                        ? cartData.length === 0
-                          ? 0
-                          : cartData.length
-                        : 0
+                      isClient ? (cartData.length === 0 ? 0 : cartData.length) : 0
                     }
                     color="error"
                   >
@@ -437,23 +315,151 @@ export default function Index() {
               </Box>
             </Box>
           </Box>
-        </PageSpacing>
+          <Box width="100%" height="8rem"></Box>
+        </MobileView>
+      </>
+    );
+  }
+
+  function handleClick(event: any) {
+    if (anchorElHover !== event.currentTarget) {
+      setAnchorElHover(event.currentTarget);
+    }
+  }
+
+  function handleClose() {
+    setAnchorElHover(null);
+  }
+
+  return (
+    <>
+      <MobileView loader={false}>
         <Box
-          bgcolor={lightColor.text.primary}
-          sx={{ opacity: "0.1" }}
-          height="1px"
-        ></Box>
-        <Box>
+          // display="flex"
+          width="100vw"
+          // height="11rem"
+          // padding="0.8rem 0rem"
+          justifyContent="space-between"
+          alignItems="center"
+          flexShrink="0"
+          bgcolor="white"
+          position="fixed"
+          zIndex="99"
+        >
           <PageSpacing>
             <Box
-              height="5rem"
+              margin="0 12rem"
               display="flex"
+              height="5rem"
+              justifyContent="space-around"
               alignItems="center"
-              justifyContent="center"
-              gap="12rem"
-              padding="3rem 0"
+              flexShrink="0"
+              bgcolor="white"
+              zIndex="99"
             >
-              {/* <LI
+              <Link href="/">
+                <Box width="15rem" height="8rem" sx={{ cursor: "pointer" }}>
+                  <Image
+                    src={`/assets/logo/logo-light.png`}
+                    alt="Logo"
+                    width="1500"
+                    height="800"
+                    layout="responsive"
+                  />
+                </Box>
+              </Link>
+
+              <Box display="flex" alignItems="center" gap="4rem">
+                <Search />
+              </Box>
+              <Box display="flex" alignItems="center" gap="4rem">
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  gap="0.8rem"
+                >
+                  {/* <Box>
+                  <ThemeToggleBtn />
+                </Box> */}
+                  <Box sx={{ borderRadius: "50%", padding: "3px" }}>
+                    <Badge invisible={true}>
+                      {/* <Profile /> */}
+                      <Link
+                        href={
+                          session.status === "authenticated"
+                            ? "/profile"
+                            : "/login"
+                        }
+                      >
+                        {
+                          session.status === "authenticated"
+                            ? <ButtonBase sx={{ borderRadius: "50%" }}>
+                              <AdminIcon
+                                color={
+                                  theme === "light"
+                                    ? lightColor.text.primary
+                                    : darkColor.text.primary
+                                }
+                              />
+                            </ButtonBase>
+                            : <Typography>Login</Typography>
+                        }
+
+
+                      </Link>
+                    </Badge>
+                  </Box>
+
+                  <Box sx={{ borderRadius: "50%", padding: "3px" }}>
+                    <Badge
+                      badgeContent={
+                        isClient
+                          ? favCartData.length === 0
+                            ? 0
+                            : favCartData.length
+                          : 0
+                      }
+                      color="error"
+                    >
+                      <FavCart />
+                    </Badge>
+                  </Box>
+
+                  <Box sx={{ borderRadius: "50%", padding: "3px" }}>
+                    <Badge
+                      badgeContent={
+                        isClient
+                          ? cartData.length === 0
+                            ? 0
+                            : cartData.length
+                          : 0
+                      }
+                      color="error"
+                    >
+                      <Cart />
+                    </Badge>
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
+          </PageSpacing>
+          <Box
+            bgcolor={lightColor.text.primary}
+            sx={{ opacity: "0.1" }}
+            height="1px"
+          ></Box>
+          <Box>
+            <PageSpacing>
+              <Box
+                height="5rem"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                gap="12rem"
+                padding="3rem 0"
+              >
+                {/* <LI
                 theme={theme}
                 highlite={isCategoryVisible}
                 aria-owns={anchorElHover ? "simple-menu" : undefined}
@@ -475,27 +481,27 @@ export default function Index() {
                 </Menu>
               </LI> */}
 
-              <Link href="/new-arrivals">
-                <LI
-                  theme={theme}
-                  highlite={pathname === "/new-arrivals" ? true : false}
-                  style={{ fontSize: 20 }}
-                >
-                  NEW ARRIVALS
-                </LI>
-              </Link>
+                <Link href="/new-arrivals">
+                  <LI
+                    theme={theme}
+                    highlite={pathname === "/new-arrivals" ? true : false}
+                    style={{ fontSize: 20 }}
+                  >
+                    NEW ARRIVALS
+                  </LI>
+                </Link>
 
-              <Link href="/men">
-                <LI
-                  theme={theme}
-                  highlite={pathname === "/men" ? true : false}
-                  style={{ fontSize: 20 }}
-                >
-                  MEN
-                </LI>
-              </Link>
+                <Link href="/men">
+                  <LI
+                    theme={theme}
+                    highlite={pathname === "/men" ? true : false}
+                    style={{ fontSize: 20 }}
+                  >
+                    MEN
+                  </LI>
+                </Link>
 
-              {/* <Link href="/women">
+                {/* <Link href="/women">
                 <LI
                   theme={theme}
                   highlite={pathname === "/women" ? true : false}
@@ -504,35 +510,35 @@ export default function Index() {
                 </LI>
               </Link> */}
 
-              <Link href="/combos">
-                <LI
-                  theme={theme}
-                  highlite={pathname === "/combos" ? true : false}
-                  style={{ fontSize: 20 }}
-                >
-                  COMBOS
-                </LI>
-              </Link>
+                <Link href="/combos">
+                  <LI
+                    theme={theme}
+                    highlite={pathname === "/combos" ? true : false}
+                    style={{ fontSize: 20 }}
+                  >
+                    COMBOS
+                  </LI>
+                </Link>
 
-              <Link href="/blog-collection">
-                <LI
-                  theme={theme}
-                  highlite={pathname === "/blog-collection" ? true : false}
-                  style={{ fontSize: 20 }}
-                >
-                  BLOGS
-                </LI>
-              </Link>
-              <Link href="/about-us">
-                <LI
-                  theme={theme}
-                  highlite={pathname === "/about-us" ? true : false}
-                  style={{ fontSize: 20 }}
-                >
-                  ABOUT US
-                </LI>
-              </Link>
-              {/* <Box onClick={(e) => handleClickMoreMenu(e)}>
+                <Link href="/blog-collection">
+                  <LI
+                    theme={theme}
+                    highlite={pathname === "/blog-collection" ? true : false}
+                    style={{ fontSize: 20 }}
+                  >
+                    BLOGS
+                  </LI>
+                </Link>
+                <Link href="/about-us">
+                  <LI
+                    theme={theme}
+                    highlite={pathname === "/about-us" ? true : false}
+                    style={{ fontSize: 20 }}
+                  >
+                    ABOUT US
+                  </LI>
+                </Link>
+                {/* <Box onClick={(e) => handleClickMoreMenu(e)}>
                 <LI
                   id="basic-button"
                   aria-controls={open ? "basic-menu" : undefined}
@@ -542,25 +548,26 @@ export default function Index() {
                   More
                 </LI>
               </Box> */}
-              <Menu
-                id="basic-menu"
-                anchorEl={moreAnchorEl}
-                open={open}
-                onClose={() => setMoreAnchorEl(null)}
-              >
-                <MenuItem onClick={() => handleCloseMoreMenu("/about-us")}>
-                  <LI theme={theme}>About us</LI>
-                </MenuItem>
-                <MenuItem>
-                  <LI theme={theme}>Gallery</LI>
-                </MenuItem>
-              </Menu>
-            </Box>
-          </PageSpacing>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={moreAnchorEl}
+                  open={open}
+                  onClose={() => setMoreAnchorEl(null)}
+                >
+                  <MenuItem onClick={() => handleCloseMoreMenu("/about-us")}>
+                    <LI theme={theme}>About us</LI>
+                  </MenuItem>
+                  <MenuItem>
+                    <LI theme={theme}>Gallery</LI>
+                  </MenuItem>
+                </Menu>
+              </Box>
+            </PageSpacing>
+          </Box>
         </Box>
-      </Box>
 
-      <Box width="100%" height="11rem"></Box>
+        <Box width="100%" height="11rem"></Box>
+      </MobileView>
     </>
   );
 }
