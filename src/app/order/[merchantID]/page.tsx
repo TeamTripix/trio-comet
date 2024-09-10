@@ -99,7 +99,7 @@ const OrderPage = () => {
   }, []);
   const handleTrack = (order_id: number, channel_id: number) => {
     const reqData = {
-      url: `https://apiv2.shiprocket.in/v1/external/courier/track?order_id=${order_id}&channel_id=${channel_id}`,
+      url: `https://apiv2.shiprocket.in/v1/external/courier/track?order_id=${order_id}&channel_id=${channel_id}&per_page=${100}`,
       token: localStorage.getItem("accessToken"),
     };
     axios

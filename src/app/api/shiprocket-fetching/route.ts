@@ -19,7 +19,6 @@ export async function POST(req: Request) {
       }
     );
     if (res.status === 200) {
-        console.log(res)
       return NextResponse.json(
         {
           message: "Your Product fetch Successfully",

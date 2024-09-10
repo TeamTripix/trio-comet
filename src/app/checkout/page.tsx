@@ -248,7 +248,7 @@ function Checkout() {
     const orderData = {
       order_id: orderID,
       order_date: currentTimeAndDate,
-      pickup_location: "Primary",
+      pickup_location: "warehouse",
       channel_id: "5134827",
       // comment: "",
       // reseller_name: "",

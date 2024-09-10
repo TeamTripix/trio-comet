@@ -35,17 +35,17 @@ const Page = () => {
       axios
         .post("/api/shiprocket-fetching", reqData)
         .then(function (response) {
-          console.log("response : ",response)
           if(response.status === 200){
-
+            
             axios({
               method: "post",
               url: "/api/shiprocket-middleware",
               data: { data, token:localStorage.getItem("accessToken") },
             })
-              .then((response) => {
-                if (response.data.success) {
-                  router.push(`/order/${response.data.data.order_id}`, {
+            .then((response) => {
+              if (response.data.success) {
+                alert("test")
+                router.push(`/order/${response.data.data.order_id}`, {
                     scroll: false,
                   });
                 } else {
