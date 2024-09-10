@@ -147,7 +147,7 @@ const ProductCollection = ({ params }: { params: { slug: string } }) => {
                     <NoProduct />
                   </Box>
                 ) : (
-                  productApiRes.slice(0, 8).map((data, index) => {
+                  productApiRes.map((data, index) => {
                     return (
                       <>
                         <Grid
