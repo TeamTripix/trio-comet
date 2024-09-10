@@ -5,8 +5,6 @@ import {
   Typography,
   Grid,
   ButtonBase,
-  Tab,
-  Tabs,
   AccordionDetails,
   AccordionSummary,
   Accordion,
@@ -17,8 +15,6 @@ import {
   DialogContent,
   TextField,
   CircularProgress,
-  IconButton,
-  Button,
 } from "@mui/material";
 import PageSpacing from "@components/PageSpacing";
 import { lightColor, darkColor } from "@/utils/CustomTheme/color";
@@ -36,18 +32,13 @@ import CancelIcon from "../../../../icons/cancelIcon";
 import NoProduct from "../../../../icons/noProduct";
 import NoFaq from "../../../../icons/noFaq";
 import NoReview from "../../../../icons/noReview";
-import AwesomeSlider from "react-awesome-slider";
 import "react-awesome-slider/dist/styles.css";
 import AdminIcon from "../../../../icons/adminIcon";
 import ImageUploader from "@components/ImageUploader";
-// import ReactImageMagnify from "react-image-magnify";
-// import Carousel from "@components/Carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import FullSizeProductImage from "@components/FullSizeProductImage";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "../../bulletStyle.module.css";
 import StarIcon from "@mui/icons-material/Star";
 import CopyToClipboard from "react-copy-to-clipboard";
-import { NextSeo } from "next-seo";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -55,17 +46,11 @@ import VerticalSlider from "./VerticalSlider";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import DescriptionIcon from "@mui/icons-material/Description";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
-
-// import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
-import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 import SizeChart from "@components/SizeChart";
-// Import Swiper styles
-// import "swiper/swiper-bundle.css";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -92,91 +77,86 @@ function CustomTabPanel(props: TabPanelProps) {
   );
 }
 
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
+
 
 interface ReviewCardProps {
   isImageInReveiw?: boolean;
   data: any;
 }
 
-function FAQs(props: any) {
-  const isTablet = useTablet();
-  const [fAQApiRes, setFAQApiRes] = useState([]);
-  const isMobile = useMobile();
-  const theme: any = useSelector<any>((state) => state.themeToggle);
-  const { pid } = props;
-  useEffect(() => {
-    // fetching FAQ data
-    axios({
-      method: "GET",
-      url: `/api/faq?id=${pid}`,
-    })
-      .then((res) => {
-        setFAQApiRes(res.data.data[0].FAQs);
-      })
-      .catch(() => {});
-  }, [pid]);
-  return (
-    <Box width={isTablet ? "100%" : "80%"} padding="0 2.4rem">
-      {fAQApiRes.length === 0 ? (
-        <Box width="100%" textAlign="center">
-          <NoFaq isMobile={isMobile} isTablet={isTablet} />
-        </Box>
-      ) : (
-        fAQApiRes.map((data: any) => {
-          return (
-            <Accordion key={data._id}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-                sx={{ bgcolor: "rgba(251, 192, 45, 0.30)" }}
-              >
-                <Typography
-                  sx={{
-                    color:
-                      theme === "light"
-                        ? lightColor.text.primary
-                        : darkColor.text.primary,
-                    fontSize: "1.4rem",
-                    fontStyle: "normal",
-                    fontWeight: 500,
-                    lineHeight: "normal",
-                    letterSpacing: "0.05rem",
-                  }}
-                >
-                  {data.heading}
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography
-                  sx={{
-                    color:
-                      theme === "light"
-                        ? lightColor.text.chevron
-                        : darkColor.text.chevron,
-                    fontSize: "1.4rem",
-                    fontStyle: "normal",
-                    fontWeight: 500,
-                    lineHeight: "normal",
-                    letterSpacing: "0.05rem",
-                  }}
-                >
-                  {data.desc}
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
-          );
-        })
-      )}
-    </Box>
-  );
-}
+// function FAQs(props: any) {
+//   const isTablet = useTablet();
+//   const [fAQApiRes, setFAQApiRes] = useState([]);
+//   const isMobile = useMobile();
+//   const theme: any = useSelector<any>((state) => state.themeToggle);
+//   const { pid } = props;
+//   useEffect(() => {
+//     // fetching FAQ data
+//     axios({
+//       method: "GET",
+//       url: `/api/faq?id=${pid}`,
+//     })
+//       .then((res) => {
+//         setFAQApiRes(res.data.data[0].FAQs);
+//       })
+//       .catch(() => {});
+//   }, [pid]);
+//   return (
+//     <Box width={isTablet ? "100%" : "80%"} padding="0 2.4rem">
+//       {fAQApiRes.length === 0 ? (
+//         <Box width="100%" textAlign="center">
+//           <NoFaq isMobile={isMobile} isTablet={isTablet} />
+//         </Box>
+//       ) : (
+//         fAQApiRes.map((data: any) => {
+//           return (
+//             <Accordion key={data._id}>
+//               <AccordionSummary
+//                 expandIcon={<ExpandMoreIcon />}
+//                 aria-controls="panel1a-content"
+//                 id="panel1a-header"
+//                 sx={{ bgcolor: "rgba(251, 192, 45, 0.30)" }}
+//               >
+//                 <Typography
+//                   sx={{
+//                     color:
+//                       theme === "light"
+//                         ? lightColor.text.primary
+//                         : darkColor.text.primary,
+//                     fontSize: "1.4rem",
+//                     fontStyle: "normal",
+//                     fontWeight: 500,
+//                     lineHeight: "normal",
+//                     letterSpacing: "0.05rem",
+//                   }}
+//                 >
+//                   {data.heading}
+//                 </Typography>
+//               </AccordionSummary>
+//               <AccordionDetails>
+//                 <Typography
+//                   sx={{
+//                     color:
+//                       theme === "light"
+//                         ? lightColor.text.chevron
+//                         : darkColor.text.chevron,
+//                     fontSize: "1.4rem",
+//                     fontStyle: "normal",
+//                     fontWeight: 500,
+//                     lineHeight: "normal",
+//                     letterSpacing: "0.05rem",
+//                   }}
+//                 >
+//                   {data.desc}
+//                 </Typography>
+//               </AccordionDetails>
+//             </Accordion>
+//           );
+//         })
+//       )}
+//     </Box>
+//   );
+// }
 
 const ReviewCard: React.FC<ReviewCardProps> = ({ isImageInReveiw, data }) => {
   const { heading, desc, rating, date, customerName, image } = data;

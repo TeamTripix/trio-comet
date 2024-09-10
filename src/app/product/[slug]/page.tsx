@@ -9,7 +9,7 @@ export async function generateMetadata({ params }:any) {
 
 async function getMetadata(params:any) {
   let productRes = await fetch(
-    `http://localhost:3000/api/product?slug=${params.slug}`
+    `${process.env.NEXTAUTH_URL}/api/product?slug=${params.slug}`
   );
   let product = await productRes.json();
   return {
@@ -23,25 +23,25 @@ async function getMetadata(params:any) {
 
 const Page = async ({ params }: { params: { slug: string } }) => {
   let productRes = await fetch(
-    `http://localhost:3000/api/product?slug=${params.slug}`
+    `${process.env.NEXTAUTH_URL}/api/product?slug=${params.slug}`
   );
   let product = await productRes.json();
 
-  let comboRes = await fetch(`http://localhost:3000/api/product?tag=combo`);
+  let comboRes = await fetch(`${process.env.NEXTAUTH_URL}/api/product?tag=combo`);
   let combo = await comboRes.json();
 
   let categoryRelatedProductRes = await fetch(
-    `http://localhost:3000/api/product/?category=${product.data.category}`
+    `${process.env.NEXTAUTH_URL}/api/product/?category=${product.data.category}`
   );
   let categoryRelatedProduct = await categoryRelatedProductRes.json();
 
   let productCouponRes = await fetch(
-    `http://localhost:3000/api/coupon/?pid=${product.data._id}`
+    `${process.env.NEXTAUTH_URL}/api/coupon/?pid=${product.data._id}`
   );
   let productCoupon = await productCouponRes.json();
 
   let productReviewRes = await fetch(
-    `http://localhost:3000/api/review?id=${product.data._id}`
+    `${process.env.NEXTAUTH_URL}/api/review?id=${product.data._id}`
   );
   let productReview = await productReviewRes.json();
   const jsonLd = {
