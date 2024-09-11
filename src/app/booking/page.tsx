@@ -44,7 +44,6 @@ const Page = () => {
             })
             .then((response) => {
               if (response.data.success) {
-                alert("test")
                 router.push(`/order/${response.data.data.order_id}`, {
                     scroll: false,
                   });
