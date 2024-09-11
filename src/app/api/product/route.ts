@@ -205,7 +205,7 @@ export async function GET(
           { status: 200 }
         );
       } else if (category) {
-        const response = await productSchema.find({ category: category });
+        const response = await productSchema.find({ category:category });
         return NextResponse.json(
           {
             message: "product found successfully",
