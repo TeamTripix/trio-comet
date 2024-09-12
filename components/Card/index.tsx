@@ -200,7 +200,8 @@ const Index: React.FC<IndexProps> = ({
                 ? `${Math.round(((price - discountPrice) / price) * 100)}% OFF`
                 : offerTag === "daily_deals"
                 ? timeLeft
-                : offerTag.split("_").join(" ")}
+                // : offerTag.split("_").join(" ")}
+                : ""}
             </Typography>
           </Box>
         ) : (
