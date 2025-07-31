@@ -37,7 +37,7 @@ const Index = () => {
       <>
         {blackBannerApiLoading ? (
           ""
-        ) : blackBannerApiRes.length === 0 ? (
+        ) : blackBannerApiRes?.length === 0 ? (
           ""
         ) : (
           <>

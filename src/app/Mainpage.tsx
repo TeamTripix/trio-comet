@@ -261,11 +261,11 @@ export default function Home(props: any) {
                   borderRadius: "0.8rem",
                 }}
               ></Skeleton>
-            ) : bannerApiRes.length === 0 ? (
+            ) : bannerApiRes?.length === 0 ? (
               ""
             ) : (
               <Slider className="mobileBanner" {...mobileBannerSettings}>
-                {bannerApiRes.map((data: any, index: number) => (
+                {bannerApiRes?.map((data: any, index: number) => (
                   <Link href={data.link} key={data.mobileImageURL} >
                     <img
 
@@ -286,11 +286,11 @@ export default function Home(props: any) {
                 borderRadius: "0.8rem",
               }}
             ></Skeleton>
-          ) : bannerApiRes.length === 0 ? (
+          ) : bannerApiRes?.length === 0 ? (
             ""
           ) : (
             <Slider {...desktopBannerSettings}>
-              {bannerApiRes.map((data: any) => {
+              {bannerApiRes?.map((data: any) => {
                 return (
                   <Box key={data.id} onDoubleClick={() => handleBannerDoubleClick(data.link)}>
                     {/* <Link href={data.link}> */}
@@ -366,7 +366,7 @@ export default function Home(props: any) {
                     })}
                   </Grid>
                 </>
-              ) : caregoryApiRes.length === 0 ? (
+              ) : caregoryApiRes?.length === 0 ? (
                 <Box width="100%" textAlign="center">
                   <NoProduct isMobile={isMobile} />
                 </Box>
@@ -395,7 +395,7 @@ export default function Home(props: any) {
                                     data={categoryData}
                                     indexes={index}
                                     categoryArrayLength={
-                                      caregoryApiRes.length - 1
+                                      caregoryApiRes?.length - 1
                                     }
                                   />
                                 </Grid>
@@ -425,7 +425,7 @@ export default function Home(props: any) {
                       </Grid>
                     );
                   })
-                ) : caregoryApiRes.length === 0 ? (
+                ) : caregoryApiRes?.length === 0 ? (
                   <Box width="100%" textAlign="center">
                     <NoProduct isMobile={isMobile} />
                   </Box>
@@ -438,7 +438,7 @@ export default function Home(props: any) {
                             data={data}
                             isHomePage={true}
                             indexes={index}
-                            categoryArrayLength={caregoryApiRes.length - 1}
+                            categoryArrayLength={caregoryApiRes?.length - 1}
                           />
                         </Box>
                       </>
@@ -462,7 +462,7 @@ export default function Home(props: any) {
                       </Grid>
                     );
                   })
-                ) : caregoryApiRes.length === 0 ? (
+                ) : caregoryApiRes?.length === 0 ? (
                   <Box width="100%" textAlign="center">
                     <NoProduct isMobile={isMobile} />
                   </Box>
@@ -477,7 +477,7 @@ export default function Home(props: any) {
                                 data={data}
                                 isHomePage={true}
                                 indexes={index}
-                                categoryArrayLength={caregoryApiRes.length - 1}
+                                categoryArrayLength={caregoryApiRes?.length - 1}
                               />
                             </Grid>
                           </>
@@ -493,7 +493,7 @@ export default function Home(props: any) {
                                 data={data}
                                 isHomePage={true}
                                 indexes={index}
-                                categoryArrayLength={caregoryApiRes.length - 1}
+                                categoryArrayLength={caregoryApiRes?.length - 1}
                               />
                             </Grid>
                           </>
